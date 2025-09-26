@@ -1,0 +1,91 @@
+title: EvaluationContext.Colour
+description: A set of DAX User-Defined Functions (UDF) designed to enable easy manipulation of hex colours for Power BI.
+remote_theme: just-the-docs/just-the-docs
+
+# Language and locale settings
+lang: en
+locale: en_US
+
+# SEO settings
+author:
+  name: EvaluationContext
+  url: https://github.com/EvaluationContext
+social:
+  name: Jake Duddy
+  links:
+    - https://www.linkedin.com/in/jakeduddy/
+
+# Remove logo to hide the icon
+# logo: "/assets/img/icon.png"
+favicon_ico: "/assets/img/favicons/favicon.ico"
+
+# CSS customization
+aux_links:
+  "GitHub":
+    - "https://github.com/EvaluationContext/EvaluationContext.Colour"
+
+aux_links_new_tab: true
+
+# Theme settings
+color_scheme: light
+
+# Enable or disable the site search
+search_enabled: true
+
+# Heading anchor links appear on hover over h1-h6 tags
+heading_anchors: true
+
+# External navigation links
+nav_external_links:
+  - title: DaxLib.org
+    url: https://daxlib.org/package/EvaluationContext.Colour/
+    hide_icon: false
+
+plugins:
+  - jekyll-remote-theme
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-relative-links
+  - jekyll-include-cache
+
+url: "https://evaluationcontext.github.io"
+baseurl: "/EvaluationContext.Colour"
+repository: EvaluationContext/EvaluationContext.Colour
+
+permalink: pretty
+
+defaults:
+  - scope:
+      path: "docs" # an empty string here means all files in the project
+      type: "pages"
+    values:
+      layout: "default"
+
+# PWA settings
+pwa:
+  enabled: true
+  cache:
+    enabled: true
+    # Files that will not be cached
+    deny_paths:
+      - /assets/js/data/
+      - /sw.min.js
+
+callouts_level: quiet # or loud
+callouts:
+  info:
+    title: Info
+    color: blue
+  tip:
+    title: Tip
+    color: green
+  warning:
+    title: Warning
+    color: yellow
+
+kramdown:
+  syntax_highlighter: none
+  syntax_highlighter_opts: {}
+
+back_to_top: true
+back_to_top_text: "Back to top"

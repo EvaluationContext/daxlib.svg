@@ -1,0 +1,54 @@
+<!-- Stylesheets -->
+<link rel="stylesheet" href="{{ site.baseurl }}/assets/css/google-light.css">
+<!-- <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/material.css"> -->
+<link rel="stylesheet" href="{{ site.baseurl }}/assets/css/highlightjs-badge-custom.css">
+<!-- <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/highlightjs-badge-material.css"> -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.1/css/all.min.css" />
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="180x180" href="{{ site.baseurl }}/assets/img/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ site.baseurl }}/assets/img/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ site.baseurl }}/assets/img/favicons/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="512x512" href="{{ site.baseurl }}/assets/img/favicons/android-chrome-192x102.png">
+<link rel="icon" type="image/png" sizes="512x512" href="{{ site.baseurl }}/assets/img/favicons/android-chrome-512x512.png">
+<link rel="manifest" href="{{ site.baseurl }}/assets/img/favicons/site.webmanifest">
+<link rel="shortcut icon" href="{{ site.baseurl }}/assets/img/favicons/favicon.ico">
+
+<!-- highlight.js and badges -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js" integrity="sha512-EBLzUL8XLl+va/zAsmXwS7Z2B1F9HUHkZwyS/VKwh3S7T/U0nF4BaU29EP/ZSf6zgiIxYAnKLu6bJ8dqpmX5uw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/fsharp.min.js" integrity="sha512-S3tgSOL0xKKsqOdbPP7AZKtb/L0bXVG/PW7RNRVXOqCWEiBRzIq9oTIinLoY11MB58l1/f++IHM+mp1Nfk2ETA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/plaintext.min.js" integrity="sha512-8G3A7cgC22yWtFGqrwXjmznP+IcB9wYQRgsOVO4pQDpJ0HWgpD8lMMShOXdU225S4qww0bEUwsz+foINFWbwwQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="{{ site.baseurl }}/assets/js/highlight/languages/dax.js"></script>
+<script src="{{ site.baseurl }}/assets/js/highlightjs-badge/highlightjs-badge.js"></script>
+<script>
+  hljs.highlightAll();
+</script>
+<script>
+  setTimeout(function () {window.highlightJsBadge()},300);
+  hljs.configure({ cssSelector: 'code' });
+  hljs.highlightAll();
+</script>
+
+<!-- PWA registration -->
+<script>
+  if ('serviceWorker' in navigator) {
+    const baseUrl = "{{ site.baseurl }}";
+    const swUrl = `${baseUrl}/sw.js?v={{ site.time | date: '%Y%m%d%H%M%S' }}`;
+
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register(swUrl)
+        .then(function(registration) {
+          console.log('Service Worker registered with scope:', registration.scope);
+        })
+        .catch(function(error) {
+          console.error('Service Worker registration failed:', error);
+        });
+    });
+  }
+</script>
+
+<!-- PWA update notification component -->
+<div id="pwa-update-toast" style="position: fixed; bottom: 20px; right: 20px; background: #4a4a4a; color: white; padding: 15px; border-radius: 5px; display: none; z-index: 9999;">
+  <div style="margin-bottom: 10px;">A new version of this site is available!</div>
+  <button id="pwa-refresh-btn" style="background: #2ecc71; border: none; color: white; padding: 5px 10px; cursor: pointer; border-radius: 3px;">Update & Refresh</button>
+</div>

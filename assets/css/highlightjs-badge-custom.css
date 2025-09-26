@@ -1,0 +1,30 @@
+/* Custom styling for highlightjs-badge */
+.code-badge {
+    background: #f6f8fa !important; /* Match the code background from google-light.css */
+    color: #373b41 !important; /* Match the text color from google-light.css */
+    opacity: 0.7 !important;
+    transition: opacity 0.3s, background-color 0.3s !important;
+    font-size: 0.75em !important; /* Reduce overall badge font size */
+    padding: 3px 6px !important; /* Reduce padding to make badge smaller */
+}
+
+.code-badge:hover {
+    opacity: 1 !important;
+    background: #e8eaed !important; /* Slightly darker when hovered */
+}
+
+.code-badge-language {
+    color: #373b41 !important; /* Match the icon gray color */
+    font-weight: 600;
+    font-size: 0.9em !important; /* Slightly reduce language label size */
+}
+
+.code-badge-copy-icon {
+    color: #373b41 !important; /* Darker shade for the icon */
+    font-size: 1em !important; /* Reduce icon size */
+    padding: 0 10px !important; /* Adjust padding around the icon */
+}
+
+.fa.text-success {
+    color: #198844 !important; /* Use the string color from google-light theme for success */
+}

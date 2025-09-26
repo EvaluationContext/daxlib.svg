@@ -1,0 +1,30 @@
+/* Custom styling for highlightjs-badge with material theme */
+.code-badge {
+    background: #263238 !important; /* Match the code background from material.css */
+    color: #EEFFFF !important; /* Match the text color from material.css */
+    opacity: 0.7 !important;
+    transition: opacity 0.3s, background-color 0.3s !important;
+    font-size: 0.75em !important; /* Reduce overall badge font size */
+    padding: 3px 6px !important; /* Reduce padding to make badge smaller */
+}
+
+.code-badge:hover {
+    opacity: 1 !important;
+    background: #314549 !important; /* Selection background when hovered */
+}
+
+.code-badge-language {
+    color: #89DDFF !important; /* Support color from material theme */
+    font-weight: 600;
+    font-size: 0.9em !important; /* Slightly reduce language label size */
+}
+
+.code-badge-copy-icon {
+    color: #EEFFFF !important; /* Default foreground color for the icon */
+    font-size: 1em !important; /* Reduce icon size */
+    padding: 0 10px !important; /* Adjust padding around the icon */
+}
+
+.fa.text-success {
+    color: #C3E88D !important; /* Use the string color from material theme for success */
+}
