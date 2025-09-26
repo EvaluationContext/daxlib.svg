@@ -29,7 +29,7 @@ function 'DaxLib.SVG.SVG' =
 				"</svg>"
 		
 			RETURN _result
-	lineageTag: 8f9c3f05-86d6-40ff-9a6e-b3a86be130c7
+	lineageTag: 8f7cd0a4-28c8-4116-8e46-04fb26d8b33f
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -319,7 +319,7 @@ function 'DaxLib.SVG.Util.OptionalCommentElements' =
 				_Style &
 				_Class &
 				_Transform
-	lineageTag: d91faeff-fc93-4a3e-a5ea-343aa5eae383
+	lineageTag: be858a9d-95fe-4938-b2ed-e535a348e660
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -357,7 +357,7 @@ function 'DaxLib.SVG.Style.Common' =
 				_StrokeWidth &
 				_StrokeOpacity &
 				_Opacity
-	lineageTag: bfe9f800-4fd4-409c-82e0-fab113f73f5e
+	lineageTag: 8f8052a5-69b5-4437-8ae9-6516c88234a2
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -407,7 +407,7 @@ function 'DaxLib.SVG.Style.Txt' =
 				_TextDecoration &
 				_LetterSpacing &
 				_WordSpacing
-	lineageTag: 0c1b87ff-426f-4ab8-b44c-8527034a2409
+	lineageTag: a6981279-3bf3-40be-afaf-7f73111e59e5
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -443,7 +443,7 @@ function 'DaxLib.SVG.Style.Line' =
 				_StrokeLinecap &
 				_StrokeLinejoin &
 				_StrokeMiterlimit
-	lineageTag: d44fe0dd-be7f-4197-a56e-61a379e8c3ea
+	lineageTag: 414d75ac-bccd-4842-b640-213b9c1962b4
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -459,7 +459,7 @@ function 'DaxLib.SVG.Element.Defs' =
 			"<defs>" &
 			defs &
 			"</defs>"
-	lineageTag: 5a8e9941-d1e5-4b9d-b5e4-7178bb98e309
+	lineageTag: 99e2639e-11c9-4c79-ab70-072c5312843c
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -480,7 +480,7 @@ function 'DaxLib.SVG.Def.GradientStop' =
 			"' stop-color='" & colour & "'" &
 			IF( NOT ISBLANK( opacity ), " stop-opacity='" & opacity & "'" ) &
 			"/>"
-	lineageTag: 8e3d346d-ccc1-41be-95d0-07635f91a698
+	lineageTag: 18c6475e-f2be-4f10-818e-743dff9f8015
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -512,7 +512,7 @@ function 'DaxLib.SVG.Def.LinearGradient' =
 			">" &
 			stops &
 			"</linearGradient>"
-	lineageTag: 2363aa72-be0a-44db-9cff-a6feceb2fa6f
+	lineageTag: ab50eb92-8498-4f10-97f9-be73fde5929d
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -550,7 +550,7 @@ function 'DaxLib.SVG.Def.RadialGradient' =
 			">" &
 			stops &
 			"</radialGradient>"
-	lineageTag: 0690ed0f-a02a-48f6-8f68-a8e6233ad88a
+	lineageTag: 20be8689-154a-4d71-9d95-5257a3bcd609
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -619,7 +619,7 @@ function 'DaxLib.SVG.Def.Circle' =
 				" r='" & r & "'" &
 				_OCE &
 				"/>"
-	lineageTag: bfa1ff10-ee76-49bc-86b6-42c92066edae
+	lineageTag: 1f1fe512-1748-47e1-ab72-4957a5a34dfe
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -657,7 +657,7 @@ function 'DaxLib.SVG.Def.Rect' =
 				IF(NOT ISBLANK(RY), " ry='" & RY & "'" ) &
 				_OCE &
 				"/>"
-	lineageTag: dea532b5-c9c0-49f1-a983-cfba112219ef
+	lineageTag: 85f509b6-fa0f-41b2-a04d-1e9be3b33889
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -695,7 +695,7 @@ function 'DaxLib.SVG.Def.Line' =
 				" y2='" & y2 & "'" &
 				_OCE &
 				"/>"
-	lineageTag: 2ee8d345-6ff6-4797-af88-3077aaf31a70
+	lineageTag: 69be2436-48b8-4263-93d2-02190531d660
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -724,7 +724,7 @@ function 'DaxLib.SVG.Def.Paths' =
 				" d='" & d & "'" &
 				_OCE &
 				"/>"
-	lineageTag: 4bcc705e-09b3-47df-b1b5-10ab797992ac
+	lineageTag: 85ee0f33-4ab8-4922-b77c-63d8ba87b2cf
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -760,7 +760,7 @@ function 'DaxLib.SVG.Element.UseDef' =
 				IF( NOT ISBLANK( y ), " y='" & y & "'" ) &
 				_OCE &
 				"/>"
-	lineageTag: f4326a08-c5ce-4321-a751-84b97bcf7740
+	lineageTag: 5d82a4d1-d0de-41e4-8e6c-77511de7ad9f
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -782,7 +782,7 @@ function 'DaxLib.SVG.Element.Group' =
 			" transform='" & transform & "'" &
 			" opacity='" & opacity & "'" &
 			">" & contents & "</g>"
-	lineageTag: 665d52fd-846d-4670-b3a0-a6ca1ee94a7e
+	lineageTag: 9780f216-dae2-4cab-a033-d524fe182274
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -815,7 +815,7 @@ function 'DaxLib.SVG.Element.Circle' =
 				" r='" & r & "'" &
 				_OCE &
 				"/>"
-	lineageTag: 3f11b451-9610-4e90-a43e-240d2c46ba9c
+	lineageTag: 2a60cbf9-7e35-48cf-a63f-649791fdeee8
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -857,7 +857,7 @@ function 'DaxLib.SVG.Element.Rect' =
 				IF( NOT ISBLANK( ry ), " ry='" & ry & "'" ) &
 				_OCE &
 				"/>"
-	lineageTag: cdcaa992-fe0a-4e35-84be-47da7cf13118
+	lineageTag: c9fa8a59-301d-4621-ac2f-5ab1fef78c18
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -893,7 +893,7 @@ function 'DaxLib.SVG.Element.Line' =
 				" y2='" & y2 & "'" &
 				_OCE &
 				"/>"
-	lineageTag: 431d0551-b75a-4f81-9111-322e4aae2d9f
+	lineageTag: 674fbb6a-821b-43c1-9d59-8ba362a3f061
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -919,7 +919,7 @@ function 'DaxLib.SVG.Element.Paths' =
 				"<path d='" & d & "'" &
 				_OCE &
 				"/>"
-	lineageTag: 85bd3d64-fbc2-4eb0-a15b-db71b71c1dec
+	lineageTag: 46a65455-06d1-471d-93a8-4dc4b874dd07
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -955,7 +955,7 @@ function 'DaxLib.SVG.Element.Ellipse' =
 				" ry='" & ry & "'" &
 				_OCE &
 				"/>"
-	lineageTag: b15e8cb5-cc02-4658-aace-0f25478f0bf3
+	lineageTag: 856fee28-6051-405d-bcb2-003ecbf4248f
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -982,7 +982,7 @@ function 'DaxLib.SVG.Element.Polygon' =
 				" points='" & points & "'" &
 				_OCE &
 				"/>"
-	lineageTag: a0792543-8d7a-4a6f-89d1-9c05495bc12b
+	lineageTag: 188a6f97-079e-4a33-979b-1b03664f22bb
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1009,7 +1009,7 @@ function 'DaxLib.SVG.Element.Polyline' =
 				" points='" & points & "'" &
 				_OCE &
 				"/>"
-	lineageTag: b501cbae-3b97-4025-a875-331a0f37e6a8
+	lineageTag: e7234268-cd69-4aed-8e1f-b3790e72b75c
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1051,7 +1051,7 @@ function 'DaxLib.SVG.Element.Txt' =
 				_OCE &
 				">" & txt &
 				"</text>"
-	lineageTag: 2df863c0-d4ae-42f1-a49a-7195e541e6fa
+	lineageTag: 93c4ace9-4322-4daf-8eaf-feaae90ced08
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1126,7 +1126,7 @@ function 'DaxLib.SVG.Compound.Pill' =
 		
 			Pill &
 			TextElement
-	lineageTag: 90833162-0bff-4728-aa74-1e7f07bdad41
+	lineageTag: 0adc2e84-9f0f-439b-afba-0613b4ec19fd
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1199,12 +1199,12 @@ function 'DaxLib.SVG.BulletChart.ActionDot' =
 					// Scale
 		            VAR _AxisMax =
 		                MAX(
-		                    DaxLib.SVG.Calc.AxisMax( actual, columnOne, 1.1 ),
-		                    DaxLib.SVG.Calc.AxisMax( target, columnOne, 1.1 )
+		                    DaxLib.SVG.Scale.AxisMax( actual, columnOne, 1.1 ),
+		                    DaxLib.SVG.Scale.AxisMax( target, columnOne, 1.1 )
 		                )
-		            VAR _AxisRange = DaxLib.SVG.Calc.AxisRange( _AxisMax, 0 )
-		            VAR _ActualNormalized = DaxLib.SVG.Calc.Normalize( _Actual, 0, _AxisMax, _BarMin, _BarMax )
-		            VAR _TargetNormalized = DaxLib.SVG.Calc.Normalize( _Target, 0, _AxisMax, _BarMin, _BarMax )
+		            VAR _AxisRange = DaxLib.SVG.Scale.AxisRange( _AxisMax, 0 )
+		            VAR _ActualNormalized = DaxLib.SVG.Scale.Normalize( _Actual, 0, _AxisMax, _BarMin, _BarMax )
+		            VAR _TargetNormalized = DaxLib.SVG.Scale.Normalize( _Target, 0, _AxisMax, _BarMin, _BarMax )
 		
 		            // Create SVG Elements
 		            VAR _ActionDot =
@@ -1317,7 +1317,7 @@ function 'DaxLib.SVG.BulletChart.ActionDot' =
 							_BarBaseline,   // contents
 		                    _Actual         // sortValue
 		                )
-	lineageTag: 09737cda-cc43-4000-ab5a-9b0c0eda7333
+	lineageTag: 8780df4f-22f7-4f4b-ba47-3c36e402e9cb
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1345,9 +1345,9 @@ function 'DaxLib.SVG.Bar' =
 			VAR XMax = CALCULATE( MAX( columnRef ), ALLSELECTED() )
 		
 			// Map the zero point and the current value to the SVG's coordinate system
-			VAR ZeroPoint = DaxLib.SVG.Calc.Normalize( 0, XMin, XMax, 0, width )
+			VAR ZeroPoint = DaxLib.SVG.Scale.Normalize( 0, XMin, XMax, 0, width )
 			VAR CurrentValue = SUM( columnRef )
-			VAR ValuePoint =  DaxLib.SVG.Calc.Normalize( CurrentValue, XMin, XMax, 0, width )
+			VAR ValuePoint =  DaxLib.SVG.Scale.Normalize( CurrentValue, XMin, XMax, 0, width )
 		
 			// Style
 			VAR _PositiveColor = IF( NOT ISBLANK( positiveColor ), positiveColor, "#01B8AA" )
@@ -1411,7 +1411,7 @@ function 'DaxLib.SVG.Bar' =
 					Rect,
 					BLANK()
 				)
-	lineageTag: 515ddccb-b3c3-4f5e-9d18-1e29ffca21d5
+	lineageTag: a27cbae4-29e1-4ebb-ba21-2c872e60d03b
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1545,7 +1545,245 @@ function 'DaxLib.SVG.Def.ClipPath' =
 			"<clipPath id='" & defId & "'>" &
 			elements &
 			"</clipPath>"
-	lineageTag: 96c5e25d-03b9-416b-b435-ce5922c24f5f
+	lineageTag: 90f9d311-50cc-4d38-91fa-07796a8f3a88
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Converts percentage to angle for circular visualizations
+/// perc			SCALAR INT64 VAL	Percentage value (0-100)
+/// startAngle 		SCALAR VAL INT64	Starting angle in degrees (default -90 for top)
+/// sweepAngle		SCALAR VAL INT64	Total sweep angle in degrees (default 360 for full circle)
+function 'DaxLib.SVG.Scale.AngleFromPercent' =
+		(
+			perc : SCALAR INT64 VAL,
+			startAngle : SCALAR INT64 VAL,
+			sweepAngle : SCALAR INT64 VAL
+		) =>
+		
+			startAngle + ( perc / 100 * sweepAngle )
+	lineageTag: 4d1388a7-aa3d-43b9-bd88-c8d1c1d906b4
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Generates path data for arc segments used in donut and gauge charts
+/// cx				SCALAR VAL	Center X position in pixels
+/// cy				SCALAR VAL	Center Y position in pixels
+/// radius			SCALAR VAL	Outer radius in pixels
+/// startAngle		SCALAR VAL	Starting angle in degrees (0 = right, 90 = bottom)
+/// endAngle		SCALAR VAL	Ending angle in degrees
+/// innerRadius		SCALAR VAL	Inner radius for donut effect (0 for pie slice)
+function 'DaxLib.SVG.Scale.ArcPath' =
+		(
+			cx : SCALAR VAL,
+			cy : SCALAR VAL,
+			radius : SCALAR VAL,
+			startAngle : SCALAR VAL,
+			endAngle : SCALAR VAL,
+			innerRadius : SCALAR VAL
+		) =>
+		
+			VAR _StartRad = startAngle * PI() / 180
+			VAR _EndRad = 	endAngle * PI() / 180
+			VAR _LargeArc = IF( endAngle - startAngle > 180, 1, 0 )
+		
+			VAR _X1 = 	cx + radius * COS (_StartRad )
+			VAR _Y1 = 	cy + radius * SIN (_StartRad )
+			VAR _X2 = 	cx + radius * COS (_EndRad )
+			VAR _Y2 = 	cy + radius * SIN (_EndRad )
+		
+			VAR _InnerX1 = 	cx + innerRadius * COS( _StartRad )
+			VAR _InnerY1 = 	cy + innerRadius * SIN( _StartRad )
+			VAR _InnerX2 = 	cx + innerRadius * COS( _EndRad )
+			VAR _InnerY2 = 	cy + innerRadius * SIN( _EndRad )
+		
+			RETURN
+				IF(
+					innerRadius > 0,
+					"M " & _InnerX1 & " " & _InnerY1 &
+					" L " & _X1 & " " & _Y1 &
+					" A " & radius & " " & radius &
+					" 0 " & _LargeArc & " 1 " &
+					_X2 & " " & _Y2 &
+					" L " & _InnerX2 & " " & _InnerY2 &
+					" A " & innerRadius & " " & innerRadius &
+					" 0 " & _LargeArc & " 0 " &
+					_InnerX1 & " " & _InnerY1 & " Z",
+					"M " & cx & " " & cy &
+					" L " & _X1 & " " & _Y1 &
+					" A " & radius & " " & radius &
+					" 0 " & _LargeArc & " 1 " &
+					_X2 & " " & _Y2 & " Z"
+				)
+	lineageTag: 723ebfb5-f79f-40c0-a1a3-4c3022411426
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Calculate the maximum for a value plotted on an SVG Chart
+/// Handles both category crossfiltering and (sub) totals
+/// measureValue	EXPR,			The actual you will measure, expects a measure reference
+/// columnOne		ANYREF EXPR		The scope of the data for which the SVG will be used, Expects a table expression
+/// axisBuffer		NUMERIC VAL		How much buffer should exist between the axis max and the end of the visual
+function 'DaxLib.SVG.Scale.AxisMax' =
+		(
+			measureValue : EXPR,
+			columnOne : ANYREF EXPR,
+			axisBuffer : NUMERIC VAL
+		) =>
+		
+			VAR _TotalScope = ALL ( columnOne )
+		
+			-- Calculates the highest value in the data scope
+			VAR _MaxInScope =
+				CALCULATE(
+					MAXX( _TotalScope, measureValue ),
+					_TotalScope
+				)
+		
+			-- Calculates the total for the data scope
+			VAR _MaxOverall =
+				CALCULATE (
+					measureValue,
+					_TotalScope
+				)
+		
+			-- Configures axis for categories if one is selected, otherwise for the total
+			VAR _Max =
+				IF (
+					HASONEVALUE ( columnOne ),
+					_MaxInScope,
+					_MaxOverall
+				)
+		
+			RETURN _Max * axisBuffer
+	lineageTag: 3fb6d9d1-dbd3-435a-9d6b-bdeef359de6c
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Calculate the minimum for a value plotted on an SVG
+/// measureValue	EXPR			The actual you will measure, expects a measure reference
+/// columnOne		ANYREF			The scope of the data for which the SVG will be used, Expects a table expression
+/// axisBuffer		NUMERIC VAL		How much buffer should exist between the axis min and the end of the visual
+function 'DaxLib.SVG.Scale.AxisMin' =
+		(
+			measureValue : EXPR,
+			columnOne : ANYREF,
+			axisBuffer : NUMERIC VAL
+		) =>
+		
+			VAR _TotalScope = ALL ( columnOne )
+			VAR _MinInScope =
+				CALCULATE(
+					MINX(
+						_TotalScope,
+						measureValue
+					),
+					_TotalScope
+				)
+		
+			RETURN  _MinInScope * axisBuffer
+	lineageTag: 5e7155f1-910e-4a7f-aaeb-e17c86e3ec27
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Determines the axis range by subtracting the minimum from the maximum
+/// maxValue	NUMERIC VAL	The highest expected value (Recommended: Use SVG.Scale.AxisMax)
+/// minValue	NUMERIC VAL	The lowest expected value. Typically a fixed value
+function 'DaxLib.SVG.Scale.AxisRange' =
+		(
+			maxValue : NUMERIC VAL,
+			minValue : NUMERIC VAL
+		) =>
+		
+			maxValue - minValue
+	lineageTag: 0c58d88c-a42f-49e9-b10c-8207e289967f
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Returns a string based on where a value falls within defined thresholds
+/// inputValue		SCALAR VAL	The value to evaluate
+/// thresholdLow	SCALAR VAL	Lower threshold value
+/// thresholdHigh	SCALAR VAL	Upper threshold value
+/// low				SCALAR VAL	String returned when value <= thresholdLow
+/// mid				SCALAR VAL	String returned when value between thresholds
+/// high			SCALAR VAL	String returned when values >= thresholdHigh
+function 'DaxLib.SVG.Scale.ColourByThreshold' =
+		(
+			inputValue : SCALAR VAL,
+			thresholdLow : SCALAR VAL,
+			thresholdHigh : SCALAR VAL,
+			colourLow : SCALAR VAL,
+			colourMid : SCALAR VAL,
+			colourHigh : SCALAR VAL
+		) =>
+		
+			SWITCH(
+				true,
+				inputValue <= thresholdLow,
+					low,
+				inputValue >= thresholdHigh,
+					high,
+				mid
+			)
+	lineageTag: 8482bd9e-5b43-464e-b58d-e640f1fce61e
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Map a value from one value scale to another
+/// Used for scaling values to fit within SVG dimensions
+/// inputValue		NUMERIC	VAL		The value to map
+/// fromMin			NUMERIC	VAL		The minimum value of the original scale
+/// fromMax			NUMERIC	VAL		The maximum value of the original scale
+/// toMin			NUMERIC	VAL		The minimum value of the new scale
+/// toMax			NUMERIC	VAL		The maximum value of the new scale
+function 'DaxLib.SVG.Scale.Normalize' =
+		(
+			inputValue: NUMERIC VAL,
+			fromMin: NUMERIC VAL,
+			fromMax: NUMERIC VAL,
+			toMin: NUMERIC VAL,
+			toMax: NUMERIC VAL
+		) =>
+		
+			( ( inputValue - fromMin ) / ( fromMax - fromMin ) ) * ( toMax - toMin ) + toMin
+	lineageTag: 8967f75f-2c0d-43e4-814c-6b5d421e6948
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Converts a value to percentage (0-100%) based on original scale
+/// inputValue		NUMERIC	VAL		The value to map
+/// fromMin			NUMERIC	VAL		The minimum value of the original scale
+/// fromMax			NUMERIC	VAL		The maximum value of the original scale
+function 'DaxLib.SVG.Scale.ToPercent' =
+		(
+			inputValue : NUMERIC VAL,
+			fromMin : NUMERIC VAL,
+			fromMax : NUMERIC VAL
+		) =>
+		
+			DaxLib.SVG.Scale.Normalize(
+				inputValue,
+				fromMin,
+				fromMax,
+				0,
+				100
+			) / 100
+	lineageTag: 7d8e8fac-e58a-4edc-bcc4-6917368a6362
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 

@@ -1,7 +1,6 @@
 ---
-title: svg
+title: Tutorial
 nav_order: 3
-parent: SVG
 ---
 
 # xxx

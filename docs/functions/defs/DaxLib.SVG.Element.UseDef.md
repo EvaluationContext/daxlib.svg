@@ -1,36 +1,66 @@
 ---
-title: DaxLib.SVG.Element.UseDef
+title: Element.UseDef
 nav_order: 3
 parent: Defs
 ---
 
-	/// Reference a previously defined SVG element with optional positioning and styling
-	/// This function is used to reuse elements that have been defined using DaxLib.SVG.Def.* functions
-	/// (e.g., DEFCIRCLE, DEFRECT, DEFPATH, etc.). Instead of duplicating element definitions,
-	/// use the appropriate DEF* function once and then reference it multiple times with USE.
-	/// defId		STRING	The identifier of the defined element to use
-	/// x			STRING	X position where the element should be placed
-	/// y			STRING	Y position where the element should be placed
-	/// style		STRING	Optional: The style to apply, can generate with DaxLib.SVG.Style.* or manually (e.g., "fill:black;stroke:blue;")
-	/// class		STRING	Optional: CSS class to apply
-	/// transform	STRING	Optional: transformation to apply
-	function 'DaxLib.SVG.Element.UseDef' = 
-			(
-				defId: STRING,
-				X: STRING,
-				Y: STRING,
-				style: STRING,
-				class: STRING,
-				transform: STRING
-			) =>
+# DaxLib.SVG.Element.UseDef
 
-				VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
-				
-				RETURN
+Applies a previously defined `DaxLib.SVG.Def.*` shape element (rect, circle, line etc.), via `<use>`{:.xml}, with the ability to overwrite properties
 
-					"<use" &
-					" href='#" & defId & "'" &
-					IF( NOT ISBLANK( x ), " x='" & x & "'" ) &
-					IF( NOT ISBLANK( y ), " y='" & y & "'" ) &
-					_OCE & 
-					"/>"
+## Syntax
+
+```dax
+DaxLib.SVG.Element.UseDef(defId, x, y, style, class, transform)
+```
+
+## Parameters
+
+| Name      | Type   | Required | Description                                                        |
+|:---:|:---:|:---:|:---:|
+| defId     | STRING | Yes      | The identifier of the defined element to use                       |
+| x         | STRING | No       | X position where the element should be placed                      |
+| y         | STRING | No       | Y position where the element should be placed                      |
+| style     | STRING | No       | The style to apply (e.g., "fill:black;stroke:blue;")               |
+| class     | STRING | No       | CSS class to apply                                                 |
+| transform | STRING | No       | Transformation to apply                                            |
+
+## Returns
+
+(*STRING*) `<use>`{:.xml} element
+
+## Example
+
+```dax
+DaxLib.SVG.Element.UseDef(
+    "myCircle",
+    100,
+    100,
+    "fill:green;",
+    BLANK(),
+    BLANK()
+)
+// Returns: <use href='#myCircle' x='100' y='100' style='fill:green;'/>
+```
+
+## Definition
+
+```dax
+function 'DaxLib.SVG.Element.UseDef' =
+    (
+        defId: STRING,
+        x: STRING,
+        y: STRING,
+        style: STRING,
+        class: STRING,
+        transform: STRING
+    ) =>
+        VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
+        RETURN
+            "<use" &
+            " href='#" & defId & "'" &
+            IF( NOT ISBLANK( x ), " x='" & x & "'" ) &
+            IF( NOT ISBLANK( y ), " y='" & y & "'" ) &
+            _OCE &
+            "/>"
+```

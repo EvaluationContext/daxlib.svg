@@ -1,37 +1,79 @@
 ---
-title: DaxLib.SVG.Element.Line
-nav_order: 3
-has_children: true
+title: Element.Rect
+nav_order: 3.2
 parent: Elements
 ---
 
-	/// Generates SVG line element
-	/// x1			STRING	Starting X position (left edge is 0)
-	/// y1			STRING	Starting Y position (top edge is 0)
-	/// x2			STRING	Ending X position (left edge is 0)
-	/// y2			STRING	Ending Y position (top edge is 0)
-	/// style		STRING	Optional: The style to apply, can generate with DaxLib.SVG.Style.* or manually (e.g., "fill:black;stroke:blue;")
-	/// class		STRING	Optional: CSS class to apply
-	/// transform	STRING	Optional: transformation to apply
-	function 'DaxLib.SVG.Element.Line' =
-			(
-				x1: STRING,
-				y1: STRING,
-				x2: STRING,
-				y2: STRING,
-				style: STRING,
-				class: STRING,
-				transform: STRING
-			) =>  
-				
-				VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
+# DaxLib.SVG.Element.Rect
 
-				RETURN
+Creates a `<rect>`{:.xml} element
 
-					"<line" &
-					" x1='" & x1 & "'" &
-					" y1='" & y1 & "'" &
-					" x2='" & x2 & "'" &
-					" y2='" & y2 & "'" &
-					_OCE & 
-					"/>"
+## Syntax
+
+```dax
+DaxLib.SVG.Element.Rect(
+	x: STRING,
+	y: STRING,
+	width: STRING,
+	height: STRING,
+	style: STRING,
+	class: STRING,
+	transform: STRING
+)
+```
+
+## Parameters
+
+| Name      | Type   | Required | Description                                                                 |
+|:---:|:---:|:---:|:---:|
+| x         | STRING | Yes      | X position (left edge is 0)                                                 |
+| y         | STRING | Yes      | Y position (top edge is 0)                                                  |
+| width     | STRING | Yes      | Width of the rectangle                                                      |
+| height    | STRING | Yes      | Height of the rectangle                                                     |
+| style     | STRING | No       | Style to apply, can use DaxLib.SVG.Style.* or manual CSS          		  |
+| class     | STRING | No       | CSS class to apply                                                		  |
+| transform | STRING | No       | Transformation to apply                                           		  |
+
+## Returns
+
+(*STRING*) `<rect>`{:.xml} element
+
+## Example
+
+```dax
+DaxLib.SVG.Element.Rect(
+	10,
+	20,
+	100,
+	50,
+	"fill:yellow;stroke:black;stroke-width:2",
+	"my-rect",
+	"rotate(5)"
+)
+```
+
+## Definition
+
+```dax
+function 'DaxLib.SVG.Element.Rect' =
+	(
+		x: STRING,
+		y: STRING,
+		width: STRING,
+		height: STRING,
+		style: STRING,
+		class: STRING,
+		transform: STRING
+	) =>
+
+		VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
+
+		RETURN
+			"<rect" &
+			" x='" & x & "'" &
+			" y='" & y & "'" &
+			" width='" & width & "'" &
+			" height='" & height & "'" &
+			_OCE &
+			"/>"
+```

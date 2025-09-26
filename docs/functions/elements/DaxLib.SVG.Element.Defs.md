@@ -1,17 +1,48 @@
 ---
-title: DaxLib.SVG.Element.Defs
+title: Element.Defs
 nav_order: 3
-has_children: true
 parent: Elements
 ---
 
-    /// Create a <def> element from one or more DaxLib.SVG.Def.* Elements
-	/// defs	STRING	Concatenated lists of def Elements to include in a def block
-	function 'DaxLib.SVG.Element.Defs' = 
-			(
-				defs: STRING    // concatenated lists of elements to include in a def block
-			) =>
+# DaxLib.SVG.Element.Defs
 
-				"<defs>" &
-				defs &  
-				"</defs>"
+Creates a `<defs>`{:.xml} element from one or more `DaxLib.SVG.Def.*` elements
+
+## Syntax
+
+```dax
+DaxLib.SVG.Element.Defs(defs)
+```
+
+## Parameters
+
+| Name | Type   | Required | Description                                                    |
+|------|--------|----------|----------------------------------------------------------------|
+| defs | STRING | Yes      | Concatenated list of def elements to include in a defs block   |
+
+## Returns
+
+(*STRING*) `<defs>`{:.xml} element
+
+## Example
+
+```dax
+DaxLib.SVG.Element.Defs(
+	DaxLib.SVG.Def.Circle(...) &
+	DaxLib.SVG.Def.Rect(...)
+)
+// Returns: <defs>...</defs>
+```
+
+## Definition
+
+```dax
+function 'DaxLib.SVG.Element.Defs' = 
+    (
+        defs: STRING
+    ) =>
+
+        "<defs>" &
+        defs &
+        "</defs>"
+```

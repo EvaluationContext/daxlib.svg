@@ -1,5 +1,5 @@
-title: EvaluationContext.Colour
-description: A set of DAX User-Defined Functions (UDF) designed to enable easy manipulation of hex colours for Power BI.
+title: DaxLib.SVG
+description: A comprehensive set of DAX User-Defined Functions (UDF) designed to enable easy creation of SVG visuals for Power BI
 remote_theme: just-the-docs/just-the-docs
 
 # Language and locale settings
@@ -22,7 +22,7 @@ favicon_ico: "/assets/img/favicons/favicon.ico"
 # CSS customization
 aux_links:
   "GitHub":
-    - "https://github.com/EvaluationContext/EvaluationContext.Colour"
+    - "https://github.com/EvaluationContext/DaxLib.SVG"
 
 aux_links_new_tab: true
 
@@ -38,7 +38,7 @@ heading_anchors: true
 # External navigation links
 nav_external_links:
   - title: DaxLib.org
-    url: https://daxlib.org/package/EvaluationContext.Colour/
+    url: https://daxlib.org/package/DaxLib.SVG/
     hide_icon: false
 
 plugins:
@@ -49,8 +49,8 @@ plugins:
   - jekyll-include-cache
 
 url: "https://evaluationcontext.github.io"
-baseurl: "/EvaluationContext.Colour"
-repository: EvaluationContext/EvaluationContext.Colour
+baseurl: "/DaxLib.SVG"
+repository: EvaluationContext/DaxLib.SVG
 
 permalink: pretty
 

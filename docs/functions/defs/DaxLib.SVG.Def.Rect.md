@@ -1,38 +1,73 @@
 ---
-title: DaxLib.SVG.Def.Rect
+title: Def.Rect
 nav_order: 3
 parent: Defs
 ---
 
-	/// Create a reusable rectangle definition
-	/// defId		STRING		The unique identifier for the rectangle
-	/// width		STRING		The width of the rectangle (pixels or percentage)
-	/// height		STRING		The height of the rectangle	(pixels or percentage)
-	/// rx			STRING		Optional: x radius for rounded corners
-	/// ry			STRING		Optional: y radius for rounded corners
-	/// style		STRING		Optional: The style to apply, can generate with DaxLib.SVG.Style.* or manually (e.g., "fill:black;stroke:blue;")
-	/// class		STRING		Optional: CSS class to apply
-	/// transform	STRING		Optional: transformation to apply
-	function 'DaxLib.SVG.Def.Rect' = 
-			(
-				defId: STRING,
-				width: STRING,
-				height: STRING,
-				rx: STRING,
-				ry: STRING,
-				style: STRING,
-				class: STRING,
-				Transform: STRING
-			) =>
+# DaxLib.SVG.Def.Rect
 
-				VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
-				
-				RETURN
+Creates a reusable `<rect>`{:.xml} definition
 
-					"<rect id='" & defId & "'" &
-					" width='" & width & "'" &
-					" height='" & height & "'" &
-					IF(NOT ISBLANK(RX), " rx='" & RX & "'" ) & 
-					IF(NOT ISBLANK(RY), " ry='" & RY & "'" ) &
-					_OCE &
-					"/>"	
+## Syntax
+
+```dax
+DaxLib.SVG.Def.Rect(defId, width, height, rx, ry, style, class, transform)
+```
+
+## Parameters
+
+| Name      | Type   | Required | Description                                                        |
+|-----------|--------|----------|--------------------------------------------------------------------|
+| defId     | STRING | Yes      | The unique identifier for the rectangle                            |
+| width     | STRING | Yes      | The width of the rectangle (pixels or percentage)                  |
+| height    | STRING | Yes      | The height of the rectangle (pixels or percentage)                 |
+| rx        | STRING | No       | X radius for rounded corners                                       |
+| ry        | STRING | No       | Y radius for rounded corners                                       |
+| style     | STRING | No       | The style to apply (e.g., "fill:black;stroke:blue;")               |
+| class     | STRING | No       | CSS class to apply                                                 |
+| transform | STRING | No       | Transformation to apply                                            |
+
+## Returns
+
+(*STRING*) `<rect>`{:.xml}  definition
+
+## Example
+
+```dax
+DaxLib.SVG.Def.Rect(
+    "myRect",
+    100,
+    50,
+    10,
+    10,
+    "fill:blue;stroke:black;",
+    BLANK(),
+    BLANK()
+)
+// Returns: <rect id='myRect' width='100' height='50' rx='10' ry='10' style='fill:blue;stroke:black;'/>
+```
+
+## Definition
+
+```dax
+function 'DaxLib.SVG.Def.Rect' =
+    (
+        defId: STRING,
+        width: STRING,
+        height: STRING,
+        rx: STRING,
+        ry: STRING,
+        style: STRING,
+        class: STRING,
+        transform: STRING
+    ) =>
+        VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
+        RETURN
+            "<rect id='" & defId & "'" &
+            " width='" & width & "'" &
+            " height='" & height & "'" &
+            IF(NOT ISBLANK(rx), " rx='" & rx & "'" ) &
+            IF(NOT ISBLANK(ry), " ry='" & ry & "'" ) &
+            _OCE &
+            "/>"
+```

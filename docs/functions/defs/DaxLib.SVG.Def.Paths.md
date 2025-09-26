@@ -1,34 +1,63 @@
 ---
-title: DaxLib.SVG.Def.Circle
+title: Def.Paths
 nav_order: 3
 parent: Defs
 ---
 
-	/// Create a reusable circle definition
-	/// defId		STRING	The unique identifier for the circle
-	/// cx			STRING	X center coordinate
-	/// cy			STRING	Y center coordinate
-	/// r			STRING	Radius
-	/// style		STRING	Optional: The style to apply, can generate with DaxLib.SVG.Style.* or manually (e.g., "fill:black;stroke:blue;")
-	/// class		STRING	Optional: CSS class to apply
-	/// transform	STRING	Optional: transformation to apply
-	function 'DaxLib.SVG.Def.Circle' = 
-			(
-				defId: STRING,
-				cx: STRING,
-				cy: STRING,  
-				r: STRING,
-				style: STRING,
-				class: STRING,
-				transform: STRING
-			) =>
+# DaxLib.SVG.Def.Paths
 
-				VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
+Creates a reusable `<path>`{:.xml} definition
 
-				RETURN
-					"<circle id='" & defId & "'" &
-					" cx='" & cx & "'" &
-					" cy='" & cy & "'" &
-					" r='" & r & "'" &
-					_OCE &
-					"/>"
+## Syntax
+
+```dax
+DaxLib.SVG.Def.Paths(defId, d, style, class, transform)
+```
+
+## Parameters
+
+| Name      | Type   | Required | Description                                                        |
+|:---:|:---:|:---:|:---:|
+| defId     | STRING | Yes      | The unique identifier for the path                                 |
+| d         | STRING | Yes      | The path data string (e.g., "M10 10 L90 90")                       |
+| style     | STRING | No       | The style to apply (e.g., "fill:black;stroke:blue;")               | 
+| class     | STRING | No       | CSS class to apply                                                 |
+| transform | STRING | No       | Transformation to apply                                            |
+
+## Returns
+
+(*STRING*) `<path>`{:.xml} definition
+
+## Example
+
+```dax
+DaxLib.SVG.Def.Paths(
+    "myPath",
+    "M10 10 L90 90",
+    "stroke:black;fill:none;",
+    BLANK(),
+    BLANK()
+)
+// Returns: <path id='myPath' d='M10 10 L90 90' style='stroke:black;fill:none;'/>
+```
+
+## Definition
+
+```dax
+function 'DaxLib.SVG.Def.Paths' =
+    (
+        defId: STRING,
+        d: STRING,
+        style: STRING,
+        class: STRING,
+        transform: STRING
+    ) =>
+        VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
+
+        RETURN
+
+            "<path id='" & defId & "'" &
+            " d='" & d & "'" &
+            _OCE &
+            "/>"
+```

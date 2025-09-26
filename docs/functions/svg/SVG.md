@@ -1,13 +1,17 @@
 ---
 title: SVG
-nav_order: 3
+nav_order: 2
 has_children: true
 parent: Functions
 ---
 
 # SVG
 
-All `elements` and `components` function are expected to be wrapped in the `DaxLib.SVG.SVG()`{:.dax} function to add the appropriate metadata (i.e. `<SVG>)`{:.xml}.
+The `DaxLib.SVG.SVG` function wraps your SVG content in a valid SVG container for use in Power BI visuals. All element and compound functions should be wrapped in this function to ensure correct metadata and rendering.
 
-{: .info}
-> Any measures use these UDFs must have the `DataCategory = "ImageUrl"`{:.txt}
+{: .tip}
+> Any measures use these UDFs must have `DataCategory = "ImageUrl"`{:.txt}
+
+## Available SVG Functions
+
+The following functions are available:

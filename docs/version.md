@@ -14,9 +14,9 @@ nav_order: 4
 
 ###  0.1.1-beta
 
-- xx
+**Bug Fixes:**
+- Fixed incorrect function references in `DaxLib.SVG.Example.BulletChart.ActionDot()`{:.dax}
 
 ###  0.1.0-beta
 
-- Initial release of the DaxLib.SVG library with support for:
-    - xxx
+- Initial release of the DaxLib.SVG library with support

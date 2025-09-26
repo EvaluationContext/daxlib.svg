@@ -36,14 +36,14 @@ createOrReplace
 		annotation DAXLIB_PackageVersion = 0.1.2-beta
 
 	/// Converts percentage to angle for circular visualizations
-	/// perc			SCALAR Double VAL	Percentage value (0-100)
-	/// startAngle 		SCALAR VAL int64	Starting angle in degrees (default -90 for top)
-	/// sweepAngle		SCALAR VAL int64	Total sweep angle in degrees (default 360 for full circle)
-	function 'DaxLib.SVG.Calc.AngleFromPercent' = 
+	/// perc			SCALAR INT64 VAL	Percentage value (0-100)
+	/// startAngle 		SCALAR VAL INT64	Starting angle in degrees (default -90 for top)
+	/// sweepAngle		SCALAR VAL INT64	Total sweep angle in degrees (default 360 for full circle)
+	function 'DaxLib.SVG.Scale.AngleFromPercent' = 
 			(
-				perc : SCALAR Double VAL,
-				startAngle : SCALAR int64 VAL,
-				sweepAngle : SCALAR int64 VAL
+				perc : SCALAR INT64 VAL,
+				startAngle : SCALAR INT64 VAL,
+				sweepAngle : SCALAR INT64 VAL
 			) =>
 				
 				startAngle + ( perc / 100 * sweepAngle )
@@ -59,7 +59,7 @@ createOrReplace
 	/// startAngle		SCALAR VAL	Starting angle in degrees (0 = right, 90 = bottom)
 	/// endAngle		SCALAR VAL	Ending angle in degrees
 	/// innerRadius		SCALAR VAL	Inner radius for donut effect (0 for pie slice)
-	function 'DaxLib.SVG.Calc.ArcPath' = 
+	function 'DaxLib.SVG.Scale.ArcPath' = 
 			(
 				cx : SCALAR VAL,
 				cy : SCALAR VAL,
@@ -111,7 +111,7 @@ createOrReplace
 	/// measureValue	EXPR,			The actual you will measure, expects a measure reference
 	/// columnOne		ANYREF EXPR		The scope of the data for which the SVG will be used, Expects a table expression
 	/// axisBuffer		NUMERIC VAL		How much buffer should exist between the axis max and the end of the visual
-	function 'DaxLib.SVG.Calc.AxisMax' = 
+	function 'DaxLib.SVG.Scale.AxisMax' = 
 			(
 				measureValue : EXPR,
 				columnOne : ANYREF EXPR,
@@ -152,7 +152,7 @@ createOrReplace
 	/// measureValue	EXPR			The actual you will measure, expects a measure reference
 	/// columnOne		ANYREF			The scope of the data for which the SVG will be used, Expects a table expression
 	/// axisBuffer		NUMERIC VAL		How much buffer should exist between the axis min and the end of the visual
-	function 'DaxLib.SVG.Calc.AxisMin' =
+	function 'DaxLib.SVG.Scale.AxisMin' =
 			(
 				measureValue : EXPR,
 				columnOne : ANYREF,
@@ -176,9 +176,9 @@ createOrReplace
 		annotation DAXLIB_PackageVersion = 0.1.2-beta
 
 	/// Determines the axis range by subtracting the minimum from the maximum
-	/// maxValue	NUMERIC VAL	The highest expected value (Recommended: Use SVG.Calc.AxisMax)
+	/// maxValue	NUMERIC VAL	The highest expected value (Recommended: Use SVG.Scale.AxisMax)
 	/// minValue	NUMERIC VAL	The lowest expected value. Typically a fixed value
-	function 'DaxLib.SVG.Calc.AxisRange' =
+	function 'DaxLib.SVG.Scale.AxisRange' =
 			(
 				maxValue : NUMERIC VAL,
 				minValue : NUMERIC VAL
@@ -190,14 +190,14 @@ createOrReplace
 
 		annotation DAXLIB_PackageVersion = 0.1.2-beta
 
-	/// Returns a colour based on where a value falls within defined thresholds
+	/// Returns a string based on where a value falls within defined thresholds
 	/// inputValue		SCALAR VAL	The value to evaluate
 	/// thresholdLow	SCALAR VAL	Lower threshold value
 	/// thresholdHigh	SCALAR VAL	Upper threshold value
-	/// colourLow		SCALAR VAL	Colour for values <= thresholdLow
-	/// colourMid		SCALAR VAL	Colour for values between thresholds
-	/// colourHigh		SCALAR VAL	Colour for values >= thresholdHigh	
-	function 'DaxLib.SVG.Calc.ColourByThreshold' =
+	/// low				SCALAR VAL	String returned when value <= thresholdLow
+	/// mid				SCALAR VAL	String returned when value between thresholds 
+	/// high			SCALAR VAL	String returned when values >= thresholdHigh 	
+	function 'DaxLib.SVG.Scale.ColourByThreshold' =
 			(
 				inputValue : SCALAR VAL,
 				thresholdLow : SCALAR VAL,
@@ -210,10 +210,10 @@ createOrReplace
 				SWITCH(
 					true,
 					inputValue <= thresholdLow, 
-						colourLow,
+						low,
 					inputValue >= thresholdHigh, 
-						colourHigh,
-					colourMid
+						high,
+					mid
 				)
 
 		annotation DAXLIB_PackageId = DaxLib.SVG
@@ -227,7 +227,7 @@ createOrReplace
 	/// fromMax			NUMERIC	VAL		The maximum value of the original scale
 	/// toMin			NUMERIC	VAL		The minimum value of the new scale
 	/// toMax			NUMERIC	VAL		The maximum value of the new scale
-	function 'DaxLib.SVG.Calc.Normalize' =
+	function 'DaxLib.SVG.Scale.Normalize' =
 			(
 				inputValue: NUMERIC VAL,
 				fromMin: NUMERIC VAL,
@@ -246,14 +246,14 @@ createOrReplace
 	/// inputValue		NUMERIC	VAL		The value to map
 	/// fromMin			NUMERIC	VAL		The minimum value of the original scale
 	/// fromMax			NUMERIC	VAL		The maximum value of the original scale
-	function 'DaxLib.SVG.Calc.ToPercent' =
+	function 'DaxLib.SVG.Scale.ToPercent' =
 			(
 				inputValue : NUMERIC VAL,
 				fromMin : NUMERIC VAL,
 				fromMax : NUMERIC VAL
 			) =>
 				
-				DaxLib.SVG.Calc.Normalize(
+				DaxLib.SVG.Scale.Normalize(
 					inputValue,
 					fromMin,
 					fromMax,
@@ -1150,12 +1150,12 @@ createOrReplace
 			// Scale
             VAR _AxisMax =
                 MAX(
-                    DaxLib.SVG.Calc.AxisMax( actual, columnOne, 1.1 ),
-                    DaxLib.SVG.Calc.AxisMax( target, columnOne, 1.1 )
+                    DaxLib.SVG.Scale.AxisMax( actual, columnOne, 1.1 ),
+                    DaxLib.SVG.Scale.AxisMax( target, columnOne, 1.1 )
                 )
-            VAR _AxisRange = DaxLib.SVG.Calc.AxisRange( _AxisMax, 0 )
-            VAR _ActualNormalized = DaxLib.SVG.Calc.Normalize( _Actual, 0, _AxisMax, _BarMin, _BarMax )
-            VAR _TargetNormalized = DaxLib.SVG.Calc.Normalize( _Target, 0, _AxisMax, _BarMin, _BarMax )
+            VAR _AxisRange = DaxLib.SVG.Scale.AxisRange( _AxisMax, 0 )
+            VAR _ActualNormalized = DaxLib.SVG.Scale.Normalize( _Actual, 0, _AxisMax, _BarMin, _BarMax )
+            VAR _TargetNormalized = DaxLib.SVG.Scale.Normalize( _Target, 0, _AxisMax, _BarMin, _BarMax )
 
             // Create SVG Elements
             VAR _ActionDot = 
@@ -1295,9 +1295,9 @@ createOrReplace
 				VAR XMax = CALCULATE( MAX( columnRef ), ALLSELECTED() ) 
 
 				// Map the zero point and the current value to the SVG's coordinate system
-				VAR ZeroPoint = DaxLib.SVG.Calc.Normalize( 0, XMin, XMax, 0, width )
+				VAR ZeroPoint = DaxLib.SVG.Scale.Normalize( 0, XMin, XMax, 0, width )
 				VAR CurrentValue = SUM( columnRef )
-				VAR ValuePoint =  DaxLib.SVG.Calc.Normalize( CurrentValue, XMin, XMax, 0, width )
+				VAR ValuePoint =  DaxLib.SVG.Scale.Normalize( CurrentValue, XMin, XMax, 0, width )
 
 				// Style
 				VAR _PositiveColor = IF( NOT ISBLANK( positiveColor ), positiveColor, "#01B8AA" )

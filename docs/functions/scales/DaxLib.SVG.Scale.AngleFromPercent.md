@@ -1,55 +1,47 @@
 ---
-title: DaxLib.SVG.Scale.ArcPath
-nav_order: 3
-parent: Styles
+title: Scale.AngleFromPercent
+nav_order: 7.1
+parent: Scales
 ---
 
-	/// Generates path data for arc segments used in donut and gauge charts
-	/// cx				SCALAR VAL	Center X position in pixels
-	/// cy				SCALAR VAL	Center Y position in pixels
-	/// radius			SCALAR VAL	Outer radius in pixels
-	/// startAngle		SCALAR VAL	Starting angle in degrees (0 = right, 90 = bottom)
-	/// endAngle		SCALAR VAL	Ending angle in degrees
-	/// innerRadius		SCALAR VAL	Inner radius for donut effect (0 for pie slice)
-	function 'DaxLib.SVG.Scale.ArcPath' = 
-			(
-				cx : SCALAR VAL,
-				cy : SCALAR VAL,
-				radius : SCALAR VAL,
-				startAngle : SCALAR VAL,
-				endAngle : SCALAR VAL,
-				innerRadius : SCALAR VAL
-			) =>
+# DaxLib.SVG.Scale.AngleFromPercent
 
-				VAR _StartRad = startAngle * PI() / 180
-				VAR _EndRad = 	endAngle * PI() / 180
-				VAR _LargeArc = IF( endAngle - startAngle > 180, 1, 0 )
+Converts a percentage value to an angle for circular visualizations, such as gauges or donut charts
 
-				VAR _X1 = 	cx + radius * COS (_StartRad )
-				VAR _Y1 = 	cy + radius * SIN (_StartRad )
-				VAR _X2 = 	cx + radius * COS (_EndRad )
-				VAR _Y2 = 	cy + radius * SIN (_EndRad )
+## Syntax
 
-				VAR _InnerX1 = 	cx + innerRadius * COS( _StartRad )
-				VAR _InnerY1 = 	cy + innerRadius * SIN( _StartRad )
-				VAR _InnerX2 = 	cx + innerRadius * COS( _EndRad )
-				VAR _InnerY2 = 	cy + innerRadius * SIN( _EndRad )
+```dax
+DaxLib.SVG.Scale.AngleFromPercent(perc, startAngle, sweepAngle)
+```
 
-				RETURN
-					IF(
-						innerRadius > 0,
-						"M " & _InnerX1 & " " & _InnerY1 &
-						" L " & _X1 & " " & _Y1 &
-						" A " & radius & " " & radius &
-						" 0 " & _LargeArc & " 1 " &
-						_X2 & " " & _Y2 &
-						" L " & _InnerX2 & " " & _InnerY2 &
-						" A " & innerRadius & " " & innerRadius &
-						" 0 " & _LargeArc & " 0 " &
-						_InnerX1 & " " & _InnerY1 & " Z",
-						"M " & cx & " " & cy &
-						" L " & _X1 & " " & _Y1 &
-						" A " & radius & " " & radius &
-						" 0 " & _LargeArc & " 1 " &
-						_X2 & " " & _Y2 & " Z"
-					)
+## Parameters
+
+| Name        | Type               | Description                                                      |
+|:---:|:---:|:---:|
+| perc        | SCALAR INT64 VAL   | Percentage value (0-100)                                         |
+| startAngle  | SCALAR INT64 VAL   | Starting angle in degrees (default -90 for top)                  |
+| sweepAngle  | SCALAR int64 VAL   | Total sweep angle in degrees (default 360 for full circle)       |
+
+## Returns
+
+(*NUMERIC*) Angle in degrees
+
+## Example
+
+```dax
+DaxLib.SVG.Scale.AngleFromPercent(50, -90, 360)
+// Returns: 90 (the angle halfway through a full circle starting at the top)
+```
+
+## Definition
+
+```dax
+function 'DaxLib.SVG.Scale.AngleFromPercent' = 
+	(
+		perc : SCALAR Double VAL,
+		startAngle : SCALAR int64 VAL,
+		sweepAngle : SCALAR int64 VAL
+	) =>
+
+		startAngle + ( perc / 100 * sweepAngle )
+```

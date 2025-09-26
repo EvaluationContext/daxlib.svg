@@ -4,102 +4,70 @@ nav_order: 2
 has_children: true
 ---
 
-# Functions
+# DaxLib.SVG Function Reference
 
-The DaxLib.SVG library provides a comprehensive set of functions for creating SVG visuals in Power BI.
+The DaxLib.SVG library provides a comprehensive set of functions for creating SVG visuals in Power BI. Functions are grouped by purpose for easy navigation.
 
 ---
 
 ## SVG Wrapper
 
-`DaxLib.SVG.SVG`
+Wraps SVG content for use in Power BI visuals.
 
-[View Hex Manipulation Functions →]({{ site.baseurl }}/docs/functions/hex-manipulation/){: .btn .btn-outline }
+[SVG Wrapper →]({{ site.baseurl }}/docs/functions/svg/SVG/){: .btn .btn-outline }
 
---- 
+---
 
 ## Visuals
 
-`DaxLib.SVG.BulletChart.ActionDot`
-`DaxLib.SVG.Bar`
+High-level chart and visual components.
+
+[Visuals →]({{ site.baseurl }}/docs/functions/visuals/Visuals/){: .btn .btn-outline }
 
 ---
 
 ## Elements
 
-`DaxLib.SVG.Element.Defs`
-`DaxLib.SVG.Element.Group`
+Core SVG element generators.
 
-`DaxLib.SVG.Element.Circle`
-`DaxLib.SVG.Element.Rect`
-`DaxLib.SVG.Element.Line`
-`DaxLib.SVG.Element.Paths`
-`DaxLib.SVG.Element.Ellipse`
-`DaxLib.SVG.Element.Polygon`
-`DaxLib.SVG.Element.Polyline`
-`DaxLib.SVG.Element.Txt`
+[Elements →]({{ site.baseurl }}/docs/functions/elements/Elements/){: .btn .btn-outline }
 
 ---
 
 ## Compounds
 
-`DaxLib.SVG.Compound.Pill`
+Reusable composite SVG components.
+
+[Compounds →]({{ site.baseurl }}/docs/functions/compounds/Compounds/){: .btn .btn-outline }
 
 ---
 
 ## Defs
 
-Defs can be used to define style? or elements that can be reused.  
+Reusable SVG definitions (gradients, shapes, etc.).
 
-{: .info}
-Def should should be wrapped with `DaxLib.SVG.Element.Defs` to add `<def>...</def>{:.xml} tags
-
-{: .tip}
-You can define a element once, then overwrite properties when creating a instance of it. Reducing the string size of the SVG, reducing the Power BI cache size, helping improve performance, and risk of risking String size limits.
-
-{: .warning}
-`additionProperties` parameters should be used if overwriting properties on a def, overwriting style will be problematic
-
-`DaxLib.SVG.Def.GradientStop`
-`DaxLib.SVG.Def.LinearGradient`
-`DaxLib.SVG.Def.RadialGradient`
-`DaxLib.SVG.Def.ClipPath`
-
-`DaxLib.SVG.Def.Circle`
-`DaxLib.SVG.Def.Rect`
-`DaxLib.SVG.Def.Line`
-`DaxLib.SVG.Def.Paths`
-
-`DaxLib.SVG.Element.UseDef`
-
+[Defs →]({{ site.baseurl }}/docs/functions/defs/Defs/){: .btn .btn-outline }
 
 ---
 
 ## Styles
 
-Wrapper functions to define style strings to be consumed by `DaxLib.SVG.Element.*` and `DaxLib.SVG.Def.*` functions
+Functions to generate style strings for SVG elements and defs.
 
-`DaxLib.SVG.Style.Common`
-`DaxLib.SVG.Style.Txt`
-`DaxLib.SVG.Style.Line`
+[Styles →]({{ site.baseurl }}/docs/functions/styles/styles/){: .btn .btn-outline }
 
 ---
 
-## Scaler
+## Scales
 
-A range of functions for defining and mapping between scales.
+Functions for mapping and normalizing values for SVG graphics.
 
-`DaxLib.SVG.Scale.AngleFromPercent`
-`DaxLib.SVG.Scale.ArcPath`
-`DaxLib.SVG.Scale.AxisMax`
-`DaxLib.SVG.Scale.AxisMin`
-`DaxLib.SVG.Scale.AxisRange`
-`DaxLib.SVG.Scale.ColourByThreshold`
-`DaxLib.SVG.Scale.Normalize`
-`DaxLib.SVG.Scale.ToPercent`
+[Scales →]({{ site.baseurl }}/docs/functions/scales/Scales/){: .btn .btn-outline }
 
 ---
 
-## Util
+## Utils
 
-`DaxLib.SVG.Util.OptionalCommentElements`
+Helper and utility functions for internal use.
+
+[Utils →]({{ site.baseurl }}/docs/functions/util/){: .btn .btn-outline }
