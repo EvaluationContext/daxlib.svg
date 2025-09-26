@@ -1,0 +1,502 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "name": "4820f4ddbcebd2fd5440",
+  "position": {
+    "x": 59.86197190722347,
+    "y": 39.284419064115404,
+    "z": 0,
+    "height": 256.28406722780051,
+    "width": 1810.82465019351
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SVG"
+                    }
+                  },
+                  "Property": "Category"
+                }
+              },
+              "queryRef": "SVG.Category",
+              "nativeQueryRef": "Category1"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SVG"
+                    }
+                  },
+                  "Property": "Sum Value"
+                }
+              },
+              "queryRef": "SVG.Sum Value",
+              "nativeQueryRef": "Sum Value"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SVG"
+                    }
+                  },
+                  "Property": "Sum Forecast"
+                }
+              },
+              "queryRef": "SVG.Sum Forecast",
+              "nativeQueryRef": "Sum Forecast"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SVG"
+                    }
+                  },
+                  "Property": "Sum Actual"
+                }
+              },
+              "queryRef": "SVG.Sum Actual",
+              "nativeQueryRef": "Sum Actual"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SVG"
+                    }
+                  },
+                  "Property": "Txt"
+                }
+              },
+              "queryRef": "SVG.TXT",
+              "nativeQueryRef": "Txt"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SVG"
+                    }
+                  },
+                  "Property": "Rect"
+                }
+              },
+              "queryRef": "SVG.RECT",
+              "nativeQueryRef": "Rect"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SVG"
+                    }
+                  },
+                  "Property": "Circle"
+                }
+              },
+              "queryRef": "SVG.CIRCLE",
+              "nativeQueryRef": "Circle"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SVG"
+                    }
+                  },
+                  "Property": "Line"
+                }
+              },
+              "queryRef": "SVG.LINE",
+              "nativeQueryRef": "Line"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SVG"
+                    }
+                  },
+                  "Property": "Path"
+                }
+              },
+              "queryRef": "SVG.PATH",
+              "nativeQueryRef": "Path"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SVG"
+                    }
+                  },
+                  "Property": "Use"
+                }
+              },
+              "queryRef": "SVG.USE",
+              "nativeQueryRef": "Use"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SVG"
+                    }
+                  },
+                  "Property": "Linear Gradient"
+                }
+              },
+              "queryRef": "SVG.Linear Gradient",
+              "nativeQueryRef": "Linear Gradient"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SVG"
+                    }
+                  },
+                  "Property": "Radial Gradient"
+                }
+              },
+              "queryRef": "SVG.Radial Gradient",
+              "nativeQueryRef": "Radial Gradient"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SVG"
+                    }
+                  },
+                  "Property": "Clip Path"
+                }
+              },
+              "queryRef": "SVG.Pattern Fill",
+              "nativeQueryRef": "Clip Path"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SVG"
+                    }
+                  },
+                  "Property": "Pill"
+                }
+              },
+              "queryRef": "SVG.PILL",
+              "nativeQueryRef": "Pill"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SVG"
+                    }
+                  },
+                  "Property": "Bar"
+                }
+              },
+              "queryRef": "SVG.BAR",
+              "nativeQueryRef": "Bar"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SVG"
+                    }
+                  },
+                  "Property": "Action Dot"
+                }
+              },
+              "queryRef": "SVG.Action Dot",
+              "nativeQueryRef": "Action Dot"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "SVG"
+                    }
+                  },
+                  "Property": "performance"
+                }
+              },
+              "queryRef": "SVG.performance",
+              "nativeQueryRef": "performance"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "SVG"
+                  }
+                },
+                "Property": "Sum Value"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "grid": [
+        {
+          "properties": {
+            "imageWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "100D"
+                }
+              }
+            },
+            "imageHeight": {
+              "expr": {
+                "Literal": {
+                  "Value": "20D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "118.0558224103003D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "SVG.Category"
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "stylePreset": [
+        {
+          "properties": {
+            "name": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Minimal'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "4d4a18fe3a912435b622",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "SVG"
+              }
+            },
+            "Property": "Category"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "52faf531019b56368e6b",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "SVG"
+              }
+            },
+            "Property": "Txt"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "69594ed4d14bd5ed8241",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "SVG"
+              }
+            },
+            "Property": "Rect"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "822b0b35ebd9dd9be3ea",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "SVG"
+              }
+            },
+            "Property": "Line"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "87293cb48fa2c5021a0e",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "SVG"
+              }
+            },
+            "Property": "Path"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "41adf08d9d10e4f8a2e5",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "SVG"
+              }
+            },
+            "Property": "Circle"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "c7b970cff4705a2144ff",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "SVG"
+              }
+            },
+            "Property": "Use"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "fb0037a0fb5770a22977",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "SVG"
+              }
+            },
+            "Property": "Pill"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "d527d53aa80aab4aa9b1",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "SVG"
+              }
+            },
+            "Property": "Bar"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "5cd7c2de264bb8ffda31",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "SVG"
+              }
+            },
+            "Property": "Linear Gradient"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "255f3985e51c96b0fca1",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "SVG"
+              }
+            },
+            "Property": "Radial Gradient"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

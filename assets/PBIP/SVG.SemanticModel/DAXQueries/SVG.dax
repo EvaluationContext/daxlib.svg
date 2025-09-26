@@ -1,0 +1,198 @@
+define
+	function DaxLib.SVG.BulletChart.ActionDot =
+			(
+            actual: EXPR,
+            target: EXPR,
+            columnOne: ANYREF EXPR,
+            thresholdVeryBad: NUMERIC VAL,
+            thresholdBad: NUMERIC VAL,
+            thresholdGood: NUMERIC VAL,
+            thresholdVeryGood: NUMERIC VAL,
+            colourBadLow: STRING VAL,
+            colourBadHigh: STRING VAL,
+            colourGoodLow: STRING VAL,
+            colourGoodHigh: STRING VAL
+        ) =>
+            
+            // Chart dimensions
+            VAR _BarMax = 100
+            VAR _BarMin = 20
+
+            // Fixed colour config
+            VAR _ColourBackground = "#F5F5F5"
+            VAR _ColourBaseline = "#797979"
+            VAR _ColourTarget = "black"
+
+            // Get current values
+            VAR _Actual = actual
+            VAR _Target = target
+
+            // Calculate performance
+            VAR _Performance = DIVIDE(_Actual - _Target, _Target)
+
+            // Determine performance colour
+            VAR _PerformanceColour =
+                SWITCH(
+                    TRUE(),
+                    _Performance < thresholdVeryBad, colourBadLow,
+                    _Performance < thresholdBad, colourBadHigh,
+                    _Performance > thresholdVeryGood, colourGoodHigh,
+                    _Performance > thresholdGood, colourGoodLow,
+                    "#CFCFCF"  // Default grey
+                )
+
+            // Action dot fill color
+            VAR _ActionDotFill =
+                IF(
+                    _Performance >= thresholdBad && _Performance <= thresholdGood,
+                    "#FFFFFF00",  // Transparent
+                    _PerformanceColour
+                )
+
+            VAR _AxisMax =
+                MAX(
+                    DaxLib.SVG.Calc.AxisMax(actual, columnOne, 1.1),
+                    DaxLib.SVG.Calc.AxisMax(target, columnOne, 1.1)
+                )
+
+            VAR _AxisRange = DaxLib.SVG.Calc.AxisRange(_AxisMax, 0)
+
+            VAR _ActualNormalized =
+                DaxLib.SVG.Calc.Normalize(_Actual, 0, _AxisMax, _BarMin, _BarMax)
+
+            VAR _TargetNormalized =
+                DaxLib.SVG.Calc.Normalize(_Target, 0, _AxisMax, _BarMin, _BarMax)
+
+            // Create SVG Elements
+            VAR _ActionDot = 
+                DaxLib.SVG.Element.Circle(
+                    "10",              // cx
+                    "10",              // cy
+                    "5",               // r
+                    DaxLib.SVG.Style.Common(
+                        _ActionDotFill, // fill
+                        1,              // fillOpacity
+                        BLANK(),        // stroke
+                        BLANK(),        // strokeWidth
+                        BLANK(),        // strokeOpacity
+                        1               // opacity
+                    ),
+                    BLANK(),           // class
+                    BLANK()            // transform
+                )
+
+            VAR _BarBackground =
+                DaxLib.SVG.Element.Rect(
+                    FORMAT(_BarMin, "0"),    // x
+                    "2",                     // y
+                    FORMAT(_BarMax, "0"),    // width
+                    "16",                    // height (80% of 20)
+                    BLANK(),                 // rx
+                    BLANK(),                 // ry
+                    DaxLib.SVG.Style.Common(
+                        _ColourBackground,   // fill
+                        1,                   // fillOpacity
+                        BLANK(),             // stroke
+                        BLANK(),             // strokeWidth
+                        BLANK(),             // strokeOpacity
+                        1                    // opacity
+                    ),
+                    BLANK(),                 // class
+                    BLANK()                  // transform
+                )
+
+            VAR _ActualBar =
+                DaxLib.SVG.Element.Rect(
+                    FORMAT(_BarMin, "0"),           // x
+                    "5",                            // y
+                    FORMAT(_ActualNormalized, "0"), // width
+                    "10",                           // height (50% of 20)
+                    BLANK(),                        // rx
+                    BLANK(),                        // ry
+                    DaxLib.SVG.Style.Common(
+                        "#CFCFCF",                  // fill
+                        1,                          // fillOpacity
+                        BLANK(),                    // stroke
+                        BLANK(),                    // strokeWidth
+                        BLANK(),                    // strokeOpacity
+                        1                           // opacity
+                    ),
+                    BLANK(),                        // class
+                    BLANK()                         // transform
+                )
+
+            VAR _TargetLine =
+                DaxLib.SVG.Element.Rect(
+                    FORMAT(_TargetNormalized, "0"), // x
+                    "2",                            // y
+                    "2",                            // width
+                    "16",                           // height
+                    BLANK(),                        // rx
+                    BLANK(),                        // ry
+                    DaxLib.SVG.Style.Common(
+                        _ColourTarget,              // fill
+                        1,                          // fillOpacity
+                        BLANK(),                    // stroke
+                        BLANK(),                    // strokeWidth
+                        BLANK(),                    // strokeOpacity
+                        1                           // opacity
+                    ),
+                    BLANK(),                        // class
+                    BLANK()                         // transform
+                )
+
+            VAR _BarBaseline =
+                DaxLib.SVG.Element.Rect(
+                    FORMAT(_BarMin, "0"),          // x
+                    "4",                           // y
+                    "1",                           // width
+                    "12",                          // height
+                    BLANK(),                       // rx
+                    BLANK(),                       // ry
+                    DaxLib.SVG.Style.Common(
+                        _ColourBaseline,           // fill
+                        1,                         // fillOpacity
+                        BLANK(),                   // stroke
+                        BLANK(),                   // strokeWidth
+                        BLANK(),                   // strokeOpacity
+                        1                          // opacity
+                    ),
+                    BLANK(),                       // class
+                    BLANK()                        // transform
+                )
+
+            // Combine all elements
+            VAR _SvgContent =
+                _ActionDot &
+                _BarBackground &
+                _ActualBar &
+                _TargetLine &
+                _BarBaseline
+
+            RETURN
+                DaxLib.SVG.SVG(
+                    "120",           // width
+                    "20",            // height
+                    BLANK(),         // viewbox
+                    _SvgContent,     // contents
+                    _Actual         // sortValue
+                )
+
+EVALUATE
+ADDCOLUMNS(
+	VALUES( SVG[Category] ),
+	"AD", 
+	DaxLib.SVG.BulletChart.ActionDot(
+		[Sum Actual],
+		[Sum Forecast],
+		SVG[Category],
+		1000,
+		4000,
+		30000,
+		50000,
+		"Red",
+		"Orange",
+		"Green",
+		"Blue"
+	)
+)

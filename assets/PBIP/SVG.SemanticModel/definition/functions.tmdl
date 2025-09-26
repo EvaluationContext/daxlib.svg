@@ -1,0 +1,1553 @@
+/// Wraps content in SVG container for Power BI visualization
+/// Warning: Any measures that use this function must have the "DataCategory" property = "ImageUrl"
+/// Note: Enter BLANK() to skip any optional parameter
+/// width		STRING		Optional: width (pixels or percentage)
+/// height		STRING		Optional: height (pixels or percentage)
+/// viewbox		STRING		Optional: viewBox (e.g., "0 0 100 100")
+/// contents	STRING		To include one or more SVG elements (e.g., from DaxLib.SVG.Element functions)
+/// sortValue	EXPR		Optional: sort value for ordering in tables
+function 'DaxLib.SVG.SVG' =
+		(
+			width : STRING,
+			height : STRING,
+			viewbox : STRING,
+			contents : STRING,
+			sortValue : EXPR
+		) =>
+		
+			VAR _Canvas = 		IF( NOT ISBLANK( width ) && NOT ISBLANK( height ), "width='" & width & "' height='" & height & "' " )
+			VAR _SortDesc = 	IF( NOT ISBLANK( sortValue ), "<desc>" & FORMAT( sortValue, "000000000000" ) & "</desc>" )
+		
+			VAR _result =
+				"data:image/svg+xml;utf8," &
+				"<svg " &
+				_Canvas &
+				viewbox &
+				"xmlns='http://www.w3.org/2000/svg'>" &
+				_SortDesc &
+				contents &
+				"</svg>"
+		
+			RETURN _result
+	lineageTag: 8f9c3f05-86d6-40ff-9a6e-b3a86be130c7
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Converts percentage to angle for circular visualizations
+/// perc			SCALAR Double VAL	Percentage value (0-100)
+/// startAngle 		SCALAR VAL int64	Starting angle in degrees (default -90 for top)
+/// sweepAngle		SCALAR VAL int64	Total sweep angle in degrees (default 360 for full circle)
+function 'DaxLib.SVG.Calc.AngleFromPercent' =
+		(
+			perc : SCALAR Double VAL,
+			startAngle : SCALAR int64 VAL,
+			sweepAngle : SCALAR int64 VAL
+		) =>
+		
+			startAngle + ( perc / 100 * sweepAngle )
+	lineageTag: ca0d86de-c6c7-483f-88ff-8b0d35eb7e3a
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Generates path data for arc segments used in donut and gauge charts
+/// cx				SCALAR VAL	Center X position in pixels
+/// cy				SCALAR VAL	Center Y position in pixels
+/// radius			SCALAR VAL	Outer radius in pixels
+/// startAngle		SCALAR VAL	Starting angle in degrees (0 = right, 90 = bottom)
+/// endAngle		SCALAR VAL	Ending angle in degrees
+/// innerRadius		SCALAR VAL	Inner radius for donut effect (0 for pie slice)
+function 'DaxLib.SVG.Calc.ArcPath' =
+		(
+			cx : SCALAR VAL,
+			cy : SCALAR VAL,
+			radius : SCALAR VAL,
+			startAngle : SCALAR VAL,
+			endAngle : SCALAR VAL,
+			innerRadius : SCALAR VAL
+		) =>
+		
+			VAR _StartRad = startAngle * PI() / 180
+			VAR _EndRad = 	endAngle * PI() / 180
+			VAR _LargeArc = IF( endAngle - startAngle > 180, 1, 0 )
+		
+			VAR _X1 = 	cx + radius * COS (_StartRad )
+			VAR _Y1 = 	cy + radius * SIN (_StartRad )
+			VAR _X2 = 	cx + radius * COS (_EndRad )
+			VAR _Y2 = 	cy + radius * SIN (_EndRad )
+		
+			VAR _InnerX1 = 	cx + innerRadius * COS( _StartRad )
+			VAR _InnerY1 = 	cy + innerRadius * SIN( _StartRad )
+			VAR _InnerX2 = 	cx + innerRadius * COS( _EndRad )
+			VAR _InnerY2 = 	cy + innerRadius * SIN( _EndRad )
+		
+			RETURN
+				IF(
+					innerRadius > 0,
+					"M " & _InnerX1 & " " & _InnerY1 &
+					" L " & _X1 & " " & _Y1 &
+					" A " & radius & " " & radius &
+					" 0 " & _LargeArc & " 1 " &
+					_X2 & " " & _Y2 &
+					" L " & _InnerX2 & " " & _InnerY2 &
+					" A " & innerRadius & " " & innerRadius &
+					" 0 " & _LargeArc & " 0 " &
+					_InnerX1 & " " & _InnerY1 & " Z",
+					"M " & cx & " " & cy &
+					" L " & _X1 & " " & _Y1 &
+					" A " & radius & " " & radius &
+					" 0 " & _LargeArc & " 1 " &
+					_X2 & " " & _Y2 & " Z"
+				)
+	lineageTag: 49d016de-2a01-4ba6-b1e7-cccb279dc6ee
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Calculate the maximum for a value plotted on an SVG Chart
+/// Handles both category crossfiltering and (sub) totals
+/// measureValue	EXPR,			The actual you will measure, expects a measure reference
+/// columnOne		ANYREF EXPR		The scope of the data for which the SVG will be used, Expects a table expression
+/// axisBuffer		NUMERIC VAL		How much buffer should exist between the axis max and the end of the visual
+function 'DaxLib.SVG.Calc.AxisMax' =
+		(
+			measureValue : EXPR,
+			columnOne : ANYREF EXPR,
+			axisBuffer : NUMERIC VAL
+		) =>
+		
+			VAR _TotalScope = ALL ( columnOne )
+		
+			-- Calculates the highest value in the data scope
+			VAR _MaxInScope =
+				CALCULATE(
+					MAXX( _TotalScope, measureValue ),
+					_TotalScope
+				)
+		
+			-- Calculates the total for the data scope
+			VAR _MaxOverall =
+				CALCULATE (
+					measureValue,
+					_TotalScope
+				)
+		
+			-- Configures axis for categories if one is selected, otherwise for the total
+			VAR _Max =
+				IF (
+					HASONEVALUE ( columnOne ),
+					_MaxInScope,
+					_MaxOverall
+				)
+		
+			RETURN _Max * axisBuffer
+	lineageTag: a5d36ed0-14d0-486f-9a82-d86e820389e5
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Calculate the minimum for a value plotted on an SVG
+/// measureValue	EXPR			The actual you will measure, expects a measure reference
+/// columnOne		ANYREF			The scope of the data for which the SVG will be used, Expects a table expression
+/// axisBuffer		NUMERIC VAL		How much buffer should exist between the axis min and the end of the visual
+function 'DaxLib.SVG.Calc.AxisMin' =
+		(
+			measureValue : EXPR,
+			columnOne : ANYREF,
+			axisBuffer : NUMERIC VAL
+		) =>
+		
+			VAR _TotalScope = ALL ( columnOne )
+			VAR _MinInScope =
+				CALCULATE(
+					MINX(
+						_TotalScope,
+						measureValue
+					),
+					_TotalScope
+				)
+		
+			RETURN  _MinInScope * axisBuffer
+	lineageTag: f7abad4b-99c9-431f-90b4-39f1e7d680ac
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Determines the axis range by subtracting the minimum from the maximum
+/// maxValue	NUMERIC VAL	The highest expected value (Recommended: Use SVG.Calc.AxisMax)
+/// minValue	NUMERIC VAL	The lowest expected value. Typically a fixed value
+function 'DaxLib.SVG.Calc.AxisRange' =
+		(
+			maxValue : NUMERIC VAL,
+			minValue : NUMERIC VAL
+		) =>
+		
+			maxValue - minValue
+	lineageTag: 671db908-7539-4a65-9410-225c05857782
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Returns a colour based on where a value falls within defined thresholds
+/// inputValue		SCALAR VAL	The value to evaluate
+/// thresholdLow	SCALAR VAL	Lower threshold value
+/// thresholdHigh	SCALAR VAL	Upper threshold value
+/// colourLow		SCALAR VAL	Colour for values <= thresholdLow
+/// colourMid		SCALAR VAL	Colour for values between thresholds
+/// colourHigh		SCALAR VAL	Colour for values >= thresholdHigh
+function 'DaxLib.SVG.Calc.ColourByThreshold' =
+		(
+			inputValue : SCALAR VAL,
+			thresholdLow : SCALAR VAL,
+			thresholdHigh : SCALAR VAL,
+			colourLow : SCALAR VAL,
+			colourMid : SCALAR VAL,
+			colourHigh : SCALAR VAL
+		) =>
+		
+			SWITCH(
+				true,
+				inputValue <= thresholdLow,
+					colourLow,
+				inputValue >= thresholdHigh,
+					colourHigh,
+				colourMid
+			)
+	lineageTag: 143e3182-752e-480b-8b66-1ca13093a4f5
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Map a value from one value scale to another
+/// Used for scaling values to fit within SVG dimensions
+/// inputValue		NUMERIC	VAL		The value to map
+/// fromMin			NUMERIC	VAL		The minimum value of the original scale
+/// fromMax			NUMERIC	VAL		The maximum value of the original scale
+/// toMin			NUMERIC	VAL		The minimum value of the new scale
+/// toMax			NUMERIC	VAL		The maximum value of the new scale
+function 'DaxLib.SVG.Calc.Normalize' =
+		(
+			inputValue: NUMERIC VAL,
+			fromMin: NUMERIC VAL,
+			fromMax: NUMERIC VAL,
+			toMin: NUMERIC VAL,
+			toMax: NUMERIC VAL
+		) =>
+		
+			( ( inputValue - fromMin ) / ( fromMax - fromMin ) ) * ( toMax - toMin ) + toMin
+	lineageTag: a53d315d-506b-42a4-bba1-9e0b2d6c70cb
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Converts a value to percentage (0-100%) based on original scale
+/// inputValue		NUMERIC	VAL		The value to map
+/// fromMin			NUMERIC	VAL		The minimum value of the original scale
+/// fromMax			NUMERIC	VAL		The maximum value of the original scale
+function 'DaxLib.SVG.Calc.ToPercent' =
+		(
+			inputValue : NUMERIC VAL,
+			fromMin : NUMERIC VAL,
+			fromMax : NUMERIC VAL
+		) =>
+		
+			DaxLib.SVG.Calc.Normalize(
+				inputValue,
+				fromMin,
+				fromMax,
+				0,
+				100
+			) / 100
+	lineageTag: 38d2a03f-2e50-4f91-b25f-96c0ccfabb08
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Util function to generate optional common SVG element attributes
+/// style		STRING	Optional: The style to apply, can generate with DaxLib.SVG.Style.* or manually (e.g., "fill:black;stroke:blue;")
+/// class		STRING	Optional: The CSS class to apply to the element
+/// transform	STRING	Optional: The transform to apply to the element (e.g., "rotate(45)")
+function 'DaxLib.SVG.Util.OptionalCommentElements' =
+		(
+			style: STRING,
+			class: STRING,
+			transform: STRING
+		) =>
+		
+		VAR _Style =
+			IF(
+				NOT ISBLANK( style ),
+				IF(
+					SEARCH( "style=", style, 1, 0 ) > 0,
+					" " & style & " ",
+					" style='" & style & "' "
+				)
+			)
+		
+		VAR _Class =
+			IF(
+				NOT ISBLANK( class ),
+				IF(
+					SEARCH( "class=", class, 1, 0 ) > 0,
+					" " & class & " ",
+					" class='" & class & "' "
+				)
+			)
+		
+		VAR _Transform =
+			IF(
+				NOT ISBLANK( transform ),
+				IF(
+					SEARCH( "transform=", transform, 1, 0 ) > 0,
+					" " & transform & " ",
+					" transform='" & transform & "' "
+				)
+			)
+		
+			RETURN
+		
+				_Style &
+				_Class &
+				_Transform
+	lineageTag: d91faeff-fc93-4a3e-a5ea-343aa5eae383
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Style properties common to all SVG elements
+/// fill             STRING      Fill color or gradient reference
+/// fillOpacity      DOUBLE      Fill opacity (0-1)
+/// stroke           STRING      Stroke color
+/// strokeWidth      INT64       Stroke width
+/// strokeOpacity    DOUBLE      Stroke opacity (0-1)
+/// opacity          DOUBLE      Overall opacity (0-1)
+function 'DaxLib.SVG.Style.Common' =
+		(
+			fill: STRING,
+			fillOpacity: DOUBLE,
+			stroke: STRING,
+			strokeWidth: INT64,
+			strokeOpacity: DOUBLE,
+			opacity: DOUBLE
+		) =>
+		
+			VAR _Fill =          IF( NOT ISBLANK( fill ),          "fill:" & fill & ";" )
+			VAR _FillOpacity =   IF( NOT ISBLANK( fillOpacity ),   "fill-opacity:" & fillOpacity & ";" )
+			VAR _Stroke =        IF( NOT ISBLANK( stroke ),        "stroke:" & stroke & ";" )
+			VAR _StrokeWidth =   IF( NOT ISBLANK( strokeWidth ),   "stroke-width:" & strokeWidth & ";" )
+			VAR _StrokeOpacity = IF( NOT ISBLANK( strokeOpacity ), "stroke-opacity:" & strokeOpacity & ";" )
+			VAR _Opacity =       IF( NOT ISBLANK( opacity ),       "opacity:" & opacity & ";" )
+		
+			RETURN
+		
+				_Fill &
+				_FillOpacity &
+				_Stroke &
+				_StrokeWidth &
+				_StrokeOpacity &
+				_Opacity
+	lineageTag: bfe9f800-4fd4-409c-82e0-fab113f73f5e
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Text-specific style properties
+/// fontFamily      STRING      Font family for text
+/// fontSize        INT64       Font size for text
+/// fontWeight      STRING      Weight ("normal", "bold", "lighter", "100-900")
+/// fontStyle       STRING      Style ("normal", "italic", "oblique")
+/// textAnchor      STRING      Anchor ("start", "middle", "end")
+/// baseline        STRING      Dominant baseline
+/// textDecoration  STRING      Decoration ("none", "underline", "overline", "line-through")
+/// letterSpacing   STRING      Space between letters
+/// wordSpacing     STRING      Space between words
+function 'DaxLib.SVG.Style.Txt' =
+		(
+			fontFamily: STRING,
+			fontSize: INT64,
+			fontWeight: STRING,
+			fontStyle: STRING,
+			textAnchor: STRING,
+			baseline: STRING,
+			textDecoration: STRING,
+			letterSpacing: STRING,
+			wordSpacing: STRING
+		) =>
+		
+			VAR _FontFamily =     IF( NOT ISBLANK( fontFamily ),     "font-family:" & fontFamily & ";" )
+			VAR _FontSize =       IF( NOT ISBLANK( fontSize ),       "font-size:" & fontSize & ";" )
+			VAR _FontWeight =     IF( NOT ISBLANK( fontWeight ),     "font-weight:" & fontWeight & ";" )
+			VAR _FontStyle =      IF( NOT ISBLANK( fontStyle ),      "font-style:" & fontStyle & ";" )
+			VAR _TextAnchor =     IF( NOT ISBLANK( textAnchor ),     "text-anchor:" & textAnchor & ";" )
+			VAR _Baseline =       IF( NOT ISBLANK( baseline ),       "dominant-baseline:" & baseline & ";" )
+			VAR _TextDecoration = IF( NOT ISBLANK( textDecoration ), "text-decoration:" & textDecoration & ";" )
+			VAR _LetterSpacing =  IF( NOT ISBLANK( letterSpacing ),  "letter-spacing:" & letterSpacing & ";" )
+			VAR _WordSpacing =    IF( NOT ISBLANK( wordSpacing ),    "word-spacing:" & wordSpacing & ";" )
+		
+			RETURN
+		
+				_FontFamily &
+				_FontSize &
+				_FontWeight &
+				_FontStyle &
+				_TextAnchor &
+				_Baseline &
+				_TextDecoration &
+				_LetterSpacing &
+				_WordSpacing
+	lineageTag: 0c1b87ff-426f-4ab8-b44c-8527034a2409
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Line and stroke style properties
+/// strokeDasharray    STRING    Line: Stroke dasharray (e.g., "5,5" for dashed)
+/// strokeDashoffset   INT64     Line: Stroke dashoffset
+/// strokeLinecap      STRING    Line: Stroke linecap ("butt", "round", "square")
+/// strokeLinejoin     STRING    Line: Stroke linejoin ("miter", "round", "bevel")
+/// strokeMiterlimit   INT64     Line: Miter limit for stroke joins
+function 'DaxLib.SVG.Style.Line' =
+		(
+			strokeDasharray: STRING,
+			strokeDashoffset: INT64,
+			strokeLinecap: STRING,
+			strokeLinejoin: STRING,
+			strokeMiterlimit: INT64
+		) =>
+		
+			VAR _StrokeDasharray =  IF( NOT ISBLANK( strokeDasharray ),  "stroke-dasharray:" & strokeDasharray & ";" )
+			VAR _StrokeDashoffset = IF( NOT ISBLANK( strokeDashoffset ), "stroke-dashoffset:" & strokeDashoffset & ";" )
+			VAR _StrokeLinecap =    IF( NOT ISBLANK( strokeLinecap ),    "stroke-linecap:" & strokeLinecap & ";" )
+			VAR _StrokeLinejoin =   IF( NOT ISBLANK( strokeLinejoin ),   "stroke-linejoin:" & strokeLinejoin & ";" )
+			VAR _StrokeMiterlimit = IF( NOT ISBLANK( strokeMiterlimit ), "stroke-miterlimit:" & strokeMiterlimit & ";" )
+		
+			RETURN
+				_Stroke &
+				_StrokeWidth &
+				_StrokeOpacity &
+				_StrokeDasharray &
+				_StrokeDashoffset &
+				_StrokeLinecap &
+				_StrokeLinejoin &
+				_StrokeMiterlimit
+	lineageTag: d44fe0dd-be7f-4197-a56e-61a379e8c3ea
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Create a <def> element from one or more DaxLib.SVG.Def.* Elements
+/// defs	STRING	Concatenated lists of def Elements to include in a def block
+function 'DaxLib.SVG.Element.Defs' =
+		(
+			defs: STRING    // concatenated lists of elements to include in a def block
+		) =>
+		
+			"<defs>" &
+			defs &
+			"</defs>"
+	lineageTag: 5a8e9941-d1e5-4b9d-b5e4-7178bb98e309
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Create a gradient stop element
+/// offset		STRING	Stop position
+/// colour		STRING	Colour value (hex or named Colour)
+/// opacity		STRING	Optional: opacity value
+function 'DaxLib.SVG.Def.GradientStop' =
+		(
+			offset: STRING,
+			colour: STRING,
+			opacity: STRING
+		) =>
+		
+			"<stop offset='" & offset &
+			"' stop-color='" & colour & "'" &
+			IF( NOT ISBLANK( opacity ), " stop-opacity='" & opacity & "'" ) &
+			"/>"
+	lineageTag: 8e3d346d-ccc1-41be-95d0-07635f91a698
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Create a linear gradient definition
+/// defId		STRING	The unique identifier for the gradient
+/// stops		STRING	Concatinated list of one or more DaxLib.SVG.Def.GradientStop Elements
+/// x1			STRING	Optional: Start X position
+/// y1			STRING	Optional: Start Y position
+/// x2			STRING	Optional: End X position
+/// y2			STRING	Optional: End Y position
+function 'DaxLib.SVG.Def.LinearGradient' =
+		(
+			defId: STRING,
+			stops: STRING,
+			x1: STRING,
+			y1: STRING,
+			x2: STRING,
+			y2: STRING
+		) =>
+		
+			"<linearGradient" &
+			" id='" & defId & "'" &
+			IF( NOT ISBLANK( x1 ), " x1='" & x1 & "'" ) &
+			IF( NOT ISBLANK( y1 ), " y1='" & y1 & "'" ) &
+			IF( NOT ISBLANK( x2 ), " x2='" & x2 & "'" ) &
+			IF( NOT ISBLANK( y2 ), " y2='" & y2 & "'" ) &
+			">" &
+			stops &
+			"</linearGradient>"
+	lineageTag: 2363aa72-be0a-44db-9cff-a6feceb2fa6f
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Create a radial gradient definition
+/// defId		STRING	The unique identifier for the gradient
+/// stops		STRING	Concatinated list of one or more DaxLib.SVG.Def.GradientStop Elements
+/// cx			STRING	Optional: Center X position
+/// cy			STRING	Optional: Center Y position
+/// r			STRING	Optional: Radius
+/// fx			STRING	Optional: Focus X position
+/// fy			STRING	Optional: Focus Y position
+/// fr			STRING	Optional: Focus radius
+function 'DaxLib.SVG.Def.RadialGradient' =
+		(
+			defId: STRING,
+			stops: STRING,
+			cx: STRING,
+			cy: STRING,
+			r: STRING,
+			fx: STRING,
+			fy: STRING,
+			fr: STRING
+		) =>
+		
+			"<radialGradient" &
+			" id='" & defId & "'" &
+			IF( NOT ISBLANK( cx ), " cx='" & cx & "'" ) &
+			IF( NOT ISBLANK( cy ), " cy='" & cy & "'" ) &
+			IF( NOT ISBLANK( r ),  " r='" & r & "'" ) &
+			IF( NOT ISBLANK( fx ), " fx='" & fx & "'" ) &
+			IF( NOT ISBLANK( fy ), " fy='" & fy & "'" ) &
+			IF( NOT ISBLANK( fr ), " fr='" & fr & "'" ) &
+			">" &
+			stops &
+			"</radialGradient>"
+	lineageTag: 0690ed0f-a02a-48f6-8f68-a8e6233ad88a
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Create a pattern fill definition
+/// defId		STRING	The unique identifier for the pattern
+/// width		STRING	The width of the pattern (pixels or percentage)
+/// height		STRING	The height of the pattern (pixels or percentage)
+/// contents	STRING	The SVG elements that make up the pattern
+function 'DaxLib.SVG.Def.PatternFill' =
+		(
+			defId: STRING,
+			width: STRING,
+			height: STRING,
+			contents: STRING
+		) =>
+		
+			/* Example usage:
+				DaxLib.SVG.Def.PatternFill(
+				"checkered",
+				20, 20,
+				DaxLib.SVG.Rect(0, 0, 10, 10, "fill:red") &
+				DaxLib.SVG.Rect(10, 10, 10, 10, "fill:blue")
+				)
+			*/
+		
+			"<pattern" &
+			" id='" & defId & "'" &
+			" width='" & width & "'" &
+			" height='" & height & "'" &
+			" patternUnits='userSpaceOnUse'>" &
+			contents &
+			"</pattern>"
+	lineageTag: 85034eb5-3366-4496-b6d6-06e599cdfe6a
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Create a reusable circle definition
+/// defId		STRING	The unique identifier for the circle
+/// cx			STRING	X center coordinate
+/// cy			STRING	Y center coordinate
+/// r			STRING	Radius
+/// style		STRING	Optional: The style to apply, can generate with DaxLib.SVG.Style.* or manually (e.g., "fill:black;stroke:blue;")
+/// class		STRING	Optional: CSS class to apply
+/// transform	STRING	Optional: transformation to apply
+function 'DaxLib.SVG.Def.Circle' =
+		(
+			defId: STRING,
+			cx: STRING,
+			cy: STRING,
+			r: STRING,
+			style: STRING,
+			class: STRING,
+			transform: STRING
+		) =>
+		
+			VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
+		
+			RETURN
+				"<circle id='" & defId & "'" &
+				" cx='" & cx & "'" &
+				" cy='" & cy & "'" &
+				" r='" & r & "'" &
+				_OCE &
+				"/>"
+	lineageTag: bfa1ff10-ee76-49bc-86b6-42c92066edae
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Create a reusable rectangle definition
+/// defId		STRING		The unique identifier for the rectangle
+/// width		STRING		The width of the rectangle (pixels or percentage)
+/// height		STRING		The height of the rectangle	(pixels or percentage)
+/// rx			STRING		Optional: x radius for rounded corners
+/// ry			STRING		Optional: y radius for rounded corners
+/// style		STRING		Optional: The style to apply, can generate with DaxLib.SVG.Style.* or manually (e.g., "fill:black;stroke:blue;")
+/// class		STRING		Optional: CSS class to apply
+/// transform	STRING		Optional: transformation to apply
+function 'DaxLib.SVG.Def.Rect' =
+		(
+			defId: STRING,
+			width: STRING,
+			height: STRING,
+			rx: STRING,
+			ry: STRING,
+			style: STRING,
+			class: STRING,
+			Transform: STRING
+		) =>
+		
+			VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
+		
+			RETURN
+		
+				"<rect id='" & defId & "'" &
+				" width='" & width & "'" &
+				" height='" & height & "'" &
+				IF(NOT ISBLANK(RX), " rx='" & RX & "'" ) &
+				IF(NOT ISBLANK(RY), " ry='" & RY & "'" ) &
+				_OCE &
+				"/>"
+	lineageTag: dea532b5-c9c0-49f1-a983-cfba112219ef
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Create a reusable line definition
+/// defId		STRING	The unique identifier for the line
+/// x1			STRING	The x position of the start point
+/// y1			STRING	The y position of the start point
+/// x2			STRING	The x position of the end point
+/// y2			STRING	The y position of the end point
+/// style		STRING	The style to apply to the line, use DaxLib.SVG.Util.Style to generate (e.g., "stroke:black;stroke-width:2")
+/// class		STRING	Optional: CSS class to apply
+/// transform	STRING	Optional: transformation to apply
+function 'DaxLib.SVG.Def.Line' =
+		(
+			defId: STRING,
+			x1: STRING,
+			y1: STRING,
+			x2: STRING,
+			y2: STRING,
+			style: STRING,
+			class: STRING,
+			transform: STRING
+		) =>
+		
+			VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
+		
+			RETURN
+		
+				"<line id='" & defId & "'" &
+				" x1='" & x1 & "'" &
+				" y1='" & y1 & "'" &
+				" x2='" & x2 & "'" &
+				" y2='" & y2 & "'" &
+				_OCE &
+				"/>"
+	lineageTag: 2ee8d345-6ff6-4797-af88-3077aaf31a70
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Create a reusable path definition
+/// defId		STRING	The unique identifier for the path
+/// d			STRING	The path data string (e.g., "M10 10 L90 90")
+/// style		STRING	Optional: The style to apply, can generate with DaxLib.SVG.Style.* or manually (e.g., "fill:black;stroke:blue;")
+/// class		STRING	Optional: CSS class to apply
+/// transform	STRING	Optional: transformation to apply
+function 'DaxLib.SVG.Def.Paths' =
+		(
+			defId: STRING,
+			d: STRING,
+			style: STRING,
+			class: STRING,
+			transform: STRING
+		) =>
+		
+			VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
+		
+			RETURN
+		
+				"<path id='" & defId & "'" &
+				" d='" & d & "'" &
+				_OCE &
+				"/>"
+	lineageTag: 4bcc705e-09b3-47df-b1b5-10ab797992ac
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Reference a previously defined SVG element with optional positioning and styling
+/// This function is used to reuse elements that have been defined using DaxLib.SVG.Def.* functions
+/// (e.g., DEFCIRCLE, DEFRECT, DEFPATH, etc.). Instead of duplicating element definitions,
+/// use the appropriate DEF* function once and then reference it multiple times with USE.
+/// defId		STRING	The identifier of the defined element to use
+/// x			STRING	X position where the element should be placed
+/// y			STRING	Y position where the element should be placed
+/// style		STRING	Optional: The style to apply, can generate with DaxLib.SVG.Style.* or manually (e.g., "fill:black;stroke:blue;")
+/// class		STRING	Optional: CSS class to apply
+/// transform	STRING	Optional: transformation to apply
+function 'DaxLib.SVG.Element.UseDef' =
+		(
+			defId: STRING,
+			X: STRING,
+			Y: STRING,
+			style: STRING,
+			class: STRING,
+			transform: STRING
+		) =>
+		
+			VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
+		
+			RETURN
+		
+				"<use" &
+				" href='#" & defId & "'" &
+				IF( NOT ISBLANK( x ), " x='" & x & "'" ) &
+				IF( NOT ISBLANK( y ), " y='" & y & "'" ) &
+				_OCE &
+				"/>"
+	lineageTag: f4326a08-c5ce-4321-a751-84b97bcf7740
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Generates SVG group element
+/// Transformations applied to the <g> element are performed on its child elements, and its attributes are inherited by its children. It can also group multiple elements to be referenced later with the <use> element.
+/// contents	SCALAR VAL	Content to group (recommend including all content in a single _SvgGroup variable defined upstream)
+/// transform	SCALAR VAL	Optional: Transform (e.g., "translate(50,50) rotate(45)")
+/// opacity		SCALAR VAL	Optional: Opacity for entire group (0-1, optional)
+function 'DaxLib.SVG.Element.Group' =
+		(
+			contents : SCALAR VAL,
+			transform : SCALAR VAL,
+			opacity : SCALAR VAL
+		) =>
+		
+			"<g" &
+			" transform='" & transform & "'" &
+			" opacity='" & opacity & "'" &
+			">" & contents & "</g>"
+	lineageTag: 665d52fd-846d-4670-b3a0-a6ca1ee94a7e
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Generates a circle SVG element
+/// cx			STRING	The x position of the center
+/// cy			STRING	The y position of the center
+/// r			STRING	The radius
+/// style		STRING	Optional: The style to apply, can generate with DaxLib.SVG.Style.* or manually (e.g., "fill:black;stroke:blue;")
+/// class		STRING	Optional: CSS class to apply
+/// transform	STRING	Optional: transformation to apply
+function 'DaxLib.SVG.Element.Circle' =
+		(
+			cx: STRING,
+			cy: STRING,
+			r: STRING,
+			style: STRING,
+			class: STRING,
+			transform: STRING
+		) =>
+		
+			VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
+		
+			RETURN
+		
+				"<circle" &
+				" cx='" & cx & "'" &
+				" cy='" & cy & "'" &
+				" r='" & r & "'" &
+				_OCE &
+				"/>"
+	lineageTag: 3f11b451-9610-4e90-a43e-240d2c46ba9c
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Generates a rectangle SVG element
+/// x			STRING	The x position
+/// y			STRING	The y position
+/// width		STRING	The width (pixels or percentage)
+/// height		STRING	The height (pixels or percentage)
+/// rx			STRING	Optional: x radius for rounded corners
+/// ry			STRING	Optional: y radius for rounded corners
+/// style		STRING	Optional: The style to apply, can generate with DaxLib.SVG.Style.* or manually (e.g., "fill:black;stroke:blue;")
+/// class		STRING	Optional: CSS class to apply
+/// transform	STRING	Optional: transformation to apply
+function 'DaxLib.SVG.Element.Rect' =
+		(
+			x: STRING,
+			y: STRING,
+			width: STRING,
+			height: STRING,
+			rx: STRING,
+			ry: STRING,
+			style: STRING,
+			class: STRING,
+			transform: STRING
+		) =>
+		
+			VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
+		
+			RETURN
+		
+				"<rect" &
+				" x='" & x & "'" &
+				" y='" & y & "'" &
+				" width='" & width & "'" &
+				" height='" & height & "'" &
+				IF( NOT ISBLANK( rx ), " rx='" & rx & "'" ) &
+				IF( NOT ISBLANK( ry ), " ry='" & ry & "'" ) &
+				_OCE &
+				"/>"
+	lineageTag: cdcaa992-fe0a-4e35-84be-47da7cf13118
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Generates SVG line element
+/// x1			STRING	Starting X position (left edge is 0)
+/// y1			STRING	Starting Y position (top edge is 0)
+/// x2			STRING	Ending X position (left edge is 0)
+/// y2			STRING	Ending Y position (top edge is 0)
+/// style		STRING	Optional: The style to apply, can generate with DaxLib.SVG.Style.* or manually (e.g., "fill:black;stroke:blue;")
+/// class		STRING	Optional: CSS class to apply
+/// transform	STRING	Optional: transformation to apply
+function 'DaxLib.SVG.Element.Line' =
+		(
+			x1: STRING,
+			y1: STRING,
+			x2: STRING,
+			y2: STRING,
+			style: STRING,
+			class: STRING,
+			transform: STRING
+		) =>
+		
+			VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
+		
+			RETURN
+		
+				"<line" &
+				" x1='" & x1 & "'" &
+				" y1='" & y1 & "'" &
+				" x2='" & x2 & "'" &
+				" y2='" & y2 & "'" &
+				_OCE &
+				"/>"
+	lineageTag: 431d0551-b75a-4f81-9111-322e4aae2d9f
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Create a SVG path element
+/// d			STRING	The path data string (e.g., "M10 10 L90 90")
+/// style		STRING	Optional: The style to apply, can generate with DaxLib.SVG.Style.* or manually (e.g., "fill:black;stroke:blue;")
+/// class		STRING	Optional: CSS class to apply
+/// transform	STRING	Optional: transformation to apply
+function 'DaxLib.SVG.Element.Paths' =
+		(
+			d: STRING,
+			style: STRING,
+			class: STRING,
+			transform: STRING
+		) =>
+		
+			VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
+		
+			RETURN
+		
+				"<path d='" & d & "'" &
+				_OCE &
+				"/>"
+	lineageTag: 85bd3d64-fbc2-4eb0-a15b-db71b71c1dec
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Generates an ellipse SVG element
+/// cx			STRING	The x position of the center
+/// cy			STRING	The y position of the center
+/// rx			STRING	The x radius
+/// ry			STRING	The y radius
+/// style		STRING	Optional: The style to apply, can generate with DaxLib.SVG.Style.* or manually (e.g., "fill:black;stroke:blue;")
+/// class		STRING	Optional: CSS class to apply
+/// transform	STRING	Optional: transformation to apply
+function 'DaxLib.SVG.Element.Ellipse' =
+		(
+			cx: STRING,
+			cy: STRING,
+			rx: STRING,
+			ry: STRING,
+			style: STRING,
+			class: STRING,
+			transform: STRING
+		) =>
+		
+			VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
+		
+			RETURN
+		
+				"<ellipse" &
+				" cx='" & cx & "'" &
+				" cy='" & cy & "'" &
+				" rx='" & rx & "'" &
+				" ry='" & ry & "'" &
+				_OCE &
+				"/>"
+	lineageTag: b15e8cb5-cc02-4658-aace-0f25478f0bf3
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Creates a polygon (closed shape)
+/// points		STRING	Space-separated x,y coordinate pairs (e.g., "0,10 20,30 40,15")
+/// style		STRING		Optional: The style to apply, can generate with DaxLib.SVG.Style.* or manually (e.g., "fill:black;stroke:blue;")
+/// class		STRING		Optional: CSS class to apply
+/// transform	STRING		Optional: transformation to apply
+function 'DaxLib.SVG.Element.Polygon' =
+		(
+			points: STRING,
+			style: STRING,
+			class: STRING,
+			transform: STRING
+		) =>
+		
+			VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
+		
+			RETURN
+		
+				"<polygon" &
+				" points='" & points & "'" &
+				_OCE &
+				"/>"
+	lineageTag: a0792543-8d7a-4a6f-89d1-9c05495bc12b
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Creates a polyline (connected points)
+/// points		STRING		Space-separated x,y coordinate pairs (e.g., "0,10 20,30 40,15")
+/// style		STRING		Optional: The style to apply, can generate with DaxLib.SVG.Style.* or manually (e.g., "fill:black;stroke:blue;")
+/// class		STRING		Optional: CSS class to apply
+/// transform	STRING		Optional: transformation to apply
+function 'DaxLib.SVG.Element.Polyline' =
+		(
+			points: STRING,
+			style: STRING,
+			class: STRING,
+			transform: STRING
+		) =>
+		
+			VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
+		
+			RETURN
+		
+				"<polyline" &
+				" points='" & points & "'" &
+				_OCE &
+				"/>"
+	lineageTag: b501cbae-3b97-4025-a875-331a0f37e6a8
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Creates a text SVG element
+/// x			STRING	The x position of the text
+/// y			STRING	The y position of the text
+/// txt			STRING	The text content
+/// dx			STRING	Optional: x offset from position
+/// dy			STRING	Optional: y offset from position
+/// style		STRING	Optional: The style to apply, can generate with DaxLib.SVG.Style.* or manually (e.g., "fill:black;stroke:blue;")
+/// class		STRING	Optional: CSS class to apply
+/// transform	STRING	Optional: additional transforms (e.g. "scale(1.2) translate(10,10)")
+function 'DaxLib.SVG.Element.Txt' =
+		(
+			x: STRING,
+			y: STRING,
+			txt: STRING,
+			dx: STRING,
+			dy: STRING,
+			style: STRING,
+			class: STRING,
+			transform: STRING
+		) =>
+		
+			VAR _DX = IF(NOT ISBLANK( dx ), " dx='" & dx & "'" )
+			VAR _DY = IF(NOT ISBLANK( dy ), " dy='" & dy & "'" )
+		
+			VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
+		
+			RETURN
+		
+				"<text" &
+				" x='" & x & "'" &
+				" y='" & y & "'" &
+				_DX &
+				_DY &
+				_OCE &
+				">" & txt &
+				"</text>"
+	lineageTag: 2df863c0-d4ae-42f1-a49a-7195e541e6fa
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Create a pill SVG Compound element (rounded rectangle with text centered inside)
+/// width 		STRING  	The width of the SVG canvas
+/// Height 		STRING  	The height of the SVG canvas
+/// txt 		STRING  The text to display
+/// pillColour 	STRING  The Hex color of the fill i.e "#01B8AA80"
+/// txtColor 	STRING  The Hex color of the text i.e "#FFFFFF"
+function 'DaxLib.SVG.Compound.Pill' =
+		(
+			width: STRING,
+			height: STRING,
+			txt: STRING,
+			pillColour: STRING,
+			txtColour: STRING
+		) =>
+		
+		VAR Pill =
+			DaxLib.SVG.Element.Rect(
+				1,                 	// X
+				1,                 	// Y
+				width,      		// Width
+				height,     		// Height
+				10,               	// RX
+				10,               	// RY
+				DaxLib.SVG.Style.Common(
+					pillColour,
+					BLANK(),
+					txtColour,
+					1,
+					BLANK(),
+					BLANK()
+				),         			// Style
+				BLANK(),           	// Class
+				BLANK()           	// Transform
+			)
+		
+		VAR TextElement =
+			DaxLib.SVG.Element.Txt(
+				width * 0.50,      	// X
+				height * 0.58,     	// Y
+				txt,              	// Text content
+				0,                	// DX
+				0,                	// DY
+				DaxLib.SVG.Style.Common(
+					txtColour,
+					BLANK(),
+					BLANK(),
+					BLANK(),
+					BLANK(),
+					BLANK()
+				) &
+				DaxLib.SVG.Style.Txt(
+					"Segoe UI",
+					12,
+					BLANK(),
+					BLANK(),
+					"middle",
+					"middle",
+					BLANK(),
+					BLANK(),
+					BLANK()
+				),         			// Style
+				BLANK(),			// Class
+				BLANK()				// Transform
+			)
+		
+		RETURN
+		
+			Pill &
+			TextElement
+	lineageTag: 90833162-0bff-4728-aa74-1e7f07bdad41
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Example chart created using the DaxLib.SVG functions
+/// Generate SVG performance bar with target line and status indicator
+/// Returns SVG string for use in Table/Matrix visuals (set Image size: Height 25px, Width 100px)
+/// actual					EXPR			Actual measure to evaluate
+/// target					EXPR			Target measure to evaluate
+/// columnOne				ANYREF EXPR		Table scope for calculating axis max (e.g., 'Customers'[Key Account Name], multiple columns not yet supported)
+/// thresholdVeryBad		NUMERIC VAL		Performance thresholds (Percenage)
+/// thresholdBad			NUMERIC VAL		Performance thresholds (Percenage)
+/// thresholdGood			NUMERIC VAL		Performance thresholds (Percenage)
+/// thresholdVeryGood		NUMERIC VAL		Performance thresholds (Percenage)
+/// colourBadLow			STRING VAL		Status colours
+/// colourBadHigh			STRING VAL	 	Status colours
+/// colourGoodLow			STRING VAL		Status colours
+/// colourGoodHigh			STRING VAL		Status colours
+function 'DaxLib.SVG.BulletChart.ActionDot' =
+					(
+						actual: EXPR,
+						target: EXPR,
+						columnOne: ANYREF EXPR,
+						thresholdVeryBad: NUMERIC VAL,
+						thresholdBad: NUMERIC VAL,
+						thresholdGood: NUMERIC VAL,
+						thresholdVeryGood: NUMERIC VAL,
+						colourBadLow: STRING VAL,
+						colourBadHigh: STRING VAL,
+						colourGoodLow: STRING VAL,
+						colourGoodHigh: STRING VAL
+					) =>
+		
+		            // Chart dimensions
+		            VAR _BarMax = 100
+		            VAR _BarMin = 20
+		
+		            // Fixed colour config
+		            VAR _ColourBackground = "#F5F5F5"
+		            VAR _ColourBaseline = "#797979"
+		            VAR _ColourTarget = "black"
+		
+		            // Get current values
+		            VAR _Actual = actual
+		            VAR _Target = target
+		
+		            // Calculate performance
+		            VAR _Performance = DIVIDE( _Actual - _Target, _Target )
+		
+		            // Determine performance colour
+		            VAR _PerformanceColour =
+		                SWITCH(
+		                    true,
+		                    _Performance < thresholdVeryBad, 	colourBadLow,
+		                    _Performance < thresholdBad, 		colourBadHigh,
+		                    _Performance > thresholdVeryGood, 	colourGoodHigh,
+		                    _Performance > thresholdGood, 		colourGoodLow,
+		                    "#CFCFCF"  // Default grey
+		                )
+		
+		            // Action dot fill color
+		            VAR _ActionDotFill =
+		                IF(
+		                    _Performance >= thresholdBad && _Performance <= thresholdGood,
+		                    "#FFFFFF00",  // Transparent
+		                    _PerformanceColour
+		                )
+		
+					// Scale
+		            VAR _AxisMax =
+		                MAX(
+		                    DaxLib.SVG.Calc.AxisMax( actual, columnOne, 1.1 ),
+		                    DaxLib.SVG.Calc.AxisMax( target, columnOne, 1.1 )
+		                )
+		            VAR _AxisRange = DaxLib.SVG.Calc.AxisRange( _AxisMax, 0 )
+		            VAR _ActualNormalized = DaxLib.SVG.Calc.Normalize( _Actual, 0, _AxisMax, _BarMin, _BarMax )
+		            VAR _TargetNormalized = DaxLib.SVG.Calc.Normalize( _Target, 0, _AxisMax, _BarMin, _BarMax )
+		
+		            // Create SVG Elements
+		            VAR _ActionDot =
+		                DaxLib.SVG.Element.Circle(
+		                    10,              		// cx
+		                    10,              		// cy
+		                    5,               		// r
+		                    DaxLib.SVG.Style.Common(
+		                        _ActionDotFill, 	// fill
+		                        BLANK(),       		// fillOpacity
+		                        BLANK(),       		// stroke
+		                        BLANK(),       		// strokeWidth
+		                        BLANK(),       		// strokeOpacity
+		                        BLANK()        		// opacity
+		                    ),				   		// style
+		                    BLANK(),           		// class
+		                    BLANK()            		// transform
+		                )
+		
+		            VAR _BarBackground =
+		                DaxLib.SVG.Element.Rect(
+		                    _BarMin, 				// x
+		                    2,                  	// y
+		                    _BarMax, 				// width
+		                    16,                 	// height (80% of 20)
+		                    BLANK(),              	// rx
+		                    BLANK(),              	// ry
+		                    DaxLib.SVG.Style.Common(
+		                        _ColourBackground, 	// fill
+		                        BLANK(),           	// fillOpacity
+		                        BLANK(),           	// stroke
+		                        BLANK(),           	// strokeWidth
+		                        BLANK(),           	// strokeOpacity
+		                        BLANK()            	// opacity
+		                    ),						// style
+		                    BLANK(),               	// class
+		                    BLANK()                	// transform
+		                )
+		
+		            VAR _ActualBar =
+		                DaxLib.SVG.Element.Rect(
+		                    _BarMin,						// x
+		                    5,                           	// y
+		                    _ActualNormalized, 				// width
+		                    10,                           	// height (50% of 20)
+		                    BLANK(),                        // rx
+		                    BLANK(),                        // ry
+		                    DaxLib.SVG.Style.Common(
+		                        "#CFCFCF",             		// fill
+		                        BLANK(),                   	// fillOpacity
+		                        BLANK(),                   	// stroke
+		                        BLANK(),                   	// strokeWidth
+		                        BLANK(),                   	// strokeOpacity
+		                        BLANK()                    	// opacity
+		                    ),
+		                    BLANK(),                        // class
+		                    BLANK()                         // transform
+		                )
+		
+		            VAR _TargetLine =
+		                DaxLib.SVG.Element.Rect(
+		                    _TargetNormalized,				// x
+		                    2,                            	// y
+		                    2,                            	// width
+		                    16,                           	// height
+		                    BLANK(),                        // rx
+		                    BLANK(),                        // ry
+		                    DaxLib.SVG.Style.Common(
+		                        _ColourTarget,              // fill
+		                        BLANK(),                   	// fillOpacity
+		                        BLANK(),                   	// stroke
+		                        BLANK(),                   	// strokeWidth
+		                        BLANK(),                   	// strokeOpacity
+		                        BLANK()                    	// opacity
+		                    ),
+		                    BLANK(),                        // class
+		                    BLANK()                         // transform
+		                )
+		
+		            VAR _BarBaseline =
+		                DaxLib.SVG.Element.Rect(
+		                    _BarMin,							// x
+		                    4,                           	// y
+		                    1,                           	// width
+		                    12,                          	// height
+		                    BLANK(),                       	// rx
+		                    BLANK(),                       	// ry
+		                    DaxLib.SVG.Style.Common(
+		                        _ColourBaseline,           	// fill
+		                        BLANK(),                   	// fillOpacity
+		                        BLANK(),                   	// stroke
+		                        BLANK(),                   	// strokeWidth
+		                        BLANK(),                   	// strokeOpacity
+		                        BLANK()                    	// opacity
+		                    ),
+		                    BLANK(),                       	// class
+		                    BLANK()                        	// transform
+		                )
+		
+		            RETURN
+		
+		                DaxLib.SVG.SVG(
+		                    100,           	// width
+		                    20,            	// height
+		                    BLANK(),        // viewbox
+		                    _ActionDot &
+							_BarBackground &
+							_ActualBar &
+							_TargetLine &
+							_BarBaseline,   // contents
+		                    _Actual         // sortValue
+		                )
+	lineageTag: 09737cda-cc43-4000-ab5a-9b0c0eda7333
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Create a bar SVG for a given column
+/// width			INT64	The width of the SVG canvas
+/// height			INT64	The height of the SVG canvas
+/// columnRef		ANYREF	The column to visualize
+/// positiveColor	STRING	The Hex color of the positive bar i.e "#01B8AA"
+/// negativeColor	STRING	The Hex color of the negative bar i.e "#FD625E"
+/// zeroAxisColor	STRING	The Hex color of the zero axis i.e "#A6A6A6"
+function 'DaxLib.SVG.Bar' =
+		(
+			width: INT64,
+			height: INT64,
+			columnRef: ANYREF,
+			positiveColor: STRING,
+			negativeColor: STRING,
+			zeroAxisColor: STRING
+		) =>
+		
+			// X-axis scale
+			VAR XMin = CALCULATE( MIN( columnRef ), ALLSELECTED() )
+			VAR XMax = CALCULATE( MAX( columnRef ), ALLSELECTED() )
+		
+			// Map the zero point and the current value to the SVG's coordinate system
+			VAR ZeroPoint = DaxLib.SVG.Calc.Normalize( 0, XMin, XMax, 0, width )
+			VAR CurrentValue = SUM( columnRef )
+			VAR ValuePoint =  DaxLib.SVG.Calc.Normalize( CurrentValue, XMin, XMax, 0, width )
+		
+			// Style
+			VAR _PositiveColor = IF( NOT ISBLANK( positiveColor ), positiveColor, "#01B8AA" )
+			VAR _NegativeColor = IF( NOT ISBLANK( negativeColor ), negativeColor, "#FD625E" )
+			VAR _ZeroAxisColor = IF( NOT ISBLANK( zeroAxisColor ), zeroAxisColor, "#A6A6A6" )
+			VAR ZeroAxisStyle =
+				DaxLib.SVG.Style.Common(
+					BLANK(),			// Fill
+					BLANK(),			// FillOpacity
+					_ZeroAxisColor,		// Stroke
+					1,					// StrokeWidth
+					BLANK(),			// StrokeOpacity
+					BLANK()				// Opacity
+				)
+			VAR RectColour = IF( CurrentValue >= 0, _PositiveColor, _NegativeColor )
+			VAR RectStyle =
+				DaxLib.SVG.Style.Common(
+					RectColour,			// Fill
+					BLANK(),			// FillOpacity
+					RectColour,			// Stroke
+					BLANK(),			// StrokeWidth
+					BLANK(),			// StrokeOpacity
+					BLANK()				// Opacity
+				)
+		
+			// Rect
+			VAR RectWidth =  ABS( ValuePoint - ZeroPoint )
+			VAR RectX =		 IF( ValuePoint > ZeroPoint, ZeroPoint, ValuePoint )
+			VAR Rect =
+				DaxLib.SVG.Element.Rect(
+					RectX,             // X
+					height / 4,        // Y
+					RectWidth,         // Width
+					height / 2,        // Height
+					0,                 // RX
+					0,                 // RY
+					RectStyle,         // Style
+					BLANK(),           // Class
+					BLANK()            // Transform
+				)
+		
+			// Zero Axis Line
+			VAR ZeroAxis =
+				DaxLib.SVG.Element.Line(
+					ZeroPoint,         	// X1
+					0,                	// Y1
+					ZeroPoint,          // X2
+					height,				// Y2
+					ZeroAxisStyle,    	// Style
+					BLANK(),            // Class
+					BLANK()             // Transform
+				)
+		
+			RETURN
+		
+				DaxLib.SVG.SVG(
+					width,
+					height,
+					BLANK(),
+					ZeroAxis &
+					Rect,
+					BLANK()
+				)
+	lineageTag: 515ddccb-b3c3-4f5e-9d18-1e29ffca21d5
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Creates a donut/pie chart SVG element
+function 'DaxLib.SVG.DonutChart'
+	lineageTag: d5f2bfb3-69dc-4e13-aee3-2853dc2357f8
+
+/// Creates a heatmap SVG element
+function 'DaxLib.SVG.Heatmap'
+	lineageTag: 7ca48d46-0d9a-4db8-a29d-2c4cf2bfd463
+
+/// Should this be a full theme or just threshold colours?
+function 'DaxLib.SVG.Colour.Theme'
+	lineageTag: b6ede950-e67a-4681-8172-99c696dc99aa
+
+/// Adds animation elements to SVG Elements
+function 'DaxLib.SVG.Animation.Animate'
+	lineageTag: abacea9c-c2b2-41a8-b0da-11ec504ae94d
+
+/// Adds transition effects between states
+function 'DaxLib.SVG.Animation.Transition'
+	lineageTag: d9d161e9-be42-4a4d-ab50-d05dd66c3ba3
+
+/// Creates a grid layout for arranging multiple SVG elements
+/// TODO: test and make sure this makes sense
+/// cols         INT64   Number of columns in the grid
+/// rows         INT64   Number of rows in the grid
+/// cellWidth    INT64   Width of each grid cell
+/// cellHeight   INT64   Height of each grid cell
+/// cellPadding  INT64   Optional: Padding between cells
+/// contents     STRING  Concatenated list of SVG elements to arrange in grid
+/// style        STRING  Optional: Style to apply to grid container
+/// class        STRING  Optional: CSS class to apply to grid container
+function 'DaxLib.SVG.Layout.Grid' =
+		(
+			cols: INT64,
+			rows: INT64,
+			cellWidth: INT64,
+			cellHeight: INT64,
+			cellPadding: INT64,
+			contents: STRING,
+			style: STRING,
+			class: STRING
+		) =>
+		
+			/* Example usage:
+				// Create a 2x2 grid of circles
+				VAR Circle1 = DaxLib.SVG.Element.Circle(25, 25, 20, "fill:red", "", "")
+				VAR Circle2 = DaxLib.SVG.Element.Circle(75, 25, 20, "fill:blue", "", "")
+				VAR Circle3 = DaxLib.SVG.Element.Circle(25, 75, 20, "fill:green", "", "")
+				VAR Circle4 = DaxLib.SVG.Element.Circle(75, 75, 20, "fill:yellow", "", "")
+		
+				RETURN
+				DaxLib.SVG.Layout.Grid(
+					2,              // 2 columns
+					2,              // 2 rows
+					50,             // 50px cell width
+					50,             // 50px cell height
+					10,             // 10px padding between cells
+					Circle1 &       // Concatenate all elements
+					Circle2 &
+					Circle3 &
+					Circle4,
+					"",             // No additional style
+					""              // No CSS class
+				)
+			*/
+		
+			VAR _Padding = IF( ISBLANK( cellPadding ), 0, cellPadding )
+		
+			// Calculate total dimensions
+			VAR _TotalWidth = cols * cellWidth + (cols - 1) * _Padding
+			VAR _TotalHeight = rows * cellHeight + (rows - 1) * _Padding
+		
+			// Create grid container
+			VAR _Container =
+				DaxLib.SVG.Element.Group(
+					contents,
+					BLANK(),     // No transform
+					1      		// Full opacity
+				)
+		
+			// Optional styling elements
+			VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, "" )
+		
+			RETURN
+				DaxLib.SVG.SVG(
+					_Container,
+					0,              // Sort value
+					"",             // Use default viewbox
+					_TotalWidth,    // Container width
+					_TotalHeight,   // Container height
+					"#FFFFFF00"     // Transparent background
+				)
+	lineageTag: 46361891-ab53-4987-a65a-a6eaadd8f378
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Creates a clipping mask definition
+/// TODO would the example work, or does a regular shape need to be used? if regular shape, then need to add parameter to shapes <circle cx="50" cy="50" r="50" fill="red" clip-path="url(#cut-bottom)" />
+/// defId		STRING	The unique identifier for the clip path. (Example: "cut-top", "mask-circle")
+/// Elements: 	STRING	The SVG element(s) that make up the clipping path (typically a single shape)
+function 'DaxLib.SVG.Def.x' =
+		(
+			defId : STRING,
+			elements: STRING,
+		) =>
+		
+			"<clipPath id='" & identifier & "'>" &
+			elements &
+			"</clipPath>"
+	lineageTag: 2770cdd2-8b0d-4d33-a083-ce4e28bce9a0
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+/// Creates a clipping mask definition
+/// defId		STRING	The unique identifier for the clip path. (Example: "cut-top", "mask-circle")
+/// Elements: 	STRING	The SVG element(s) that make up the clipping path (typically a single shape)
+function 'DaxLib.SVG.Def.ClipPath' =
+		(
+			defId : STRING,
+			elements: STRING
+		) =>
+		
+			"<clipPath id='" & defId & "'>" &
+			elements &
+			"</clipPath>"
+	lineageTag: 96c5e25d-03b9-416b-b435-ce5922c24f5f
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
