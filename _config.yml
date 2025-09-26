@@ -22,7 +22,7 @@ favicon_ico: "/assets/img/favicons/favicon.ico"
 # CSS customization
 aux_links:
   "GitHub":
-    - "https://github.com/EvaluationContext/DaxLib.SVG"
+    - "https://github.com/EvaluationContext/daxlib.svg"
 
 aux_links_new_tab: true
 
@@ -49,8 +49,8 @@ plugins:
   - jekyll-include-cache
 
 url: "https://evaluationcontext.github.io"
-baseurl: "/DaxLib.SVG"
-repository: EvaluationContext/DaxLib.SVG
+baseurl: "/daxlib.svg"
+repository: EvaluationContext/daxlib.svg
 
 permalink: pretty
 
