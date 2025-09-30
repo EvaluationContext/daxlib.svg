@@ -1,13 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.2.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
   "name": "6f3d728e14843eeecb84",
   "position": {
-    "x": 59.86197190722347,
-    "y": 356.36580151018973,
-    "z": 3,
-    "height": 323.62878562342689,
-    "width": 1765.9281712630925,
-    "tabOrder": 2
+    "x": 1401.2419068648715,
+    "y": 128.88324592878831,
+    "z": 1000,
+    "height": 890.55415795907106,
+    "width": 400.21639525255318
   },
   "visual": {
     "visualType": "textbox",
@@ -19,69 +18,14 @@
               {
                 "textRuns": [
                   {
-                    "value": "TODO"
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": ""
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "    ",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#d4d4d4"
-                    }
+                    "value": "Investigate "
                   },
                   {
-                    "value": "/// Creates a Violin Plot SVG chart",
+                    "value": "// https://dax.guide/sampleaxiswithlocalminmax/ SAMPLEAXISWITHLOCALMINMAX is used by Power BI to reduce the number of points in a line chart with a continuous (numeric) x-axis ",
                     "textStyle": {
                       "fontFamily": "Consolas, Courier New, monospace",
                       "fontSize": "12px",
                       "color": "#6a9955"
-                    }
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "    ",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#d4d4d4"
-                    }
-                  },
-                  {
-                    "value": "function",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#569cd6"
-                    }
-                  },
-                  {
-                    "value": " ",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#d4d4d4"
-                    }
-                  },
-                  {
-                    "value": "'DaxLib.SVG.ViolinPlot'",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#c586c0"
                     }
                   }
                 ]
@@ -96,19 +40,28 @@
               {
                 "textRuns": [
                   {
-                    "value": "    ",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#d4d4d4"
-                    }
+                    "value": "sparklines"
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "\tsparkline.line - Test with categorical axis"
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "\t"
                   },
                   {
-                    "value": "/// Creates a heatmap SVG element",
+                    "value": "Columns",
                     "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#6a9955"
+                      "fontFamily": "Arial, Helvetica, sans-serif",
+                      "fontSize": "small",
+                      "color": "#222222"
                     }
                   }
                 ]
@@ -116,35 +69,14 @@
               {
                 "textRuns": [
                   {
-                    "value": "    ",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#d4d4d4"
-                    }
+                    "value": "\t"
                   },
                   {
-                    "value": "function",
+                    "value": "Boxplot",
                     "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#569cd6"
-                    }
-                  },
-                  {
-                    "value": " ",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#d4d4d4"
-                    }
-                  },
-                  {
-                    "value": "'DaxLib.SVG.Heatmap'",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#c586c0"
+                      "fontFamily": "Arial, Helvetica, sans-serif",
+                      "fontSize": "small",
+                      "color": "#222222"
                     }
                   }
                 ]
@@ -152,26 +84,14 @@
               {
                 "textRuns": [
                   {
-                    "value": ""
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "    ",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#d4d4d4"
-                    }
+                    "value": "\t"
                   },
                   {
-                    "value": "/// Should this be a full theme or just threshold colours?",
+                    "value": "Violin",
                     "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#6a9955"
+                      "fontFamily": "Arial, Helvetica, sans-serif",
+                      "fontSize": "small",
+                      "color": "#222222"
                     }
                   }
                 ]
@@ -179,36 +99,43 @@
               {
                 "textRuns": [
                   {
-                    "value": "    ",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#d4d4d4"
-                    }
+                    "value": "\t"
                   },
                   {
-                    "value": "function",
+                    "value": "Jitter",
                     "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#569cd6"
+                      "fontFamily": "Arial, Helvetica, sans-serif",
+                      "fontSize": "small",
+                      "color": "#222222"
                     }
-                  },
+                  }
+                ]
+              },
+              {
+                "textRuns": [
                   {
-                    "value": " ",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#d4d4d4"
-                    }
-                  },
+                    "value": "Consider functions for"
+                  }
+                ]
+              },
+              {
+                "textRuns": [
                   {
-                    "value": "'DaxLib.SVG.Colour.Theme'",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#c586c0"
-                    }
+                    "value": "\tAnimation"
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "\tCSS"
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "\tGeneric wrapper and primative function, that accept tags not currently covered by existing functions"
                   }
                 ]
               },
@@ -222,56 +149,28 @@
               {
                 "textRuns": [
                   {
-                    "value": "    ",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#d4d4d4"
-                    }
-                  },
-                  {
-                    "value": "/// Adds animation elements to SVG Elements",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#6a9955"
-                    }
+                    "value": "Docs"
                   }
                 ]
               },
               {
                 "textRuns": [
                   {
-                    "value": "    ",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#d4d4d4"
-                    }
-                  },
+                    "value": "\tExamples/tutorial"
+                  }
+                ]
+              },
+              {
+                "textRuns": [
                   {
-                    "value": "function",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#569cd6"
-                    }
-                  },
+                    "value": "\tinline SVG images"
+                  }
+                ]
+              },
+              {
+                "textRuns": [
                   {
-                    "value": " ",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#d4d4d4"
-                    }
-                  },
-                  {
-                    "value": "'DaxLib.SVG.Animation.Animate'",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#c586c0"
-                    }
+                    "value": "\tget XML syntax highlighting working"
                   }
                 ]
               },
@@ -279,62 +178,6 @@
                 "textRuns": [
                   {
                     "value": ""
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "    ",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#d4d4d4"
-                    }
-                  },
-                  {
-                    "value": "/// Adds transition effects between states",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#6a9955"
-                    }
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "    ",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#d4d4d4"
-                    }
-                  },
-                  {
-                    "value": "function",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#569cd6"
-                    }
-                  },
-                  {
-                    "value": " ",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#d4d4d4"
-                    }
-                  },
-                  {
-                    "value": "'DaxLib.SVG.Animation.Transition'",
-                    "textStyle": {
-                      "fontFamily": "Consolas, Courier New, monospace",
-                      "fontSize": "12px",
-                      "color": "#c586c0"
-                    }
                   }
                 ]
               },

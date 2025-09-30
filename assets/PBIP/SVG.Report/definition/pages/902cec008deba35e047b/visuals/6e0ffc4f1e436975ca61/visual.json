@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "4820f4ddbcebd2fd5440",
+  "name": "6e0ffc4f1e436975ca61",
   "position": {
-    "x": 9.3534331105036674,
-    "y": 88.857614549784842,
-    "z": 0,
-    "height": 104.75845083764108,
-    "width": 1491.872581125335,
-    "tabOrder": 1000
+    "x": 9.6904696187058885,
+    "y": 193.80939237411775,
+    "z": 2000,
+    "height": 603.71625724537682,
+    "width": 1341.1609952288948,
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "tableEx",
@@ -17,17 +17,17 @@
           "projections": [
             {
               "field": {
-                "Measure": {
+                "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "_Measures"
+                      "Entity": "Products"
                     }
                   },
-                  "Property": "Txt"
+                  "Property": "Brand"
                 }
               },
-              "queryRef": "SVG.TXT",
-              "nativeQueryRef": "Txt"
+              "queryRef": "Products.Brand",
+              "nativeQueryRef": "Brand"
             },
             {
               "field": {
@@ -37,11 +37,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Rect"
+                  "Property": "Pill"
                 }
               },
-              "queryRef": "SVG.RECT",
-              "nativeQueryRef": "Rect"
+              "queryRef": "SVG.PILL",
+              "nativeQueryRef": "Pill"
             },
             {
               "field": {
@@ -51,11 +51,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Circle"
+                  "Property": "Total Cost"
                 }
               },
-              "queryRef": "SVG.CIRCLE",
-              "nativeQueryRef": "Circle"
+              "queryRef": "SVG.Sum Value",
+              "nativeQueryRef": "Total Cost"
             },
             {
               "field": {
@@ -65,11 +65,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Line"
+                  "Property": "Bar"
                 }
               },
-              "queryRef": "SVG.LINE",
-              "nativeQueryRef": "Line"
+              "queryRef": "SVG.BAR",
+              "nativeQueryRef": "Bar"
             },
             {
               "field": {
@@ -79,11 +79,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Path"
+                  "Property": "Sparkline.Line"
                 }
               },
-              "queryRef": "SVG.PATH",
-              "nativeQueryRef": "Path"
+              "queryRef": "SVG.Sparkline.Line",
+              "nativeQueryRef": "Sparkline.Line"
             },
             {
               "field": {
@@ -93,11 +93,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Use"
+                  "Property": "Sparkline.Area"
                 }
               },
-              "queryRef": "SVG.USE",
-              "nativeQueryRef": "Use"
+              "queryRef": "_Measures.Sparkline.Area",
+              "nativeQueryRef": "Sparkline.Area"
             },
             {
               "field": {
@@ -107,42 +107,31 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Linear Gradient"
+                  "Property": "Sparkline.Heatmap"
                 }
               },
-              "queryRef": "SVG.Linear Gradient",
-              "nativeQueryRef": "Linear Gradient"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Radial Gradient"
-                }
-              },
-              "queryRef": "SVG.Radial Gradient",
-              "nativeQueryRef": "Radial Gradient"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Clip Path"
-                }
-              },
-              "queryRef": "SVG.Pattern Fill",
-              "nativeQueryRef": "Clip Path"
+              "queryRef": "_Measures.Sparkline.Heatmap",
+              "nativeQueryRef": "Sparkline.Heatmap"
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measures"
+                  }
+                },
+                "Property": "Total Cost"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
       }
     },
     "objects": {
@@ -207,7 +196,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Elements'"
+                  "Value": "'Visuals'"
                 }
               }
             }

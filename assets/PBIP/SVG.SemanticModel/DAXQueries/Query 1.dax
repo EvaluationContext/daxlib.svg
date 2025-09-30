@@ -1,0 +1,109 @@
+DEFINE
+FUNCTION DaxLib.SVG.Sparkline.Line.Enhanced =
+			(
+				width: INT64,
+				height: INT64,
+				contextTable: ANYREF EXPR,
+				xAxis: ANYREF EXPR,
+				measureRef: NUMERIC EXPR,
+				lineColour: STRING
+			) =>
+			
+				// Detect if xAxis is numeric or categorical
+				VAR _xAxisSample = 	MAX( xAxis )
+				VAR _IsNumeric = 	ISNUMERIC( _xAxisSample ) || ISDATETIME( _xAxisSample )
+
+				// Axis Scale
+				VAR _AllData = 
+					DaxLib.SVG.Util.NormalizeAxisAllSelected(
+						contextTable,
+						xAxis,
+						measureRef,
+						_IsNumeric
+					)
+						
+				VAR _XMin = 	MINX( _AllData, [XValue] )
+				VAR _XMax = 	MAXX( _AllData, [XValue] )
+				VAR _RawYMin = 	MINX( _AllData, [Value] )
+				VAR _YMin = 	IF( _RawYMin > 0, 0, _RawYMin )
+				VAR _YMax = 	MAXX( _AllData, [Value] )
+				
+				// Data in Context
+				VAR _Data = 
+						DaxLib.SVG.Util.NormalizeAxis(
+							CALCULATETABLE( contextTable ),
+							xAxis,
+							measureRef,
+							_IsNumeric
+						)
+
+				// Generate points
+				VAR _Points = 
+					CONCATENATEX(
+						_Data,
+						IF( 
+							NOT ISBLANK( [Value] ), 
+							COMBINEVALUES( 
+								",", 
+								ROUND( DaxLib.SVG.Scale.Normalize( [XValue], _XMin, _XMax, 0, width ), 2 ), 
+								ROUND( DaxLib.SVG.Scale.Normalize( [Value], _YMin, _YMax, height, 0 ), 2 )
+							)
+						),
+						" ",
+						[XValue],
+						ASC
+					)
+
+				// Style
+				VAR _LineStyle =
+					DaxLib.SVG.Attr.Shapes(
+						"none",
+						BLANK(),
+						BLANK(),
+						IF( NOT ISBLANK( lineColour ), lineColour, "#01B8AA" ),
+						2,
+						BLANK(),
+						BLANK()
+					)
+
+				VAR _Padding = 0.05
+
+				// Line Element
+				VAR _LineElement =
+					DaxLib.SVG.Element.Polyline(
+						_Points,
+						_LineStyle,
+						BLANK()
+					)
+
+				// SVG
+				VAR _SVG =
+					DaxLib.SVG.SVG(
+						width,
+						height,
+						COMBINEVALUES( " ", - width * ( _Padding / 2 ), 0, width * ( 1 + _Padding ), height),
+						_LineElement,
+						BLANK()
+					)
+
+				RETURN
+					
+					COMBINEVALUES( " ", _XMin, _XMax, _YMin, _YMax )
+					// IF( NOT ISEMPTY( _Data ), _SVG )
+
+EVALUATE
+ADDCOLUMNS(
+	SUMMARIZE( SVG, SVG[Category], SVG[Subcategory] ),
+	"x", 
+	DaxLib.SVG.Sparkline.Line.Enhanced(
+		100,                // width
+		20,                 // height
+		SUMMARIZE( SVG, SVG[Category], SVG[Subcategory], SVG[FOMONTH] ), // contextTable
+		SVG[FOMONTH],       // xAxis
+		[Sum Value],        // measureVal
+		DaxLib.SVG.Colour.Theme(
+			MAX( Theme[Theme] ),
+			MIN( Variant[Variant] )
+		)                   // lineColour
+	)
+)
