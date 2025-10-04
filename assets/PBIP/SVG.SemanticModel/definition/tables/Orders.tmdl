@@ -152,9 +152,9 @@ table Orders
 		source =
 				
 				DataGoblins.SampleData.Orders(
-				    100,                    // Generate 100 orders
-				    DATE(2025, 09, 01),    // Start date
-				    DATE(2025, 09, 18),    // End date
+				    100,                   // Generate 100 orders
+				    DATE(2025, 08, 01),    // Start date
+				    DATE(2025, 10, 01),    // End date
 				    100,                   // 100 unique customers
 				    250,                   // 250 unique products
 				    5,                     // 5 store locations

@@ -1,0 +1,84 @@
+	/// Creates a Jitter Plot Sparkline SVG Visual showing individual data points with horizontal displacement
+	/// WARNING: contextTable should match the columns of the visual that the measure will be called in
+	/// width          INT64           The width of the SVG canvas
+	/// height         INT64           The height of the SVG canvas
+	/// contextTable   ANYREF EXPR     The table to evaluate values against
+	/// measureRef     NUMERIC EXPR    The measure to visualize
+	/// jitterAmount   NUMERIC         Amount of horizontal jitter (0-1)
+	/// pointSize      INT64           Radius of data points in pixels
+	/// pointColour    STRING          Fill color for data points
+	/// pointOpacity   NUMERIC         Opacity of data points (0-1)
+	function 'DaxLib.SVG.Sparkline.Jitter' =
+			(
+				width: INT64,
+				height: INT64,
+				contextTable: ANYREF EXPR,
+				measureRef: NUMERIC EXPR,
+				jitterAmount: NUMERIC,
+				pointSize: INT64,
+				pointColour: STRING,
+				pointOpacity: NUMERIC
+			) =>
+			
+				// Calculate values with row numbers for pseudo-random positioning
+				VAR _FilteredContext = 
+					FILTER(
+						KEEPFILTERS( contextTable ),
+						NOT ISBLANK( measureRef )
+					)
+
+				VAR _Values = 
+					ADDCOLUMNS(
+						_FilteredContext,
+						"@Value", measureRef,
+						"@RowNum", ROWNUMBER( _FilteredContext, ORDERBY( measureRef, ASC ) )
+					)
+
+				VAR _Min = 			MINX( _Values, [@Value] )
+				VAR _Max = 			MAXX( _Values, [@Value] )
+
+				// Calculate jitter parameters for vertical displacement around center
+				VAR _CenterY = 		height / 2
+				VAR _JitterHeightRange = height * jitterAmount  // Vertical jitter range based on jitterAmount
+				
+				VAR _Points = 
+					CONCATENATEX(
+						_Values,
+						VAR _Seed = 		MOD( [@RowNum] * 2654435761, 4294967296 ) / 4294967296  // Linear Congruential Generator
+						VAR _X = 			DaxLib.SVG.Scale.Normalize( [@Value], _XMin, _XMax, width * 0.05, width * 0.95 )  // X based on measure value using global scale
+						VAR _JitterY = 		_CenterY + (_Seed - 0.5) * _JitterHeightRange  // Y jittered around center
+						RETURN
+							DaxLib.SVG.Element.Circle(
+								_X,                     // cx - X position based on measure value
+								_JitterY,               // cy - vertically jittered around center
+								pointSize,              // r
+								DaxLib.SVG.Attr.Shapes(
+									pointColour,         // fill
+									pointOpacity,       // fillOpacity
+									BLANK(),            // fillRule
+									BLANK(),            // stroke
+									BLANK(),            // strokeWidth
+									BLANK(),            // strokeOpacity
+									BLANK()             // opacity
+								),
+								BLANK()                 // transforms
+							),
+						""
+					)
+
+				VAR _SVG = 
+					DaxLib.SVG.SVG(
+						width,
+						height,
+						BLANK(),
+						_Points,
+						BLANK()
+					)
+
+				RETURN
+
+					IF( NOT ISEMPTY( _Values ), _SVG )
+
+		annotation DAXLIB_PackageId = DaxLib.SVG
+
+		annotation DAXLIB_PackageVersion = 0.1.2-beta

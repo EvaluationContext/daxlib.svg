@@ -27,168 +27,6 @@ createOrReplace
 
 		annotation DAXLIB_PackageVersion = 0.1.2-beta
 
-	/// Converts percentage to angle for circular visualizations
-	/// perc			SCALAR Double VAL	Percentage value (0-100)
-	/// startAngle 		SCALAR VAL int64	Starting angle in degrees (default -90 for top)
-	/// sweepAngle		SCALAR VAL int64	Total sweep angle in degrees (default 360 for full circle)
-	function 'DaxLib.SVG.Scale.AngleFromPercent' = 
-			(
-				perc : SCALAR Double VAL,
-				startAngle : SCALAR int64 VAL,
-				sweepAngle : SCALAR int64 VAL
-			) =>
-				
-				startAngle + ( perc / 100 * sweepAngle )
-
-		annotation DAXLIB_PackageId = DaxLib.SVG
-
-		annotation DAXLIB_PackageVersion = 0.1.2-beta
-
-	/// Generates path data for arc segments used in donut and gauge charts
-	/// cx				SCALAR VAL	Center X position in pixels
-	/// cy				SCALAR VAL	Center Y position in pixels
-	/// radius			SCALAR VAL	Outer radius in pixels
-	/// startAngle		SCALAR VAL	Starting angle in degrees (0 = right, 90 = bottom)
-	/// endAngle		SCALAR VAL	Ending angle in degrees
-	/// innerRadius		SCALAR VAL	Inner radius for donut effect (0 for pie slice)
-	function 'DaxLib.SVG.Scale.ArcPath' = 
-			(
-				cx : SCALAR VAL,
-				cy : SCALAR VAL,
-				radius : SCALAR VAL,
-				startAngle : SCALAR VAL,
-				endAngle : SCALAR VAL,
-				innerRadius : SCALAR VAL
-			) =>
-
-				VAR _StartRad = startAngle * PI() / 180
-				VAR _EndRad = 	endAngle * PI() / 180
-				VAR _LargeArc = IF( endAngle - startAngle > 180, 1, 0 )
-
-				VAR _X1 = 	cx + radius * COS (_StartRad )
-				VAR _Y1 = 	cy + radius * SIN (_StartRad )
-				VAR _X2 = 	cx + radius * COS (_EndRad )
-				VAR _Y2 = 	cy + radius * SIN (_EndRad )
-
-				VAR _InnerX1 = 	cx + innerRadius * COS( _StartRad )
-				VAR _InnerY1 = 	cy + innerRadius * SIN( _StartRad )
-				VAR _InnerX2 = 	cx + innerRadius * COS( _EndRad )
-				VAR _InnerY2 = 	cy + innerRadius * SIN( _EndRad )
-
-				RETURN
-					IF(
-						innerRadius > 0,
-						"M " & _InnerX1 & " " & _InnerY1 &
-						" L " & _X1 & " " & _Y1 &
-						" A " & radius & " " & radius &
-						" 0 " & _LargeArc & " 1 " &
-						_X2 & " " & _Y2 &
-						" L " & _InnerX2 & " " & _InnerY2 &
-						" A " & innerRadius & " " & innerRadius &
-						" 0 " & _LargeArc & " 0 " &
-						_InnerX1 & " " & _InnerY1 & " Z",
-						"M " & cx & " " & cy &
-						" L " & _X1 & " " & _Y1 &
-						" A " & radius & " " & radius &
-						" 0 " & _LargeArc & " 1 " &
-						_X2 & " " & _Y2 & " Z"
-					)
-
-		annotation DAXLIB_PackageId = DaxLib.SVG
-
-		annotation DAXLIB_PackageVersion = 0.1.2-beta
-
-	/// Calculate the maximum for a value plotted on an SVG Chart
-	/// Handles both category crossfiltering and (sub) totals
-	/// columnRef		ANYREF EXPR		The scope of the data for which the SVG will be used, Expects a table expression
-	/// measureVal		EXPR,			The actual you will measure, expects a measure reference
-	function 'DaxLib.SVG.Scale.AxisMax' = 
-			(
-				columnRef : ANYREF EXPR,
-				measureVal : EXPR
-			) =>
-				
-				VAR _TotalScope = ALL ( columnRef )
-
-				-- Calculates the highest value in the data scope
-				VAR _MaxInScope =
-					CALCULATE(
-						MAXX( _TotalScope, measureVal ),
-						_TotalScope
-					)
-
-				-- Calculates the total for the data scope
-				VAR _MaxOverall =
-					CALCULATE (
-						measureVal,
-						_TotalScope
-					)
-
-				-- Configures axis for categories if one is selected, otherwise for the total
-				VAR _Max =
-					IF (
-						HASONEVALUE ( columnRef ),
-						_MaxInScope,
-						_MaxOverall
-					)
-
-				RETURN _Max 
-
-		annotation DAXLIB_PackageId = DaxLib.SVG
-
-		annotation DAXLIB_PackageVersion = 0.1.2-beta
-
-	/// Calculate the minimum for a value plotted on an SVG
-	/// columnRef		ANYREF			The scope of the data for which the SVG will be used, Expects a table expression
-	/// measureVal		EXPR			The actual you will measure, expects a measure reference
-	function 'DaxLib.SVG.Scale.AxisMin' =
-			(
-				columnRef : ANYREF,
-				measureVal : EXPR
-			) =>  
-			
-				VAR _TotalScope = ALL ( columnRef )
-				VAR _MinInScope =
-					CALCULATE(
-						MINX(
-							_TotalScope,
-							measureVal
-						),
-						_TotalScope
-					)
-
-				RETURN  _MinInScope
-
-	/// Returns a colour based on where a value falls within defined thresholds
-	/// inputValue		SCALAR VAL	The value to evaluate
-	/// thresholdLow	SCALAR VAL	Lower threshold value
-	/// thresholdHigh	SCALAR VAL	Upper threshold value
-	/// low				STRING		STRING for values <= thresholdLow
-	/// mid				STRING		STRING for values between thresholds
-	/// high			STRING		STRING for values >= thresholdHigh	
-	function 'DaxLib.SVG.Scale.StringByThreshold' =
-			(
-				inputValue : SCALAR VAL,
-				thresholdLow : SCALAR VAL,
-				thresholdHigh : SCALAR VAL,
-				colourLow : SCALAR VAL,
-				colourMid : SCALAR VAL,
-				colourHigh : SCALAR VAL
-			) =>
-
-				SWITCH(
-					true,
-					inputValue <= thresholdLow, 
-						colourLow,
-					inputValue >= thresholdHigh, 
-						colourHigh,
-					colourMid
-				)
-
-		annotation DAXLIB_PackageId = DaxLib.SVG
-
-		annotation DAXLIB_PackageVersion = 0.1.2-beta
-
 	/// Map a value from one value scale to another
 	/// Used for scaling values to fit within SVG dimensions
 	/// inputValue		NUMERIC	VAL		The value to map
@@ -874,7 +712,7 @@ createOrReplace
 				colour: STRING
 			) =>
 
-			VAR Pill = 
+			VAR _Pill = 
 				DaxLib.SVG.Element.Rect(
 					1,                 	// x
 					1,                 	// y
@@ -894,7 +732,7 @@ createOrReplace
 					BLANK()           	// transforms
 				)
 
-			VAR TextElement = 
+			VAR _TextElement = 
 				DaxLib.SVG.Element.Txt(
 					width * 0.50,      	// x
 					height * 0.58,     	// y
@@ -924,16 +762,19 @@ createOrReplace
 					BLANK()				// transforms
 				)
 
+			VAR _SVG = 
+				DaxLib.SVG.SVG(
+					width,
+					height,
+					BLANK(),
+					_Pill & 
+					_TextElement,
+					BLANK()
+				)
+
 			RETURN
 			
-			DaxLib.SVG.SVG(
-				width,
-				height,
-				BLANK(),
-				Pill & 
-				TextElement,
-				BLANK()
-			)
+				IF( NOT ISBLANK( txt ), _SVG )
 
 		annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1098,55 +939,49 @@ createOrReplace
 		annotation DAXLIB_PackageVersion = 0.1.2-beta
 
 	/// Create a bar for a given column
-	/// width			INT64		The width of the SVG canvas
-	/// height			INT64		The height of the SVG canvas
-	/// columnRef		AnyRef		The column to visualize
-	/// positiveColor	STRING		The Hex color of the positive bar i.e "#01B8AA"
-	/// negativeColor	STRING		The Hex color of the negative bar i.e "#FD625E"
-	/// zeroAxisColor	STRING		The Hex color of the zero axis i.e "#A6A6A6"
+	/// width			INT64			The width of the SVG canvas
+	/// height			INT64			The height of the SVG canvas
+	/// columnRef		ANYREF EXPR		The context the measure will be evaluated in
+	/// measureRef		NUMERIC EXPR    The measure to evaluate
+	/// positiveColour	STRING			The Hex colour of the positive bar i.e "#01B8AA"
+	/// negativeColour	STRING			The Hex colour of the negative bar i.e "#FD625E"
+	/// zeroAxisColour	STRING			The Hex colour of the zero axis i.e "#A6A6A6"
 	function 'DaxLib.SVG.Sparkline.Bar' = 
 			(
 				width: INT64,
 				height: INT64,
 				columnRef: ANYREF EXPR,
-				measureVal: NUMERIC EXPR,
-				positiveColor: STRING,
-				negativeColor: STRING,
-				zeroAxisColor: STRING
+				measureRef: NUMERIC EXPR,
+				positiveColour: STRING,
+				negativeColour: STRING,
+				zeroAxisColour: STRING
 			) =>
 
 				// Calculate current value
-				VAR _CurrentValue = measureVal
+				VAR _CurrentValue = measureRef
 				
 				// Use scale functions for axis calculations
-				VAR _RawXMin =  	DaxLib.SVG.Scale.AxisMin( columnRef, measureVal )
-				VAR _XMax =   		DaxLib.SVG.Scale.AxisMax( columnRef, measureVal )
-				
-				// Always start from 0 unless the minimum value is negative
-				VAR _XMin =        IF( _RawXMin < 0, _RawXMin, 0 )
-				
-				// Ensure max is at least 0 if min is 0
-				VAR _AdjustedXMax = IF( _XMin == 0 && _XMax <= 0, 0.1, _XMax )
+				VAR _RawXMin =  	CALCULATE( MINX( VALUES( columnRef ), measureRef ), ALLSELECTED( columnRef ) )
+				VAR _XMin =        	IF( _RawXMin < 0, _RawXMin, 0 )
+				VAR _RawXMax =   	CALCULATE( MAXX( VALUES( columnRef ), measureRef ), ALLSELECTED( columnRef ) )
+				VAR _XMax = 		IF( _XMin == 0 && _RawXMax <= 0, 0.1, _RawXMax )			
 			
 				// Map the zero point and the current value to the SVG's coordinate system
-				VAR _ZeroPoint = 	DaxLib.SVG.Scale.Normalize( 0, _XMin, _AdjustedXMax, 0, width )
-				VAR _ValuePoint =  	DaxLib.SVG.Scale.Normalize( _CurrentValue, _XMin, _AdjustedXMax, 0, width )
+				VAR _ZeroPoint = 	DaxLib.SVG.Scale.Normalize( 0, _XMin, _XMax, 0, width )
+				VAR _ValuePoint =  	DaxLib.SVG.Scale.Normalize( _CurrentValue, _XMin, _XMax, 0, width )
 
 				// Style
-				VAR _PositiveColor = IF( NOT ISBLANK( positiveColor ), positiveColor, "#01B8AA" )
-				VAR _NegativeColor = IF( NOT ISBLANK( negativeColor ), negativeColor, "#FD625E" )
-				VAR _ZeroAxisColor = IF( NOT ISBLANK( zeroAxisColor ), zeroAxisColor, "#A6A6A6" )
 				VAR _ZeroAxisStyle =
 					DaxLib.SVG.Attr.Shapes(
 						BLANK(),			// Fill
 						BLANK(),			// FillOpacity
 						BLANK(),			// FillRule
-						_ZeroAxisColor,		// Stroke
+						zeroAxisColour,		// Stroke
 						1,					// StrokeWidth
 						BLANK(),			// StrokeOpacity
 						BLANK()				// Opacity
 					)
-				VAR _Rectcolour = IF( _CurrentValue >= 0, _PositiveColor, _NegativeColor )
+				VAR _Rectcolour = IF( _CurrentValue >= 0, positiveColour, negativeColour )
 				VAR _RectAttributes =
 					DaxLib.SVG.Attr.Shapes(
 						_Rectcolour,		// fill
@@ -1186,8 +1021,7 @@ createOrReplace
 
 				VAR _Padding = 0.05
 
-				RETURN 
-					
+				VAR _SVG = 
 					DaxLib.SVG.SVG(
 						width,				// width
 						height,				// height
@@ -1197,108 +1031,347 @@ createOrReplace
 						BLANK()				// sortValue
 					)
 
+				RETURN 
+
+					IF( NOT ISBLANK( _CurrentValue) , _SVG )	
+					
+
 		annotation DAXLIB_PackageId = DaxLib.SVG
 
 		annotation DAXLIB_PackageVersion = 0.1.2-beta
 
-	/// Creates a Line Sparkline SVG Visual with optional context detection
+	/// Creates a Line Sparkline SVG Visual for a numeric axis
 	/// WARNING: contextTable should match the columns of the visual that the measure will be called in
-	/// width          INT64           The width of the SVG canvas
-	/// height         INT64           The height of the SVG canvas
-	/// contextTable   ANYREF EXPR     Optional: The table to evaluate axis min and max against
-	/// xAxis          ANYREF EXPR     The column to visualize
-	/// measureRef     NUMERIC EXPR    The measure to visualize
-	/// lineColour     STRING          The Hex colour of the line i.e "#01B8AA"
+	/// width          INT64           	The width of the SVG canvas
+	/// height         INT64           	The height of the SVG canvas
+	/// contextTable   ANYREF EXPR     	The context the measure will be evaluated in
+	/// axisRef        ANYREF EXPR     	The column that the measure will be evaluated against
+	/// measureRef     NUMERIC EXPR    	The measure to evaluate
+	/// lineColour     STRING          	The Hex colour of the line i.e "#01B8AA"
 	function 'DaxLib.SVG.Sparkline.Line' =
 			(
 				width: INT64,
 				height: INT64,
 				contextTable: ANYREF EXPR,
-				xAxis: ANYREF EXPR,
+				axisRef: ANYREF EXPR,
 				measureRef: NUMERIC EXPR,
 				lineColour: STRING
 			) =>
 			
-				// Detect if xAxis is numeric or categorical
-				VAR _xAxisSample = 	MAX( xAxis )
-				VAR _IsNumeric = 	ISNUMERIC( _xAxisSample ) || ISDATETIME( _xAxisSample )
-
-				// Axis Scale
-				VAR _AllData = 
-					DaxLib.SVG.Util.NormalizeAxisAllSelected(
-						contextTable,
-						xAxis,
-						measureRef,
-						_IsNumeric
+				// Replace contextTable with Index
+				VAR _ContextTableIndex =
+					ADDCOLUMNS(
+						CALCULATETABLE(
+							FILTER(
+								KEEPFILTERS( contextTable ),
+								NOT ISBLANK( measureRef )
+							),
+							ALLSELECTED()
+						),
+						"@Index", RANK( DENSE, CALCULATETABLE( contextTable, ALLSELECTED() ) )
 					)
-						
-				VAR _XMin = 	MINX( _AllData, [XValue] )
-				VAR _XMax = 	MAXX( _AllData, [XValue] )
-				VAR _RawYMin = 	MINX( _AllData, [Value] )
-				VAR _YMin = 	IF( _RawYMin > 0, 0, _RawYMin )
-				VAR _YMax = 	MAXX( _AllData, [Value] )
-				
-				// Data in Context
-				VAR _Data = 
-						DaxLib.SVG.Util.NormalizeAxis(
-							CALCULATETABLE( contextTable ),
-							xAxis,
-							measureRef,
-							_IsNumeric
-						)
 
-				// Generate points
+				VAR _currentIndex =
+					MAXX(
+						NATURALINNERJOIN(
+							_ContextTableIndex,
+							CALCULATETABLE( contextTable )
+						),
+						[@Index]
+					)
+
+				// Add in axisRef and evaulate measure
+				VAR _Data = 
+					FILTER(
+						ADDCOLUMNS(
+							GENERATE(
+								_ContextTableIndex,
+								VALUES( axisRef )
+							),
+							"@Value", measureRef
+						),
+						NOT ISBLANK( [@Value] )
+					)
+				
+				VAR _XMin = 	MINX( _Data, axisRef )
+				VAR _XMax = 	MAXX( _Data, axisRef )
+				VAR _RawYMin = 	MINX( _Data, [@Value] )
+				VAR _YMin = 	IF( _RawYMin > 0, 0, _RawYMin )
+				VAR _YMax = 	MAXX( _Data, [@Value] )
+
+				// Filter to current context
+				VAR _DataPerCurrentContext =
+					FILTER(
+						_Data,
+						[@Index] = _currentIndex
+					)
+
+				// Multiple Points
 				VAR _Points = 
 					CONCATENATEX(
-						_Data,
+						_DataPerCurrentContext,
 						IF( 
-							NOT ISBLANK( [Value] ), 
+							NOT ISBLANK( [@Value] ), 
 							COMBINEVALUES( 
 								",", 
-								DaxLib.SVG.Scale.Normalize( [XValue], _XMin, _XMax, 0, width ), 
-								DaxLib.SVG.Scale.Normalize( [Value], _YMin, _YMax, height, 0 )
+								DaxLib.SVG.Scale.Normalize( axisRef, _XMin, _XMax, 0, width ), 
+								DaxLib.SVG.Scale.Normalize( [@Value], _YMin, _YMax, height, 0 )
 							)
 						),
 						" ",
-						[XValue],
+						axisRef,
 						ASC
 					)
 
-				// Style
-				VAR _LineStyle =
-					DaxLib.SVG.Attr.Shapes(
-						"none",
-						BLANK(),
-						BLANK(),
-						IF( NOT ISBLANK( lineColour ), lineColour, "#01B8AA" ),
-						2,
-						BLANK(),
-						BLANK()
+				// Line Element
+				VAR _LineElement = 
+					IF(
+						COUNTROWS( _DataPerCurrentContext ) = 1,
+						DaxLib.SVG.Element.Circle(
+							DaxLib.SVG.Scale.Normalize( MAXX( _DataPerCurrentContext, axisRef ), _XMin, _XMax, 0, width ),     // cx
+							DaxLib.SVG.Scale.Normalize( MAXX( _DataPerCurrentContext, [@Value] ), _YMin, _YMax, height, 0 ), // cy
+							"3%",               // r
+							DaxLib.SVG.Attr.Shapes(
+								lineColour,     // fill
+								BLANK(),        // fillOpacity
+								BLANK(),        // fillRule
+								BLANK(),        // stroke
+								BLANK(),        // strokeWidth
+								BLANK(),        // strokeOpacity
+								BLANK()         // opacity
+							),
+							BLANK()             // transforms
+						),
+						DaxLib.SVG.Element.Polyline(
+								_Points,
+								DaxLib.SVG.Attr.Shapes(
+								"none",
+								BLANK(),
+								BLANK(),
+								IF( NOT ISBLANK( lineColour ), lineColour, "#01B8AA" ),
+								1,
+								BLANK(),
+								BLANK()
+							),
+							BLANK()
+						)
+					)
+						
+					// SVG
+					VAR _Padding = 0.05
+					VAR _SVG =
+						DaxLib.SVG.SVG(
+							width,
+							height,
+							COMBINEVALUES( " ", - width * ( _Padding / 2 ), 0, width * ( 1 + _Padding ), height),
+							_LineElement,
+							BLANK()
+						)
+
+					RETURN
+
+						IF( NOT ISEMPTY( _DataPerCurrentContext ), _SVG )
+
+		annotation DAXLIB_PackageId = DaxLib.SVG
+
+		annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+	/// Creates an Area Sparkline SVG Visual for a numeric x-axis
+	/// WARNING: contextTable should match the columns of the visual that the measure will be called in
+	/// width          INT64           	The width of the SVG canvas
+	/// height         INT64           	The height of the SVG canvas
+	///	contextTable   ANYREF EXPR     	The context the measure will be evaluated in
+	/// axisRef        ANYREF EXPR   	The column that the measure will be evaluated against
+	/// measureRef     NUMERIC EXPR    	The measure to evaluate
+	/// fillColour     STRING          	The colour of the area fill i.e "#01B8AA"
+	/// fillOpacity    NUMERIC         	The opacity of the fill (0-1), defaults to 0.3
+	/// strokeColour   STRING          	The colour of the stroke line
+	function 'DaxLib.SVG.Sparkline.Area' =
+			(
+				width: INT64,
+				height: INT64,
+				contextTable: ANYREF EXPR,
+				axisRef: ANYREF EXPR,
+				measureRef: NUMERIC EXPR,
+				fillColour: STRING,
+				fillOpacity: NUMERIC,
+				strokeColour: STRING
+			) =>
+			
+				// Replace contextTable with Index
+				VAR _ContextTableIndex =
+					ADDCOLUMNS(
+						CALCULATETABLE(
+							FILTER(
+								KEEPFILTERS( contextTable ),
+								NOT ISBLANK( measureRef )
+							),
+							ALLSELECTED()
+						),
+						"@Index", RANK( DENSE, CALCULATETABLE( contextTable, ALLSELECTED() ) )
 					)
 
-				VAR _Padding = 0.05
+				VAR _currentIndex =
+					MAXX(
+						NATURALINNERJOIN(
+							_ContextTableIndex,
+							CALCULATETABLE( contextTable )
+						),
+						[@Index]
+					)
 
-				// Line Element
-				VAR _LineElement =
+				// Add in axisRef and evaulate measure
+				VAR _Data = 
+					FILTER(
+						ADDCOLUMNS(
+							GENERATE(
+								_ContextTableIndex,
+								VALUES( axisRef )
+							),
+							"@Value", measureRef
+						),
+						NOT ISBLANK( [@Value] )
+					)
+				
+				VAR _XMin = 	MINX( _Data, axisRef )
+				VAR _XMax = 	MAXX( _Data, axisRef )
+				VAR _RawYMin = 	MINX( _Data, [@Value] )
+				VAR _YMin = 	IF( _RawYMin > 0, 0, _RawYMin )
+				VAR _YMax = 	MAXX( _Data, [@Value] )
+
+				// Filter to current context
+				VAR _DataPerCurrentContext =
+					FILTER(
+						_Data,
+						[@Index] = _currentIndex
+					)
+
+				// Calculate baseline Y position (for zero line or bottom)
+				VAR _BaselineY = DaxLib.SVG.Scale.Normalize( _YMin, _YMin, _YMax, height, 0 )
+
+				// Get first and last X positions
+				VAR _FirstX = 
+					MINX(
+						FILTER( _DataPerCurrentContext, NOT ISBLANK( [@Value] ) ),
+						DaxLib.SVG.Scale.Normalize( axisRef, _XMin, _XMax, 0, width )
+					)
+				
+				VAR _LastX = 
+					MAXX(
+						FILTER( _DataPerCurrentContext, NOT ISBLANK( [@Value] ) ),
+						DaxLib.SVG.Scale.Normalize( axisRef, _XMin, _XMax, 0, width )
+					)
+
+				// Generate points for the area polygon
+				// Start at baseline (bottom left), go up the data line, then back down to baseline
+				VAR _PolygonPoints = 
+					// Start at first X position at baseline
+					_FirstX & "," & _BaselineY
+					// Add all the data points (the top line)
+					& " " & 
+					CONCATENATEX(
+						_DataPerCurrentContext,
+						IF( 
+							NOT ISBLANK( [@Value] ), 
+							COMBINEVALUES( 
+								",", 
+								DaxLib.SVG.Scale.Normalize( axisRef, _XMin, _XMax, 0, width ), 
+								DaxLib.SVG.Scale.Normalize( [@Value], _YMin, _YMax, height, 0 )
+							)
+						),
+						" ",
+						axisRef,
+						ASC
+					)
+					// End at last X position at baseline
+					& " " & _LastX & "," & _BaselineY
+
+				// Generate points for just the top line (for optional stroke)
+				VAR _TopPoints = 
+					CONCATENATEX(
+						_DataPerCurrentContext,
+						IF( 
+							NOT ISBLANK( [@Value] ), 
+							COMBINEVALUES( 
+								",", 
+								DaxLib.SVG.Scale.Normalize( axisRef, _XMin, _XMax, 0, width ), 
+								DaxLib.SVG.Scale.Normalize( [@Value], _YMin, _YMax, height, 0 )
+							)
+						),
+						" ",
+						axisRef,
+						ASC
+					)
+
+				// Area Element (using polygon for filled area)
+				VAR _AreaElement =
+					DaxLib.SVG.Element.Polygon(
+						_PolygonPoints,
+						DaxLib.SVG.Attr.Shapes(
+							IF( NOT ISBLANK( fillColour ), fillColour, "#01B8AA" ), // fill
+							IF( NOT ISBLANK( fillOpacity ), fillOpacity, 0.3 ),     // fillOpacity
+							BLANK(),      	// fillRul
+							"none",         // stroke
+							0,              // strokeWidth
+							BLANK(),        // strokeOpacity
+							BLANK()         // opacity
+						),
+						BLANK()				// transforms
+					)
+
+				// stroke line on top of the area
+				VAR _StrokeElement = 
 					DaxLib.SVG.Element.Polyline(
-						_Points,
-						_LineStyle,
-						BLANK()
+						_TopPoints,			// ppints
+						DaxLib.SVG.Attr.Shapes(
+							"none",			// fill
+							BLANK(),		// fillOpacity
+							BLANK(),		// fillRule
+							strokeColour,	// stroke
+							1,			// strokeWidth
+							BLANK(),		// strokeOpacity
+							BLANK()			// opacity
+						),
+						BLANK()				// transforms
+					)
+
+				// Combine elements
+				VAR _CombinedElements = 
+					IF(
+						COUNTROWS( _DataPerCurrentContext ) = 1,
+						DaxLib.SVG.Element.Circle(
+							DaxLib.SVG.Scale.Normalize( MAXX( _DataPerCurrentContext, axisRef ), _XMin, _XMax, 0, width ),     // cx
+							DaxLib.SVG.Scale.Normalize( MAXX( _DataPerCurrentContext, [@Value] ), _YMin, _YMax, height, 0 ), // cy
+							"3%",               // r
+							DaxLib.SVG.Attr.Shapes(
+								fillColour,     // fill
+								BLANK(),        // fillOpacity
+								BLANK(),        // fillRule
+								BLANK(),        // stroke
+								BLANK(),        // strokeWidth
+								BLANK(),        // strokeOpacity
+								BLANK()         // opacity
+							),
+							BLANK()             // transforms
+						),
+						_AreaElement &
+						_StrokeElement
 					)
 
 				// SVG
+				VAR _Padding = 0.05
 				VAR _SVG =
 					DaxLib.SVG.SVG(
 						width,
 						height,
 						COMBINEVALUES( " ", - width * ( _Padding / 2 ), 0, width * ( 1 + _Padding ), height),
-						_LineElement,
+						_CombinedElements,
 						BLANK()
 					)
 
 				RETURN
-
-					IF( NOT ISEMPTY( _Data ), _SVG )
+				
+					IF( NOT ISEMPTY( _DataPerCurrentContext ), _SVG )
 
 		annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1308,90 +1381,96 @@ createOrReplace
 	/// WARNING: contextTable should match the columns of the visual that the measure will be called in
 	/// width          INT64           The width of the SVG canvas
 	/// height         INT64           The height of the SVG canvas
-	/// contextTable   ANYREF EXPR     The table to evaluate
-	/// xAxis          ANYREF EXPR     The column to visualize
-	/// measureRef     NUMERIC EXPR    The measure to visualize
+	/// contextTable   ANYREF EXPR     The context the measure will be evaluated in
+	/// axisRef        ANYREF EXPR     The column that the measure will be evaluated against
+	/// measureRef     NUMERIC EXPR    The measure to evaluate
 	/// numBins        INT64           Number of bins/buckets for the heatmap
-	/// lowColour      STRING          The Hex colour for low values (e.g., "#FFFFFF" white)
-	/// highColour     STRING          The Hex colour for high values (e.g., "#01B8AA" teal)
+	/// lowColour      STRING          The Hex colour for low values (e.g., "#FFFFFF")
+	/// highColour     STRING          The Hex colour for high values (e.g., "#01B8AA")
 	function 'DaxLib.SVG.Sparkline.Heatmap' =
 			(
 				width: INT64,
 				height: INT64,
 				contextTable: ANYREF EXPR,
-				xAxis: ANYREF EXPR,
+				axisRef: ANYREF EXPR,
 				measureRef: NUMERIC EXPR,
 				numBins: INT64,
 				lowColour: STRING,
 				highColour: STRING
 			) =>
-    
-				// Detect if xAxis is numeric or categorical
-				VAR _xAxisSample = MAX( xAxis )
-				VAR _IsNumeric = ISNUMERIC( _xAxisSample ) || ISDATETIME( _xAxisSample )
 
-				// Get all data for binning
-				VAR _AllData = 
-					DaxLib.SVG.Util.NormalizeAxisAllSelected(
-						contextTable,
-						xAxis,
-						measureRef,
-						_IsNumeric
-					)
-				
-				// Get data in current context
-				VAR _Data = 
-					DaxLib.SVG.Util.NormalizeAxis(
-						CALCULATETABLE( contextTable ),
-						xAxis,
-						measureRef,
-						_IsNumeric
-					)
-				
-				// Calculate value range for binning
-				VAR _MinValue = MINX( _Data, [Value] )
-				VAR _MaxValue = MAXX( _Data, [Value] )
-				VAR _Range = _MaxValue - _MinValue
-				VAR _BinWidth = IF( _Range > 0, _Range / numBins, 1 )
-				
-				// Create bins and count frequency
-				VAR _Bins = 
+				// Replace contextTable with Index
+				VAR _ContextTableIndex =
 					ADDCOLUMNS(
-						GENERATESERIES( 0, numBins - 1, 1 ),
-						"BinIndex", [Value],
-						"BinStart", _MinValue + [Value] * _BinWidth,
-						"BinEnd", _MinValue + ( [Value] + 1 ) * _BinWidth,
-						"Count", 
-							VAR _BinStart = _MinValue + [Value] * _BinWidth
-							VAR _BinEnd = _MinValue + ( [Value] + 1 ) * _BinWidth
-							RETURN
-								COUNTROWS(
-									FILTER(
-										_Data,
-										[Value] >= _BinStart && [Value] < _BinEnd
-									)
-								) +
-								// Include max value in the last bin
-								IF(
-									[Value] = numBins - 1,
-									COUNTROWS( FILTER( _Data, [Value] = _MaxValue ) ),
-									0
-								)
+						CALCULATETABLE(
+							FILTER(
+								KEEPFILTERS( contextTable ),
+								NOT ISBLANK( measureRef )
+							),
+							ALLSELECTED()
+						),
+						"@Index", RANK( DENSE, CALCULATETABLE( contextTable, ALLSELECTED() ) )
 					)
-				
+
+				VAR _currentIndex =
+					MAXX(
+						NATURALINNERJOIN(
+							_ContextTableIndex,
+							CALCULATETABLE( contextTable )
+						),
+						[@Index]
+					)
+
+				// Add in axisRef and evaulate measure
+				VAR _Data = 
+					FILTER(
+						ADDCOLUMNS(
+							GENERATE(
+								_ContextTableIndex,
+								VALUES( axisRef )
+							),
+							"@Value", measureRef
+						),
+						NOT ISBLANK( [@Value] )
+					)
+
+				// Binning logic
+				VAR _BinWidth = 	IF( numBins > 0, width / numBins, width )
+				VAR _MinValue = 	MINX( _Data, [@Value] )
+				VAR _MaxValue = 	MAXX( _Data, [@Value] )
+				VAR _Range = 		_MaxValue - _MinValue
+
+				VAR _AssignBins =
+					ADDCOLUMNS( 
+						_Data, 
+						"@Bin", IF( not ISBLANK( [@Value] ), INT( ( [@Value] / _Range ) * ( numBins - 1 ) ) + 1 ) 
+					)
+
+				VAR _CountPerBin =
+					ADDCOLUMNS(
+						SUMMARIZE( _AssignBins, [@Index], [@Bin] )
+						,"@x", ( [@Bin] * _BinWidth ) - _BinWidth
+						,"@cnt",
+							VAR _Bin =  [@Bin]
+							RETURN
+							CALCULATE( COUNTX ( _AssignBins, IF( [@Bin] = _Bin && _Bin <> 0, 1 ) ) )
+					)
+
 				// Get max count for normalization
-				VAR _MaxCount = MAXX( _Bins, [Count] )
-				
-				// Calculate cell dimensions
-				VAR _CellWidth = width / numBins
-				VAR _CellHeight = height
-				
-				// Generate heatmap cells
-				VAR _HeatmapCells = 
+				VAR _MaxCount = MAXX( _CountPerBin, [@cnt] )
+
+				// Filter to current context
+				VAR _CountPerBinPerCurrentContext =
+					FILTER(
+						_CountPerBin,
+						[@Index] = _currentIndex
+					)
+
+				// Create heatmap cells
+				VAR _HeatmapCells =
 					CONCATENATEX(
-						_Bins,
-						VAR _Intensity = IF( _MaxCount > 0, [Count] / _MaxCount, 0 )
-						VAR _X = [BinIndex] * _CellWidth
+						_CountPerBinPerCurrentContext,
+						VAR _Intensity = IF( _MaxCount > 0, [@cnt] / _MaxCount, 0 )
 						VAR _FillColour = 
 							DaxLib.SVG.Colour.Hex.Interpolate(
 								IF( NOT ISBLANK( lowColour ), lowColour, "#FFFFFF" ),
@@ -1400,25 +1479,25 @@ createOrReplace
 							)
 						RETURN
 							DaxLib.SVG.Element.Rect(
-								_X,              	// x
-								0,               	// y
-								_CellWidth,      	// width
-								_CellHeight,     	// height
-								0,               	// rx (rounded corners)
-								0,               	// ry
-								DaxLib.SVG.Attr.Shapes(
-									_FillColour,  	// fill
-									BLANK(),      	// fillOpacity
-									BLANK(),      	// fillRule
-									BLANK(),   		// stroke (light border)
-									BLANK(),        // strokeWidth
-									BLANK(),      	// strokeOpacity
-									BLANK()       	// opacity
+									[@x],              	// x
+									0,               	// y
+									_BinWidth,      	// width
+									height,     		// height
+									0,               	// rx
+									0,               	// ry
+									DaxLib.SVG.Attr.Shapes(
+										_FillColour,  	// fill
+										BLANK(),      	// fillOpacity
+										BLANK(),      	// fillRule
+										BLANK(),   		// stroke
+										BLANK(),        // strokeWidth
+										BLANK(),      	// strokeOpacity
+										BLANK()       	// opacity
+									),
+									BLANK()          	// transforms
 								),
-								BLANK()          	// transforms
-							),
-						"",
-						[BinIndex],
+						" ",
+						[@Bin],
 						ASC
 					)
 				
@@ -1433,174 +1512,575 @@ createOrReplace
 					)
 
 				RETURN
-					IF( NOT ISEMPTY( _Data ), _SVG )
-
+					
+					IF( NOT ISEMPTY( _CountPerBinPerCurrentContext ), _SVG )
+					
 		annotation DAXLIB_PackageId = DaxLib.SVG
 		
 		annotation DAXLIB_PackageVersion = 0.1.2-beta
 
-
-	/// Creates an Area Sparkline SVG Visual with optional context detection
-	/// WARNING: contextTable should match the columns of the visual that the measure will be called in
+	/// Creates a Jitter Plot Sparkline SVG Visual showing values as points with x-position based on value and y-position jittered around center
 	/// width          INT64           The width of the SVG canvas
 	/// height         INT64           The height of the SVG canvas
-	/// contextTable   ANYREF EXPR     Optional: The table to evaluate axis min and max against
-	/// xAxis          ANYREF EXPR     The column to visualize
-	/// measureRef     NUMERIC EXPR    The measure to visualize
-	/// fillColour     STRING          The Hex colour of the area fill i.e "#01B8AA"
-	/// fillOpacity    NUMERIC         The opacity of the fill (0-1), defaults to 0.3
-	/// strokeColour   STRING          Optional: The Hex colour of the stroke line
-	function 'DaxLib.SVG.Sparkline.Area' =
+	/// contextTable   ANYREF EXPR     The context the measure will be evaluated in
+	/// axisRef        ANYREF EXPR     The column that the measure will be evaluated against
+	/// measureRef     NUMERIC EXPR    The measure to evaluate
+	/// pointColour    STRING          The Hex colour of the points (e.g., "#01B8AA")
+	/// jitterAmount   DOUBLE          The amount of y-axis jitter as a percentage of height (0.0-1.0, defaults to 0.3)
+	function 'DaxLib.SVG.Sparkline.Jitter' = 
 			(
 				width: INT64,
 				height: INT64,
 				contextTable: ANYREF EXPR,
-				xAxis: ANYREF EXPR,
+				axisRef: ANYREF EXPR,
 				measureRef: NUMERIC EXPR,
-				fillColour: STRING,
-				fillOpacity: NUMERIC,
-				strokeColour: STRING
+				pointColour: STRING,
+				jitterAmount: DOUBLE
 			) =>
-			
-				// Detect if xAxis is numeric or categorical
-				VAR _xAxisSample = MAX( xAxis )
-				VAR _IsNumeric = ISNUMERIC( _xAxisSample ) || ISDATETIME( _xAxisSample )
+				
+				// Replace contextTable with Index
+				VAR _ContextTableIndex =
+					ADDCOLUMNS(
+						CALCULATETABLE(
+							FILTER(
+								KEEPFILTERS( contextTable ),
+								NOT ISBLANK( measureRef )
+							),
+							ALLSELECTED()
+						),
+						"@Index", RANK( DENSE, CALCULATETABLE( contextTable, ALLSELECTED() ) )
+					)
 
-				// Axis Scale
-				VAR _AllData = 
-					DaxLib.SVG.Util.NormalizeAxisAllSelected(
-						contextTable,
-						xAxis,
-						measureRef,
-						_IsNumeric
+				VAR _currentIndex =
+					MAXX(
+						NATURALINNERJOIN(
+							_ContextTableIndex,
+							CALCULATETABLE( contextTable )
+						),
+						[@Index]
+					)
+
+				// Add in axisRef and evaulate measure
+				VAR _Data = 
+					FILTER(
+						ADDCOLUMNS(
+							GENERATE(
+								_ContextTableIndex,
+								VALUES( axisRef )
+							),
+							"@Value", measureRef
+						),
+						NOT ISBLANK( [@Value] )
 					)
 						
-				VAR _XMin = MINX( _AllData, [XValue] )
-				VAR _XMax = MAXX( _AllData, [XValue] )
-				VAR _RawYMin = MINX( _AllData, [Value] )
-				VAR _YMin = IF( _RawYMin > 0, 0, _RawYMin )
-				VAR _YMax = MAXX( _AllData, [Value] )
+				VAR _RawXMin = 	MINX( _Data, [@Value] )
+				VAR _XMin = 	IF( _RawXMin > 0, 0, _RawXMin )
+				VAR _XMax = 	MAXX( _Data, [@Value] )
 				
-				// Data
-				VAR _Data = 
-					DaxLib.SVG.Util.NormalizeAxis(
-						CALCULATETABLE( contextTable ),
-						xAxis,
-						measureRef,
-						_IsNumeric
-					)
-
-				// Calculate baseline Y position (for zero line or bottom)
-				VAR _BaselineY = DaxLib.SVG.Scale.Normalize( _YMin, _YMin, _YMax, height, 0 )
-
-				// Get first and last X positions
-				VAR _FirstX = 
-					MINX(
-						FILTER( _Data, NOT ISBLANK( [Value] ) ),
-						DaxLib.SVG.Scale.Normalize( [XValue], _XMin, _XMax, 0, width )
+				// Filter to current context
+				VAR _DataPerCurrentContext =
+					FILTER(
+						_Data,
+						[@Index] = _currentIndex
 					)
 				
-				VAR _LastX = 
-					MAXX(
-						FILTER( _Data, NOT ISBLANK( [Value] ) ),
-						DaxLib.SVG.Scale.Normalize( [XValue], _XMin, _XMax, 0, width )
-					)
-
-				// Generate points for the area polygon
-				// Start at baseline (bottom left), go up the data line, then back down to baseline
-				VAR _PolygonPoints = 
-					// Start at first X position at baseline
-					_FirstX & "," & _BaselineY
-					// Add all the data points (the top line)
-					& " " & 
+				// Points
+				VAR _CenterY = 		height / 2
+				VAR _JitterRange = 	height * IF( ISBLANK( jitterAmount ), 0.3, jitterAmount )
+				VAR _Points = 
 					CONCATENATEX(
-						_Data,
+						_DataPerCurrentContext,
 						IF( 
-							NOT ISBLANK( [Value] ), 
-							COMBINEVALUES( 
-								",", 
-								DaxLib.SVG.Scale.Normalize( [XValue], _XMin, _XMax, 0, width ), 
-								DaxLib.SVG.Scale.Normalize( [Value], _YMin, _YMax, height, 0 )
-							)
+							NOT ISBLANK( [@Value] ),
+							VAR _Seed = 		ABS( [@Value] * 12345 ) + ABS( axisRef * 67890 ) + ABS( LEN( FORMAT( [@Value], "0.000000" ) ) * 9876 )
+							VAR _PseudoRandom = MOD( _Seed, 10000 ) / 10000
+							VAR _JitterY = 		_CenterY + ( _PseudoRandom - 0.5 ) * _JitterRange
+							VAR _ClampedY = 	MAX( 0, MIN( height, _JitterY ) )
+							RETURN
+								DaxLib.SVG.Element.Circle(
+									DaxLib.SVG.Scale.Normalize( [@Value], _XMin, _XMax, 0, width ), // cx
+									_ClampedY,          // cy
+									"3%",         		// r
+									DaxLib.SVG.Attr.Shapes(
+										pointColour,   	// fill
+										0.5,            // fillOpacity
+										BLANK(),        // fillRule
+										pointColour,   	// stroke
+										1,              // strokeWidth
+										0.9,            // strokeOpacity
+										BLANK()         // opacity
+									),
+									BLANK()             // transforms
+								)
 						),
 						" ",
-						[XValue],
+						axisRef,
 						ASC
 					)
-					// End at last X position at baseline
-					& " " & _LastX & "," & _BaselineY
-
-				// Generate points for just the top line (for optional stroke)
-				VAR _TopPoints = 
-					CONCATENATEX(
-						_Data,
-						IF( 
-							NOT ISBLANK( [Value] ), 
-							COMBINEVALUES( 
-								",", 
-								DaxLib.SVG.Scale.Normalize( [XValue], _XMin, _XMax, 0, width ), 
-								DaxLib.SVG.Scale.Normalize( [Value], _YMin, _YMax, height, 0 )
-							)
-						),
-						" ",
-						[XValue],
-						ASC
-					)
-
-				// Area Element (using polygon for filled area)
-				VAR _AreaElement =
-					DaxLib.SVG.Element.Polygon(
-						_PolygonPoints,
-						DaxLib.SVG.Attr.Shapes(
-							IF( NOT ISBLANK( fillColour ), fillColour, "#01B8AA" ),     // fill
-							IF( NOT ISBLANK( fillOpacity ), fillOpacity, 0.3 ),         // fillOpacity
-							BLANK(),                                                     // fillRule
-							"none",                                                      // stroke (no stroke on polygon)
-							0,                                                           // strokeWidth
-							BLANK(),                                                     // strokeOpacity
-							BLANK()                                                      // opacity
-						),
+					
+				// SVG
+				VAR _Padding = 0.05
+				VAR _SVG = 
+					DaxLib.SVG.SVG(
+						width,
+						height,
+						COMBINEVALUES( " ", - width * ( _Padding / 2 ), 0, width * ( 1 + _Padding ), height),
+						_Points,
 						BLANK()
 					)
 
-				// Optional: Add stroke line on top of the area
-				VAR _StrokeElement = 
-					IF(
-						NOT ISBLANK( strokeColour ),
-						DaxLib.SVG.Element.Polyline(
-							_TopPoints,
-							DaxLib.SVG.Attr.Shapes(
-								"none",
-								BLANK(),
-								BLANK(),
-								strokeColour,
-								1.5,
-								BLANK(),
-								BLANK()
+				RETURN
+					
+					IF( NOT ISEMPTY( _DataPerCurrentContext ), _SVG )
+	
+		annotation DAXLIB_PackageId = DaxLib.SVG
+
+		annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+	/// Creates a Box Plot Sparkline SVG Visual showing statistical distribution
+	/// WARNING: contextTable should match the columns of the visual that the measure will be called in
+	/// width          INT64           The width of the SVG canvas
+	/// height         INT64           The height of the SVG canvas
+	/// contextTable   ANYREF EXPR     The context the measure will be evaluated in
+	/// measureRef     NUMERIC EXPR    The measure to evaluate
+	/// fillColor      STRING          Color for the box fill
+	/// strokeColor    STRING          Color for lines, whiskers, and median
+	/// showOutliers   BOOLEAN         Whether to show outlier points beyond whiskers
+	function 'DaxLib.SVG.Sparkline.Boxplot' =
+			(
+				width: INT64,
+				height: INT64,
+				contextTable: ANYREF EXPR,
+				axisRef: ANYREF EXPR,
+				measureRef: NUMERIC EXPR,
+				fillColor: STRING,
+				strokeColor: STRING,
+				showOutliers: BOOLEAN
+			) =>
+
+				// Replace contextTable with Index
+				VAR _ContextTableIndex =
+					ADDCOLUMNS(
+						CALCULATETABLE(
+							FILTER(
+								KEEPFILTERS( contextTable ),
+								NOT ISBLANK( measureRef )
 							),
-							BLANK()
+							ALLSELECTED()
+						),
+						"@Index", RANK( DENSE, CALCULATETABLE( contextTable, ALLSELECTED() ) )
+					)
+
+				VAR _currentIndex =
+					MAXX(
+						NATURALINNERJOIN(
+							_ContextTableIndex,
+							CALCULATETABLE( contextTable )
+						),
+						[@Index]
+					)
+
+				// Add in axisRef and evaulate measure
+				VAR _Data = 
+					FILTER(
+						ADDCOLUMNS(
+							GENERATE(
+								_ContextTableIndex,
+								VALUES( axisRef )
+							),
+							"@Value", measureRef
+						),
+						NOT ISBLANK( [@Value] )
+					)
+
+				VAR _XMin = 	MINX( _Data, [@Value] )
+				VAR _XMax = 	MAXX( _Data, [@Value] )
+
+				// Filter to current context
+				VAR _DataPerCurrentContext =
+					FILTER(
+						_Data,
+						[@Index] = _currentIndex
+					)
+
+				VAR _Count = 			COUNTROWS( _DataPerCurrentContext )
+				VAR _Min = 				MINX( _DataPerCurrentContext, [@Value] )
+				VAR _Max = 				MAXX( _DataPerCurrentContext, [@Value] )
+
+				// Calculate quartiles using standard definitions
+				VAR _Q1 = 				PERCENTILEX.INC( _DataPerCurrentContext, [@Value], 0.25 )
+				VAR _Median = 			PERCENTILEX.INC( _DataPerCurrentContext, [@Value], 0.5 )
+				VAR _Q3 = 				PERCENTILEX.INC( _DataPerCurrentContext, [@Value], 0.75 )
+
+				// Calculate IQR and whisker boundaries (1.5 * IQR rule)
+				VAR _IQR = 				_Q3 - _Q1
+				VAR _LowerWhisker =		MAX( _Min, _Q1 - 1.5 * _IQR )
+				VAR _UpperWhisker = 	MIN( _Max, _Q3 + 1.5 * _IQR )
+
+				// Padding for the plot area
+				VAR _Padding = 			0.1
+				VAR _PlotLeft = 		width * _Padding
+				VAR _PlotRight = 		width * (1 - _Padding)
+
+				// Scale statistical values to SVG coordinates (horizontal - left to right)
+				VAR _Q1X = 				DaxLib.SVG.Scale.Normalize( _Q1, _XMin, _XMax, _PlotLeft, _PlotRight )
+				VAR _MedianX = 			DaxLib.SVG.Scale.Normalize( _Median, _XMin, _XMax, _PlotLeft, _PlotRight )
+				VAR _Q3X = 				DaxLib.SVG.Scale.Normalize( _Q3, _XMin, _XMax, _PlotLeft, _PlotRight )
+				VAR _LowerWhiskerX = 	DaxLib.SVG.Scale.Normalize( _LowerWhisker, _XMin, _XMax, _PlotLeft, _PlotRight )
+				VAR _UpperWhiskerX = 	DaxLib.SVG.Scale.Normalize( _UpperWhisker, _XMin, _XMax, _PlotLeft, _PlotRight )
+
+				// Box dimensions - centered vertically with padding
+				VAR _BoxHeight = 		height * 0.6
+				VAR _BoxY = 			height * 0.2
+
+				// Create outlier points beyond whiskers if enabled
+				VAR _Outliers = 
+					IF(
+						showOutliers,
+						CONCATENATEX(
+							FILTER(
+								_DataPerCurrentContext,
+								[@Value] < _LowerWhisker || [@Value] > _UpperWhisker
+							),
+							DaxLib.SVG.Element.Circle(
+								DaxLib.SVG.Scale.Normalize( [@Value], _XMin, _XMax, _PlotLeft, _PlotRight ), // cx
+								"50%",          	// cy
+								2,                  // radius
+								DaxLib.SVG.Attr.Shapes(
+									strokeColor,    // fill
+									BLANK(),        // fillOpacity
+									BLANK(),        // fillRule
+									BLANK(),        // stroke
+									BLANK(),        // strokeWidth
+									BLANK(),        // strokeOpacity
+									BLANK()         // opacity
+								),
+								BLANK()             // transforms
+							),
+							""
 						)
 					)
 
-				// Combine elements
-				VAR _CombinedElements = 
-					_AreaElement 
-					& IF( NOT ISBLANK( _StrokeElement ), _StrokeElement, "" )
+				// Build the box plot elements
+				
+				// Lower whisker line from whisker to Q1 (horizontal)
+				VAR _LowerWhiskerLine = 
+					DaxLib.SVG.Element.Line(
+						_LowerWhiskerX,         // x1
+						"50%",              	// y1
+						_Q1X,                   // x2
+						"50%",              	// y2
+						DaxLib.SVG.Attr.Shapes(
+							BLANK(),            // fill
+							BLANK(),            // fillOpacity
+							BLANK(),            // fillRule
+							strokeColor,        // stroke
+							1,                  // strokeWidth
+							BLANK(),            // strokeOpacity
+							BLANK()             // opacity
+						),
+						BLANK()                 // transforms
+					)
 
-				VAR _Padding = 0.05
+				// Upper whisker line from Q3 to whisker (horizontal)
+				VAR _UpperWhiskerLine = 
+					DaxLib.SVG.Element.Line(
+						_Q3X,                   // x1
+						"50%",             		// y1
+						_UpperWhiskerX,         // x2
+						"50%",             		// y2
+						DaxLib.SVG.Attr.Shapes(
+							BLANK(),            // fill
+							BLANK(),            // fillOpacity
+							BLANK(),            // fillRule
+							strokeColor,        // stroke
+							1,                  // strokeWidth
+							BLANK(),            // strokeOpacity
+							BLANK()             // opacity
+						),
+						BLANK()                 // transforms
+					)
+
+				// Lower whisker cap (vertical line)
+				VAR _LowerCap = 
+					DaxLib.SVG.Element.Line(
+						_LowerWhiskerX,         // x1
+						_BoxY,                  // y1
+						_LowerWhiskerX,         // x2
+						_BoxY + _BoxHeight,     // y2
+						DaxLib.SVG.Attr.Shapes(
+							BLANK(),            // fill
+							BLANK(),            // fillOpacity
+							BLANK(),            // fillRule
+							strokeColor,        // stroke
+							1,                  // strokeWidth
+							BLANK(),            // strokeOpacity
+							BLANK()             // opacity
+						),
+						BLANK()                 // transforms
+					)
+
+				// Upper whisker cap (vertical line)
+				VAR _UpperCap = 
+					DaxLib.SVG.Element.Line(
+						_UpperWhiskerX,         // x1
+						_BoxY,                  // y1
+						_UpperWhiskerX,         // x2
+						_BoxY + _BoxHeight,     // y2
+						DaxLib.SVG.Attr.Shapes(
+							BLANK(),            // fill
+							BLANK(),            // fillOpacity
+							BLANK(),            // fillRule
+							strokeColor,        // stroke
+							1,                  // strokeWidth
+							BLANK(),            // strokeOpacity
+							BLANK()             // opacity
+						),
+						BLANK()                 // transforms
+					)
+
+				// Main box (Q1 to Q3) - horizontal
+				VAR _Box = 
+					DaxLib.SVG.Element.Rect(
+						_Q1X,                   // x (left of box)
+						_BoxY,                  // y
+						_Q3X - _Q1X,            // width (Q3 - Q1)
+						_BoxHeight,             // height
+						2,                      // rx
+						2,                      // ry
+						DaxLib.SVG.Attr.Shapes(
+							fillColor,          // fill
+							0.5,                // fillOpacity
+							BLANK(),            // fillRule
+							strokeColor,        // stroke
+							1,                  // strokeWidth
+							BLANK(),            // strokeOpacity
+							BLANK()             // opacity
+						),
+						BLANK()                 // transforms
+					)
+
+				// Median line (vertical)
+				VAR _MedianLine = 
+					DaxLib.SVG.Element.Line(
+						_MedianX,               // x1
+						_BoxY,                  // y1
+						_MedianX,               // x2
+						_BoxY + _BoxHeight,     // y2
+						DaxLib.SVG.Attr.Shapes(
+							BLANK(),            // fill
+							BLANK(),            // fillOpacity
+							BLANK(),            // fillRule
+							strokeColor,        // stroke
+							2,                  // strokeWidth (thicker for median)
+							BLANK(),            // strokeOpacity
+							BLANK()             // opacity
+						),
+						BLANK()                 // transforms
+					)
 
 				// SVG
 				VAR _SVG =
 					DaxLib.SVG.SVG(
 						width,
 						height,
+						BLANK(),
+						_LowerWhiskerLine &
+						_UpperWhiskerLine &
+						_LowerCap &
+						_UpperCap &
+						_Box &
+						_MedianLine &
+						_Outliers,
+						_Median
+					)
+
+				RETURN
+					
+					IF( NOT ISEMPTY( _DataPerCurrentContext ), _SVG )
+
+	annotation DAXLIB_PackageId = DaxLib.SVG
+
+	annotation DAXLIB_PackageVersion = 0.1.2-beta
+
+	/// Creates a Violin Plot Sparkline SVG Visual showing distribution density using Kernel Density Estimation (KDE)
+	/// WARNING: contextTable should match the columns of the visual that the measure will be called in
+	/// width          INT64           The width of the SVG canvas
+	/// height         INT64           The height of the SVG canvas
+	/// contextTable   ANYREF EXPR     The context the measure will be evaluated in
+	/// axisRef        ANYREF EXPR     The column that the measure will be evaluated against
+	/// measureRef     NUMERIC EXPR    The measure to evaluate
+	/// samples        INT64           Number of density calculation points (default 30)
+	/// bandwidth      NUMERIC         Kernel bandwidth for smoothing
+	/// fillColor      STRING          Fill color for the violin shape
+	/// strokeColor    STRING          Outline color for the violin
+	function 'DaxLib.SVG.Sparkline.Violin' =
+			(
+				width: INT64,
+				height: INT64,
+				contextTable: ANYREF EXPR,
+				axisRef: ANYREF EXPR,
+				measureRef: NUMERIC EXPR,
+				samples: INT64,
+				bandwidth: NUMERIC,
+				fillColor: STRING,
+				strokeColor: STRING
+			) =>
+			
+								// Replace contextTable with Index
+				VAR _ContextTableIndex =
+					ADDCOLUMNS(
+						CALCULATETABLE(
+							FILTER(
+								KEEPFILTERS( contextTable ),
+								NOT ISBLANK( measureRef )
+							),
+							ALLSELECTED()
+						),
+						"@Index", RANK( DENSE, CALCULATETABLE( contextTable, ALLSELECTED() ) )
+					)
+
+				VAR _currentIndex =
+					MAXX(
+						NATURALINNERJOIN(
+							_ContextTableIndex,
+							CALCULATETABLE( contextTable )
+						),
+						[@Index]
+					)
+
+				// Add in axisRef and evaulate measure
+				VAR _Data = 
+					FILTER(
+						ADDCOLUMNS(
+							GENERATE(
+								_ContextTableIndex,
+								VALUES( axisRef )
+							),
+							"@Value", measureRef
+						),
+						NOT ISBLANK( [@Value] )
+					)
+				
+				VAR _NumValues = 		COUNTROWS( _Data )	// TODO does this need to be on all or context data?
+				VAR _Min = 				MINX( _Data, [@Value] )
+				VAR _Max = 				MAXX( _Data, [@Value] )
+				VAR _Range = 			_Max - _Min
+				VAR _RangePerSample = 	_Range / samples
+
+				// Filter to current context
+				VAR _DataPerCurrentContext =
+					FILTER(
+						_Data,
+						[@Index] = _currentIndex
+					)
+
+				// Calculate Kernel Density Estimation using Normal distribution
+				VAR _KDE = 
+					ADDCOLUMNS(
+						GENERATESERIES( 0, samples + 1, 1 ),
+						"@InputX", _Min + _RangePerSample * [Value],
+						"@KDE", 
+							( 1 / _NumValues ) * 
+							SUMX(
+								_DataPerCurrentContext, 
+								NORM.DIST( 
+									_Min + _rangePerSample * [Value], 
+									[@Value], 
+									bandwidth, 
+									false 
+								) 
+							)
+					)
+
+				VAR _MaxKDE = 		MAXX( _KDE, [@KDE] )
+
+				// Map KDE values to SVG coordinates using normalize function
+				VAR _Points = 
+					ADDCOLUMNS(
+						_KDE,
+						"@X", DaxLib.SVG.Scale.Normalize( [@InputX], _Min, _Max, 0, width),
+						"@Y", DaxLib.SVG.Scale.Normalize( [@KDE], 0, _maxKDE, height * 0.5, 0 )
+					)
+
+				// Create control points for smooth Bézier curves
+				VAR _PointsWithPrev = 
+					NATURALLEFTOUTERJOIN(
+						_Points,
+						SELECTCOLUMNS(
+							_Points,
+							"Value", [Value] + 1,
+							"@PrevX", [@X],
+							"@PrevY", [@Y]
+						)
+					)
+
+				VAR _WithControlPoints = 
+					ADDCOLUMNS(
+						_PointsWithPrev,
+						"@CX", [@prevX] + ( ( [@x] - [@prevX] ) / 2 ),
+						"@CY", [@y]
+					)
+
+				VAR _TopCurve = 
+					CONCATENATEX(
+						_WithControlPoints,
+						"S " & [@cx] & " " & [@cy] & ", " & [@x] & " " & [@y], // cubic Bézier curve
+						" ",
+						[Value]
+				)
+
+				VAR _BottomCurve = // top curve inverted
+					CONCATENATEX(
+						_WithControlPoints,
+						"S " & [@cx] & " " & ( height * 0.5 ) - ([@cy] - ( height * 0.5  ) ) & ", " & [@x] & " " & ( height * 0.5 ) - ( [@y] - ( height * 0.5 ) ),
+						" ",
+						[Value]
+				)
+
+				// Create the violin shape path
+				VAR _ViolinShape = 
+					DaxLib.SVG.Element.Paths(
+						"M 0 " & ( height * 0.5 ) & " " & _TopCurve & "M " & width & " " & ( height * 0.5 ), // d
+						DaxLib.SVG.Attr.Shapes(
+							fillColor,            // fill
+							0.5,                  // fillOpacity
+							BLANK(),              // fillRule
+							strokeColor,          // stroke
+							1,                    // strokeWidth
+							BLANK(),              // strokeOpacity
+							BLANK()               // opacity
+						),
+						BLANK()                   // transforms
+					) &
+					DaxLib.SVG.Element.Paths(
+						"M 0 " & ( height * 0.5 ) & " " & _BottomCurve & "M " & width & " " & ( height * 0.5 ), // d
+						DaxLib.SVG.Attr.Shapes(
+							fillColor,            // fill
+							0.5,                  // fillOpacity
+							BLANK(),              // fillRule
+							strokeColor,          // stroke
+							1,                    // strokeWidth
+							BLANK(),              // strokeOpacity
+							BLANK()               // opacity
+						),
+						BLANK()                   // transforms
+					)
+
+				// SVG
+				VAR _Padding = 0.05
+				VAR _SVG =
+					DaxLib.SVG.SVG(
+						width,
+						height,
 						COMBINEVALUES( " ", - width * ( _Padding / 2 ), 0, width * ( 1 + _Padding ), height),
-						_CombinedElements,
+						_ViolinShape,
 						BLANK()
 					)
 
 				RETURN
-					IF( NOT ISEMPTY( _Data ), _SVG )
+
+					IF( NOT ISEMPTY( _DataPerCurrentContext ), _SVG )
 
 		annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1956,23 +2436,26 @@ createOrReplace
 		annotation DAXLIB_PackageVersion = 0.1.2-beta
 
 	/// Returns data with XValue based on axis type (numeric or categorical)
-	/// contextTable    ANYREF EXPR    The context table
-	/// xAxis           ANYREF EXPR    The x-axis column
+	/// contextTable   ANYREF EXPR     The table context the measure will be evaluated in
+	/// axisRef           ANYREF EXPR    The x-axis column
 	/// measureRef      NUMERIC EXPR   The measure to evaluate
-	/// isNumeric       BOOLEAN        Whether the xAxis is numeric
+	/// isNumeric       BOOLEAN        Whether the axisRef is numeric
 	function 'DaxLib.SVG.Util.NormalizeAxis'  =
 			(
 				contextTable: ANYREF EXPR,
-				xAxis: ANYREF EXPR,
+				axisRef: ANYREF EXPR,
 				measureRef: NUMERIC EXPR,
 				isNumeric: BOOLEAN
 			) =>
-    
+
 				VAR _All_Categories =
+					CALCULATETABLE(
 						FILTER(
-							KEEPFILTERS( VALUES( xAxis ) ),
+							KEEPFILTERS( VALUES( axisRef ) ),
 							NOT ISBLANK( measureRef )
-						)
+						),
+						ALLSELECTED()
+					)
 				
 				VAR _FilteredTable = 
 						FILTER(
@@ -1984,7 +2467,7 @@ createOrReplace
 					ADDCOLUMNS(
 						_FilteredTable,
 						"Value", measureRef,
-						"XValue", xAxis
+						"XValue", axisRef
 					)
 				
 				VAR _CategoricalData = 
@@ -1993,7 +2476,7 @@ createOrReplace
 							_FilteredTable,
 							"GroupIndex",
 							_All_Categories,
-							xAxis,
+							axisRef,
 							ASC
 						),
 						"Value", measureRef,
@@ -2013,21 +2496,21 @@ createOrReplace
 
 	/// Returns data with XValue based on axis type (numeric or categorical)
 	/// contextTable    ANYREF EXPR    The context table
-	/// xAxis           ANYREF EXPR    The x-axis column
+	/// axisRef           ANYREF EXPR    The x-axis column
 	/// measureRef      NUMERIC EXPR   The measure to evaluate
-	/// isNumeric       BOOLEAN        Whether the xAxis is numeric
+	/// isNumeric       BOOLEAN        Whether the axisRef is numeric
 	function 'DaxLib.SVG.Util.NormalizeAxisAllSelected'  =
 			(
 				contextTable: ANYREF EXPR,
-				xAxis: ANYREF EXPR,
+				axisRef: ANYREF EXPR,
 				measureRef: NUMERIC EXPR,
 				isNumeric: BOOLEAN
 			) =>
-    
+
 				VAR _All_Categories =
 					CALCULATETABLE(
 						FILTER(
-							KEEPFILTERS( VALUES( xAxis ) ),
+							KEEPFILTERS( VALUES( axisRef ) ),
 							NOT ISBLANK( measureRef )
 						),
 						ALLSELECTED()
@@ -2046,7 +2529,7 @@ createOrReplace
 					ADDCOLUMNS(
 						_FilteredTable,
 						"Value", measureRef,
-						"XValue", xAxis
+						"XValue", axisRef
 					)
 				
 				VAR _CategoricalData = 
@@ -2055,7 +2538,7 @@ createOrReplace
 							_FilteredTable,
 							"GroupIndex",
 							_All_Categories,
-							xAxis,
+							axisRef,
 							ASC
 						),
 						"Value", measureRef,

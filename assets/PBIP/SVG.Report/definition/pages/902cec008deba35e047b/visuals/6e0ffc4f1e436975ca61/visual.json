@@ -2,18 +2,18 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
   "name": "6e0ffc4f1e436975ca61",
   "position": {
-    "x": 9.6904696187058885,
-    "y": 193.80939237411775,
+    "x": 9,
+    "y": 194,
     "z": 2000,
-    "height": 603.71625724537682,
-    "width": 1341.1609952288948,
-    "tabOrder": 2000
+    "height": 488,
+    "width": 1425,
+    "tabOrder": 1000
   },
   "visual": {
-    "visualType": "tableEx",
+    "visualType": "pivotTable",
     "query": {
       "queryState": {
-        "Values": {
+        "Rows": {
           "projections": [
             {
               "field": {
@@ -27,8 +27,28 @@
                 }
               },
               "queryRef": "Products.Brand",
-              "nativeQueryRef": "Brand"
+              "nativeQueryRef": "Brand",
+              "active": true
             },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Products"
+                    }
+                  },
+                  "Property": "ProductSubcategory"
+                }
+              },
+              "queryRef": "Products.ProductSubcategory",
+              "nativeQueryRef": "ProductSubcategory",
+              "active": false
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
             {
               "field": {
                 "Measure": {
@@ -40,7 +60,7 @@
                   "Property": "Pill"
                 }
               },
-              "queryRef": "SVG.PILL",
+              "queryRef": "_Measures.Pill",
               "nativeQueryRef": "Pill"
             },
             {
@@ -54,7 +74,7 @@
                   "Property": "Total Cost"
                 }
               },
-              "queryRef": "SVG.Sum Value",
+              "queryRef": "_Measures.Total Cost",
               "nativeQueryRef": "Total Cost"
             },
             {
@@ -65,11 +85,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Bar"
+                  "Property": "Sparkline.Bar"
                 }
               },
-              "queryRef": "SVG.BAR",
-              "nativeQueryRef": "Bar"
+              "queryRef": "_Measures.Sparkline.Bar",
+              "nativeQueryRef": "Sparkline.Bar"
             },
             {
               "field": {
@@ -82,7 +102,7 @@
                   "Property": "Sparkline.Line"
                 }
               },
-              "queryRef": "SVG.Sparkline.Line",
+              "queryRef": "_Measures.Sparkline.Line",
               "nativeQueryRef": "Sparkline.Line"
             },
             {
@@ -107,11 +127,53 @@
                       "Entity": "_Measures"
                     }
                   },
+                  "Property": "Sparkline.BoxPlot"
+                }
+              },
+              "queryRef": "_Measures.Sparkline.BoxPlot",
+              "nativeQueryRef": "Sparkline.BoxPlot"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
                   "Property": "Sparkline.Heatmap"
                 }
               },
               "queryRef": "_Measures.Sparkline.Heatmap",
               "nativeQueryRef": "Sparkline.Heatmap"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Sparkline.Jitter"
+                }
+              },
+              "queryRef": "_Measures.Sparkline.Jitter",
+              "nativeQueryRef": "Sparkline.Jitter"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Sparkline.Violin"
+                }
+              },
+              "queryRef": "_Measures.Sparkline.Violin",
+              "nativeQueryRef": "Sparkline.Violin"
             }
           ]
         }
@@ -134,6 +196,54 @@
         ]
       }
     },
+    "expansionStates": [
+      {
+        "roles": [
+          "Rows"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "Products.Brand"
+            ],
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Products"
+                    }
+                  },
+                  "Property": "Brand"
+                }
+              }
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "Products.ProductSubcategory"
+            ],
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Products"
+                    }
+                  },
+                  "Property": "ProductSubcategory"
+                }
+              }
+            ],
+            "isPinned": true
+          }
+        ],
+        "root": {}
+      }
+    ],
     "objects": {
       "grid": [
         {
@@ -157,14 +267,22 @@
       ],
       "total": [
         {
+          "properties": {}
+        }
+      ],
+      "columnWidth": [
+        {
           "properties": {
-            "totals": {
+            "value": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "114.63524442635189D"
                 }
               }
             }
+          },
+          "selector": {
+            "metadata": "_Measures.Sparkline.BoxPlot"
           }
         }
       ]

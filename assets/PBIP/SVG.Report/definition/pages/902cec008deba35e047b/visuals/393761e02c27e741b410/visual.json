@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "33dcb7468cb77b0b7598",
+  "name": "393761e02c27e741b410",
   "position": {
-    "x": 225.41773796313839,
-    "y": 0,
-    "z": 4000,
-    "height": 69.215405017727136,
-    "width": 232.90048445154133,
-    "tabOrder": 3000
+    "x": 1619.5042157741173,
+    "y": 43.287155099133869,
+    "z": 8000,
+    "height": 68.69483309210375,
+    "width": 233.37422749098261,
+    "tabOrder": 5000
   },
   "visual": {
     "visualType": "slicer",
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Variant"
+                      "Entity": "Products"
                     }
                   },
-                  "Property": "Variant"
+                  "Property": "Brand"
                 }
               },
-              "queryRef": "Variant.Variant",
-              "nativeQueryRef": "Sum of Variant",
+              "queryRef": "Products.Brand",
+              "nativeQueryRef": "Brand",
               "active": true
             }
           ]

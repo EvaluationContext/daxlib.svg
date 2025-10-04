@@ -1,0 +1,193 @@
+DEFINE
+
+FUNCTION DaxLib.SVG.Sparkline.Violin =
+			(
+				width: INT64,
+				height: INT64,
+				contextTable: ANYREF EXPR,
+				axisRef: ANYREF EXPR,
+				measureRef: NUMERIC EXPR,
+				samples: INT64,
+				bandwidth: NUMERIC,
+				fillColor: STRING,
+				strokeColor: STRING
+			) =>
+			
+				// Replace contextTable with Index
+				VAR _ContextTableIndex =
+					ADDCOLUMNS(
+						CALCULATETABLE(
+							FILTER(
+								KEEPFILTERS( contextTable ),
+								NOT ISBLANK( measureRef )
+							),
+							ALLSELECTED()
+						),
+						"@Index", RANK( DENSE, CALCULATETABLE( contextTable, ALLSELECTED() ) )
+					)
+
+				VAR _currentIndex =
+					MAXX(
+						NATURALINNERJOIN(
+							_ContextTableIndex,
+							CALCULATETABLE( contextTable )
+						),
+						[@Index]
+					)
+
+				// Add in axisRef and evaulate measure
+				VAR _Data = 
+					FILTER(
+						ADDCOLUMNS(
+							GENERATE(
+								_ContextTableIndex,
+								VALUES( axisRef )
+							),
+							"@Value", measureRef
+						),
+						NOT ISBLANK( [@Value] )
+					)
+				
+				VAR _NumValues = 		COUNTROWS( _Data )	// TODO does this need to be on all or context data?
+				VAR _Min = 				MINX( _Data, [@Value] )
+				VAR _Max = 				MAXX( _Data, [@Value] )
+				VAR _Range = 			_Max - _Min
+				VAR _RangePerSample = 	_Range / samples
+
+				// Filter to current context
+				VAR _DataPerCurrentContext =
+					FILTER(
+						_Data,
+						[@Index] = _currentIndex
+					)
+
+				// Calculate Kernel Density Estimation using Normal distribution
+				VAR _KDE = 
+					ADDCOLUMNS(
+						GENERATESERIES( 0, samples + 1, 1 ),
+						"@InputX", _Min + _RangePerSample * [Value],
+						"@KDE", 
+							( 1 / _NumValues ) * 
+							SUMX(
+								_DataPerCurrentContext, 
+								NORM.DIST( 
+									_Min + _rangePerSample * [Value], 
+									[@Value], 
+									bandwidth, 
+									false 
+								) 
+							)
+					)
+
+				VAR _MaxKDE = 		MAXX( _KDE, [@KDE] )
+
+				// Map KDE values to SVG coordinates using normalize function
+				VAR _Points = 
+					ADDCOLUMNS(
+						_KDE,
+						"@X", DaxLib.SVG.Scale.Normalize( [@InputX], _Min, _Max, 0, width),
+						"@Y", DaxLib.SVG.Scale.Normalize( [@KDE], 0, _maxKDE, height * 0.5, 0 )
+					)
+
+				// Create control points for smooth Bézier curves
+				VAR _PointsWithPrev = 
+					NATURALLEFTOUTERJOIN(
+						_Points,
+						SELECTCOLUMNS(
+							_Points,
+							"Value", [Value] + 1,
+							"@PrevX", [@X],
+							"@PrevY", [@Y]
+						)
+					)
+
+				VAR _WithControlPoints = 
+					ADDCOLUMNS(
+						_PointsWithPrev,
+						"@CX", [@prevX] + ( ( [@x] - [@prevX] ) / 2 ),
+						"@CY", [@y]
+					)
+
+				VAR _TopCurve = 
+					CONCATENATEX(
+						_WithControlPoints,
+						"S " & [@cx] & " " & [@cy] & ", " & [@x] & " " & [@y], // cubic Bézier curve
+						" ",
+						[Value]
+				)
+
+				VAR _BottomCurve = // top curve inverted
+					CONCATENATEX(
+						_WithControlPoints,
+						"S " & [@cx] & " " & ( height * 0.5 ) - ([@cy] - ( height * 0.5  ) ) & ", " & [@x] & " " & ( height * 0.5 ) - ( [@y] - ( height * 0.5 ) ),
+						" ",
+						[Value]
+				)
+
+				// Create the violin shape path
+				VAR _ViolinShape = 
+					DaxLib.SVG.Element.Paths(
+						"M 0 " & ( height * 0.5 ) & " " & _TopCurve & "M " & width & " " & ( height * 0.5 ), // d
+						DaxLib.SVG.Attr.Shapes(
+							fillColor,            // fill
+							0.5,                  // fillOpacity
+							BLANK(),              // fillRule
+							strokeColor,          // stroke
+							1,                    // strokeWidth
+							BLANK(),              // strokeOpacity
+							BLANK()               // opacity
+						),
+						BLANK()                   // transforms
+					) &
+					DaxLib.SVG.Element.Paths(
+						"M 0 " & ( height * 0.5 ) & " " & _BottomCurve & "M " & width & " " & ( height * 0.5 ), // d
+						DaxLib.SVG.Attr.Shapes(
+							fillColor,            // fill
+							0.5,                  // fillOpacity
+							BLANK(),              // fillRule
+							strokeColor,          // stroke
+							1,                    // strokeWidth
+							BLANK(),              // strokeOpacity
+							BLANK()               // opacity
+						),
+						BLANK()                   // transforms
+					)
+
+				// SVG
+				VAR _Padding = 0.05
+				VAR _SVG =
+					DaxLib.SVG.SVG(
+						width,
+						height,
+						"0 0 " & width & " " & height,
+						_ViolinShape,
+						BLANK()
+					)
+
+				RETURN
+					TOJSON( _KDE )
+					//IF( NOT ISEMPTY( _DataPerCurrentContext ), _SVG )
+
+EVALUATE
+SUMMARIZECOLUMNS(
+	Products[Brand],
+	"x",
+	DaxLib.SVG.Sparkline.Violin(
+    100,                // width
+    20,                 // height
+    SUMMARIZE( Orders, Products[Brand] ), // contextTable
+	Dates[Date],		// axisRef
+    [Total Cost],       // measureVal
+    30,                 // samples
+    60,            		// bandwidth
+    DaxLib.SVG.Colour.Theme(
+        MAX( Theme[Theme] ),
+        MIN( Variant[Variant] )
+    ),                  // fillColour
+    DaxLib.SVG.Colour.Theme(
+        MAX( Theme[Theme] ),
+        MIN( Variant[Variant] ) + 1
+    )                   // strokeColour
+)
+)
+

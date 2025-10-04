@@ -2,7 +2,8 @@
   "version": "1.0.0",
   "tabOrder": [
     "SVG",
-    "Query 1"
+    "Query 1",
+    "Query 3"
   ],
-  "defaultTab": "Query 1"
+  "defaultTab": "Query 3"
 }
