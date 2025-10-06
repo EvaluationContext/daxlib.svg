@@ -2,8 +2,7 @@
   "version": "1.0.0",
   "tabOrder": [
     "DaxLib.SVG",
-    "DataGoblin.SampleData",
-    "Script 1"
+    "DataGoblin.SampleData"
   ],
-  "defaultTab": "DaxLib.SVG"
+  "defaultTab": "DataGoblin.SampleData"
 }

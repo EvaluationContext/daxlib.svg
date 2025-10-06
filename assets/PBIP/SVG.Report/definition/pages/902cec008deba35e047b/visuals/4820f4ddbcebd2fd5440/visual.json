@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
   "name": "4820f4ddbcebd2fd5440",
   "position": {
-    "x": 9.3534331105036674,
-    "y": 88.857614549784842,
+    "x": 9.451944155994001,
+    "y": 77.5059420791508,
     "z": 0,
-    "height": 104.75845083764108,
-    "width": 1491.872581125335
+    "height": 104.91658013153341,
+    "width": 1327.0529595015576
   },
   "visual": {
     "visualType": "tableEx",
@@ -215,5 +215,135 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "2a36d83d8ce0299d3cd9",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Txt"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "6877edf22d4b510207bc",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Rect"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "18ee8cdf5d675425d05d",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Circle"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "cc3f9720d58e93e58b01",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Line"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "1cb07a20e26cc64c03a7",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Path"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "5a003b5e40236d216805",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Use"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "a18823794c6d0ebec478",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Linear Gradient"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "aad9e00ccbbc301b1628",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Radial Gradient"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "e91980e7a7ca55adb507",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Clip Path"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

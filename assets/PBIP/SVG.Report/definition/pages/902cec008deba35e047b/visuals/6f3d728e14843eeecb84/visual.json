@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
   "name": "6f3d728e14843eeecb84",
   "position": {
-    "x": 0,
-    "y": 656,
+    "x": 92.598987793986311,
+    "y": 870.80462258789146,
     "z": 1000,
-    "height": 344,
-    "width": 1002,
+    "height": 161.81439281171345,
+    "width": 1279.5496495169018,
     "tabOrder": 7000
   },
   "visual": {
@@ -26,63 +26,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "\tdoesn't look like it matches sparkline!!!, is that just due to resolution?"
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "confirm lower grain works"
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "\tDo I even need to give contextTable?"
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "\tAt lower grain, the global scale is not respected"
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": ""
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Need to make sure there is a measure value, else don't include in rank!!!"
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": ""
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "When add subcategory, the axis seems to be plotted on it's own axis"
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": ""
+                    "value": "For subcateory, allow pass table, use DMV to get all columns, check if in scope, pass columns to groupby, is this possible?"
                   }
                 ]
               },
@@ -93,23 +37,6 @@
                     "textStyle": {
                       "color": "#d64550"
                     }
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Heatmap, when filter to one date why different colours? since grain is date?",
-                    "textStyle": {
-                      "color": "#d64550"
-                    }
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": ""
                   }
                 ]
               },
@@ -131,213 +58,6 @@
                 "textRuns": [
                   {
                     "value": "\tcould always do the rank trick again or categorical"
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": ""
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "The top of all the measure look the same now, just update the util functions or bin them?"
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": ""
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "sparklines"
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "\t"
-                  },
-                  {
-                    "value": "Columns",
-                    "textStyle": {
-                      "fontFamily": "Arial, Helvetica, sans-serif",
-                      "fontSize": "small",
-                      "color": "#222222"
-                    }
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "\t\tsimilar logic to line"
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": ""
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Consider functions for"
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "\tAnimation"
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "\tCSS"
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "\tGeneric wrapper and primative function, that accept tags not currently covered by existing functions"
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": ""
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Docs"
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "\tExamples/tutorial"
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "\tinline SVG images"
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "\tget XML syntax highlighting working"
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": ""
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "docs"
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Register docs site with Google Search",
-                    "textStyle": {
-                      "fontFamily": "Google Sans, Roboto, RobotoDraft, Helvetica, Arial, sans-serif",
-                      "fontSize": "1.375rem",
-                      "color": "#1f1f1f"
-                    }
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Add giscus from chirpy theme"
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Turn of toc table of contents where makes sense, i.e. on fucntion page",
-                    "textStyle": {
-                      "fontFamily": "Google Sans, Roboto, RobotoDraft, Helvetica, Arial, sans-serif",
-                      "fontSize": "22px",
-                      "color": "#1f1f1f"
-                    }
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": ""
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": ""
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": ""
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": ""
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": ""
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": ""
                   }
                 ]
               }

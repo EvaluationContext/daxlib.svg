@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "33dcb7468cb77b0b7598",
+  "name": "3ec234fd9e09e0bd3673",
   "position": {
-    "x": 225.41773796313839,
-    "y": 0,
-    "z": 4000,
-    "height": 69.215405017727136,
-    "width": 232.90048445154133,
-    "tabOrder": 3000
+    "x": 910.64248039691347,
+    "y": 275.98140641384811,
+    "z": 8004,
+    "height": 69.235753525425309,
+    "width": 125.00899942090682,
+    "tabOrder": 8004
   },
   "visual": {
     "visualType": "slicer",
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Variant"
+                      "Entity": "Samples"
                     }
                   },
-                  "Property": "Variant"
+                  "Property": "Samples"
                 }
               },
-              "queryRef": "Variant.Variant",
-              "nativeQueryRef": "Sum of Variant",
+              "queryRef": "Samples.Samples",
+              "nativeQueryRef": "Samples",
               "active": true
             }
           ]
@@ -51,13 +51,20 @@
       "general": [
         {
           "properties": {
+            "orientation": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
             "filter": {
               "filter": {
                 "Version": 2,
                 "From": [
                   {
-                    "Name": "v",
-                    "Entity": "Variant",
+                    "Name": "s",
+                    "Entity": "Samples",
                     "Type": 0
                   }
                 ],
@@ -70,10 +77,10 @@
                             "Column": {
                               "Expression": {
                                 "SourceRef": {
-                                  "Source": "v"
+                                  "Source": "s"
                                 }
                               },
-                              "Property": "Variant"
+                              "Property": "Samples"
                             }
                           }
                         ],
@@ -81,7 +88,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "25L"
+                                "Value": "60L"
                               }
                             }
                           ]
@@ -90,54 +97,6 @@
                     }
                   }
                 ]
-              }
-            }
-          }
-        }
-      ]
-    },
-    "visualContainerObjects": {
-      "title": [
-        {
-          "properties": {
-            "titleWrap": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "background": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "border": [
-        {
-          "properties": {
-            "width": {
-              "expr": {
-                "Literal": {
-                  "Value": "1D"
-                }
               }
             }
           }

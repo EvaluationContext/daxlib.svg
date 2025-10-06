@@ -30,10 +30,11 @@
           "nodeIndex": "Variant",
           "nodeLineageTag": "7b2aff17-738f-4c6e-b686-c70501c00c84",
           "size": {
-            "height": 200,
+            "height": 72,
             "width": 234
           },
-          "zIndex": 2
+          "zIndex": 2,
+          "expandedHeight": 200
         },
         {
           "location": {
@@ -121,11 +122,36 @@
         },
         {
           "location": {
-            "x": 1067.9537455833874,
-            "y": 301.87756478492406
+            "x": 1073.8923206283366,
+            "y": 166.28010125858114
           },
           "nodeIndex": "_Measures",
           "nodeLineageTag": "fc71a644-ec86-4b02-8cbe-a3b62e5b9769",
+          "size": {
+            "height": 72,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 200
+        },
+        {
+          "location": {
+            "x": 1357.8923206283366,
+            "y": 182.36200119864867
+          },
+          "nodeIndex": "Bandwidth",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1641.8923206283366,
+            "y": 182.36200119864867
+          },
+          "nodeIndex": "Samples",
           "size": {
             "height": 200,
             "width": 234

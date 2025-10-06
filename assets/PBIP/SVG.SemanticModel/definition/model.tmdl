@@ -25,6 +25,8 @@ ref table Dates
 ref table Inventory
 ref table Products
 ref table Stores
+ref table Bandwidth
+ref table Samples
 
 ref cultureInfo en-GB
 

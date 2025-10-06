@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
-  "name": "33dcb7468cb77b0b7598",
+  "name": "9d6f6de299ab905004d4",
   "position": {
-    "x": 225.41773796313839,
-    "y": 0,
-    "z": 4000,
-    "height": 69.215405017727136,
-    "width": 232.90048445154133,
-    "tabOrder": 3000
+    "x": 1035.6514798178202,
+    "y": 275.98140641384811,
+    "z": 8002,
+    "height": 69.235753525425309,
+    "width": 125.00899942090682,
+    "tabOrder": 8002
   },
   "visual": {
     "visualType": "slicer",
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Variant"
+                      "Entity": "Bandwidth"
                     }
                   },
-                  "Property": "Variant"
+                  "Property": "Bandwidth"
                 }
               },
-              "queryRef": "Variant.Variant",
-              "nativeQueryRef": "Sum of Variant",
+              "queryRef": "Bandwidth.Bandwidth",
+              "nativeQueryRef": "Bandwidth",
               "active": true
             }
           ]
@@ -51,13 +51,20 @@
       "general": [
         {
           "properties": {
+            "orientation": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
             "filter": {
               "filter": {
                 "Version": 2,
                 "From": [
                   {
-                    "Name": "v",
-                    "Entity": "Variant",
+                    "Name": "b",
+                    "Entity": "Bandwidth",
                     "Type": 0
                   }
                 ],
@@ -70,10 +77,10 @@
                             "Column": {
                               "Expression": {
                                 "SourceRef": {
-                                  "Source": "v"
+                                  "Source": "b"
                                 }
                               },
-                              "Property": "Variant"
+                              "Property": "Bandwidth"
                             }
                           }
                         ],
@@ -81,7 +88,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "25L"
+                                "Value": "400L"
                               }
                             }
                           ]
@@ -90,54 +97,6 @@
                     }
                   }
                 ]
-              }
-            }
-          }
-        }
-      ]
-    },
-    "visualContainerObjects": {
-      "title": [
-        {
-          "properties": {
-            "titleWrap": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "background": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "border": [
-        {
-          "properties": {
-            "width": {
-              "expr": {
-                "Literal": {
-                  "Value": "1D"
-                }
               }
             }
           }

@@ -1,44 +1,79 @@
 table _Measures
 	lineageTag: fc71a644-ec86-4b02-8cbe-a3b62e5b9769
 
-	measure 'Sparkline.Bar' =
+	measure 'Compound.Bar' = ```
 			
-			DaxLib.SVG.Sparkline.Bar(
-			    100,                // width
-			    20,                 // height
-			    Products[Brand],    // columnRef
-			    [Total Cost],       // measureVal
-			    DaxLib.SVG.Colour.Theme(
-			        MAX( Theme[Theme] ),
-			        MIN( Variant[Variant] )
-			    ),                  // negativeColour
-			    DaxLib.SVG.Colour.Theme(
-			        MAX( Theme[Theme] ),
-			        MIN( Variant[Variant] ) + 1
-			    ),                  // positiveColour
-			    DaxLib.SVG.Colour.Theme(
-			        MAX( Theme[Theme] ),
-			        MIN( Variant[Variant] )
-			    )                   // zeroAxisColour
-			)
-		displayFolder: SVG\Visuals
-		lineageTag: 314490e4-1755-4532-a9f5-f07aedae8a3e
-		dataCategory: ImageUrl
-
-	measure Pill =
-			
-			IF( NOT ISBLANK( [Total Cost] ),
-			    DaxLib.SVG.Pill(
-			        100,
-			        20,
-			        MAX( Products[Brand] ),
+			VAR Compound = 
+			    DaxLib.SVG.Compound.Bar(
+			        0,                  // x
+			        0,                  // y   
+			        100,                // width
+			        20,                 // height
+			        0.05,               // paddingX
+			        0.02,               // paddingY
+			        Products[Brand],    // columnRef
+			        [Total Cost],       // measureVal
 			        DaxLib.SVG.Colour.Theme(
 			            MAX( Theme[Theme] ),
 			            MIN( Variant[Variant] )
+			        ),                  // negativeColour
+			        DaxLib.SVG.Colour.Theme(
+			            MAX( Theme[Theme] ),
+			            MIN( Variant[Variant] ) + 1
+			        ),                  // positiveColour
+			        DaxLib.SVG.Colour.Theme(
+			            MAX( Theme[Theme] ),
+			            MIN( Variant[Variant] )
+			        )                    // zeroAxisColour
+			    )
+			
+			RETURN
+			
+			    IF(
+			        NOT ISBLANK( Compound ),
+			        DaxLib.SVG.SVG(
+			            100,
+			            20,
+			            BLANK(),
+			            Compound,                 
+			            BLANK()
 			        )
 			    )
-			)
-		displayFolder: SVG\Visuals
+			```
+		displayFolder: SVG\Compound
+		lineageTag: 314490e4-1755-4532-a9f5-f07aedae8a3e
+		dataCategory: ImageUrl
+
+	measure 'Compound.Pill' = ```
+			
+			VAR Compound = 
+			    DaxLib.SVG.Compound.Pill(
+			        0,                  // x
+			        0,                  // y
+			        100,                // width
+			        20,                 // height
+			        0.05,               // paddingX
+			        0.02,               // paddingY
+			        MAX( Products[Brand] ), // txt
+			        DaxLib.SVG.Colour.Theme(
+			            MAX( Theme[Theme] ),
+			            MIN( Variant[Variant] )
+			        )                   // colour
+			    )
+			RETURN
+			
+			    IF( 
+			        NOT ISBLANK( Compound ) && NOT ISBLANK( [Total Cost] ),
+			        DaxLib.SVG.SVG(
+			            100,
+			            20,
+			            BLANK(),
+			            Compound,
+			            BLANK()
+			        )
+			    )
+			```
+		displayFolder: SVG\Compound
 		lineageTag: 9c01df68-7f3e-486f-ba39-70e260a26808
 		dataCategory: ImageUrl
 
@@ -509,53 +544,38 @@ table _Measures
 		lineageTag: 0ee21ac1-95fc-44e3-89d5-6a67c09cd0ed
 		dataCategory: ImageUrl
 
-	measure 'Action Dot' =
+	measure 'Compound.Line' = ```
 			
-			VAR theme = "Stoplight"
+			VAR Compound = 
+			    DaxLib.SVG.Compound.Line(
+			        0,                  // x
+			        0,                  // y
+			        100,                // width
+			        20,                 // height
+			        0.05,               // paddingX
+			        0.02,               // paddingY
+			        SUMMARIZE( Orders, Products[Brand] ), // contextTable
+			        Dates[Date],        // xAxis
+			        [Total Cost],       // measureVal
+			        DaxLib.SVG.Colour.Theme(
+			            MAX( Theme[Theme] ),
+			            MIN( Variant[Variant] )
+			        )                   // lineColour
+			    )
 			RETURN
-			DaxLib.SVG.Sparkline.BulletChart.ActionDot(
-			    100,                // width
-			    20,                 // height
-			    [Sum Actual],       // Actual value
-			    [Sum Forecast],     // Target/Forecast value
-			    SVG[Category],      // Category column
-			    -0.06,              // thresholdVeryBad
-			    -0.035,             // thresholdBad
-			    -0.033,             // thresholdGood
-			    DaxLib.SVG.Colour.PerformanceTheme(
-			        theme,
-			        "VeryBad"
-			    ),                  // colourVeryBad
-			    DaxLib.SVG.Colour.PerformanceTheme(
-			        theme,
-			        "Bad"
-			    ),                  // colourBad
-			    DaxLib.SVG.Colour.PerformanceTheme(
-			        theme,
-			        "Good"
-			    ),                  // colourGood
-			    DaxLib.SVG.Colour.PerformanceTheme(
-			        theme,
-			        "VeryGood"
-			    )                  // colourVeryGood
-			)
-		displayFolder: SVG\Visuals
-		lineageTag: 1f33fac1-e97c-4d47-b2b5-ca9da397ee55
-
-	measure 'Sparkline.Line' =
 			
-			DaxLib.SVG.Sparkline.Line(
-			    100,                // width
-			    20,                 // height
-			    SUMMARIZE( Orders, Products[Brand] ), // contextTable
-			    Dates[Date],        // xAxis
-			    [Total Cost],       // measureVal
-			    DaxLib.SVG.Colour.Theme(
-			        MAX( Theme[Theme] ),
-			        MIN( Variant[Variant] )
-			    )                   // lineColour
-			)
-		displayFolder: SVG\Visuals
+			    IF(
+			        NOT ISBLANK( Compound ),
+			        DaxLib.SVG.SVG(
+			            100,
+			            20,
+			            BLANK(),
+			            Compound,
+			            BLANK()
+			        )
+			    )
+			```
+		displayFolder: SVG\Compound
 		lineageTag: 12d80253-de6a-46a9-9cf4-9341367e4c0b
 		dataCategory: ImageUrl
 
@@ -568,113 +588,307 @@ table _Measures
 	measure Blank = ""
 		lineageTag: e0d624fb-152d-45bf-a154-bbbef29f53db
 
-	measure 'Sparkline.Area' = ```
+	measure 'Compound.Area' = ```
 			
-			DaxLib.SVG.Sparkline.Area(
-			    100,            //width
-			    20,             // height
-			    SUMMARIZE( Orders, Products[Brand]), // contextTable
-			    Dates[Date],    // xAxis
-			    [Total Cost],   // measureVal
-			    DaxLib.SVG.Colour.Theme(
-			        MAX( Theme[Theme] ),
-			        MIN( Variant[Variant] )
-			    ),              // fillColour
-			    0.2,            // fillOpacity
-			    DaxLib.SVG.Colour.Theme(
-			        MAX( Theme[Theme] ),
-			        MIN( Variant[Variant] )
-			    )               // strokeColour
-			)     
+			VAR Compound = 
+			    DaxLib.SVG.Compound.Area(
+			        0,              // x
+			        0,              // y
+			        100,            // width
+			        20,             // height
+			        0.05,           // paddingX
+			        0.02,           // paddingY
+			        SUMMARIZE( Orders, Products[Brand]), // contextTable
+			        Dates[Date],    // xAxis
+			        [Total Cost],   // measureVal
+			        DaxLib.SVG.Colour.Theme(
+			            MAX( Theme[Theme] ),
+			            MIN( Variant[Variant] )
+			        ),              // fillColour
+			        0.2,            // fillOpacity
+			        DaxLib.SVG.Colour.Theme(
+			            MAX( Theme[Theme] ),
+			            MIN( Variant[Variant] )
+			        )               // strokeColour
+			    )     
+			RETURN
+			
+			    IF(
+			        NOT ISBLANK( Compound ),
+			        DaxLib.SVG.SVG(
+			            100,
+			            20,
+			            BLANK(),
+			            Compound,
+			            BLANK()
+			        )
+			    )
 			```
-		displayFolder: SVG\Visuals
+		displayFolder: SVG\Compound
 		lineageTag: 84ce9f4e-83dc-49d9-bc7d-c58508ccbc1d
 		dataCategory: ImageUrl
 
-	measure 'Sparkline.Heatmap' = ```
+	measure 'Compound.BoxPlot' = ```
 			
-			DaxLib.SVG.Sparkline.Heatmap(
-			    100,                // width
-			    20,                 // height
-			    SUMMARIZE( Orders, Products[Brand]), // contextTable
-			    Dates[Date],        // xAxis
-			    [Total Cost],       // measureVal
-			    50,                 // numBins        
-			    DaxLib.SVG.Colour.Theme(
-			        MAX( Theme[Theme] ),
-			        MIN( Variant[Variant] )
-			    ),                 // lowColour
-			    DaxLib.SVG.Colour.Theme(
-			        MAX( Theme[Theme] ),
-			        MIN( Variant[Variant] ) + 1
-			    )                   // highColour
-			)
+			VAR Compound = 
+			    DaxLib.SVG.Compound.Boxplot(
+			        0,                  // x
+			        0,                  // y
+			        100,                // width
+			        20,                 // height
+			        0.05,               // paddingX
+			        0.02,               // paddingY
+			        SUMMARIZE( Orders, Products[Brand]), // contextTable
+			        Dates[Date],        // axisRef
+			        [Total Cost],       // measureVal
+			        DaxLib.SVG.Colour.Theme(
+			            MAX( Theme[Theme] ),
+			            MIN( Variant[Variant] )
+			        ),                  // fillColour
+			        DaxLib.SVG.Colour.Theme(
+			            MAX( Theme[Theme] ),
+			            MIN( Variant[Variant] )
+			        ),                   // strokeColour
+			        TRUE                 // showOutliers
+			    )
+			RETURN
+			
+			    IF(
+			        NOT ISBLANK( Compound ),
+			        DaxLib.SVG.SVG(
+			            100,
+			            20,
+			            BLANK(),
+			            Compound,                 
+			            BLANK()
+			        )
+			    )
 			```
-		displayFolder: SVG\Visuals
-		lineageTag: 25c20fc9-83b2-4dd6-b7f5-96c902d5fb8b
-		dataCategory: ImageUrl
-
-	measure 'Sparkline.BoxPlot' =
-			
-			DaxLib.SVG.Sparkline.Boxplot(
-			    100,                // width
-			    20,                 // height
-			    VALUES(Products[Brand]),//SUMMARIZE( Orders, Products[Brand]), // contextTable
-			    Dates[Date],        // axisRef
-			    [Total Cost],       // measureVal
-			    DaxLib.SVG.Colour.Theme(
-			        MAX( Theme[Theme] ),
-			        MIN( Variant[Variant] )
-			    ),                  // fillColour
-			    DaxLib.SVG.Colour.Theme(
-			        MAX( Theme[Theme] ),
-			        MIN( Variant[Variant] )
-			    ),                   // strokeColour
-			    TRUE                 // showOutliers
-			)
-		displayFolder: SVG\Visuals
+		displayFolder: SVG\Compound
 		lineageTag: 6d5721f0-b599-41a7-8ef0-9b9418142174
 		dataCategory: ImageUrl
 
-	measure 'Sparkline.Violin' =
+	measure 'Compound.Violin' = ```
 			
-			DaxLib.SVG.Sparkline.Violin(
-			    100,                // width
-			    20,                 // height
-			    SUMMARIZE( Orders, Products[Brand] ), // contextTable
-			    Dates[Date],        // axisRef
-			    [Total Cost],       // measureVal
-			    50,                 // samples
-			    500,                 // bandwidth
-			    DaxLib.SVG.Colour.Theme(
-			        MAX( Theme[Theme] ),
-			        MIN( Variant[Variant] )
-			    ),                  // fillColour
-			    DaxLib.SVG.Colour.Theme(
-			        MAX( Theme[Theme] ),
-			        MIN( Variant[Variant] )
-			    )                   // strokeColour
-			)
-		displayFolder: SVG\Visuals
+			VAR Compound =
+			    DaxLib.SVG.Compound.Violin(
+			        0,                  // x
+			        0,                  // y
+			        100,                // width
+			        20,                 // height
+			        0.05,               // paddingX
+			        0.02,               // paddingY
+			        SUMMARIZE( Orders, Products[Brand] ), // contextTable
+			        Dates[Date],        // axisRef
+			        [Total Cost],       // measureVal
+			        MAX( Samples[Samples] ), // samples
+			        MAX( Bandwidth[Bandwidth] ), // bandwidth
+			        DaxLib.SVG.Colour.Theme(
+			            MAX( Theme[Theme] ),
+			            MIN( Variant[Variant] )
+			        )                   // color
+			    )
+			RETURN
+			
+			    IF( 
+			        NOT ISBLANK( Compound ),
+			        DaxLib.SVG.SVG(
+			            100,
+			            20,
+			            BLANK(),
+			            Compound,
+			            BLANK()
+			        )
+			    )
+			```
+		displayFolder: SVG\Compound
 		lineageTag: fc5f68fa-6a23-4e30-adcf-f3ca84abf767
 		dataCategory: ImageUrl
 
-	measure 'Sparkline.Jitter' =
+	measure 'Compound.Jitter' =
 			
-			DaxLib.SVG.Sparkline.Jitter(
-			    100,                // width
-			    20,                 // height
-			    SUMMARIZE( Orders, Products[Brand]), // contextTable
-			    Dates[Date],        // xAxis
-			    [Total Cost],       // measureRef
-			    DaxLib.SVG.Colour.Theme(
-			        MAX( Theme[Theme] ),
-			        MIN( Variant[Variant] )
-			    ),                   // pointColour
-			    0.5                 // jitterAmount
-			)
-		displayFolder: SVG\Visuals
+			VAR Compound =
+			    DaxLib.SVG.Compound.Jitter(
+			        0,                  // x
+			        0,                  // y
+			        100,                // width
+			        20,                 // height
+			        0.05,               // paddingX
+			        0.02,               // paddingY
+			        SUMMARIZE( Orders, Products[Brand]), // contextTable
+			        Dates[Date],        // xAxis
+			        [Total Cost],       // measureRef
+			        DaxLib.SVG.Colour.Theme(
+			            MAX( Theme[Theme] ),
+			            MIN( Variant[Variant] )
+			        ),                  // pointColour
+			        0.5                 // jitterAmount
+			    )
+			RETURN
+			
+			    IF(
+			        NOT ISBLANK( Compound ),
+			        DaxLib.SVG.SVG(
+			            100,
+			            20,
+			            BLANK(),
+			            Compound,
+			            BLANK()
+			        )
+			    )
+		displayFolder: SVG\Compound
 		lineageTag: 1daf81bd-2dda-4291-89a5-5291a52581af
+		dataCategory: ImageUrl
+
+	measure 'Compound.Heatmap' = ```
+			
+			VAR Compound = 
+			    DaxLib.SVG.Compound.Heatmap(
+			        0,                  // x
+			        0,                  // y
+			        100,                // width
+			        20,                 // height
+			        0.05,               // paddingX
+			        0.02,               // paddingY
+			        SUMMARIZE( Orders, Products[Brand] ), // contextTable
+			        Dates[Date],        // axisRef
+			        [Total Cost],       // measureVal
+			        MAX( Samples[Samples] ), // samples
+			        MAX( Bandwidth[Bandwidth] ), // bandwidth
+			        DaxLib.SVG.Colour.Theme(
+			            MAX( Theme[Theme] ),
+			            MIN( Variant[Variant] )
+			        )                   // Colour
+			    )
+			RETURN
+			
+			    IF(
+			        NOT ISBLANK( Compound ),
+			        DaxLib.SVG.SVG(
+			            100,
+			            20,
+			            BLANK(),
+			            Compound,                 
+			            BLANK()
+			        )
+			    )
+			```
+		displayFolder: SVG\Compound
+		lineageTag: 657c1c16-3fd9-4498-9dd6-1039a9c5db76
+		dataCategory: ImageUrl
+
+	measure 'Jitter and Heatmap' = ```
+			
+			VAR Jitter =
+			    DaxLib.SVG.Compound.Jitter(
+			        0,                  // x
+			        0,                  // y
+			        100,                // width
+			        20,                 // height
+			        0.05,               // paddingX
+			        0.02,               // paddingY
+			        SUMMARIZE( Orders, Products[Brand]), // contextTable
+			        Dates[Date],        // xAxis
+			        [Total Cost],       // measureRef
+			        DaxLib.SVG.Colour.Theme(
+			            MAX( Theme[Theme] ),
+			            MIN( Variant[Variant] ) + 1
+			        ),                  // pointColour
+			        0.5                 // jitterAmount
+			    )
+			VAR Heatmap = 
+			    DaxLib.SVG.Compound.Heatmap(
+			        0,                  // x
+			        0,                  // y
+			        100,                // width
+			        20,                 // height
+			        0.05,               // paddingX
+			        0.02,               // paddingY
+			        SUMMARIZE( Orders, Products[Brand] ), // contextTable
+			        Dates[Date],        // axisRef
+			        [Total Cost],       // measureVal
+			        MAX( Samples[Samples] ), // samples
+			        MAX( Bandwidth[Bandwidth] ), // bandwidth
+			        DaxLib.SVG.Colour.Theme(
+			            MAX( Theme[Theme] ),
+			            MIN( Variant[Variant] )
+			        )                   // colour
+			    )
+			VAR Combined = 
+			    Heatmap &
+			    Jitter
+			RETURN
+			
+			    IF(
+			        NOT ISBLANK( Combined ),
+			        DaxLib.SVG.SVG(
+			            100,
+			            20,
+			            BLANK(),
+			            Combined,                 
+			            BLANK()
+			        )
+			    )
+			```
+		displayFolder: SVG\Compound
+		lineageTag: b39fb0db-6272-4845-8483-c8a30fe6f5fa
+		dataCategory: ImageUrl
+
+	measure 'Jitter and Violin' = ```
+			
+			VAR Jitter =
+			    DaxLib.SVG.Compound.Jitter(
+			        0,                  // x
+			        0,                  // y
+			        100,                // width
+			        20,                 // height
+			        0.05,               // paddingX
+			        0.02,               // paddingY
+			        SUMMARIZE( Orders, Products[Brand]), // contextTable
+			        Dates[Date],        // xAxis
+			        [Total Cost],       // measureRef
+			        DaxLib.SVG.Colour.Theme(
+			            MAX( Theme[Theme] ),
+			            MIN( Variant[Variant] ) + 1
+			        ),                  // pointColour
+			        0.5                 // jitterAmount
+			    )
+			VAR Violin =
+			    DaxLib.SVG.Compound.Violin(
+			        0,                  // x
+			        0,                  // y
+			        100,                // width
+			        20,                 // height
+			        0.05,               // paddingX
+			        0.02,               // paddingY
+			        SUMMARIZE( Orders, Products[Brand] ), // contextTable
+			        Dates[Date],        // axisRef
+			        [Total Cost],       // measureVal
+			        MAX( Samples[Samples] ), // samples
+			        MAX( Bandwidth[Bandwidth] ), // bandwidth
+			        DaxLib.SVG.Colour.Theme(
+			            MAX( Theme[Theme] ),
+			            MIN( Variant[Variant] ) 
+			        )                   // color
+			    )
+			VAR Combined = 
+			    Violin &
+			    Jitter
+			RETURN
+			
+			    IF(
+			        NOT ISBLANK( Combined ),
+			        DaxLib.SVG.SVG(
+			            100,
+			            20,
+			            BLANK(),
+			            Combined,                 
+			            BLANK()
+			        )
+			    )
+			```
+		displayFolder: SVG\Compound
+		lineageTag: 28f64d09-7940-451d-8b66-3305905f9484
 		dataCategory: ImageUrl
 
 	column Value
