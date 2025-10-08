@@ -7,8 +7,6 @@ parent: Functions
 
 # Compounds
 
-Compound functions combine multiple SVG elements into higher-level reusable components, such as pills, badges, or other composite shapes. Use these to simplify the creation of complex visuals in Power BI.
+Compound functions combine multiple `DaxLib.SVG.Element.*` into higher-level reusable components and complete chart visualizations. Use these to simplify the creation of complex visuals in Power BI. You can specify x,y coordinates and width, height to easily combine `DaxLib.SVG.Compound.*` with other `DaxLib.SVG.Compound.*` or `DaxLib.SVG.Element.*`.
 
-## Available Compound Functions
-
-The following functions are available:
+![Compound Functions]({{ site.baseurl }}/assets/img/compounds.png)

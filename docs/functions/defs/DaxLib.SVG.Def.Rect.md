@@ -11,63 +11,74 @@ Creates a reusable `<rect>`{:.xml} definition
 ## Syntax
 
 ```dax
-DaxLib.SVG.Def.Rect(defId, width, height, rx, ry, style, class, transform)
+DaxLib.SVG.Def.Rect(
+    defId, 
+    width, 
+    height, 
+    rx, 
+    ry, 
+    attributes, 
+    transforms
+)
 ```
 
-## Parameters
-
-| Name      | Type   | Required | Description                                                        |
-|-----------|--------|----------|--------------------------------------------------------------------|
-| defId     | STRING | Yes      | The unique identifier for the rectangle                            |
-| width     | STRING | Yes      | The width of the rectangle (pixels or percentage)                  |
-| height    | STRING | Yes      | The height of the rectangle (pixels or percentage)                 |
-| rx        | STRING | No       | X radius for rounded corners                                       |
-| ry        | STRING | No       | Y radius for rounded corners                                       |
-| style     | STRING | No       | The style to apply (e.g., "fill:black;stroke:blue;")               |
-| class     | STRING | No       | CSS class to apply                                                 |
-| transform | STRING | No       | Transformation to apply                                            |
+| Name       | Type   | Required | Description                                                                |
+|:----------:|:------:|:--------:|:--------------------------------------------------------------------------|
+| defId      | STRING | Yes      | The unique identifier for the rectangle                                   |
+| width      | STRING | Yes      | The width of the rectangle (pixels or percentage)                         |
+| height     | STRING | Yes      | The height of the rectangle (pixels or percentage)                        |
+| rx         | STRING | No       | X radius for rounded corners                                              |
+| ry         | STRING | No       | Y radius for rounded corners                                              |
+| attributes | STRING | No       | Direct SVG attributes to apply (e.g., "fill='none' stroke='blue'"), can generate with DaxLib.SVG.Attr.* or manually |
+| transforms | STRING | No       | Transformation to apply (can be generated with DaxLib.SVG.Transforms)    |
 
 ## Returns
 
-(*STRING*) `<rect>`{:.xml}  definition
+**STRING** `<rect>`{:.xml} definition
 
 ## Example
 
 ```dax
 DaxLib.SVG.Def.Rect(
     "myRect",
-    100,
-    50,
-    10,
-    10,
-    "fill:blue;stroke:black;",
-    BLANK(),
+    "100",
+    "50",
+    "10",
+    "10",
+    DaxLib.SVG.Attr.Shapes(
+        "blue",     // fill
+        BLANK(),    // fillOpacity
+        BLANK(),    // fillRule
+        "black",    // stroke
+        2,          // strokeWidth
+        BLANK(),    // strokeOpacity
+        BLANK()     // opacity
+    ),
     BLANK()
 )
-// Returns: <rect id='myRect' width='100' height='50' rx='10' ry='10' style='fill:blue;stroke:black;'/>
+// Returns: <rect id='myRect' width='100' height='50' rx='10' ry='10' fill='blue' stroke='black' stroke-width='2' />
 ```
 
 ## Definition
 
 ```dax
-function 'DaxLib.SVG.Def.Rect' =
+function 'DaxLib.SVG.Def.Rect' = 
     (
         defId: STRING,
         width: STRING,
         height: STRING,
         rx: STRING,
         ry: STRING,
-        style: STRING,
-        class: STRING,
-        transform: STRING
+        attributes: STRING,
+        transforms: STRING
     ) =>
-        VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
-        RETURN
-            "<rect id='" & defId & "'" &
-            " width='" & width & "'" &
-            " height='" & height & "'" &
-            IF(NOT ISBLANK(rx), " rx='" & rx & "'" ) &
-            IF(NOT ISBLANK(ry), " ry='" & ry & "'" ) &
-            _OCE &
-            "/>"
+
+        "<rect id='" & defId & "'" &
+        " width='" & width & "'" &
+        " height='" & height & "'" &
+        IF(NOT ISBLANK( rx ), " rx='" & rx & "'" ) & 
+        IF(NOT ISBLANK( ry ), " ry='" & ry & "'" ) &
+        IF( NOT ISBLANK( attributes ), " " & attributes & " " ) &
+        IF( NOT ISBLANK( transforms ), " transform='" & transforms & "'" ) &
+        "/>"
 ```

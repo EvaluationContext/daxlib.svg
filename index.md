@@ -18,8 +18,7 @@ A comprehensive set of DAX User-Defined Functions (UDF) designed to enable easy 
 
 ---
 
-<!-- Placeholder for SVG library image -->
-![DaxLib.SVG in Action](/assets/img/UDFInPowerBI.png)
+![DaxLib.SVG in Action]({{ site.baseurl }}/assets/img/UDFInAction.png)
 
 ---
 
@@ -51,9 +50,7 @@ Core SVG element generator functions:
 
 Composite SVG components:
 
-- Create complex visual elements from simple parts
-- Combine shapes and styles for consistent visuals
-- Build reusable UI components
+- Prebuilt complex visual elements
 
 [View Compounds →]({{ site.baseurl }}/docs/functions/compounds/Compounds/){: .btn .btn-outline }
 
@@ -71,49 +68,47 @@ Reusable SVG definitions for gradients, shapes, and more:
 
 ---
 
+### Attributes
+
+Functions for creating SVG attribute strings:
+
+- Style shapes with fill, stroke, and opacity
+- Configure text with font and alignment options
+- Apply comprehensive stroke settings
+
+[View Attributes →]({{ site.baseurl }}/docs/functions/attributes/){: .btn .btn-outline }
+
+---
+
+### Transforms
+
+Functions for creating SVG transform attribute values:
+
+- Apply translations, rotations, and scaling
+
+[View Transforms →]({{ site.baseurl }}/docs/functions/transforms/){: .btn .btn-outline }
+
+---
+
+### Colors
+
+Color utility functions for dynamic theming and visualization:
+
+- Access predefined color themes and palettes
+- Themes for performance-based color coding
+- Interpolate colors for gradients and heat maps
+
+[View Colors →]({{ site.baseurl }}/docs/functions/colors/Colors/){: .btn .btn-outline }
+
+---
+
 ### Scales
 
 Functions for mapping and normalizing values for SVG graphics:
 
 - Convert data values to visual dimensions
-- Create dynamic scaling for responsive visuals
-- Generate paths and arcs based on data
 
-[View Scales →]({{ site.baseurl }}/docs/functions/scales/Scales){: .btn .btn-outline }
-
----
-
-### Styles
-
-Functions to generate style strings for SVG elements:
-
-- Create consistent styling across elements
-- Generate text formatting for SVG text elements
-- Apply line styles for paths and outlines
-
-[View Styles →]({{ site.baseurl }}/docs/functions/styles/Styles/){: .btn .btn-outline }
-
----
-
-### Visuals
-
-Ready to use chart and visual components built from library elements:
-
-- Pre-built visuals you can apply to your data
-
-[View Visuals →]({{ site.baseurl }}/docs/functions/visuals/Visuals/){: .btn .btn-outline }
-
----
-
-### Utils
-
-Helper and utility functions for internal use:
-
-- Format and process SVG element properties
-- Handle optional elements and attributes
-- Support internal library operations
-
-[View Utils →]({{ site.baseurl }}/docs/functions/util/Util/){: .btn .btn-outline }
+[View Scales →]({{ site.baseurl }}/docs/functions/scales/Scales/){: .btn .btn-outline }
 
 ---
 

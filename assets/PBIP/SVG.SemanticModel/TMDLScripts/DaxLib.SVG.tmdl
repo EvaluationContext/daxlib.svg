@@ -788,118 +788,13 @@ createOrReplace
 
 		annotation DAXLIB_PackageVersion = 0.1.2-beta
 
-	/// Create a bar compound for a given column with absolute positioning
-	/// x				INT64			The x position of compound
-	/// y				INT64			The y position of compound
-	/// width			INT64			The width of the compound
-	/// height			INT64			The height of the compound
-	/// paddingX		DOUBLE			The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
-	/// paddingY		DOUBLE			The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
-	/// columnRef		ANYREF EXPR		The context the measure will be evaluated in
-	/// measureRef		NUMERIC EXPR    The measure to evaluate
-	/// positiveColor	STRING			The Hex color of the positive bar i.e "#01B8AA"
-	/// negativeColor	STRING			The Hex color of the negative bar i.e "#FD625E"
-	/// zeroAxisColor	STRING			The Hex color of the zero axis i.e "#A6A6A6"
-	function 'DaxLib.SVG.Compound.Bar' = 
-			(
-				x: INT64,
-				y: INT64,
-				width: INT64,
-				height: INT64,
-				paddingX: DOUBLE,
-				paddingY: DOUBLE,
-				columnRef: ANYREF EXPR,
-				measureRef: NUMERIC EXPR,
-				positiveColor: STRING,
-				negativeColor: STRING,
-				zeroAxisColor: STRING
-			) =>
-
-				// Apply padding to dimensions
-				VAR _X = 			x + (width * (IF(ISBLANK(paddingX), 0, paddingX) / 2))
-				VAR _Y = 			y + (height * (IF(ISBLANK(paddingY), 0, paddingY) / 2))
-				VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
-				VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
-
-				// Current value
-				VAR _CurrentValue = measureRef
-				
-				// Use scale functions for axis calculations
-				VAR _RawXMin =  	CALCULATE( MINX( VALUES( columnRef ), measureRef ), ALLSELECTED( columnRef ) )
-				VAR _XMin =        	IF( _RawXMin < 0, _RawXMin, 0 )
-				VAR _RawXMax =   	CALCULATE( MAXX( VALUES( columnRef ), measureRef ), ALLSELECTED( columnRef ) )
-				VAR _XMax = 		IF( _XMin == 0 && _RawXMax <= 0, 0.1, _RawXMax )			
-			
-				// Map the zero point and the current value to the absolute coordinate system
-				VAR _ZeroPoint = 	DaxLib.SVG.Scale.Normalize( 0, _XMin, _XMax, _X, _X + _Width )
-				VAR _ValuePoint =  	DaxLib.SVG.Scale.Normalize( _CurrentValue, _XMin, _XMax, _X, _X + _Width )
-				
-				// Style
-				VAR _ZeroAxisStyle =
-					DaxLib.SVG.Attr.Shapes(
-						BLANK(),			// Fill
-						BLANK(),			// FillOpacity
-						BLANK(),			// FillRule
-						zeroAxisColor,		// Stroke
-						1,					// StrokeWidth
-						BLANK(),			// StrokeOpacity
-						BLANK()				// Opacity
-					)
-				VAR _Rectcolor = IF( _CurrentValue >= 0, positiveColor, negativeColor )
-				VAR _RectAttributes =
-					DaxLib.SVG.Attr.Shapes(
-						_Rectcolor,			// fill
-						0.5,				// fillOpacity
-						BLANK(),			// fillRule
-						_Rectcolor,	    	// stroke
-						BLANK(),			// strokeWidth
-						BLANK(),			// strokeOpacity
-						BLANK()				// opacity
-					)
-
-				// Rect
-				VAR _RectWidth =    ABS( _ValuePoint - _ZeroPoint )
-				VAR _RectX =        IF( _ValuePoint > _ZeroPoint, _ZeroPoint, _ValuePoint )
-				VAR _Rect = 
-					DaxLib.SVG.Element.Rect(
-						_RectX,                   // x
-						_Y + _Height * 0.25,      // y
-						_RectWidth,               // width
-						_Y + _Height * 0.5,       // height
-						0,                        // rx
-						0,                        // ry
-						_RectAttributes,          // attributes
-						BLANK()                   // transforms
-					)
-
-				// Zero Axis Line
-				VAR _ZeroAxis = 
-					DaxLib.SVG.Element.Line(
-						_ZeroPoint,               // x1
-						_Y,                       // y1
-						_ZeroPoint,               // x2
-						_Y + _Height,             // y2
-						_ZeroAxisStyle,           // attributes
-						BLANK()                   // transforms
-					)
-
-				RETURN 
-
-					IF( NOT ISBLANK( _CurrentValue), _ZeroAxis & _Rect )
-
-		annotation DAXLIB_PackageId = DaxLib.SVG
-
-		annotation DAXLIB_PackageVersion = 0.1.2-beta
-
 	/// Creates a Line compound SVG Visual for a numeric axis
-	/// WARNING: contextTable should match the columns of the visual that the measure will be called in
 	/// x              	INT64           	The x position of the compound
 	/// y              	INT64           	The y position of the compound
 	/// width          	INT64           	The width of the compound
 	/// height         	INT64           	The height of the compound
 	/// paddingX		DOUBLE				The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
 	/// paddingY		DOUBLE				The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
-	/// contextTable   	ANYREF EXPR     	The context the measure will be evaluated in
 	/// axisRef        	ANYREF EXPR     	The column that the measure will be evaluated against
 	/// measureRef     	NUMERIC EXPR    	The measure to evaluate
 	/// lineColor    	STRING          	The Hex color of the line i.e "#01B8AA"
@@ -911,7 +806,6 @@ createOrReplace
 				height: INT64,
 				paddingX: DOUBLE,
 				paddingY: DOUBLE,
-				contextTable: ANYREF EXPR,
 				axisRef: ANYREF EXPR,
 				measureRef: NUMERIC EXPR,
 				lineColor: STRING
@@ -922,76 +816,55 @@ createOrReplace
 				VAR _Y = 			y + (height * (IF(ISBLANK(paddingY), 0, paddingY) / 2))
 				VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
 				VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
-			
-				// Replace contextTable with Index
-				VAR _ContextTableIndex =
-					ADDCOLUMNS(
-						CALCULATETABLE(
-							FILTER(
-								KEEPFILTERS( contextTable ),
-								NOT ISBLANK( measureRef )
-							),
-							ALLSELECTED()
-						),
-						"@Index", RANK( DENSE, CALCULATETABLE( contextTable, ALLSELECTED() ) )
-					)
-
-				VAR _currentIndex =
-					MAXX(
-						NATURALINNERJOIN(
-							_ContextTableIndex,
-							CALCULATETABLE( contextTable )
-						),
-						[@Index]
-					)
-
-				// Add in axisRef and evaulate measure
-				VAR _Data = 
-					FILTER(
-						ADDCOLUMNS(
-							GENERATE(
-								_ContextTableIndex,
-								VALUES( axisRef )
-							),
-							"@Value", measureRef
-						),
-						NOT ISBLANK( [@Value] )
-					)
+		
+				// Check if Axis is numeric
+				VAR axisSample = 	MAX( axisRef )
+				VAR axisIsNumeric = ISNUMERIC( axisSample ) || ISDATETIME( axisSample )
 				
-				VAR _XMin = 	MINX( _Data, axisRef )
-				VAR _XMax = 	MAXX( _Data, axisRef )
+				// For totals
+				VAR _Data = 
+					ADDCOLUMNS(
+						FILTER(
+							VALUES( axisRef ),
+							NOT ISBLANK( measureRef )
+						),
+						"@AxisIndex", 	
+							IF(
+								axisIsNumeric,
+								axisRef,
+								RANK( DENSE, CALCULATETABLE( VALUES( axisRef ), ALLSELECTED() ) )
+							),
+						"@Value", measureRef
+					)
+
+				// Define axis scales		
+				VAR _XMin = 	MINX( _Data, [@AxisIndex] )
+				VAR _XMax = 	MAXX( _Data, [@AxisIndex] )
 				VAR _RawYMin = 	MINX( _Data, [@Value] )
 				VAR _YMin = 	IF( _RawYMin > 0, 0, _RawYMin )
 				VAR _YMax = 	MAXX( _Data, [@Value] )
 
-				// Filter to current context
-				VAR _DataPerCurrentContext =
-					FILTER(
-						_Data,
-						[@Index] = _currentIndex
-					)
-
-				// Points
+				//Points
 				VAR _Points = 
 					CONCATENATEX(
-						_DataPerCurrentContext,
+						_Data,
 						IF( 
 							NOT ISBLANK( [@Value] ), 
 							COMBINEVALUES( 
 								",", 
-								DaxLib.SVG.Scale.Normalize( axisRef, _XMin, _XMax, _X, _X + _Width ), 
+								DaxLib.SVG.Scale.Normalize( [@AxisIndex], _XMin, _XMax, _X, _X + _Width ), 
 								DaxLib.SVG.Scale.Normalize( [@Value], _YMin, _YMax, _Y + _Height, _Y )
 							)
 						),
 						" ",
-						axisRef,
+						[@AxisIndex],
 						ASC
 					)
 
 				// Line Element
 				VAR _LineElement =
 					DaxLib.SVG.Element.Polyline(
-						_Points,	// points
+						_Points,		// points
 						DaxLib.SVG.Attr.Shapes(
 							"none",		// fill
 							BLANK(),	// fillOpacity
@@ -1007,45 +880,44 @@ createOrReplace
 				// Single Point Element
 				VAR _SinglePointElement =
 					DaxLib.SVG.Element.Circle(
-							DaxLib.SVG.Scale.Normalize( MAXX( _DataPerCurrentContext, axisRef ), _XMin, _XMax, _X, _X + _Width ), // cx
-							DaxLib.SVG.Scale.Normalize( MAXX( _DataPerCurrentContext, [@Value] ), _YMin, _YMax, _Y + _Height, _Y ), // cy
-							2,           	// r
-							DaxLib.SVG.Attr.Shapes(
-								lineColor, 	// fill
-								BLANK(),    // fillOpacity
-								BLANK(),    // fillRule
-								BLANK(),    // stroke
-								BLANK(),    // strokeWidth
-								BLANK(),    // strokeOpacity
-								BLANK()     // opacity
-							),
-							BLANK()         // transforms
-						)
+						DaxLib.SVG.Scale.Normalize( MAXX( _Data, [@AxisIndex] ), _XMin, _XMax, _X, _X + _Width ), // cx
+						DaxLib.SVG.Scale.Normalize( MAXX( _Data, [@Value] ), _YMin, _YMax, _Y + _Height, _Y ), // cy
+						2,           	// r
+						DaxLib.SVG.Attr.Shapes(
+							lineColor, 	// fill
+							BLANK(),    // fillOpacity
+							BLANK(),    // fillRule
+							BLANK(),    // stroke
+							BLANK(),    // strokeWidth
+							BLANK(),    // strokeOpacity
+							BLANK()     // opacity
+						),
+						BLANK()         // transforms
+					)
 
+				// Combined elements
 				VAR _CombinedElement = 
 					IF(
-						COUNTROWS( _DataPerCurrentContext ) = 1,
+						COUNTROWS( _Data ) = 1,
 						_SinglePointElement,
 						_LineElement
 					)
 
 				RETURN
-
-					IF( NOT ISEMPTY( _DataPerCurrentContext ), _CombinedElement )
+					
+					IF( NOT ISEMPTY( _Data ), _CombinedElement )
 
 		annotation DAXLIB_PackageId = DaxLib.SVG
 
 		annotation DAXLIB_PackageVersion = 0.1.2-beta
 
 	/// Creates an Area compound SVG Visual for a numeric x-axis
-	/// WARNING: contextTable should match the columns of the visual that the measure will be called in
 	/// x              	INT64           	The x position of the compound
 	/// y              	INT64           	The y position of the compound
 	/// width          	INT64           	The width of the compound
 	/// height         	INT64           	The height of the compound
 	/// paddingX		DOUBLE				The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
 	/// paddingY		DOUBLE				The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
-	///	contextTable   	ANYREF EXPR     	The context the measure will be evaluated in
 	/// axisRef        	ANYREF EXPR   		The column that the measure will be evaluated against
 	/// measureRef     	NUMERIC EXPR    	The measure to evaluate
 	/// fillColor     	STRING          	The color of the area fill i.e "#01B8AA"
@@ -1059,7 +931,6 @@ createOrReplace
 				height: INT64,
 				paddingX: DOUBLE,
 				paddingY: DOUBLE,
-				contextTable: ANYREF EXPR,
 				axisRef: ANYREF EXPR,
 				measureRef: NUMERIC EXPR,
 				fillColor: STRING,
@@ -1073,53 +944,31 @@ createOrReplace
 				VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
 				VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
 			
-				// Replace contextTable with Index
-				VAR _ContextTableIndex =
-					ADDCOLUMNS(
-						CALCULATETABLE(
-							FILTER(
-								KEEPFILTERS( contextTable ),
-								NOT ISBLANK( measureRef )
-							),
-							ALLSELECTED()
-						),
-						"@Index", RANK( DENSE, CALCULATETABLE( contextTable, ALLSELECTED() ) )
-					)
-
-				VAR _currentIndex =
-					MAXX(
-						NATURALINNERJOIN(
-							_ContextTableIndex,
-							CALCULATETABLE( contextTable )
-						),
-						[@Index]
-					)
-
-				// Add in axisRef and evaulate measure
+				// Check if Axis is numeric
+				VAR axisSample = 	MAX( axisRef )
+				VAR axisIsNumeric = ISNUMERIC( axisSample ) || ISDATETIME( axisSample )
+				
+				// For totals
 				VAR _Data = 
-					FILTER(
-						ADDCOLUMNS(
-							GENERATE(
-								_ContextTableIndex,
-								VALUES( axisRef )
-							),
-							"@Value", measureRef
+					ADDCOLUMNS(
+						FILTER(
+							VALUES( axisRef ),
+							NOT ISBLANK( measureRef )
 						),
-						NOT ISBLANK( [@Value] )
+						"@AxisIndex", 	
+							IF(
+								axisIsNumeric,
+								axisRef,
+								RANK( DENSE, CALCULATETABLE( VALUES( axisRef ), ALLSELECTED() ) )
+							),
+						"@Value", measureRef
 					)
 				
-				VAR _XMin = 	MINX( _Data, axisRef )
-				VAR _XMax = 	MAXX( _Data, axisRef )
+				VAR _XMin = 	MINX( _Data, [@AxisIndex] )
+				VAR _XMax = 	MAXX( _Data, [@AxisIndex] )
 				VAR _RawYMin = 	MINX( _Data, [@Value] )
 				VAR _YMin = 	IF( _RawYMin > 0, 0, _RawYMin )
 				VAR _YMax = 	MAXX( _Data, [@Value] )
-
-				// Filter to current context
-				VAR _DataPerCurrentContext =
-					FILTER(
-						_Data,
-						[@Index] = _currentIndex
-					)
 
 				// Calculate baseline Y position (for zero line or bottom)
 				VAR _BaselineY = DaxLib.SVG.Scale.Normalize( _YMin, _YMin, _YMax, _Y + _Height, _Y )
@@ -1127,14 +976,14 @@ createOrReplace
 				// Get first and last X positions
 				VAR _FirstX = 
 					MINX(
-						FILTER( _DataPerCurrentContext, NOT ISBLANK( [@Value] ) ),
-						DaxLib.SVG.Scale.Normalize( axisRef, _XMin, _XMax, _X, _X + _Width )
+						FILTER( _Data, NOT ISBLANK( [@Value] ) ),
+						DaxLib.SVG.Scale.Normalize( [@AxisIndex], _XMin, _XMax, _X, _X + _Width )
 					)
 				
 				VAR _LastX = 
 					MAXX(
-						FILTER( _DataPerCurrentContext, NOT ISBLANK( [@Value] ) ),
-						DaxLib.SVG.Scale.Normalize( axisRef, _XMin, _XMax, _X, _X + _Width )
+						FILTER( _Data, NOT ISBLANK( [@Value] ) ),
+						DaxLib.SVG.Scale.Normalize( [@AxisIndex], _XMin, _XMax, _X, _X + _Width )
 					)
 
 				// Generate points for the area polygon
@@ -1145,17 +994,17 @@ createOrReplace
 					// Add all the data points (the top line)
 					& " " & 
 					CONCATENATEX(
-						_DataPerCurrentContext,
+						_Data,
 						IF( 
 							NOT ISBLANK( [@Value] ), 
 							COMBINEVALUES( 
 								",", 
-								DaxLib.SVG.Scale.Normalize( axisRef, _XMin, _XMax, _X, _X + _Width ), 
+								DaxLib.SVG.Scale.Normalize( [@AxisIndex], _XMin, _XMax, _X, _X + _Width ), 
 								DaxLib.SVG.Scale.Normalize( [@Value], _YMin, _YMax, _Y + _Height, _Y )
 							)
 						),
 						" ",
-						axisRef,
+						[@AxisIndex],
 						ASC
 					)
 					// End at last X position at baseline
@@ -1164,17 +1013,17 @@ createOrReplace
 				// Generate points for just the top line (for optional stroke)
 				VAR _TopPoints = 
 					CONCATENATEX(
-						_DataPerCurrentContext,
+						_Data,
 						IF( 
 							NOT ISBLANK( [@Value] ), 
 							COMBINEVALUES( 
 								",", 
-								DaxLib.SVG.Scale.Normalize( axisRef, _XMin, _XMax, _X, _X + _Width ), 
+								DaxLib.SVG.Scale.Normalize( [@AxisIndex], _XMin, _XMax, _X, _X + _Width ), 
 								DaxLib.SVG.Scale.Normalize( [@Value], _YMin, _YMax, _Y + _Height, _Y )
 							)
 						),
 						" ",
-						axisRef,
+						[@AxisIndex],
 						ASC
 					)
 
@@ -1213,8 +1062,8 @@ createOrReplace
 				// Circle if only one point
 				VAR _SinglePointElement =
 					DaxLib.SVG.Element.Circle(
-							DaxLib.SVG.Scale.Normalize( MAXX( _DataPerCurrentContext, axisRef ), _XMin, _XMax, _X, _X + _Width ), // cx
-							DaxLib.SVG.Scale.Normalize( MAXX( _DataPerCurrentContext, [@Value] ), _YMin, _YMax, _Y + _Height, _Y ), // cy
+							DaxLib.SVG.Scale.Normalize( MAXX( _Data, [@AxisIndex] ), _XMin, _XMax, _X, _X + _Width ), // cx
+							DaxLib.SVG.Scale.Normalize( MAXX( _Data, [@Value] ), _YMin, _YMax, _Y + _Height, _Y ), // cy
 							2,               	// r
 							DaxLib.SVG.Attr.Shapes(
 								fillColor,     // fill
@@ -1231,7 +1080,7 @@ createOrReplace
 				// Combine elements
 				VAR _CombinedElements = 
 					IF(
-						COUNTROWS( _DataPerCurrentContext ) = 1,
+						COUNTROWS( _Data ) = 1,
 						_SinglePointElement,
 						_AreaElement &
 						_StrokeElement
@@ -1239,7 +1088,7 @@ createOrReplace
 
 				RETURN
 				
-					IF( NOT ISEMPTY( _DataPerCurrentContext ), _CombinedElements )
+					IF( NOT ISEMPTY( _Data ), _CombinedElements )
 
 		annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1252,7 +1101,6 @@ createOrReplace
 	/// height         	INT64           	The height of the compound
 	/// paddingX		DOUBLE				The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
 	/// paddingY		DOUBLE				The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
-	/// contextTable   	ANYREF EXPR     	The context the measure will be evaluated in
 	/// axisRef        	ANYREF EXPR     	The column that the measure will be evaluated against
 	/// measureRef     	NUMERIC EXPR    	The measure to evaluate
 	/// pointColor    	STRING          	The Hex color of the points (e.g., "#01B8AA")
@@ -1265,7 +1113,6 @@ createOrReplace
 				height: INT64,
 				paddingX: DOUBLE,
 				paddingY: DOUBLE,
-				contextTable: ANYREF EXPR,
 				axisRef: ANYREF EXPR,
 				measureRef: NUMERIC EXPR,
 				pointColor: STRING,
@@ -1278,61 +1125,39 @@ createOrReplace
 				VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
 				VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
 
-				// Replace contextTable with Index
-				VAR _ContextTableIndex =
-					ADDCOLUMNS(
-						CALCULATETABLE(
-							FILTER(
-								KEEPFILTERS( contextTable ),
-								NOT ISBLANK( measureRef )
-							),
-							ALLSELECTED()
-						),
-						"@Index", RANK( DENSE, CALCULATETABLE( contextTable, ALLSELECTED() ) )
-					)
-
-				VAR _currentIndex =
-					MAXX(
-						NATURALINNERJOIN(
-							_ContextTableIndex,
-							CALCULATETABLE( contextTable )
-						),
-						[@Index]
-					)
-
-				// Add in axisRef and evaulate measure
+				// Check if Axis is numeric
+				VAR axisSample = 	MAX( axisRef )
+				VAR axisIsNumeric = ISNUMERIC( axisSample ) || ISDATETIME( axisSample )
+				
+				// For totals
 				VAR _Data = 
-					FILTER(
-						ADDCOLUMNS(
-							GENERATE(
-								_ContextTableIndex,
-								VALUES( axisRef )
-							),
-							"@Value", measureRef
+					ADDCOLUMNS(
+						FILTER(
+							VALUES( axisRef ),
+							NOT ISBLANK( measureRef )
 						),
-						NOT ISBLANK( [@Value] )
+						"@AxisIndex", 	
+							IF(
+								axisIsNumeric,
+								axisRef,
+								RANK( DENSE, CALCULATETABLE( VALUES( axisRef ), ALLSELECTED() ) )
+							),
+						"@Value", measureRef
 					)
 						
 				VAR _RawXMin = 	MINX( _Data, [@Value] )
 				VAR _XMin = 	IF( _RawXMin > 0, 0, _RawXMin )
 				VAR _XMax = 	MAXX( _Data, [@Value] )
-				
-				// Filter to current context
-				VAR _DataPerCurrentContext =
-					FILTER(
-						_Data,
-						[@Index] = _currentIndex
-					)
-				
+			
 				// Points
 				VAR _CenterY = 		_Y + _Height * 0.5
 				VAR _JitterRange = 	_Height * IF( ISBLANK( jitterAmount ), 0.3, jitterAmount )
 				VAR _CircleElements = 
 					CONCATENATEX(
-						_DataPerCurrentContext,
+						_Data,
 						IF( 
 							NOT ISBLANK( [@Value] ),
-							VAR _Seed = 		ABS( [@Value] * 12345 ) + ABS( axisRef * 67890 ) + ABS( LEN( FORMAT( [@Value], "0.000000" ) ) * 9876 )
+							VAR _Seed = 		ABS( [@Value] * 12345 ) + ABS( [@AxisIndex] * 67890 ) + ABS( LEN( FORMAT( [@Value], "0.000000" ) ) * 9876 )
 							VAR _PseudoRandom = MOD( _Seed, 10000 ) / 10000
 							VAR _JitterY = 		_CenterY + ( _PseudoRandom - 0.5 ) * _JitterRange
 							VAR _ClampedY = 	MAX( _Y, MIN( _Y + _Height, _JitterY ) )
@@ -1354,27 +1179,26 @@ createOrReplace
 								)
 						),
 						" ",
-						axisRef,
+						[@AxisIndex],
 						ASC
 					)
 
 				RETURN
 					
-					IF( NOT ISEMPTY( _DataPerCurrentContext ), _CircleElements )
+					IF( NOT ISEMPTY( _Data ), _CircleElements )
 	
 		annotation DAXLIB_PackageId = DaxLib.SVG
 
 		annotation DAXLIB_PackageVersion = 0.1.2-beta
 
 	/// Creates a Box Plot compound SVG Visual showing statistical distribution
-	/// WARNING: contextTable should match the columns of the visual that the measure will be called in
 	/// x              	INT64           The x position of the compound
 	/// y              	INT64           The y position of the compound
 	/// width          	INT64           The width of the compound
 	/// height         	INT64           The height of the compound
 	/// paddingX		DOUBLE			The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
 	/// paddingY		DOUBLE			The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
-	/// contextTable   	ANYREF EXPR     The context the measure will be evaluated in
+	/// axisRef        	ANYREF EXPR    	The column that the measure will be evaluated against
 	/// measureRef     	NUMERIC EXPR    The measure to evaluate
 	/// fillColor      	STRING          Color for the box fill
 	/// strokeColor    	STRING          Color for lines, whiskers, and median
@@ -1387,7 +1211,6 @@ createOrReplace
 				height: INT64,
 				paddingX: DOUBLE,
 				paddingY: DOUBLE,
-				contextTable: ANYREF EXPR,
 				axisRef: ANYREF EXPR,
 				measureRef: NUMERIC EXPR,
 				fillColor: STRING,
@@ -1401,59 +1224,37 @@ createOrReplace
 				VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
 				VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
 
-				// Replace contextTable with Index
-				VAR _ContextTableIndex =
-					ADDCOLUMNS(
-						CALCULATETABLE(
-							FILTER(
-								KEEPFILTERS( contextTable ),
-								NOT ISBLANK( measureRef )
-							),
-							ALLSELECTED()
-						),
-						"@Index", RANK( DENSE, CALCULATETABLE( contextTable, ALLSELECTED() ) )
-					)
-
-				VAR _currentIndex =
-					MAXX(
-						NATURALINNERJOIN(
-							_ContextTableIndex,
-							CALCULATETABLE( contextTable )
-						),
-						[@Index]
-					)
-
-				// Add in axisRef and evaulate measure
+				// Check if Axis is numeric
+				VAR axisSample = 	MAX( axisRef )
+				VAR axisIsNumeric = ISNUMERIC( axisSample ) || ISDATETIME( axisSample )
+				
+				// For totals
 				VAR _Data = 
-					FILTER(
-						ADDCOLUMNS(
-							GENERATE(
-								_ContextTableIndex,
-								VALUES( axisRef )
-							),
-							"@Value", measureRef
+					ADDCOLUMNS(
+						FILTER(
+							VALUES( axisRef ),
+							NOT ISBLANK( measureRef )
 						),
-						NOT ISBLANK( [@Value] )
+						"@AxisIndex", 	
+							IF(
+								axisIsNumeric,
+								axisRef,
+								RANK( DENSE, CALCULATETABLE( VALUES( axisRef ), ALLSELECTED() ) )
+							),
+						"@Value", measureRef
 					)
 
-				VAR _XMin = 	MINX( _Data, [@Value] )
-				VAR _XMax = 	MAXX( _Data, [@Value] )
+				VAR _XMin = 			MINX( _Data, [@Value] )
+				VAR _XMax = 			MAXX( _Data, [@Value] )
 
-				// Filter to current context
-				VAR _DataPerCurrentContext =
-					FILTER(
-						_Data,
-						[@Index] = _currentIndex
-					)
-
-				VAR _Count = 			COUNTROWS( _DataPerCurrentContext )
-				VAR _Min = 				MINX( _DataPerCurrentContext, [@Value] )
-				VAR _Max = 				MAXX( _DataPerCurrentContext, [@Value] )
+				VAR _Count = 			COUNTROWS( _Data )
+				VAR _Min = 				MINX( _Data, [@Value] )
+				VAR _Max = 				MAXX( _Data, [@Value] )
 
 				// Calculate quartiles using standard definitions
-				VAR _Q1 = 				PERCENTILEX.INC( _DataPerCurrentContext, [@Value], 0.25 )
-				VAR _Median = 			PERCENTILEX.INC( _DataPerCurrentContext, [@Value], 0.5 )
-				VAR _Q3 = 				PERCENTILEX.INC( _DataPerCurrentContext, [@Value], 0.75 )
+				VAR _Q1 = 				PERCENTILEX.INC( _Data, [@Value], 0.25 )
+				VAR _Median = 			PERCENTILEX.INC( _Data, [@Value], 0.5 )
+				VAR _Q3 = 				PERCENTILEX.INC( _Data, [@Value], 0.75 )
 
 				// Calculate IQR and whisker boundaries (1.5 * IQR rule)
 				VAR _IQR = 				_Q3 - _Q1
@@ -1478,7 +1279,7 @@ createOrReplace
 						showOutliers,
 						CONCATENATEX(
 							FILTER(
-								_DataPerCurrentContext,
+								_Data,
 								[@Value] < _LowerWhisker || [@Value] > _UpperWhisker
 							),
 							DaxLib.SVG.Element.Circle(
@@ -1628,21 +1429,19 @@ createOrReplace
 
 				RETURN
 
-					IF( NOT ISEMPTY( _DataPerCurrentContext ), _CombinedElements )
+					IF( NOT ISEMPTY( _Data ), _CombinedElements )
 
 		annotation DAXLIB_PackageId = DaxLib.SVG
 
 		annotation DAXLIB_PackageVersion = 0.1.2-beta
 
 	/// Creates a Violin Plot compound SVG Visual showing distribution density using Kernel Density Estimation (KDE)
-	/// WARNING: contextTable should match the columns of the visual that the measure will be called in
 	/// x			  	INT64           The x position of the compound
 	/// y			  	INT64           The y position of the compound
 	/// width          	INT64           The width of the compound
 	/// height         	INT64           The height of the compound
 	/// paddingX		DOUBLE			The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
 	/// paddingY		DOUBLE			The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
-	/// contextTable   	ANYREF EXPR     The context the measure will be evaluated in
 	/// axisRef        	ANYREF EXPR     The column that the measure will be evaluated against
 	/// measureRef     	NUMERIC EXPR    The measure to evaluate
 	/// samples        	INT64           Number of density calculation points (default 30)
@@ -1656,7 +1455,6 @@ createOrReplace
 				height: INT64,
 				paddingX: DOUBLE,
 				paddingY: DOUBLE,
-				contextTable: ANYREF EXPR,
 				axisRef: ANYREF EXPR,
 				measureRef: NUMERIC EXPR,
 				samples: INT64,
@@ -1670,53 +1468,31 @@ createOrReplace
 				VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
 				VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
 
-				// Replace contextTable with Index
-				VAR _ContextTableIndex =
-					ADDCOLUMNS(
-						CALCULATETABLE(
-							FILTER(
-								KEEPFILTERS( contextTable ),
-								NOT ISBLANK( measureRef )
-							),
-							ALLSELECTED()
-						),
-						"@Index", RANK( DENSE, CALCULATETABLE( contextTable, ALLSELECTED() ) )
-					)
-
-				VAR _currentIndex =
-					MAXX(
-						NATURALINNERJOIN(
-							_ContextTableIndex,
-							CALCULATETABLE( contextTable )
-						),
-						[@Index]
-					)
-
-				// Add in axisRef and evaulate measure
-				VAR _Data = 
-					FILTER(
-						ADDCOLUMNS(
-							GENERATE(
-								_ContextTableIndex,
-								VALUES( axisRef )
-							),
-							"@Value", measureRef
-						),
-						NOT ISBLANK( [@Value] )
-					)
+				// Check if Axis is numeric
+				VAR axisSample = 	MAX( axisRef )
+				VAR axisIsNumeric = ISNUMERIC( axisSample ) || ISDATETIME( axisSample )
 				
+				// For totals
+				VAR _Data = 
+					ADDCOLUMNS(
+						FILTER(
+							VALUES( axisRef ),
+							NOT ISBLANK( measureRef )
+						),
+						"@AxisIndex", 	
+							IF(
+								axisIsNumeric,
+								axisRef,
+								RANK( DENSE, CALCULATETABLE( VALUES( axisRef ), ALLSELECTED() ) )
+							),
+						"@Value", measureRef
+					)
+		
 				VAR _NumValues = 		COUNTROWS( _Data )
 				VAR _Min = 				MINX( _Data, [@Value] )
 				VAR _Max = 				MAXX( _Data, [@Value] )
 				VAR _Range = 			_Max - _Min
 				VAR _RangePerSample = 	_Range / samples
-
-				// Filter to current context
-				VAR _DataPerCurrentContext =
-					FILTER(
-						_Data,
-						[@Index] = _currentIndex
-					)
 
 				// Calculate Kernel Density Estimation using Normal distribution
 				VAR _KDE = 
@@ -1726,7 +1502,7 @@ createOrReplace
 						"@KDE", 
 							( 1 / _NumValues ) * 
 							SUMX(
-								_DataPerCurrentContext, 
+								_Data, 
 								NORM.DIST( 
 									_Min + _RangePerSample * [Value], 
 									[@Value], 
@@ -1822,21 +1598,19 @@ createOrReplace
 
 				RETURN
 
-					IF( NOT ISEMPTY( _DataPerCurrentContext ), _CombinedElements )
+					IF( NOT ISEMPTY( _Data ), _CombinedElements )
 
 		annotation DAXLIB_PackageId = DaxLib.SVG
 
 		annotation DAXLIB_PackageVersion = 0.1.2-beta
 
 	/// Creates a KDE-based Heatmap compound SVG Visual using Kernel Density Estimation for smooth color gradients
-	/// WARNING: contextTable should match the columns of the visual that the measure will be called in
 	/// x              	INT64           The x position of the compound
 	/// y              	INT64           The y position of the compound
 	/// width          	INT64           The width of the compound
 	/// height         	INT64           The height of the compound
 	/// paddingX		DOUBLE			The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
 	/// paddingY		DOUBLE			The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
-	/// contextTable   	ANYREF EXPR     The context the measure will be evaluated in
 	/// axisRef        	ANYREF EXPR     The column that the measure will be evaluated against
 	/// measureRef     	NUMERIC EXPR    The measure to evaluate
 	/// samples        	INT64           Number of density calculation points (default 50)
@@ -1850,7 +1624,6 @@ createOrReplace
 				height: INT64,
 				paddingX: DOUBLE,
 				paddingY: DOUBLE,
-				contextTable: ANYREF EXPR,
 				axisRef: ANYREF EXPR,
 				measureRef: NUMERIC EXPR,
 				samples: INT64,
@@ -1864,39 +1637,24 @@ createOrReplace
 				VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
 				VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
 
-				// Replace contextTable with Index
-				VAR _ContextTableIndex =
-					ADDCOLUMNS(
-						CALCULATETABLE(
-							FILTER(
-								KEEPFILTERS( contextTable ),
-								NOT ISBLANK( measureRef )
-							),
-							ALLSELECTED()
-						),
-						"@Index", RANK( DENSE, CALCULATETABLE( contextTable, ALLSELECTED() ) )
-					)
-
-				VAR _currentIndex =
-					MAXX(
-						NATURALINNERJOIN(
-							_ContextTableIndex,
-							CALCULATETABLE( contextTable )
-						),
-						[@Index]
-					)
-
-				// Add in axisRef and evaulate measure
+				// Check if Axis is numeric
+				VAR axisSample = 	MAX( axisRef )
+				VAR axisIsNumeric = ISNUMERIC( axisSample ) || ISDATETIME( axisSample )
+				
+				// For totals
 				VAR _Data = 
-					FILTER(
-						ADDCOLUMNS(
-							GENERATE(
-								_ContextTableIndex,
-								VALUES( axisRef )
-							),
-							"@Value", measureRef
+					ADDCOLUMNS(
+						FILTER(
+							VALUES( axisRef ),
+							NOT ISBLANK( measureRef )
 						),
-						NOT ISBLANK( [@Value] )
+						"@AxisIndex", 	
+							IF(
+								axisIsNumeric,
+								axisRef,
+								RANK( DENSE, CALCULATETABLE( VALUES( axisRef ), ALLSELECTED() ) )
+							),
+						"@Value", measureRef
 					)
 				
 				VAR _NumValues = 		COUNTROWS( _Data )
@@ -1904,13 +1662,6 @@ createOrReplace
 				VAR _Max = 				MAXX( _Data, [@Value] )
 				VAR _Range = 			_Max - _Min
 				VAR _RangePerSample = 	_Range / samples
-
-				// Filter to current context
-				VAR _DataPerCurrentContext =
-					FILTER(
-						_Data,
-						[@Index] = _currentIndex
-					)
 
 				// Calculate Kernel Density Estimation using Normal distribution
 				VAR _KDE = 
@@ -1920,7 +1671,7 @@ createOrReplace
 						"@KDE", 
 							( 1 / _NumValues ) * 
 							SUMX(
-								_DataPerCurrentContext, 
+								_Data, 
 								NORM.DIST( 
 									_Min + _RangePerSample * [Value], 
 									[@Value], 
@@ -1951,13 +1702,10 @@ createOrReplace
 						ASC
 					)
 
-				// Generate unique gradient ID
-				VAR _GradientId = "kde-gradient-" & _currentIndex
-
 				// Create linear gradient definition
 				VAR _GradientDef = 
 					"<defs>" &
-						"<linearGradient id='" & _GradientId & "' x1='0%' y1='0%' x2='100%' y2='0%'>" &
+						"<linearGradient id='kde-gradient' x1='0%' y1='0%' x2='100%' y2='0%'>" &
 							_GradientStops &
 						"</linearGradient>" &
 					"</defs>"
@@ -1972,7 +1720,7 @@ createOrReplace
 						0,                          // rx
 						0,                          // ry
 						DaxLib.SVG.Attr.Shapes(
-							"url(#" & _GradientId & ")", // fill (gradient reference)
+							"url(#kde-gradient)", 	// fill
 							BLANK(),                // fillOpacity
 							BLANK(),                // fillRule
 							BLANK(),                // stroke
@@ -1990,7 +1738,7 @@ createOrReplace
 						
 				RETURN
 
-					IF( NOT ISEMPTY( _DataPerCurrentContext ), _CombinedElements )
+					IF( NOT ISEMPTY( _Data ), _CombinedElements )
 
 		annotation DAXLIB_PackageId = DaxLib.SVG
 

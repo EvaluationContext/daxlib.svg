@@ -1,6 +1,6 @@
 ---
 title: Def.GradientStop
-nav_order: 5.3
+nav_order: 7
 parent: Defs
 ---
 
@@ -11,25 +11,26 @@ Creates a gradient `<stop>`{:.xml} element for use in SVG gradients
 ## Syntax
 
 ```dax
-DaxLib.SVG.Def.GradientStop(offset, colour, opacity)
+DaxLib.SVG.Def.GradientStop(
+    offset, 
+    color, 
+    opacity
+)
 ```
 
-## Parameters
-
-| Name    | Type   | Required | Description                                                        |
-|:---:|:---:|:---:|:---:|
-| offset  | STRING | Yes      | Stop position (e.g., "0%", "100%")                                 |
-| colour  | STRING | Yes      | Colour value (hex or named colour)                                 |
-| opacity | STRING | No       | Opacity value                                            		   |
+| Name    | Type   | Required | Description                      |
+|:-------:|:------:|:--------:|:--------------------------------|
+| offset  | STRING | Yes      | Stop position                   |
+| color   | STRING | Yes      | color value (hex or named color) |
+| opacity | STRING | No       | Optional: opacity value         |
 
 ## Returns
 
-(*STRING*) `<stop>`{:.xml} element
+**STRING** `<stop>`{:.xml} element
 
 ## Example
 
 ```dax
-
 DaxLib.SVG.Def.GradientStop("0%", "red", "1")
 // Returns: <stop offset='0%' stop-color='red' stop-opacity='1'/>
 
@@ -38,15 +39,15 @@ DaxLib.SVG.Def.GradientStop("0%", "red", "1")
 ## Definition
 
 ```dax
-function 'DaxLib.SVG.Def.GradientStop' =
+function 'DaxLib.SVG.Def.GradientStop' = 
     (
         offset: STRING,
-        colour: STRING,
+        color: STRING,
         opacity: STRING
     ) =>
 
-        "<stop offset='" & offset &
-        "' stop-color='" & colour & "'" &
+        "<stop offset='" & offset & 
+        "' stop-color='" & color & "'" &
         IF( NOT ISBLANK( opacity ), " stop-opacity='" & opacity & "'" ) &
         "/>"
 ```

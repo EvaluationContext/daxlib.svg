@@ -105,6 +105,29 @@ table Customers
 
 		annotation SummarizationSetBy = Automatic
 
+	column 'Country Order' =
+			
+			VAR country = Customers[Country]
+			RETURN
+			SWITCH(
+			   country,
+			    "Australia", 1,
+			    "Canada", 2,
+			    "France", 3,
+			    "Germany", 4,
+			    "India", 5,
+			    "Japan", 6,
+			    "Mexico", 7,
+			    "UK", 8,
+			    "USA", 9
+			)
+		isHidden
+		formatString: 0
+		lineageTag: 9f7348c6-854c-4319-b548-2b141de5ddcd
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Customers = calculated
 		mode: import
 		source =

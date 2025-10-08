@@ -1,7 +1,7 @@
 ---
 title: Element.Defs
-nav_order: 3
-parent: Elements
+nav_order: 1
+parent: Defs
 ---
 
 # DaxLib.SVG.Element.Defs

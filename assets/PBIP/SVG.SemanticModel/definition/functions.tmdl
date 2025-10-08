@@ -1482,7 +1482,7 @@ function 'DaxLib.SVG.SVG' =
 			IF( NOT ISBLANK( sortValue ), "<desc>" & FORMAT( sortValue, "000000000000" ) & "</desc>" ) &
 			contents &
 			"</svg>"
-	lineageTag: b06bf1b7-0613-4a11-9893-0f5d199ac750
+	lineageTag: 1d190399-f67a-4167-b61f-d25fca3748fb
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1505,7 +1505,7 @@ function 'DaxLib.SVG.Scale.Normalize' =
 		) =>
 		
 			( ( inputValue - fromMin ) / ( fromMax - fromMin ) ) * ( toMax - toMin ) + toMin
-	lineageTag: 83d0e8f5-dc5f-4b75-bef0-58a0a62c1784
+	lineageTag: 610403a5-f8d8-4940-b6fd-aada4b894b7d
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1537,7 +1537,7 @@ function 'DaxLib.SVG.Attr.Shapes' =
 			IF( NOT ISBLANK( strokeWidth ),   "stroke-width='" & strokeWidth & "' ") &
 			IF( NOT ISBLANK( strokeOpacity ), "stroke-opacity='" & strokeOpacity & "' ") &
 			IF( NOT ISBLANK( opacity ),       "opacity='" & opacity & "' ")
-	lineageTag: e65e81e6-90e1-4870-acb3-13b39ac6b334
+	lineageTag: 66b23c33-ace5-4a17-8a49-aadac815c4ae
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1575,7 +1575,7 @@ function 'DaxLib.SVG.Attr.Txt' =
 			IF( NOT ISBLANK( textDecoration ), "text-decoration='" & textDecoration & "' ") &
 			IF( NOT ISBLANK( letterSpacing ),  "letter-spacing='" & letterSpacing & "' ") &
 			IF( NOT ISBLANK( wordSpacing ),    "word-spacing='" & wordSpacing & "' ")
-	lineageTag: f220af52-7069-40cf-9a8e-b2d84d370bc0
+	lineageTag: a8bdcd66-2ca4-4135-9e43-8121efbe873b
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1631,7 +1631,7 @@ function 'DaxLib.SVG.Attr.Stroke' =
 				_MarkerStart &
 				_MarkerMid &
 				_MarkerEnd
-	lineageTag: 9cf8d381-3c0e-4d51-8878-f9be0b72af8e
+	lineageTag: 0d35994c-b65f-498f-b60e-21e0590f01ec
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1657,7 +1657,7 @@ function 'DaxLib.SVG.Transforms' =
 			IF(NOT ISBLANK(scale), "scale(" & scale & ") ") &
 			IF(NOT ISBLANK(skewX), "skewX(" & skewX & ") ") &
 			IF(NOT ISBLANK(skewY), "skewY(" & skewY & ") ")
-	lineageTag: 3af27dbd-0850-4be5-90cd-b02004542d95
+	lineageTag: 89ecbb1c-ac45-453d-8190-800d0924ca22
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1673,7 +1673,7 @@ function 'DaxLib.SVG.Element.Defs' =
 			"<defs>" &
 			defs &
 			"</defs>"
-	lineageTag: 4b6d7941-a1fb-45c1-9333-f82a5fb81f26
+	lineageTag: 70ec3bc1-8642-44e8-bb54-4a297a95a496
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1694,7 +1694,7 @@ function 'DaxLib.SVG.Def.GradientStop' =
 			"' stop-color='" & color & "'" &
 			IF( NOT ISBLANK( opacity ), " stop-opacity='" & opacity & "'" ) &
 			"/>"
-	lineageTag: bd91e356-cd9c-4ba0-aa6f-68c87cde7768
+	lineageTag: 9562ba1f-8a4d-459d-ab57-78a2d6eee371
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1726,7 +1726,7 @@ function 'DaxLib.SVG.Def.LinearGradient' =
 			">" &
 			stops &
 			"</linearGradient>"
-	lineageTag: abf99fe4-beaf-460d-923a-6d0826a65ed0
+	lineageTag: 04551e67-daa7-4888-91bb-f331a7851c16
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1764,7 +1764,7 @@ function 'DaxLib.SVG.Def.RadialGradient' =
 			">" &
 			stops &
 			"</radialGradient>"
-	lineageTag: ebe5b1c8-a5bc-41c5-927a-5c7c93080a7b
+	lineageTag: 553dcb77-2df9-400c-86b8-ab2be68e2307
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1782,7 +1782,7 @@ function 'DaxLib.SVG.Def.ClipPath' =
 			"<clipPath id='" & defId & "'>" &
 			contents &
 			"</clipPath>"
-	lineageTag: a8f707b1-915b-44a2-a311-059568c84fd2
+	lineageTag: 57b110ed-fc81-4997-b76d-fc46f4de1d19
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1812,7 +1812,7 @@ function 'DaxLib.SVG.Def.Circle' =
 			IF( NOT ISBLANK( attributes ), " " & attributes & " " ) &
 			IF( NOT ISBLANK( transforms ), " transform='" & transforms & "'" ) &
 			"/>"
-	lineageTag: d3d1df3a-e087-4924-ad64-18d88ccf1173
+	lineageTag: 350eb64d-f229-407f-9738-6dad6af393b9
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1845,7 +1845,7 @@ function 'DaxLib.SVG.Def.Rect' =
 			IF( NOT ISBLANK( attributes ), " " & attributes & " " ) &
 			IF( NOT ISBLANK( transforms ), " transform='" & transforms & "'" ) &
 			"/>"
-	lineageTag: a3163a0b-ee08-4053-ad6d-494f72eb2d7a
+	lineageTag: 879a119a-abf1-4d71-8a14-c84ca4a1f8eb
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1878,7 +1878,7 @@ function 'DaxLib.SVG.Def.Line' =
 			IF( NOT ISBLANK( attributes ), " " & attributes & " " ) &
 			IF( NOT ISBLANK( transforms ), " transform='" & transforms & "'" ) &
 			"/>"
-	lineageTag: bc9f59a0-7c2a-467c-9bc2-7414c2c94cac
+	lineageTag: 0e38ccf0-b8cf-47c2-99ec-da7dd17fc630
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1902,7 +1902,7 @@ function 'DaxLib.SVG.Def.Paths' =
 			IF( NOT ISBLANK( attributes ), " " & attributes & " " ) &
 			IF( NOT ISBLANK( transforms ), " transform='" & transforms & "'" ) &
 			"/>"
-	lineageTag: 28444183-02ac-4383-b9be-5e280c196e38
+	lineageTag: e8131387-ef65-4801-a9f5-8869dd28afac
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1930,7 +1930,7 @@ function 'DaxLib.SVG.Element.UseDef' =
 			IF( NOT ISBLANK( y ), " y='" & y & "'" ) &
 			IF( NOT ISBLANK( transforms ), " transform='" & transforms & "'" ) &
 			"/>"
-	lineageTag: a6e7e0f4-930d-4e20-b99a-d09792e6d129
+	lineageTag: f7cddaa7-7422-4994-947b-eefadb743aef
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1952,7 +1952,7 @@ function 'DaxLib.SVG.Element.Group' =
 			IF( NOT ISBLANK( transforms ), " transform='" & transforms & "'" ) &
 			IF( NOT ISBLANK( opacity ), " opacity='" & opacity & "'" ) &
 			">" & contents & "</g>"
-	lineageTag: d8e85460-0f4b-4bea-90c0-b6b2ad38cd53
+	lineageTag: fde6ddd6-f1d2-402d-bf61-7548678bb7a3
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -1980,7 +1980,7 @@ function 'DaxLib.SVG.Element.Circle' =
 			IF( NOT ISBLANK( attributes ), " " & attributes & " " ) &
 			IF( NOT ISBLANK( transforms ), " transform='" & transforms & "'" ) &
 			"/>"
-	lineageTag: d2b9a273-80af-4080-bc05-1689dece4659
+	lineageTag: 84ca4933-9555-42a6-88e2-c2940a766bea
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -2017,7 +2017,7 @@ function 'DaxLib.SVG.Element.Rect' =
 			IF( NOT ISBLANK( attributes ), " " & attributes & " " ) &
 			IF( NOT ISBLANK( transforms ), " transform='" & transforms & "'" ) &
 			"/>"
-	lineageTag: 00a89de8-89f5-4f03-b7b0-0545802370e8
+	lineageTag: eeb2e6a5-5b05-4375-8c05-7be8c225c04f
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -2048,7 +2048,7 @@ function 'DaxLib.SVG.Element.Line' =
 			IF( NOT ISBLANK( attributes ), " " & attributes & " " ) &
 			IF( NOT ISBLANK( transforms ), " transform='" & transforms & "'" ) &
 			"/>"
-	lineageTag: 5aad65a0-3f7d-49f5-b610-dfce29ffa7b7
+	lineageTag: c030a21f-9956-4e53-9880-8e13ef34eaac
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -2069,7 +2069,7 @@ function 'DaxLib.SVG.Element.Paths' =
 			IF( NOT ISBLANK( attributes ), " " & attributes & " " ) &
 			IF( NOT ISBLANK( transforms ), " transform='" & transforms & "'" ) &
 			"/>"
-	lineageTag: 54a14d25-3dae-42d4-a439-88fd161ac464
+	lineageTag: c06f70aa-5055-4682-b408-8f27f5879635
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -2100,7 +2100,7 @@ function 'DaxLib.SVG.Element.Ellipse' =
 			IF( NOT ISBLANK( attributes ), " " & attributes & " " ) &
 			IF( NOT ISBLANK( transforms ), " transform='" & transforms & "'" ) &
 			"/>"
-	lineageTag: 1c0d5697-ed53-4419-9040-9807aa9448d9
+	lineageTag: 00ac6568-c081-4dc3-b8e3-6e7dfe8599d9
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -2122,7 +2122,7 @@ function 'DaxLib.SVG.Element.Polygon' =
 			IF( NOT ISBLANK( attributes ), " " & attributes & " " ) &
 			IF( NOT ISBLANK( transforms ), " transform='" & transforms & "'" ) &
 			"/>"
-	lineageTag: 1f384aa6-dcfe-4234-8572-14df1feaea11
+	lineageTag: 921e3805-f47f-4756-90ff-cd38ec499e56
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -2144,7 +2144,7 @@ function 'DaxLib.SVG.Element.Polyline' =
 			IF( NOT ISBLANK( attributes ), " " & attributes & " " ) &
 			IF( NOT ISBLANK( transforms ), " transform='" & transforms & "'" ) &
 			"/>"
-	lineageTag: 2f3ce5e8-a368-4a98-ab0d-a87ddc1ac76d
+	lineageTag: 42db7eb9-3a12-4fb6-8db6-078bb9ab6511
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -2178,7 +2178,7 @@ function 'DaxLib.SVG.Element.Txt' =
 			IF( NOT ISBLANK( transforms ), " transform='" & transforms & "'" ) &
 			">" & txt &
 			"</text>"
-	lineageTag: 0283b9aa-74a5-489f-8e40-c9f0ec24a4df
+	lineageTag: 9d92e528-ddd4-435d-b7d7-54a3842c8e47
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -2268,125 +2268,19 @@ function 'DaxLib.SVG.Compound.Pill' =
 		RETURN
 		
 			IF( NOT ISBLANK( txt ), _CombinedElements )
-	lineageTag: 457ab9e2-a896-478b-8770-1e45a974b0e4
-
-	annotation DAXLIB_PackageId = DaxLib.SVG
-
-	annotation DAXLIB_PackageVersion = 0.1.2-beta
-
-/// Create a bar compound for a given column with absolute positioning
-/// x				INT64			The x position of compound
-/// y				INT64			The y position of compound
-/// width			INT64			The width of the compound
-/// height			INT64			The height of the compound
-/// paddingX		DOUBLE			The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
-/// paddingY		DOUBLE			The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
-/// columnRef		ANYREF EXPR		The context the measure will be evaluated in
-/// measureRef		NUMERIC EXPR    The measure to evaluate
-/// positiveColor	STRING			The Hex color of the positive bar i.e "#01B8AA"
-/// negativeColor	STRING			The Hex color of the negative bar i.e "#FD625E"
-/// zeroAxisColor	STRING			The Hex color of the zero axis i.e "#A6A6A6"
-function 'DaxLib.SVG.Compound.Bar' =
-		(
-			x: INT64,
-			y: INT64,
-			width: INT64,
-			height: INT64,
-			paddingX: DOUBLE,
-			paddingY: DOUBLE,
-			columnRef: ANYREF EXPR,
-			measureRef: NUMERIC EXPR,
-			positiveColor: STRING,
-			negativeColor: STRING,
-			zeroAxisColor: STRING
-		) =>
-		
-			// Apply padding to dimensions
-			VAR _X = 			x + (width * (IF(ISBLANK(paddingX), 0, paddingX) / 2))
-			VAR _Y = 			y + (height * (IF(ISBLANK(paddingY), 0, paddingY) / 2))
-			VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
-			VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
-		
-			// Current value
-			VAR _CurrentValue = measureRef
-		
-			// Use scale functions for axis calculations
-			VAR _RawXMin =  	CALCULATE( MINX( VALUES( columnRef ), measureRef ), ALLSELECTED( columnRef ) )
-			VAR _XMin =        	IF( _RawXMin < 0, _RawXMin, 0 )
-			VAR _RawXMax =   	CALCULATE( MAXX( VALUES( columnRef ), measureRef ), ALLSELECTED( columnRef ) )
-			VAR _XMax = 		IF( _XMin == 0 && _RawXMax <= 0, 0.1, _RawXMax )
-		
-			// Map the zero point and the current value to the absolute coordinate system
-			VAR _ZeroPoint = 	DaxLib.SVG.Scale.Normalize( 0, _XMin, _XMax, _X, _X + _Width )
-			VAR _ValuePoint =  	DaxLib.SVG.Scale.Normalize( _CurrentValue, _XMin, _XMax, _X, _X + _Width )
-		
-			// Style
-			VAR _ZeroAxisStyle =
-				DaxLib.SVG.Attr.Shapes(
-					BLANK(),			// Fill
-					BLANK(),			// FillOpacity
-					BLANK(),			// FillRule
-					zeroAxisColor,		// Stroke
-					1,					// StrokeWidth
-					BLANK(),			// StrokeOpacity
-					BLANK()				// Opacity
-				)
-			VAR _Rectcolor = IF( _CurrentValue >= 0, positiveColor, negativeColor )
-			VAR _RectAttributes =
-				DaxLib.SVG.Attr.Shapes(
-					_Rectcolor,			// fill
-					0.5,				// fillOpacity
-					BLANK(),			// fillRule
-					_Rectcolor,	    	// stroke
-					BLANK(),			// strokeWidth
-					BLANK(),			// strokeOpacity
-					BLANK()				// opacity
-				)
-		
-			// Rect
-			VAR _RectWidth =    ABS( _ValuePoint - _ZeroPoint )
-			VAR _RectX =        IF( _ValuePoint > _ZeroPoint, _ZeroPoint, _ValuePoint )
-			VAR _Rect =
-				DaxLib.SVG.Element.Rect(
-					_RectX,                   // x
-					_Y + _Height * 0.25,      // y
-					_RectWidth,               // width
-					_Y + _Height * 0.5,       // height
-					0,                        // rx
-					0,                        // ry
-					_RectAttributes,          // attributes
-					BLANK()                   // transforms
-				)
-		
-			// Zero Axis Line
-			VAR _ZeroAxis =
-				DaxLib.SVG.Element.Line(
-					_ZeroPoint,               // x1
-					_Y,                       // y1
-					_ZeroPoint,               // x2
-					_Y + _Height,             // y2
-					_ZeroAxisStyle,           // attributes
-					BLANK()                   // transforms
-				)
-		
-			RETURN
-		
-				IF( NOT ISBLANK( _CurrentValue), _ZeroAxis & _Rect )
-	lineageTag: 427d8038-ed06-41d5-b474-0228d97c85cb
+	lineageTag: e421a8bd-5aa8-494c-b157-94ae7882e54f
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
 	annotation DAXLIB_PackageVersion = 0.1.2-beta
 
 /// Creates a Line compound SVG Visual for a numeric axis
-/// WARNING: contextTable should match the columns of the visual that the measure will be called in
 /// x              	INT64           	The x position of the compound
 /// y              	INT64           	The y position of the compound
 /// width          	INT64           	The width of the compound
 /// height         	INT64           	The height of the compound
 /// paddingX		DOUBLE				The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
 /// paddingY		DOUBLE				The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
-/// contextTable   	ANYREF EXPR     	The context the measure will be evaluated in
 /// axisRef        	ANYREF EXPR     	The column that the measure will be evaluated against
 /// measureRef     	NUMERIC EXPR    	The measure to evaluate
 /// lineColor    	STRING          	The Hex color of the line i.e "#01B8AA"
@@ -2398,7 +2292,6 @@ function 'DaxLib.SVG.Compound.Line' =
 			height: INT64,
 			paddingX: DOUBLE,
 			paddingY: DOUBLE,
-			contextTable: ANYREF EXPR,
 			axisRef: ANYREF EXPR,
 			measureRef: NUMERIC EXPR,
 			lineColor: STRING
@@ -2410,75 +2303,54 @@ function 'DaxLib.SVG.Compound.Line' =
 			VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
 			VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
 		
-			// Replace contextTable with Index
-			VAR _ContextTableIndex =
-				ADDCOLUMNS(
-					CALCULATETABLE(
-						FILTER(
-							KEEPFILTERS( contextTable ),
-							NOT ISBLANK( measureRef )
-						),
-						ALLSELECTED()
-					),
-					"@Index", RANK( DENSE, CALCULATETABLE( contextTable, ALLSELECTED() ) )
-				)
+			// Check if Axis is numeric
+			VAR axisSample = 	MAX( axisRef )
+			VAR axisIsNumeric = ISNUMERIC( axisSample ) || ISDATETIME( axisSample )
 		
-			VAR _currentIndex =
-				MAXX(
-					NATURALINNERJOIN(
-						_ContextTableIndex,
-						CALCULATETABLE( contextTable )
-					),
-					[@Index]
-				)
-		
-			// Add in axisRef and evaulate measure
+			// For totals
 			VAR _Data =
-				FILTER(
-					ADDCOLUMNS(
-						GENERATE(
-							_ContextTableIndex,
-							VALUES( axisRef )
-						),
-						"@Value", measureRef
+				ADDCOLUMNS(
+					FILTER(
+						VALUES( axisRef ),
+						NOT ISBLANK( measureRef )
 					),
-					NOT ISBLANK( [@Value] )
+					"@AxisIndex",
+						IF(
+							axisIsNumeric,
+							axisRef,
+							RANK( DENSE, CALCULATETABLE( VALUES( axisRef ), ALLSELECTED() ) )
+						),
+					"@Value", measureRef
 				)
 		
-			VAR _XMin = 	MINX( _Data, axisRef )
-			VAR _XMax = 	MAXX( _Data, axisRef )
+			// Define axis scales
+			VAR _XMin = 	MINX( _Data, [@AxisIndex] )
+			VAR _XMax = 	MAXX( _Data, [@AxisIndex] )
 			VAR _RawYMin = 	MINX( _Data, [@Value] )
 			VAR _YMin = 	IF( _RawYMin > 0, 0, _RawYMin )
 			VAR _YMax = 	MAXX( _Data, [@Value] )
 		
-			// Filter to current context
-			VAR _DataPerCurrentContext =
-				FILTER(
-					_Data,
-					[@Index] = _currentIndex
-				)
-		
-			// Points
+			//Points
 			VAR _Points =
 				CONCATENATEX(
-					_DataPerCurrentContext,
+					_Data,
 					IF(
 						NOT ISBLANK( [@Value] ),
 						COMBINEVALUES(
 							",",
-							DaxLib.SVG.Scale.Normalize( axisRef, _XMin, _XMax, _X, _X + _Width ),
+							DaxLib.SVG.Scale.Normalize( [@AxisIndex], _XMin, _XMax, _X, _X + _Width ),
 							DaxLib.SVG.Scale.Normalize( [@Value], _YMin, _YMax, _Y + _Height, _Y )
 						)
 					),
 					" ",
-					axisRef,
+					[@AxisIndex],
 					ASC
 				)
 		
 			// Line Element
 			VAR _LineElement =
 				DaxLib.SVG.Element.Polyline(
-					_Points,	// points
+					_Points,		// points
 					DaxLib.SVG.Attr.Shapes(
 						"none",		// fill
 						BLANK(),	// fillOpacity
@@ -2494,46 +2366,45 @@ function 'DaxLib.SVG.Compound.Line' =
 			// Single Point Element
 			VAR _SinglePointElement =
 				DaxLib.SVG.Element.Circle(
-						DaxLib.SVG.Scale.Normalize( MAXX( _DataPerCurrentContext, axisRef ), _XMin, _XMax, _X, _X + _Width ), // cx
-						DaxLib.SVG.Scale.Normalize( MAXX( _DataPerCurrentContext, [@Value] ), _YMin, _YMax, _Y + _Height, _Y ), // cy
-						2,           	// r
-						DaxLib.SVG.Attr.Shapes(
-							lineColor, 	// fill
-							BLANK(),    // fillOpacity
-							BLANK(),    // fillRule
-							BLANK(),    // stroke
-							BLANK(),    // strokeWidth
-							BLANK(),    // strokeOpacity
-							BLANK()     // opacity
-						),
-						BLANK()         // transforms
-					)
+					DaxLib.SVG.Scale.Normalize( MAXX( _Data, [@AxisIndex] ), _XMin, _XMax, _X, _X + _Width ), // cx
+					DaxLib.SVG.Scale.Normalize( MAXX( _Data, [@Value] ), _YMin, _YMax, _Y + _Height, _Y ), // cy
+					2,           	// r
+					DaxLib.SVG.Attr.Shapes(
+						lineColor, 	// fill
+						BLANK(),    // fillOpacity
+						BLANK(),    // fillRule
+						BLANK(),    // stroke
+						BLANK(),    // strokeWidth
+						BLANK(),    // strokeOpacity
+						BLANK()     // opacity
+					),
+					BLANK()         // transforms
+				)
 		
+			// Combined elements
 			VAR _CombinedElement =
 				IF(
-					COUNTROWS( _DataPerCurrentContext ) = 1,
+					COUNTROWS( _Data ) = 1,
 					_SinglePointElement,
 					_LineElement
 				)
 		
 			RETURN
 		
-				IF( NOT ISEMPTY( _DataPerCurrentContext ), _CombinedElement )
-	lineageTag: 7735496f-3082-4ecc-9d1a-213c680125ac
+				IF( NOT ISEMPTY( _Data ), _CombinedElement )
+	lineageTag: 4a351186-9c14-44b2-8e15-defc0c276a42
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
 	annotation DAXLIB_PackageVersion = 0.1.2-beta
 
 /// Creates an Area compound SVG Visual for a numeric x-axis
-/// WARNING: contextTable should match the columns of the visual that the measure will be called in
 /// x              	INT64           	The x position of the compound
 /// y              	INT64           	The y position of the compound
 /// width          	INT64           	The width of the compound
 /// height         	INT64           	The height of the compound
 /// paddingX		DOUBLE				The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
 /// paddingY		DOUBLE				The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
-/// contextTable   	ANYREF EXPR     	The context the measure will be evaluated in
 /// axisRef        	ANYREF EXPR   		The column that the measure will be evaluated against
 /// measureRef     	NUMERIC EXPR    	The measure to evaluate
 /// fillColor     	STRING          	The color of the area fill i.e "#01B8AA"
@@ -2547,7 +2418,6 @@ function 'DaxLib.SVG.Compound.Area' =
 			height: INT64,
 			paddingX: DOUBLE,
 			paddingY: DOUBLE,
-			contextTable: ANYREF EXPR,
 			axisRef: ANYREF EXPR,
 			measureRef: NUMERIC EXPR,
 			fillColor: STRING,
@@ -2561,53 +2431,31 @@ function 'DaxLib.SVG.Compound.Area' =
 			VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
 			VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
 		
-			// Replace contextTable with Index
-			VAR _ContextTableIndex =
-				ADDCOLUMNS(
-					CALCULATETABLE(
-						FILTER(
-							KEEPFILTERS( contextTable ),
-							NOT ISBLANK( measureRef )
-						),
-						ALLSELECTED()
-					),
-					"@Index", RANK( DENSE, CALCULATETABLE( contextTable, ALLSELECTED() ) )
-				)
+			// Check if Axis is numeric
+			VAR axisSample = 	MAX( axisRef )
+			VAR axisIsNumeric = ISNUMERIC( axisSample ) || ISDATETIME( axisSample )
 		
-			VAR _currentIndex =
-				MAXX(
-					NATURALINNERJOIN(
-						_ContextTableIndex,
-						CALCULATETABLE( contextTable )
-					),
-					[@Index]
-				)
-		
-			// Add in axisRef and evaulate measure
+			// For totals
 			VAR _Data =
-				FILTER(
-					ADDCOLUMNS(
-						GENERATE(
-							_ContextTableIndex,
-							VALUES( axisRef )
-						),
-						"@Value", measureRef
+				ADDCOLUMNS(
+					FILTER(
+						VALUES( axisRef ),
+						NOT ISBLANK( measureRef )
 					),
-					NOT ISBLANK( [@Value] )
+					"@AxisIndex",
+						IF(
+							axisIsNumeric,
+							axisRef,
+							RANK( DENSE, CALCULATETABLE( VALUES( axisRef ), ALLSELECTED() ) )
+						),
+					"@Value", measureRef
 				)
 		
-			VAR _XMin = 	MINX( _Data, axisRef )
-			VAR _XMax = 	MAXX( _Data, axisRef )
+			VAR _XMin = 	MINX( _Data, [@AxisIndex] )
+			VAR _XMax = 	MAXX( _Data, [@AxisIndex] )
 			VAR _RawYMin = 	MINX( _Data, [@Value] )
 			VAR _YMin = 	IF( _RawYMin > 0, 0, _RawYMin )
 			VAR _YMax = 	MAXX( _Data, [@Value] )
-		
-			// Filter to current context
-			VAR _DataPerCurrentContext =
-				FILTER(
-					_Data,
-					[@Index] = _currentIndex
-				)
 		
 			// Calculate baseline Y position (for zero line or bottom)
 			VAR _BaselineY = DaxLib.SVG.Scale.Normalize( _YMin, _YMin, _YMax, _Y + _Height, _Y )
@@ -2615,14 +2463,14 @@ function 'DaxLib.SVG.Compound.Area' =
 			// Get first and last X positions
 			VAR _FirstX =
 				MINX(
-					FILTER( _DataPerCurrentContext, NOT ISBLANK( [@Value] ) ),
-					DaxLib.SVG.Scale.Normalize( axisRef, _XMin, _XMax, _X, _X + _Width )
+					FILTER( _Data, NOT ISBLANK( [@Value] ) ),
+					DaxLib.SVG.Scale.Normalize( [@AxisIndex], _XMin, _XMax, _X, _X + _Width )
 				)
 		
 			VAR _LastX =
 				MAXX(
-					FILTER( _DataPerCurrentContext, NOT ISBLANK( [@Value] ) ),
-					DaxLib.SVG.Scale.Normalize( axisRef, _XMin, _XMax, _X, _X + _Width )
+					FILTER( _Data, NOT ISBLANK( [@Value] ) ),
+					DaxLib.SVG.Scale.Normalize( [@AxisIndex], _XMin, _XMax, _X, _X + _Width )
 				)
 		
 			// Generate points for the area polygon
@@ -2633,17 +2481,17 @@ function 'DaxLib.SVG.Compound.Area' =
 				// Add all the data points (the top line)
 				& " " &
 				CONCATENATEX(
-					_DataPerCurrentContext,
+					_Data,
 					IF(
 						NOT ISBLANK( [@Value] ),
 						COMBINEVALUES(
 							",",
-							DaxLib.SVG.Scale.Normalize( axisRef, _XMin, _XMax, _X, _X + _Width ),
+							DaxLib.SVG.Scale.Normalize( [@AxisIndex], _XMin, _XMax, _X, _X + _Width ),
 							DaxLib.SVG.Scale.Normalize( [@Value], _YMin, _YMax, _Y + _Height, _Y )
 						)
 					),
 					" ",
-					axisRef,
+					[@AxisIndex],
 					ASC
 				)
 				// End at last X position at baseline
@@ -2652,17 +2500,17 @@ function 'DaxLib.SVG.Compound.Area' =
 			// Generate points for just the top line (for optional stroke)
 			VAR _TopPoints =
 				CONCATENATEX(
-					_DataPerCurrentContext,
+					_Data,
 					IF(
 						NOT ISBLANK( [@Value] ),
 						COMBINEVALUES(
 							",",
-							DaxLib.SVG.Scale.Normalize( axisRef, _XMin, _XMax, _X, _X + _Width ),
+							DaxLib.SVG.Scale.Normalize( [@AxisIndex], _XMin, _XMax, _X, _X + _Width ),
 							DaxLib.SVG.Scale.Normalize( [@Value], _YMin, _YMax, _Y + _Height, _Y )
 						)
 					),
 					" ",
-					axisRef,
+					[@AxisIndex],
 					ASC
 				)
 		
@@ -2701,8 +2549,8 @@ function 'DaxLib.SVG.Compound.Area' =
 			// Circle if only one point
 			VAR _SinglePointElement =
 				DaxLib.SVG.Element.Circle(
-						DaxLib.SVG.Scale.Normalize( MAXX( _DataPerCurrentContext, axisRef ), _XMin, _XMax, _X, _X + _Width ), // cx
-						DaxLib.SVG.Scale.Normalize( MAXX( _DataPerCurrentContext, [@Value] ), _YMin, _YMax, _Y + _Height, _Y ), // cy
+						DaxLib.SVG.Scale.Normalize( MAXX( _Data, [@AxisIndex] ), _XMin, _XMax, _X, _X + _Width ), // cx
+						DaxLib.SVG.Scale.Normalize( MAXX( _Data, [@Value] ), _YMin, _YMax, _Y + _Height, _Y ), // cy
 						2,               	// r
 						DaxLib.SVG.Attr.Shapes(
 							fillColor,     // fill
@@ -2719,7 +2567,7 @@ function 'DaxLib.SVG.Compound.Area' =
 			// Combine elements
 			VAR _CombinedElements =
 				IF(
-					COUNTROWS( _DataPerCurrentContext ) = 1,
+					COUNTROWS( _Data ) = 1,
 					_SinglePointElement,
 					_AreaElement &
 					_StrokeElement
@@ -2727,8 +2575,8 @@ function 'DaxLib.SVG.Compound.Area' =
 		
 			RETURN
 		
-				IF( NOT ISEMPTY( _DataPerCurrentContext ), _CombinedElements )
-	lineageTag: ba6d7cc1-2e63-4e3d-bdd5-9fb46a459959
+				IF( NOT ISEMPTY( _Data ), _CombinedElements )
+	lineageTag: 4ad09039-4a73-43bc-916c-d0015b83e542
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -2741,7 +2589,6 @@ function 'DaxLib.SVG.Compound.Area' =
 /// height         	INT64           	The height of the compound
 /// paddingX		DOUBLE				The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
 /// paddingY		DOUBLE				The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
-/// contextTable   	ANYREF EXPR     	The context the measure will be evaluated in
 /// axisRef        	ANYREF EXPR     	The column that the measure will be evaluated against
 /// measureRef     	NUMERIC EXPR    	The measure to evaluate
 /// pointColor    	STRING          	The Hex color of the points (e.g., "#01B8AA")
@@ -2754,7 +2601,6 @@ function 'DaxLib.SVG.Compound.Jitter' =
 			height: INT64,
 			paddingX: DOUBLE,
 			paddingY: DOUBLE,
-			contextTable: ANYREF EXPR,
 			axisRef: ANYREF EXPR,
 			measureRef: NUMERIC EXPR,
 			pointColor: STRING,
@@ -2767,61 +2613,39 @@ function 'DaxLib.SVG.Compound.Jitter' =
 			VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
 			VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
 		
-			// Replace contextTable with Index
-			VAR _ContextTableIndex =
-				ADDCOLUMNS(
-					CALCULATETABLE(
-						FILTER(
-							KEEPFILTERS( contextTable ),
-							NOT ISBLANK( measureRef )
-						),
-						ALLSELECTED()
-					),
-					"@Index", RANK( DENSE, CALCULATETABLE( contextTable, ALLSELECTED() ) )
-				)
+			// Check if Axis is numeric
+			VAR axisSample = 	MAX( axisRef )
+			VAR axisIsNumeric = ISNUMERIC( axisSample ) || ISDATETIME( axisSample )
 		
-			VAR _currentIndex =
-				MAXX(
-					NATURALINNERJOIN(
-						_ContextTableIndex,
-						CALCULATETABLE( contextTable )
-					),
-					[@Index]
-				)
-		
-			// Add in axisRef and evaulate measure
+			// For totals
 			VAR _Data =
-				FILTER(
-					ADDCOLUMNS(
-						GENERATE(
-							_ContextTableIndex,
-							VALUES( axisRef )
-						),
-						"@Value", measureRef
+				ADDCOLUMNS(
+					FILTER(
+						VALUES( axisRef ),
+						NOT ISBLANK( measureRef )
 					),
-					NOT ISBLANK( [@Value] )
+					"@AxisIndex",
+						IF(
+							axisIsNumeric,
+							axisRef,
+							RANK( DENSE, CALCULATETABLE( VALUES( axisRef ), ALLSELECTED() ) )
+						),
+					"@Value", measureRef
 				)
 		
 			VAR _RawXMin = 	MINX( _Data, [@Value] )
 			VAR _XMin = 	IF( _RawXMin > 0, 0, _RawXMin )
 			VAR _XMax = 	MAXX( _Data, [@Value] )
 		
-			// Filter to current context
-			VAR _DataPerCurrentContext =
-				FILTER(
-					_Data,
-					[@Index] = _currentIndex
-				)
-		
 			// Points
 			VAR _CenterY = 		_Y + _Height * 0.5
 			VAR _JitterRange = 	_Height * IF( ISBLANK( jitterAmount ), 0.3, jitterAmount )
 			VAR _CircleElements =
 				CONCATENATEX(
-					_DataPerCurrentContext,
+					_Data,
 					IF(
 						NOT ISBLANK( [@Value] ),
-						VAR _Seed = 		ABS( [@Value] * 12345 ) + ABS( axisRef * 67890 ) + ABS( LEN( FORMAT( [@Value], "0.000000" ) ) * 9876 )
+						VAR _Seed = 		ABS( [@Value] * 12345 ) + ABS( [@AxisIndex] * 67890 ) + ABS( LEN( FORMAT( [@Value], "0.000000" ) ) * 9876 )
 						VAR _PseudoRandom = MOD( _Seed, 10000 ) / 10000
 						VAR _JitterY = 		_CenterY + ( _PseudoRandom - 0.5 ) * _JitterRange
 						VAR _ClampedY = 	MAX( _Y, MIN( _Y + _Height, _JitterY ) )
@@ -2843,28 +2667,27 @@ function 'DaxLib.SVG.Compound.Jitter' =
 							)
 					),
 					" ",
-					axisRef,
+					[@AxisIndex],
 					ASC
 				)
 		
 			RETURN
 		
-				IF( NOT ISEMPTY( _DataPerCurrentContext ), _CircleElements )
-	lineageTag: 17d6da1a-6fd4-4182-82c4-f02ca6f2006a
+				IF( NOT ISEMPTY( _Data ), _CircleElements )
+	lineageTag: dfa95e0d-3ff8-464a-8921-37f162c72e27
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
 	annotation DAXLIB_PackageVersion = 0.1.2-beta
 
 /// Creates a Box Plot compound SVG Visual showing statistical distribution
-/// WARNING: contextTable should match the columns of the visual that the measure will be called in
 /// x              	INT64           The x position of the compound
 /// y              	INT64           The y position of the compound
 /// width          	INT64           The width of the compound
 /// height         	INT64           The height of the compound
 /// paddingX		DOUBLE			The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
 /// paddingY		DOUBLE			The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
-/// contextTable   	ANYREF EXPR     The context the measure will be evaluated in
+/// axisRef        	ANYREF EXPR    	The column that the measure will be evaluated against
 /// measureRef     	NUMERIC EXPR    The measure to evaluate
 /// fillColor      	STRING          Color for the box fill
 /// strokeColor    	STRING          Color for lines, whiskers, and median
@@ -2877,7 +2700,6 @@ function 'DaxLib.SVG.Compound.Boxplot' =
 			height: INT64,
 			paddingX: DOUBLE,
 			paddingY: DOUBLE,
-			contextTable: ANYREF EXPR,
 			axisRef: ANYREF EXPR,
 			measureRef: NUMERIC EXPR,
 			fillColor: STRING,
@@ -2891,59 +2713,37 @@ function 'DaxLib.SVG.Compound.Boxplot' =
 			VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
 			VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
 		
-			// Replace contextTable with Index
-			VAR _ContextTableIndex =
-				ADDCOLUMNS(
-					CALCULATETABLE(
-						FILTER(
-							KEEPFILTERS( contextTable ),
-							NOT ISBLANK( measureRef )
-						),
-						ALLSELECTED()
-					),
-					"@Index", RANK( DENSE, CALCULATETABLE( contextTable, ALLSELECTED() ) )
-				)
+			// Check if Axis is numeric
+			VAR axisSample = 	MAX( axisRef )
+			VAR axisIsNumeric = ISNUMERIC( axisSample ) || ISDATETIME( axisSample )
 		
-			VAR _currentIndex =
-				MAXX(
-					NATURALINNERJOIN(
-						_ContextTableIndex,
-						CALCULATETABLE( contextTable )
-					),
-					[@Index]
-				)
-		
-			// Add in axisRef and evaulate measure
+			// For totals
 			VAR _Data =
-				FILTER(
-					ADDCOLUMNS(
-						GENERATE(
-							_ContextTableIndex,
-							VALUES( axisRef )
-						),
-						"@Value", measureRef
+				ADDCOLUMNS(
+					FILTER(
+						VALUES( axisRef ),
+						NOT ISBLANK( measureRef )
 					),
-					NOT ISBLANK( [@Value] )
+					"@AxisIndex",
+						IF(
+							axisIsNumeric,
+							axisRef,
+							RANK( DENSE, CALCULATETABLE( VALUES( axisRef ), ALLSELECTED() ) )
+						),
+					"@Value", measureRef
 				)
 		
-			VAR _XMin = 	MINX( _Data, [@Value] )
-			VAR _XMax = 	MAXX( _Data, [@Value] )
+			VAR _XMin = 			MINX( _Data, [@Value] )
+			VAR _XMax = 			MAXX( _Data, [@Value] )
 		
-			// Filter to current context
-			VAR _DataPerCurrentContext =
-				FILTER(
-					_Data,
-					[@Index] = _currentIndex
-				)
-		
-			VAR _Count = 			COUNTROWS( _DataPerCurrentContext )
-			VAR _Min = 				MINX( _DataPerCurrentContext, [@Value] )
-			VAR _Max = 				MAXX( _DataPerCurrentContext, [@Value] )
+			VAR _Count = 			COUNTROWS( _Data )
+			VAR _Min = 				MINX( _Data, [@Value] )
+			VAR _Max = 				MAXX( _Data, [@Value] )
 		
 			// Calculate quartiles using standard definitions
-			VAR _Q1 = 				PERCENTILEX.INC( _DataPerCurrentContext, [@Value], 0.25 )
-			VAR _Median = 			PERCENTILEX.INC( _DataPerCurrentContext, [@Value], 0.5 )
-			VAR _Q3 = 				PERCENTILEX.INC( _DataPerCurrentContext, [@Value], 0.75 )
+			VAR _Q1 = 				PERCENTILEX.INC( _Data, [@Value], 0.25 )
+			VAR _Median = 			PERCENTILEX.INC( _Data, [@Value], 0.5 )
+			VAR _Q3 = 				PERCENTILEX.INC( _Data, [@Value], 0.75 )
 		
 			// Calculate IQR and whisker boundaries (1.5 * IQR rule)
 			VAR _IQR = 				_Q3 - _Q1
@@ -2968,7 +2768,7 @@ function 'DaxLib.SVG.Compound.Boxplot' =
 					showOutliers,
 					CONCATENATEX(
 						FILTER(
-							_DataPerCurrentContext,
+							_Data,
 							[@Value] < _LowerWhisker || [@Value] > _UpperWhisker
 						),
 						DaxLib.SVG.Element.Circle(
@@ -3118,22 +2918,20 @@ function 'DaxLib.SVG.Compound.Boxplot' =
 		
 			RETURN
 		
-				IF( NOT ISEMPTY( _DataPerCurrentContext ), _CombinedElements )
-	lineageTag: 501b5568-bf2d-4260-97f2-192dd099e1ad
+				IF( NOT ISEMPTY( _Data ), _CombinedElements )
+	lineageTag: 14fec1ce-a8cb-4836-be73-4c6a6e2f4d15
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
 	annotation DAXLIB_PackageVersion = 0.1.2-beta
 
 /// Creates a Violin Plot compound SVG Visual showing distribution density using Kernel Density Estimation (KDE)
-/// WARNING: contextTable should match the columns of the visual that the measure will be called in
 /// x			  	INT64           The x position of the compound
 /// y			  	INT64           The y position of the compound
 /// width          	INT64           The width of the compound
 /// height         	INT64           The height of the compound
 /// paddingX		DOUBLE			The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
 /// paddingY		DOUBLE			The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
-/// contextTable   	ANYREF EXPR     The context the measure will be evaluated in
 /// axisRef        	ANYREF EXPR     The column that the measure will be evaluated against
 /// measureRef     	NUMERIC EXPR    The measure to evaluate
 /// samples        	INT64           Number of density calculation points (default 30)
@@ -3147,7 +2945,6 @@ function 'DaxLib.SVG.Compound.Violin' =
 			height: INT64,
 			paddingX: DOUBLE,
 			paddingY: DOUBLE,
-			contextTable: ANYREF EXPR,
 			axisRef: ANYREF EXPR,
 			measureRef: NUMERIC EXPR,
 			samples: INT64,
@@ -3161,39 +2958,24 @@ function 'DaxLib.SVG.Compound.Violin' =
 			VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
 			VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
 		
-			// Replace contextTable with Index
-			VAR _ContextTableIndex =
-				ADDCOLUMNS(
-					CALCULATETABLE(
-						FILTER(
-							KEEPFILTERS( contextTable ),
-							NOT ISBLANK( measureRef )
-						),
-						ALLSELECTED()
-					),
-					"@Index", RANK( DENSE, CALCULATETABLE( contextTable, ALLSELECTED() ) )
-				)
+			// Check if Axis is numeric
+			VAR axisSample = 	MAX( axisRef )
+			VAR axisIsNumeric = ISNUMERIC( axisSample ) || ISDATETIME( axisSample )
 		
-			VAR _currentIndex =
-				MAXX(
-					NATURALINNERJOIN(
-						_ContextTableIndex,
-						CALCULATETABLE( contextTable )
-					),
-					[@Index]
-				)
-		
-			// Add in axisRef and evaulate measure
+			// For totals
 			VAR _Data =
-				FILTER(
-					ADDCOLUMNS(
-						GENERATE(
-							_ContextTableIndex,
-							VALUES( axisRef )
-						),
-						"@Value", measureRef
+				ADDCOLUMNS(
+					FILTER(
+						VALUES( axisRef ),
+						NOT ISBLANK( measureRef )
 					),
-					NOT ISBLANK( [@Value] )
+					"@AxisIndex",
+						IF(
+							axisIsNumeric,
+							axisRef,
+							RANK( DENSE, CALCULATETABLE( VALUES( axisRef ), ALLSELECTED() ) )
+						),
+					"@Value", measureRef
 				)
 		
 			VAR _NumValues = 		COUNTROWS( _Data )
@@ -3201,13 +2983,6 @@ function 'DaxLib.SVG.Compound.Violin' =
 			VAR _Max = 				MAXX( _Data, [@Value] )
 			VAR _Range = 			_Max - _Min
 			VAR _RangePerSample = 	_Range / samples
-		
-			// Filter to current context
-			VAR _DataPerCurrentContext =
-				FILTER(
-					_Data,
-					[@Index] = _currentIndex
-				)
 		
 			// Calculate Kernel Density Estimation using Normal distribution
 			VAR _KDE =
@@ -3217,7 +2992,7 @@ function 'DaxLib.SVG.Compound.Violin' =
 					"@KDE",
 						( 1 / _NumValues ) *
 						SUMX(
-							_DataPerCurrentContext,
+							_Data,
 							NORM.DIST(
 								_Min + _RangePerSample * [Value],
 								[@Value],
@@ -3313,22 +3088,20 @@ function 'DaxLib.SVG.Compound.Violin' =
 		
 			RETURN
 		
-				IF( NOT ISEMPTY( _DataPerCurrentContext ), _CombinedElements )
-	lineageTag: 2de6f139-23a2-4509-9f9e-4b848ca41d35
+				IF( NOT ISEMPTY( _Data ), _CombinedElements )
+	lineageTag: a3ab862c-57a9-4e9b-8cd2-41b65942c27e
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
 	annotation DAXLIB_PackageVersion = 0.1.2-beta
 
 /// Creates a KDE-based Heatmap compound SVG Visual using Kernel Density Estimation for smooth color gradients
-/// WARNING: contextTable should match the columns of the visual that the measure will be called in
 /// x              	INT64           The x position of the compound
 /// y              	INT64           The y position of the compound
 /// width          	INT64           The width of the compound
 /// height         	INT64           The height of the compound
 /// paddingX		DOUBLE			The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
 /// paddingY		DOUBLE			The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding)
-/// contextTable   	ANYREF EXPR     The context the measure will be evaluated in
 /// axisRef        	ANYREF EXPR     The column that the measure will be evaluated against
 /// measureRef     	NUMERIC EXPR    The measure to evaluate
 /// samples        	INT64           Number of density calculation points (default 50)
@@ -3342,7 +3115,6 @@ function 'DaxLib.SVG.Compound.Heatmap' =
 			height: INT64,
 			paddingX: DOUBLE,
 			paddingY: DOUBLE,
-			contextTable: ANYREF EXPR,
 			axisRef: ANYREF EXPR,
 			measureRef: NUMERIC EXPR,
 			samples: INT64,
@@ -3356,39 +3128,24 @@ function 'DaxLib.SVG.Compound.Heatmap' =
 			VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
 			VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
 		
-			// Replace contextTable with Index
-			VAR _ContextTableIndex =
-				ADDCOLUMNS(
-					CALCULATETABLE(
-						FILTER(
-							KEEPFILTERS( contextTable ),
-							NOT ISBLANK( measureRef )
-						),
-						ALLSELECTED()
-					),
-					"@Index", RANK( DENSE, CALCULATETABLE( contextTable, ALLSELECTED() ) )
-				)
+			// Check if Axis is numeric
+			VAR axisSample = 	MAX( axisRef )
+			VAR axisIsNumeric = ISNUMERIC( axisSample ) || ISDATETIME( axisSample )
 		
-			VAR _currentIndex =
-				MAXX(
-					NATURALINNERJOIN(
-						_ContextTableIndex,
-						CALCULATETABLE( contextTable )
-					),
-					[@Index]
-				)
-		
-			// Add in axisRef and evaulate measure
+			// For totals
 			VAR _Data =
-				FILTER(
-					ADDCOLUMNS(
-						GENERATE(
-							_ContextTableIndex,
-							VALUES( axisRef )
-						),
-						"@Value", measureRef
+				ADDCOLUMNS(
+					FILTER(
+						VALUES( axisRef ),
+						NOT ISBLANK( measureRef )
 					),
-					NOT ISBLANK( [@Value] )
+					"@AxisIndex",
+						IF(
+							axisIsNumeric,
+							axisRef,
+							RANK( DENSE, CALCULATETABLE( VALUES( axisRef ), ALLSELECTED() ) )
+						),
+					"@Value", measureRef
 				)
 		
 			VAR _NumValues = 		COUNTROWS( _Data )
@@ -3396,13 +3153,6 @@ function 'DaxLib.SVG.Compound.Heatmap' =
 			VAR _Max = 				MAXX( _Data, [@Value] )
 			VAR _Range = 			_Max - _Min
 			VAR _RangePerSample = 	_Range / samples
-		
-			// Filter to current context
-			VAR _DataPerCurrentContext =
-				FILTER(
-					_Data,
-					[@Index] = _currentIndex
-				)
 		
 			// Calculate Kernel Density Estimation using Normal distribution
 			VAR _KDE =
@@ -3412,7 +3162,7 @@ function 'DaxLib.SVG.Compound.Heatmap' =
 					"@KDE",
 						( 1 / _NumValues ) *
 						SUMX(
-							_DataPerCurrentContext,
+							_Data,
 							NORM.DIST(
 								_Min + _RangePerSample * [Value],
 								[@Value],
@@ -3443,13 +3193,10 @@ function 'DaxLib.SVG.Compound.Heatmap' =
 					ASC
 				)
 		
-			// Generate unique gradient ID
-			VAR _GradientId = "kde-gradient-" & _currentIndex
-		
 			// Create linear gradient definition
 			VAR _GradientDef =
 				"<defs>" &
-					"<linearGradient id='" & _GradientId & "' x1='0%' y1='0%' x2='100%' y2='0%'>" &
+					"<linearGradient id='kde-gradient' x1='0%' y1='0%' x2='100%' y2='0%'>" &
 						_GradientStops &
 					"</linearGradient>" &
 				"</defs>"
@@ -3464,7 +3211,7 @@ function 'DaxLib.SVG.Compound.Heatmap' =
 					0,                          // rx
 					0,                          // ry
 					DaxLib.SVG.Attr.Shapes(
-						"url(#" & _GradientId & ")", // fill (gradient reference)
+						"url(#kde-gradient)", 	// fill
 						BLANK(),                // fillOpacity
 						BLANK(),                // fillRule
 						BLANK(),                // stroke
@@ -3482,8 +3229,8 @@ function 'DaxLib.SVG.Compound.Heatmap' =
 		
 			RETURN
 		
-				IF( NOT ISEMPTY( _DataPerCurrentContext ), _CombinedElements )
-	lineageTag: 4846813d-9708-4b68-93c1-6ffd665cdccc
+				IF( NOT ISEMPTY( _Data ), _CombinedElements )
+	lineageTag: bb5f48b7-b19e-4119-8090-b36c0e3b3f74
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -3998,7 +3745,7 @@ function 'DaxLib.SVG.Color.Theme' =
 				)
 		
 			RETURN SelectedColor
-	lineageTag: 2267f403-1217-42cd-9256-bc0437ba5130
+	lineageTag: edd66f0b-1ebf-49f0-96d9-c893cff30fc6
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -4066,7 +3813,7 @@ function 'DaxLib.SVG.Color.PerformanceTheme' =
 				)
 		
 			RETURN SelectedColor
-	lineageTag: 96856c4f-b76d-4ae4-99b6-474ec2beef43
+	lineageTag: 46338f39-5cc6-4a70-943d-e375d57d3ef2
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -4096,7 +3843,7 @@ function 'DaxLib.SVG.Color.Int.ToHex' =
 				)
 		
 			RETURN Hex
-	lineageTag: 34a5579d-b5eb-4b31-8e1e-68e2e35bf706
+	lineageTag: 7c82035e-26bf-4202-94b1-3194d8f85c11
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -4121,7 +3868,7 @@ function 'DaxLib.SVG.Color.Hex.ToInt' =
 				)
 		
 			RETURN Result
-	lineageTag: 7ed6978d-70a3-4b14-80e6-e8fca3f0a54b
+	lineageTag: 5e030292-e826-43bb-b5dd-a10466e9425e
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -4145,7 +3892,7 @@ function 'DaxLib.SVG.Color.RGB.ToHex' =
 			DaxLib.SVG.Colour.Int.ToHex( green, 2 ) &
 			DaxLib.SVG.Colour.Int.ToHex( blue, 2 ) &
 			IF( NOT ISBLANK( alpha ), DaxLib.SVG.Colour.Int.ToHex( alpha * 255, 2 ) )
-	lineageTag: 6ea85647-32b4-49f6-8491-5b097e404aed
+	lineageTag: 8007dad4-fce6-48db-9356-58c47c1db203
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 
@@ -4192,7 +3939,7 @@ function 'DaxLib.SVG.Color.Hex.Interpolate' =
 				)
 		
 			RETURN result
-	lineageTag: c2357ff3-bd5d-4388-b469-d0c0e4a0b50d
+	lineageTag: 9ed620f7-b5a7-4e81-89ca-54a49af95032
 
 	annotation DAXLIB_PackageId = DaxLib.SVG
 

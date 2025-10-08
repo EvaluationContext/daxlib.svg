@@ -1,6 +1,6 @@
 ---
 title: Element.Polyline
-nav_order: 3
+nav_order: 7
 parent: Elements
 ---
 
@@ -11,21 +11,17 @@ Creates a `<polyline>`{:.xml} (connected points) element
 ## Syntax
 ```dax
 DaxLib.SVG.Element.Polyline(
-	points: STRING,
-	style: STRING,
-	class: STRING,
-	transform: STRING
+	points, 
+	attributes, 
+	transforms
 )
 ```
 
-## Parameters
-
-| Name      | Type   | Required | Description                                                                 |
-|:---:|:---:|:---:|:---:|
-| points    | STRING | Yes 		| Space-separated x,y coordinate pairs (e.g., "0,10 20,30 40,15")             |
-| style     | STRING | No  		| Style to apply, can use DaxLib.SVG.Style.* or manual CSS          		  |
-| class     | STRING | No  		| CSS class to apply                                                		  |
-| transform | STRING | No  		| Transformation to apply                                           		  |
+| Name       | Type   | Required | Description                                                                                         |
+|:----------:|:------:|:--------:|:----------------------------------------------------------------------------------------------------|
+| points     | STRING | Yes      | Space-separated x,y coordinate pairs (e.g., "0,10 20,30 40,15")                                   |
+| attributes | STRING | No       | Direct SVG attributes to apply (e.g., "marker-start='url(#dot)'"), can generate with DaxLib.SVG.Attr.* or manually |
+| transforms | STRING | No       | Transformation to apply (can be generated with DaxLib.SVG.Transforms)                             |
 
 ## Returns
 
@@ -36,10 +32,10 @@ DaxLib.SVG.Element.Polyline(
 ```dax
 DaxLib.SVG.Element.Polyline(
 	"0,10 20,30 40,15",
-	"fill:none;stroke:blue;stroke-width:2",
-	"my-polyline",
+	DaxLib.SVG.Attr.Lines("none", "#0078D4", "2", BLANK(), BLANK(), BLANK(), BLANK()),
 	"translate(5,5)"
 )
+// Returns: <polyline points='0,10 20,30 40,15' fill='none' stroke='#0078D4' stroke-width='2' transform='translate(5,5)' />
 ```
 
 ## Definition
@@ -48,17 +44,13 @@ DaxLib.SVG.Element.Polyline(
 function 'DaxLib.SVG.Element.Polyline' =
 	(
 		points: STRING,
-		style: STRING,
-		class: STRING,
-		transform: STRING
+		attributes: STRING,
+		transforms: STRING
 	) =>
 
-		VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
-
-		RETURN
-		
-			"<polyline" &
-			" points='" & points & "'" &
-			_OCE &
-			"/>"
+		"<polyline" &
+		" points='" & points & "'" &
+		IF( NOT ISBLANK( attributes ), " " & attributes & " " ) &
+		IF( NOT ISBLANK( transforms ), " transform='" & transforms & "'" ) & 
+		"/>"
 ```

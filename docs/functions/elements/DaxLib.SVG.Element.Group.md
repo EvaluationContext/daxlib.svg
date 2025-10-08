@@ -1,6 +1,6 @@
 ---
 title: Element.Group
-nav_order: 3
+nav_order: 1
 parent: Elements
 ---
 
@@ -11,10 +11,12 @@ Generates a `<g>`{:.xml} element. Transformations applied to the `<g>`{:.xml} el
 ## Syntax
 
 ```dax
-DaxLib.SVG.Element.Group(contents, transform, opacity)
+DaxLib.SVG.Element.Group(
+    contents, 
+    transform, 
+    opacity
+)
 ```
-
-## Parameters
 
 | Name      | Type       | Required | Description                                                        |
 |:---:|:---:|:---:|:---:|
@@ -24,7 +26,7 @@ DaxLib.SVG.Element.Group(contents, transform, opacity)
 
 ## Returns
 
-(*STRING*) `<g>`{:.xml} element
+**STRING** `<g>`{:.xml} element
 
 ## Example
 

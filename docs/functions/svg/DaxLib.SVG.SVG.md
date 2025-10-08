@@ -9,24 +9,20 @@ parent: SVG
 
 Wraps content in an SVG container for Power BI visualization
 
-{: .info}
+{: .tip}
 > Any measures use these UDFs must have `DataCategory = "ImageUrl"`{:.txt}
-
-TODO why is sortValue a expression, it doesn't get evaluated a different context within the function
 
 ## Syntax
 
 ```dax
 DaxLib.SVG.SVG(
-	width: STRING,
-	height: STRING,
-	viewbox: STRING,
-	contents: STRING,
-	sortValue: EXPR
+	width,
+	height,
+	viewbox,
+	contents,
+	sortValue
 )
 ```
-
-## Parameters
 
 | Name      | Type   | Required | Description                                                                 |
 |-----------|--------|----------|-----------------------------------------------------------------------------|
@@ -38,7 +34,7 @@ DaxLib.SVG.SVG(
 
 ## Returns
 
-(*STRING*) SVG string
+**STRING** SVG string
 
 ## Example
 

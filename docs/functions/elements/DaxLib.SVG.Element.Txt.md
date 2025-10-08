@@ -1,6 +1,6 @@
 ---
 title: Element.Txt
-nav_order: 3
+nav_order: 9
 parent: Elements
 ---
 
@@ -12,76 +12,83 @@ Creates a `<text>`{:.xml} SVG element
 
 ```dax
 DaxLib.SVG.Element.Txt(
-	x: STRING,
-	y: STRING,
-	txt: STRING,
-	dx: STRING,
-	dy: STRING,
-	style: STRING,
-	class: STRING,
-	transform: STRING
+	x, 
+	y, 
+	txt, 
+	dx, 
+	dy, 
+	attributes, 
+	transforms
 )
 ```
 
-## Parameters
-
-| Name      | Type   | Required | Description                                                                 |
-|:---:|:---:|:---:|:---:|
-| x         | STRING | Yes 		| The x position of the text                                                  |
-| y         | STRING | Yes 		| The y position of the text                                                  |
-| txt       | STRING | Yes 		| The text content                                                            |
-| dx        | STRING | No  		| x offset from position                                            		  |
-| dy        | STRING | No  		| y offset from position                                            		  |
-| style     | STRING | No  		| Style to apply, can use DaxLib.SVG.Style.* or manual CSS          		  |
-| class     | STRING | No  		| CSS class to apply                                                		  |
-| transform | STRING | No  		| Additional transforms (e.g. "scale(1.2) translate(10,10)")        		  |
+| Name       | Type   | Required | Description                                                         |
+|:----------:|:------:|:--------:|:-------------------------------------------------------------------|
+| x          | STRING | Yes      | The x position of the text                                         |
+| y          | STRING | Yes      | The y position of the text                                         |
+| txt        | STRING | Yes      | The text content                                                   |
+| dx         | STRING | No       | Optional: x offset from position                                   |
+| dy         | STRING | No       | Optional: y offset from position                                   |
+| attributes | STRING | No       | Direct SVG attributes to apply (e.g., "text-anchor='middle' dominant-baseline='middle'"), can generate with DaxLib.SVG.Attr.* or manually |
+| transforms | STRING | No       | Additional transforms (e.g. "scale(1.2) translate(10,10)") (can be generated with DaxLib.SVG.Transforms) |
 
 ## Returns
 
-(*STRING*) `<text>`{:.xml} element
+**STRING** `<text>`{:.xml} element
 
 ## Example
 
 ```dax
-DaxLib.SVG.Element.Txt(
-	50,
-	100,
-	"Hello SVG!",
-	5,
-	10,
-	"fill:black;stroke:none;",
-	"my-text",
-	"scale(1.2) translate(10,10)"
+DaxLib.SVG.SVG( 
+    500,                // width
+    100,                // height
+    "0 0 100 20",       // viewbox
+    DaxLib.SVG.Element.Txt(
+        10,             // x
+        10, 	        // y
+        "SomeText",     // txt
+        0,              // dx
+        0,              // dy
+        DaxLib.SVG.Attr.Txt(
+            "Arial",    // fontFamily
+            12,         // fontSize
+            BLANK(),    // fontWeight
+            BLANK(),    // fontStyle
+            BLANK(),    // textAnchor
+            BLANK(),    // baseline
+            BLANK(),    // textDecoration
+            BLANK(),    // letterSpacing
+            BLANK()     // wordSpacing
+         ),             // attributes
+        BLANK()			// transforms
+    ),                  // contents
+    BLANK()             // sortValue
 )
 ```
+
+<svg width='500' height='100' viewbox= '0 0 100 20' xmlns='http://www.w3.org/2000/svg'><text x='10' y='10' dx='0' dy='0' font-family='Arial' font-size='12'  >SomeText</text></svg>
 
 ## Definition
 
 ```dax
 function 'DaxLib.SVG.Element.Txt' =
-	(
-		x: STRING,
-		y: STRING,
-		txt: STRING,
-		dx: STRING,
-		dy: STRING,
-		style: STRING,
-		class: STRING,
-		transform: STRING
-	) =>
+    (
+        x: STRING,
+        y: STRING,
+        txt: STRING,
+        dx: STRING,
+        dy: STRING,
+        attributes: STRING,
+        transforms: STRING
+    ) =>
 
-		VAR _DX = IF(NOT ISBLANK( dx ), " dx='" & dx & "'" )
-		VAR _DY = IF(NOT ISBLANK( dy ), " dy='" & dy & "'" )
-		VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
-
-		RETURN
-		
-			"<text" &
-			" x='" & x & "'" &
-			" y='" & y & "'" &
-			_DX &
-			_DY &
-			_OCE &
-			">" & txt &
-			"</text>"
+        "<text" &
+        " x='" & x & "'" &
+        " y='" & y & "'" &
+        IF(NOT ISBLANK( dx ), " dx='" & dx & "'" ) & 
+        IF(NOT ISBLANK( dy ), " dy='" & dy & "'" ) &
+        IF( NOT ISBLANK( attributes ), " " & attributes & " " ) &
+        IF( NOT ISBLANK( transforms ), " transform='" & transforms & "'" ) &
+        ">" & txt & 
+        "</text>"
 ```

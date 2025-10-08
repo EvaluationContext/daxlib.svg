@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
   "name": "6a1ca4f14d2b1ca7a278",
   "position": {
-    "x": 9.451944155994001,
-    "y": 182.42252221068421,
+    "x": 19.780917265221959,
+    "y": 68.762236207676324,
     "z": 8001,
-    "height": 149.34071766470521,
-    "width": 258.03807545863623,
+    "height": 137.52447241535265,
+    "width": 258.09387288908647,
     "tabOrder": 8001
   },
   "visual": {
@@ -233,5 +233,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "e17f74eabd2471dbc0e5",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Total Cost"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

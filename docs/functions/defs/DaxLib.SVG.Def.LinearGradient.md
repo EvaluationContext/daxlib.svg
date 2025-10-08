@@ -1,6 +1,6 @@
 ---
 title: Def.LinearGradient
-nav_order: 5.5
+nav_order: 8
 parent: Defs
 ---
 
@@ -11,10 +11,15 @@ Creates a reusable `<linearGradient>`{:.xml} definition
 ## Syntax
 
 ```dax
-DaxLib.SVG.Def.LinearGradient(defId, stops, x1, y1, x2, y2)
+DaxLib.SVG.Def.LinearGradient(
+    defId, 
+    stops, 
+    x1, 
+    y1, 
+    x2, 
+    y2
+)
 ```
-
-## Parameters
 
 | Name   | Type   | Required | Description                                                        |
 |:---:|:---:|:---:|:---:|:---:|:---:|
@@ -27,30 +32,63 @@ DaxLib.SVG.Def.LinearGradient(defId, stops, x1, y1, x2, y2)
 
 ## Returns
 
-(*STRING*) `<linearGradient>`{:.xml} definition
+**STRING** `<linearGradient>`{:.xml} definition
 
 ## Example
 
 ```dax
-DaxLib.SVG.Def.LinearGradient(
-    "myGradient",
-    DaxLib.SVG.Def.GradientStop(
-		"0%", 
-		"red", 
-		1
-	) & 
-	DaxLib.SVG.Def.GradientStop(
-		"100%", 
-		"blue", 
-		1
-	),
-    "0%", 
-	"0%", 
-	"100%", 
-	"0%"
+DaxLib.SVG.SVG(
+    500,
+    100,
+    "0 0 100 20",
+    DaxLib.SVG.Element.Defs(
+        DaxLib.SVG.Def.LinearGradient(
+            "myGradient",   // id
+            DaxLib.SVG.Def.GradientStop(
+                "20%",      // offset
+                DaxLib.SVG.Colour.Theme(
+                    "Power BI",
+                    25
+                ),          // colour
+                BLANK()     // opacity
+            ) &
+            DaxLib.SVG.Def.GradientStop( 
+                "80%",      // offset
+                DaxLib.SVG.Colour.Theme(
+                    "Power BI",
+                    26
+                ),           // colour
+                BLANK()     // opacity
+            ),              // stops
+            BLANK(),        // x1
+            BLANK(),        // y1
+            BLANK(),        // x2
+            BLANK()         // y2
+        )                   // contents
+    ) &
+    DaxLib.SVG.Element.Rect(
+        2,                  // x
+        2,                  // y
+        "80%",              // width
+        "80%",              // height
+        BLANK(),            // rx
+        BLANK(),            // ry
+        DaxLib.SVG.Attr.Shapes(
+            "url(""" & "#myGradient" & """)", // fill
+            BLANK(),        // fillOpacity
+            BLANK(),        // fillRule   
+            BLANK(),        // stroke
+            BLANK(),        // strokeWidth
+            BLANK(),        // strokeOpacity
+            BLANK()         // opacity
+        ),                  // attributes
+        BLANK()             // transforms
+    ),
+    BLANK()                 // sortValue               
 )
-// Returns: <linearGradient id='myGradient' x1='0%' y1='0%' x2='100%' y2='0%'>...</linearGradient>
 ```
+
+<svg width='500' height='100' viewbox= '0 0 100 20' xmlns='http://www.w3.org/2000/svg'><defs><linearGradient id='myGradient'><stop offset='20%' stop-color='#EC008C'/><stop offset='80%' stop-color='#533285'/></linearGradient></defs><rect x='2' y='2' width='80%' height='80%' fill='url("#myGradient")'  /></svg>
 
 ## Definition
 

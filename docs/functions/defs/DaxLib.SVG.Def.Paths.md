@@ -1,6 +1,6 @@
 ---
 title: Def.Paths
-nav_order: 3
+nav_order: 6
 parent: Defs
 ---
 
@@ -11,22 +11,24 @@ Creates a reusable `<path>`{:.xml} definition
 ## Syntax
 
 ```dax
-DaxLib.SVG.Def.Paths(defId, d, style, class, transform)
+DaxLib.SVG.Def.Paths(
+    defId, 
+    d, 
+    attributes, 
+    transforms
+)
 ```
 
-## Parameters
-
-| Name      | Type   | Required | Description                                                        |
-|:---:|:---:|:---:|:---:|
-| defId     | STRING | Yes      | The unique identifier for the path                                 |
-| d         | STRING | Yes      | The path data string (e.g., "M10 10 L90 90")                       |
-| style     | STRING | No       | The style to apply (e.g., "fill:black;stroke:blue;")               | 
-| class     | STRING | No       | CSS class to apply                                                 |
-| transform | STRING | No       | Transformation to apply                                            |
+| Name       | Type   | Required | Description                                                                |
+|:----------:|:------:|:--------:|:--------------------------------------------------------------------------|
+| defId      | STRING | Yes      | The unique identifier for the path                                        |
+| d          | STRING | Yes      | The path data string (e.g., "M10 10 L90 90")                             |
+| attributes | STRING | No       | Direct SVG attributes to apply (e.g., "fill='none' stroke='blue'"), can generate with DaxLib.SVG.Attr.* or manually |
+| transforms | STRING | No       | Transformation to apply (can be generated with DaxLib.SVG.Transforms)    |
 
 ## Returns
 
-(*STRING*) `<path>`{:.xml} definition
+**STRING** `<path>`{:.xml} definition
 
 ## Example
 
@@ -34,11 +36,18 @@ DaxLib.SVG.Def.Paths(defId, d, style, class, transform)
 DaxLib.SVG.Def.Paths(
     "myPath",
     "M10 10 L90 90",
-    "stroke:black;fill:none;",
-    BLANK(),
+    DaxLib.SVG.Attr.Shapes(
+        "none",     // fill
+        BLANK(),    // fillOpacity
+        BLANK(),    // fillRule
+        "black",    // stroke
+        2,          // strokeWidth
+        BLANK(),    // strokeOpacity
+        BLANK()     // opacity
+    ),
     BLANK()
 )
-// Returns: <path id='myPath' d='M10 10 L90 90' style='stroke:black;fill:none;'/>
+// Returns: <path id='myPath' d='M10 10 L90 90' fill='none' stroke='black' stroke-width='2' />
 ```
 
 ## Definition
@@ -48,16 +57,13 @@ function 'DaxLib.SVG.Def.Paths' =
     (
         defId: STRING,
         d: STRING,
-        style: STRING,
-        class: STRING,
-        transform: STRING
+        attributes: STRING,
+        transforms: STRING
     ) =>
-        VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
 
-        RETURN
-
-            "<path id='" & defId & "'" &
-            " d='" & d & "'" &
-            _OCE &
-            "/>"
+        "<path id='" & defId & "'" &
+        " d='" & d & "'" &
+        IF( NOT ISBLANK( attributes ), " " & attributes & " " ) &
+        IF( NOT ISBLANK( transforms ), " transform='" & transforms & "'" ) &
+        "/>"
 ```

@@ -1,6 +1,6 @@
 ---
 title: Element.Rect
-nav_order: 3.2
+nav_order: 3
 parent: Elements
 ---
 
@@ -12,68 +12,98 @@ Creates a `<rect>`{:.xml} element
 
 ```dax
 DaxLib.SVG.Element.Rect(
-	x: STRING,
-	y: STRING,
-	width: STRING,
-	height: STRING,
-	style: STRING,
-	class: STRING,
-	transform: STRING
+	x, 
+	y, 
+	width, 
+	height, 
+	rx, 
+	ry, 
+	attributes, 
+	transforms
 )
 ```
 
-## Parameters
-
-| Name      | Type   | Required | Description                                                                 |
-|:---:|:---:|:---:|:---:|
-| x         | STRING | Yes      | X position (left edge is 0)                                                 |
-| y         | STRING | Yes      | Y position (top edge is 0)                                                  |
-| width     | STRING | Yes      | Width of the rectangle                                                      |
-| height    | STRING | Yes      | Height of the rectangle                                                     |
-| style     | STRING | No       | Style to apply, can use DaxLib.SVG.Style.* or manual CSS          		  |
-| class     | STRING | No       | CSS class to apply                                                		  |
-| transform | STRING | No       | Transformation to apply                                           		  |
+| Name       | Type   | Required | Description                                                               |
+|:----------:|:------:|:--------:|:-------------------------------------------------------------------------|
+| x          | STRING | Yes      | The x position                                                           |
+| y          | STRING | Yes      | The y position                                                           |
+| width      | STRING | Yes      | The width (pixels or percentage)                                         |
+| height     | STRING | Yes      | The height (pixels or percentage)                                        |
+| rx         | STRING | No       | Optional: x radius for rounded corners                                   |
+| ry         | STRING | No       | Optional: y radius for rounded corners                                   |
+| attributes | STRING | No       | Direct SVG attributes to apply (e.g., "fill='red' stroke-width='2'"), can generate with DaxLib.SVG.Attr.* or manually |
+| transforms | STRING | No       | Transformation to apply (can be generated with DaxLib.SVG.Transforms)   |
 
 ## Returns
 
-(*STRING*) `<rect>`{:.xml} element
+**STRING** `<rect>`{:.xml} element
 
 ## Example
 
 ```dax
-DaxLib.SVG.Element.Rect(
-	10,
-	20,
-	100,
-	50,
-	"fill:yellow;stroke:black;stroke-width:2",
-	"my-rect",
-	"rotate(5)"
+DaxLib.SVG.SVG( 
+    500,                // width
+    100,                // height
+    "0 0 100 20",       // viewbox
+    DaxLib.SVG.Element.Rect(
+        "50%",          // x
+        "0%",           // y
+        "40%",          // width
+        8,              // height
+        blank(),        // rx
+        blank(),        // ry
+        DaxLib.SVG.Attr.Shapes(
+            DaxLib.SVG.Colour.Theme(
+                "Power BI",
+                25
+            ),          // fill
+            0.3,        // fillOpacity
+            BLANK(),    // fillRule
+             DaxLib.SVG.Colour.Theme(
+                "Power BI",
+                25
+            ),          // stroke
+            2,          // strokeWidth
+            0.9,        // strokeOpacity
+            BLANK()     // opacity
+        ),              // attributes
+        DaxLib.SVG.Transforms(
+            -15,        // translate
+            5,          // rotate
+            BLANK(),    // scale
+            -20,        // skewX
+            BLANK()     // skewY
+        )               // transforms
+    ),                  // contents
+    BLANK()             // sortValue
 )
 ```
+
+<svg width='500' height='100' viewbox= '0 0 100 20' xmlns='http://www.w3.org/2000/svg'><rect x='50%' y='0%' width='40%' height='8' fill='#EC008C' fill-opacity='0.3' stroke='#EC008C' stroke-width='2' stroke-opacity='0.9'   transform='translate(-15) rotate(5) skewX(-20) '/></svg>
 
 ## Definition
 
 ```dax
 function 'DaxLib.SVG.Element.Rect' =
-	(
-		x: STRING,
-		y: STRING,
-		width: STRING,
-		height: STRING,
-		style: STRING,
-		class: STRING,
-		transform: STRING
-	) =>
+    (
+        x: STRING,
+        y: STRING,
+        width: STRING,
+        height: STRING,
+        rx: STRING,
+        ry: STRING,
+        attributes: STRING,
+        transforms: STRING
+    ) =>
 
-		VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
-
-		RETURN
-			"<rect" &
-			" x='" & x & "'" &
-			" y='" & y & "'" &
-			" width='" & width & "'" &
-			" height='" & height & "'" &
-			_OCE &
-			"/>"
+        "<rect" &
+        " x='" & x & "'" &
+        " y='" & y & "'" &
+        " width='" & width & "'" &
+        " height='" & height & "'" &
+        IF( NOT ISBLANK( rx ), " rx='" & rx & "'" ) &
+        IF( NOT ISBLANK( ry ), " ry='" & ry & "'" ) &
+        IF( NOT ISBLANK( attributes ), " " & attributes & " " ) &
+        IF( NOT ISBLANK( transforms ), " transform='" & transforms & "'" ) & 
+        "/>"
 ```

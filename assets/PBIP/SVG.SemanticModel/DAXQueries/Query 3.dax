@@ -1,6 +1,5 @@
 DEFINE
-
-function DaxLib.SVG.Compound.Line2 =
+function DaxLib.SVG.Compound.Boxplot =
 			(
 				x: INT64,
 				y: INT64,
@@ -8,10 +7,11 @@ function DaxLib.SVG.Compound.Line2 =
 				height: INT64,
 				paddingX: DOUBLE,
 				paddingY: DOUBLE,
-				contextTable: ANYREF EXPR,
 				axisRef: ANYREF EXPR,
 				measureRef: NUMERIC EXPR,
-				lineColor: STRING
+				fillColor: STRING,
+				strokeColor: STRING,
+				showOutliers: BOOLEAN
 			) =>
 
 				// Apply padding to dimensions
@@ -19,155 +19,233 @@ function DaxLib.SVG.Compound.Line2 =
 				VAR _Y = 			y + (height * (IF(ISBLANK(paddingY), 0, paddingY) / 2))
 				VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
 				VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
-			
-				// I only have the index because I don't have a better way of filtering down to current row
-				// Handle case where axisRef might be blank or out of scope
-				//VAR _UseIndexFiltering = CALCULATE( COUNTROWS( contextTable ) ) > 1 || NOT ISBLANK( contextTable )
-			
-				// Replace contextTable with Index
-				VAR _ContextTableIndex =
+
+				// Check if Axis is numeric
+				VAR axisSample = 	MAX( axisRef )
+				VAR axisIsNumeric = ISNUMERIC( axisSample ) || ISDATETIME( axisSample )
+				
+				// For totals
+				VAR _Data = 
 					ADDCOLUMNS(
-						CALCULATETABLE(
-							FILTER(
-								KEEPFILTERS( contextTable ),
-								NOT ISBLANK( measureRef )
-							),
-							ALLSELECTED()
+						FILTER(
+							VALUES( axisRef ),
+							NOT ISBLANK( measureRef )
 						),
-						"@Index", RANK( DENSE, CALCULATETABLE( contextTable, ALLSELECTED() ) )
+						"@AxisIndex", 	
+							IF(
+								axisIsNumeric,
+								axisRef,
+								RANK( DENSE, CALCULATETABLE( VALUES( axisRef ), ALLSELECTED() ) )
+							),
+						"@Value", measureRef
 					)
 
-				VAR _currentIndex =
-					// MAXX(
-						NATURALINNERJOIN(
-							_ContextTableIndex,
-							CALCULATETABLE( contextTable )
-						)
-					// 	[@Index]
-					// )
+				// VAR _XMin = 			MINX( _Data, [@Value] )
+				// VAR _XMax = 			MAXX( _Data, [@Value] )
 
-				// Add in axisRef and evaulate measure
-				// VAR _Data = 
-				// 	FILTER(
-				// 		ADDCOLUMNS(
-				// 			GENERATE(
-				// 				_ContextTableIndex,
-				// 				VALUES( axisRef )
+				// VAR _Count = 			COUNTROWS( _Data )
+				// VAR _Min = 				MINX( _Data, [@Value] )
+				// VAR _Max = 				MAXX( _Data, [@Value] )
+
+				// // Calculate quartiles using standard definitions
+				// VAR _Q1 = 				PERCENTILEX.INC( _Data, [@Value], 0.25 )
+				// VAR _Median = 			PERCENTILEX.INC( _Data, [@Value], 0.5 )
+				// VAR _Q3 = 				PERCENTILEX.INC( _Data, [@Value], 0.75 )
+
+				// // Calculate IQR and whisker boundaries (1.5 * IQR rule)
+				// VAR _IQR = 				_Q3 - _Q1
+				// VAR _LowerWhisker =		MAX( _Min, _Q1 - 1.5 * _IQR )
+				// VAR _UpperWhisker = 	MIN( _Max, _Q3 + 1.5 * _IQR )
+
+				// // Scale statistical values to SVG coordinates
+				// VAR _Q1X = 				DaxLib.SVG.Scale.Normalize( _Q1, _XMin, _XMax, _X, _X + _Width )
+				// VAR _MedianX = 			DaxLib.SVG.Scale.Normalize( _Median, _XMin, _XMax, _X, _X + _Width )
+				// VAR _Q3X = 				DaxLib.SVG.Scale.Normalize( _Q3, _XMin, _XMax, _X, _X + _Width )
+				// VAR _LowerWhiskerX = 	DaxLib.SVG.Scale.Normalize( _LowerWhisker, _XMin, _XMax, _X, _X + _Width )
+				// VAR _UpperWhiskerX = 	DaxLib.SVG.Scale.Normalize( _UpperWhisker, _XMin, _XMax, _X, _X + _Width )
+
+				// // Box dimensions - centered vertically with padding
+				// VAR _BoxHeight = 		_Height * 0.6
+				// VAR _BoxY = 			_Y + _Height * 0.2
+				// VAR _CenterY = 			_Y + _Height * 0.5
+
+				// // Create outlier points beyond whiskers if enabled
+				// VAR _Outliers = 
+				// 	IF(
+				// 		showOutliers,
+				// 		CONCATENATEX(
+				// 			FILTER(
+				// 				_Data,
+				// 				[@Value] < _LowerWhisker || [@Value] > _UpperWhisker
 				// 			),
-				// 			"@Value", measureRef
-				// 		),
-				// 		NOT ISBLANK( [@Value] )
+				// 			DaxLib.SVG.Element.Circle(
+				// 				DaxLib.SVG.Scale.Normalize( [@Value], _XMin, _XMax, _X, _X + _Width ), // cx
+				// 				_CenterY,          	// cy
+				// 				2,                  // radius
+				// 				DaxLib.SVG.Attr.Shapes(
+				// 					strokeColor,    // fill
+				// 					BLANK(),        // fillOpacity
+				// 					BLANK(),        // fillRule
+				// 					BLANK(),        // stroke
+				// 					BLANK(),        // strokeWidth
+				// 					BLANK(),        // strokeOpacity
+				// 					BLANK()         // opacity
+				// 				),
+				// 				BLANK()             // transforms
+				// 			),
+				// 			""
+				// 		)
 				// 	)
 				
-				// VAR _XMin = 	MINX( _Data, axisRef )
-				// VAR _XMax = 	MAXX( _Data, axisRef )
-				// VAR _RawYMin = 	MINX( _Data, [@Value] )
-				// VAR _YMin = 	IF( _RawYMin > 0, 0, _RawYMin )
-				// VAR _YMax = 	MAXX( _Data, [@Value] )
-
-				// // Filter to current context
-				// VAR _DataPerCurrentContext =
-				// 	FILTER(
-				// 		_Data,
-				// 		[@Index] = _currentIndex
-				// 	)
-
-				// // Points
-				// VAR _Points = 
-				// 	CONCATENATEX(
-				// 		_DataPerCurrentContext,
-				// 		IF( 
-				// 			NOT ISBLANK( [@Value] ), 
-				// 			COMBINEVALUES( 
-				// 				",", 
-				// 				DaxLib.SVG.Scale.Normalize( axisRef, _XMin, _XMax, _X, _X + _Width ), 
-				// 				DaxLib.SVG.Scale.Normalize( [@Value], _YMin, _YMax, _Y + _Height, _Y )
-				// 			)
-				// 		),
-				// 		" ",
-				// 		axisRef,
-				// 		ASC
-				// 	)
-
-				// // Line Element
-				// VAR _LineElement =
-				// 	DaxLib.SVG.Element.Polyline(
-				// 		_Points,	// points
+				// // Lower whisker line from whisker to Q1 (horizontal)
+				// VAR _LowerWhiskerLine = 
+				// 	DaxLib.SVG.Element.Line(
+				// 		_LowerWhiskerX,         // x1
+				// 		_CenterY,              	// y1
+				// 		_Q1X,                   // x2
+				// 		_CenterY,              	// y2
 				// 		DaxLib.SVG.Attr.Shapes(
-				// 			"none",		// fill
-				// 			BLANK(),	// fillOpacity
-				// 			BLANK(),	// fillRule
-				// 			IF( NOT ISBLANK( lineColor ), lineColor, "#01B8AA" ), // stroke
-				// 			1,			// stroke
-				// 			BLANK(),	// strokeOpacity
-				// 			BLANK()		// opacity
+				// 			BLANK(),            // fill
+				// 			BLANK(),            // fillOpacity
+				// 			BLANK(),            // fillRule
+				// 			strokeColor,        // stroke
+				// 			1,                  // strokeWidth
+				// 			BLANK(),            // strokeOpacity
+				// 			BLANK()             // opacity
 				// 		),
-				// 		BLANK()			// transforms
+				// 		BLANK()                 // transforms
 				// 	)
 
-				// // Single Point Element
-				// VAR _SinglePointElement =
-				// 	DaxLib.SVG.Element.Circle(
-				// 			DaxLib.SVG.Scale.Normalize( MAXX( _DataPerCurrentContext, axisRef ), _XMin, _XMax, _X, _X + _Width ), // cx
-				// 			DaxLib.SVG.Scale.Normalize( MAXX( _DataPerCurrentContext, [@Value] ), _YMin, _YMax, _Y + _Height, _Y ), // cy
-				// 			2,           	// r
-				// 			DaxLib.SVG.Attr.Shapes(
-				// 				lineColor, 	// fill
-				// 				BLANK(),    // fillOpacity
-				// 				BLANK(),    // fillRule
-				// 				BLANK(),    // stroke
-				// 				BLANK(),    // strokeWidth
-				// 				BLANK(),    // strokeOpacity
-				// 				BLANK()     // opacity
-				// 			),
-				// 			BLANK()         // transforms
-				// 		)
+				// // Upper whisker line from Q3 to whisker (horizontal)
+				// VAR _UpperWhiskerLine = 
+				// 	DaxLib.SVG.Element.Line(
+				// 		_Q3X,                   // x1
+				// 		_CenterY,             	// y1
+				// 		_UpperWhiskerX,         // x2
+				// 		_CenterY,             	// y2
+				// 		DaxLib.SVG.Attr.Shapes(
+				// 			BLANK(),            // fill
+				// 			BLANK(),            // fillOpacity
+				// 			BLANK(),            // fillRule
+				// 			strokeColor,        // stroke
+				// 			1,                  // strokeWidth
+				// 			BLANK(),            // strokeOpacity
+				// 			BLANK()             // opacity
+				// 		),
+				// 		BLANK()                 // transforms
+				// 	)
 
-				// VAR _CombinedElement = 
-					// IF(
-					// 	COUNTROWS( _DataPerCurrentContext ) = 1,
-					// 	_SinglePointElement,
-					// 	_LineElement
-					// )
+				// // Lower whisker cap (vertical line)
+				// VAR _LowerCap = 
+				// 	DaxLib.SVG.Element.Line(
+				// 		_LowerWhiskerX,         // x1
+				// 		_BoxY,                  // y1
+				// 		_LowerWhiskerX,         // x2
+				// 		_BoxY + _BoxHeight,     // y2
+				// 		DaxLib.SVG.Attr.Shapes(
+				// 			BLANK(),            // fill
+				// 			BLANK(),            // fillOpacity
+				// 			BLANK(),            // fillRule
+				// 			strokeColor,        // stroke
+				// 			1,                  // strokeWidth
+				// 			BLANK(),            // strokeOpacity
+				// 			BLANK()             // opacity
+				// 		),
+				// 		BLANK()                 // transforms
+				// 	)
+
+				// // Upper whisker cap (vertical line)
+				// VAR _UpperCap = 
+				// 	DaxLib.SVG.Element.Line(
+				// 		_UpperWhiskerX,         // x1
+				// 		_BoxY,                  // y1
+				// 		_UpperWhiskerX,         // x2
+				// 		_BoxY + _BoxHeight,     // y2
+				// 		DaxLib.SVG.Attr.Shapes(
+				// 			BLANK(),            // fill
+				// 			BLANK(),            // fillOpacity
+				// 			BLANK(),            // fillRule
+				// 			strokeColor,        // stroke
+				// 			1,                  // strokeWidth
+				// 			BLANK(),            // strokeOpacity
+				// 			BLANK()             // opacity
+				// 		),
+				// 		BLANK()                 // transforms
+				// 	)
+
+				// // Main box (Q1 to Q3) - horizontal
+				// VAR _Box = 
+				// 	DaxLib.SVG.Element.Rect(
+				// 		_Q1X,                   // x (left of box)
+				// 		_BoxY,                  // y
+				// 		_Q3X - _Q1X,            // width (Q3 - Q1)
+				// 		_BoxHeight,             // height
+				// 		2,                      // rx
+				// 		2,                      // ry
+				// 		DaxLib.SVG.Attr.Shapes(
+				// 			fillColor,          // fill
+				// 			0.5,                // fillOpacity
+				// 			BLANK(),            // fillRule
+				// 			strokeColor,        // stroke
+				// 			1,                  // strokeWidth
+				// 			BLANK(),            // strokeOpacity
+				// 			BLANK()             // opacity
+				// 		),
+				// 		BLANK()                 // transforms
+				// 	)
+
+				// // Median line (vertical)
+				// VAR _MedianLine = 
+				// 	DaxLib.SVG.Element.Line(
+				// 		_MedianX,               // x1
+				// 		_BoxY,                  // y1
+				// 		_MedianX,               // x2
+				// 		_BoxY + _BoxHeight,     // y2
+				// 		DaxLib.SVG.Attr.Shapes(
+				// 			BLANK(),            // fill
+				// 			BLANK(),            // fillOpacity
+				// 			BLANK(),            // fillRule
+				// 			strokeColor,        // stroke
+				// 			2,                  // strokeWidth (thicker for median)
+				// 			BLANK(),            // strokeOpacity
+				// 			BLANK()             // opacity
+				// 		),
+				// 		BLANK()                 // transforms
+				// 	)
+
+				// // Combined elements
+				// VAR _CombinedElements = 
+				// 	_LowerWhiskerLine &
+				// 	_UpperWhiskerLine &
+				// 	_LowerCap &
+				// 	_UpperCap &
+				// 	_Box &
+				// 	_MedianLine &
+				// 	_Outliers
 
 				RETURN
-					TOJSON( _currentIndex )
-					//IF( NOT ISEMPTY( _DataPerCurrentContext ), _CombinedElement )
+					TOJSON( _Data )
+					IF( NOT ISEMPTY( _Data ), _CombinedElements )
 
 EVALUATE
-{DaxLib.SVG.Compound.Line2(
-			0,                  // x
-			0,                  // y
-			100,                // width
-			20,                 // height
-			0.05,               // paddingX
-			0.02,               // paddingY
-			SUMMARIZE( Orders, Products[Brand] ), // contextTable
-			Dates[Date],        // xAxis
-			[Total Cost],       // measureVal
-			DaxLib.SVG.Colour.Theme(
-				MAX( Theme[Theme] ),
-				MIN( Variant[Variant] )
-			)                   // lineColour
-		)}
-
-EVALUATE
-SUMMARIZECOLUMNS(
-	Products[Brand],
-	"x",
-	DaxLib.SVG.Compound.Line2(
-			0,                  // x
-			0,                  // y
-			100,                // width
-			20,                 // height
-			0.05,               // paddingX
-			0.02,               // paddingY
-			SUMMARIZE( Orders, Products[Brand] ), // contextTable
-			Dates[Date],        // xAxis
-			[Total Cost],       // measureVal
-			DaxLib.SVG.Colour.Theme(
-				MAX( Theme[Theme] ),
-				MIN( Variant[Variant] )
-			)                   // lineColour
-		)
-)
+{
+DaxLib.SVG.Compound.Boxplot(
+        0,                  // x
+        0,                  // y
+        100,                // width
+        20,                 // height
+        0.05,               // paddingX
+        0.02,               // paddingY
+        Dates[Date],        // axisRef
+        [Total Cost],       // measureVal
+        DaxLib.SVG.Colour.Theme(
+            MAX( Theme[Theme] ),
+            MIN( Variant[Variant] )
+        ),                  // fillColour
+        DaxLib.SVG.Colour.Theme(
+            MAX( Theme[Theme] ),
+            MIN( Variant[Variant] )
+        ),                   // strokeColour
+        TRUE                 // showOutliers
+    )
+}

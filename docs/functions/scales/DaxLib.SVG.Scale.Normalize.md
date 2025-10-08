@@ -1,22 +1,24 @@
 ---
 title: Scale.Normalize
-nav_order: 3
+nav_order: 1
 parent: Scales
 ---
 
 # DaxLib.SVG.Scale.Normalize
 
-Maps a value from one scale to another. Used for scaling values to fit within SVG dimensions.
-
-TODO add optional toMin and toMin % buffer so can remove the buffer from axisMin and axisMax
+Maps a value from one scale to another. Used for scaling values to fit within SVG dimensions
 
 ## Syntax
 
 ```dax
-DaxLib.SVG.Scale.Normalize(inputValue, fromMin, fromMax, toMin, toMax)
+DaxLib.SVG.Scale.Normalize(
+    inputValue, 
+    fromMin, 
+    fromMax, 
+    toMin, 
+    toMax
+)
 ```
-
-## Parameters
 
 | Name       | Type        | Required | Description                         |
 |:---:|:---:|:---:|:---:|:---:|:---:|
@@ -28,7 +30,7 @@ DaxLib.SVG.Scale.Normalize(inputValue, fromMin, fromMax, toMin, toMax)
 
 ## Returns
 
-(*NUMERIC*) mapped value
+**NUMERIC** mapped value
 
 ## Example
 

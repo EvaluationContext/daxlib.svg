@@ -1,6 +1,6 @@
 ---
 title: Def.ClipPath
-nav_order: 5.2
+nav_order: 4
 parent: Defs
 ---
 
@@ -11,40 +11,85 @@ Creates a reusable `<clipPath>`{:.xml} definition
 ## Syntax
 
 ```dax
-DaxLib.SVG.Def.ClipPath(defId, elements)
+DaxLib.SVG.Def.ClipPath(
+    defId, 
+    contents
+)
 ```
 
-## Parameters
-
 | Name     | Type   | Required | Description                                                        |
-|:---:|:---:|:---:|:---:|
-| defId    | STRING | Yes      | The unique identifier for the clip path (e.g., "cut-top")          |
-| elements | STRING | Yes      | The SVG element(s) that make up the clipping path                  |
+|:--------:|:------:|:--------:|:------------------------------------------------------------------|
+| defId    | STRING | Yes      | The unique identifier for the clip path. (Example: "cut-top", "mask-circle") |
+| contents | STRING | Yes      | The SVG element(s) that make up the clipping path (typically a single shape) |
 
 ## Returns
 
-(*STRING*) `<clipPath>`{:.xml} definition
+**STRING** `<clipPath>`{:.xml} definition
 
 ## Example
 
 ```dax
-DaxLib.SVG.Def.ClipPath(
-    "cut-bottom",
-    "<rect x='0' y='50' width='100' height='50'/>"
+VAR _Defs = 
+    DaxLib.SVG.Element.Defs(
+        DaxLib.SVG.Def.ClipPath(
+            "clip-circle",      // id
+            DaxLib.SVG.Element.Circle(
+                "50%",          // cx 
+                "80%",          // cy
+                8,              // r
+                BLANK(),        // attributes
+                BLANK()         // transforms
+            )                   // elements
+        )
+    )
+
+VAR _Rectangle = 
+    DaxLib.SVG.Element.Rect(
+        "0%",           // x
+        "0%",           // y
+        "100%",         // width
+        "80%",          // height
+        BLANK(),        // rx
+        BLANK(),        // ry
+        DaxLib.SVG.Attr.Shapes(
+            DaxLib.SVG.Colour.Theme(
+                "Power BI",
+                25
+            ),          // fill
+            BLANK(),    // fillOpacity
+            BLANK(),    // fillRule   
+            BLANK(),    // stroke
+            BLANK(),    // strokeWidth
+            BLANK(),    // strokeOpacity
+            BLANK()     // opacity
+        ) &
+        "clip-path='url(#clip-circle)'",  // Add clip-path reference
+        BLANK()         // transforms
+    )
+
+RETURN
+DaxLib.SVG.SVG(
+    500,
+    100,
+    "0 0 100 20",
+    _Defs &          
+    _Rectangle,    
+    BLANK()         
 )
-// Returns: <clipPath id='cut-bottom'><rect x='0' y='50' width='100' height='50'/></clipPath>
 ```
+
+<svg width='500' height='100' viewbox= '0 0 100 20' xmlns='http://www.w3.org/2000/svg'><defs><clipPath id='clip-circle'><circle cx='50%' cy='80%' r='8'/></clipPath></defs><rect x='0%' y='0%' width='100%' height='80%' fill='#EC008C' clip-path='url(#clip-circle)' /></svg>
 
 ## Definition
 
 ```dax
 function 'DaxLib.SVG.Def.ClipPath' =
     (
-        defId: STRING,
-        elements: STRING
+        defId : STRING,
+        contents: STRING
     ) =>
-
+        
         "<clipPath id='" & defId & "'>" &
-        elements &
+        contents &
         "</clipPath>"
 ```

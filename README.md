@@ -3,11 +3,11 @@
 
 A comprehensive set of DAX User-Defined Functions (UDF) designed to enable easy creation of SVG visuals for Power BI.
 
-![DaxLib.SVG in Action](assets/img/UDFInPowerBI.png)
+![DaxLib.SVG in Action](assets/img/UDFInAction.png)
 
 ## Summary
 
-DaxLib.SVG provides a complete toolkit for creating SVG graphics directly in Power BI using DAX measures. The library includes functions for creating basic shapes, complex visuals, reusable components, and styling options.
+`DaxLib.SVG` provides a complete toolkit for creating SVG graphics directly in Power BI using DAX measures. The library includes functions for creating basic shapes, complex visuals, reusable components, and styling options.
 
 ## Function Categories
 
@@ -19,9 +19,13 @@ Functions for wrapping SVG content for use in Power BI visuals.
 
 Core SVG element generator functions (Circle, Rect, Line, Text, etc.).
 
+![Element Functions](assets/img/elements.png)
+
 ### Compounds
 
 Composite SVG components for creating complex visual elements.
+
+![Compound Functions](assets/img/compounds.png)
 
 ### Defs
 
@@ -31,17 +35,17 @@ Reusable SVG definitions for gradients, shapes, clip paths, and more.
 
 Functions for mapping and normalizing values for SVG graphics.
 
-### Styles
-
-Functions to generate style strings for SVG elements.
-
 ### Visuals
 
 Ready to use chart and visual components built from library elements.
 
-### Utils
+### Transforms
 
-Helper and utility functions for internal library operations.
+Functions for creating SVG transform attribute values (translate, rotate, scale, etc.).
+
+### Attributes
+
+Functions for creating SVG attribute strings to style and configure SVG elements.
 
 ## Getting Started
 

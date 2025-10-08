@@ -11,7 +11,3 @@ The `DaxLib.SVG.SVG` function wraps your SVG content in a valid SVG container fo
 
 {: .tip}
 > Any measures use these UDFs must have `DataCategory = "ImageUrl"`{:.txt}
-
-## Available SVG Functions
-
-The following functions are available:

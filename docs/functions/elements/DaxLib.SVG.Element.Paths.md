@@ -1,43 +1,61 @@
 ---
 title: Element.Paths
-nav_order: 3
+nav_order: 8
 parent: Elements
 ---
 
 # DaxLib.SVG.Element.Paths
 
-Creates a `<path>{`:.xml} element
+Creates a `<path>`{:.xml} element
 
 ## Syntax
 
 ```dax
-DaxLib.SVG.Element.Paths(d, style, class, transform)
+DaxLib.SVG.Element.Paths(
+    d, 
+    attributes, 
+    transforms
+)
 ```
 
-## Parameters
-
-| Name      | Type   | Required | Description                                                        |
-|:---:|:---:|:---:|:---:|
-| d         | STRING | Yes      | The path data string (e.g., "M10 10 L90 90")                       |
-| style     | STRING | No       | The style to apply (e.g., "fill:black;stroke:blue;")               |
-| class     | STRING | No       | CSS class to apply                                                 |
-| transform | STRING | No       | Transformation to apply                                            |
+| Name       | Type   | Required | Description                                                        |
+|:----------:|:------:|:--------:|:------------------------------------------------------------------|
+| d          | STRING | Yes      | The path data string (e.g., "M10 10 L90 90")                     |
+| attributes | STRING | No       | Direct SVG attributes to apply (e.g., "pathLength='100' fill-rule='evenodd'"), can generate with DaxLib.SVG.Attr.* or manually |
+| transforms | STRING | No       | Transformation to apply (can be generated with DaxLib.SVG.Transforms) |
 
 ## Returns
 
-(*STRING*) `<path>`{:.xml} element
+**STRING** `<path>`{:.xml} element
 
 ## Example
 
 ```dax
-DaxLib.SVG.Element.Paths(
-	"M10 10 L90 90", 
-	"stroke:black;", 
-	BLANK(), 
-	BLANK()
+DaxLib.SVG.SVG(
+    500,                // width
+    100,                // height
+    "0 0 100 20",       // viewbox
+    DaxLib.SVG.Element.Paths(
+        "M10 10 L30 5 C50 0 70 20 90 15 L100 0", // d
+        DaxLib.SVG.Attr.Shapes(
+            "none",     // fill
+            BLANK(),    // fillOpacity
+            BLANK(),    // fillRule
+            DaxLib.SVG.Colour.Theme(
+                "Power BI",
+                25
+            ),          // stroke
+            2,          // strokeWidth
+            BLANK(),    // strokeOpacity
+            BLANK()     // opacity
+        ),              // attributes
+        BLANK()		    // transforms
+    ),                  // contents
+    BLANK()             // sortValue
 )
-// Returns: <path d='M10 10 L90 90' style='stroke:black;' />
 ```
+
+<svg width='500' height='100' viewbox= '0 0 100 20' xmlns='http://www.w3.org/2000/svg'><path d='M10 10 L30 5 C50 0 70 20 90 15 L100 0' fill='none' stroke='#EC008C' stroke-width='2'  /></svg>
 
 ## Definition
 
@@ -45,16 +63,12 @@ DaxLib.SVG.Element.Paths(
 function 'DaxLib.SVG.Element.Paths' =
     (
         d: STRING,
-        style: STRING,
-        class: STRING,
-        transform: STRING
+        attributes: STRING,
+        transforms: STRING
     ) =>
 
-        VAR _OCE = DaxLib.SVG.Util.OptionalCommentElements( style, class, transform )
-
-        RETURN
-
-            "<path d='" & d & "'" &
-            _OCE & 
-            " />"
+        "<path d='" & d & "'" &
+        IF( NOT ISBLANK( attributes ), " " & attributes & " " ) &
+        IF( NOT ISBLANK( transforms ), " transform='" & transforms & "'" ) & 
+        "/>"
 ```

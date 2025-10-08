@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
   "name": "6e0ffc4f1e436975ca61",
   "position": {
-    "x": 9.3534331105036674,
-    "y": 332.04687542288019,
+    "x": 277.87479015430847,
+    "y": 222.29983212344675,
     "z": 2000,
-    "height": 538.75774716501121,
-    "width": 1573.2474491867169,
+    "height": 459.67083930611022,
+    "width": 1289.5274160042313,
     "tabOrder": 1000
   },
   "visual": {
@@ -29,40 +29,11 @@
               "queryRef": "Products.Brand",
               "nativeQueryRef": "Brand",
               "active": true
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Products"
-                    }
-                  },
-                  "Property": "ProductSubcategory"
-                }
-              },
-              "queryRef": "Products.ProductSubcategory",
-              "nativeQueryRef": "ProductSubcategory",
-              "active": true
             }
           ]
         },
         "Values": {
           "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Compound.Pill"
-                }
-              },
-              "queryRef": "_Measures.Pill",
-              "nativeQueryRef": "Compound.Pill"
-            },
             {
               "field": {
                 "Measure": {
@@ -85,11 +56,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Compound.Bar"
+                  "Property": "Compound.Pill"
                 }
               },
-              "queryRef": "_Measures.Sparkline.Bar",
-              "nativeQueryRef": "Compound.Bar"
+              "queryRef": "_Measures.Pill",
+              "nativeQueryRef": "Compound.Pill"
             },
             {
               "field": {
@@ -102,7 +73,7 @@
                   "Property": "Compound.Line"
                 }
               },
-              "queryRef": "_Measures.Sparkline.Line",
+              "queryRef": "_Measures.Compound.Line",
               "nativeQueryRef": "Compound.Line"
             },
             {
@@ -248,29 +219,9 @@
               }
             ],
             "isPinned": true
-          },
-          {
-            "queryRefs": [
-              "Products.ProductSubcategory"
-            ],
-            "isCollapsed": true,
-            "isPinned": true
           }
         ],
-        "root": {
-          "children": [
-            {
-              "identityValues": [
-                {
-                  "Literal": {
-                    "Value": "'PhoenixCo'"
-                  }
-                }
-              ],
-              "isToggled": true
-            }
-          ]
-        }
+        "root": {}
       }
     ],
     "objects": {
@@ -363,48 +314,6 @@
               }
             },
             "Property": "Compound.Pill"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "74ce05b65d928b68a9ed",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Total Cost"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "b73f9ca008d27e7657c5",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Compound.Bar"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "0d352bdecd608827dcb5",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Compound.Line"
           }
         },
         "type": "Advanced"
@@ -506,20 +415,6 @@
           }
         },
         "type": "Advanced"
-      },
-      {
-        "name": "259a208d5961c5aa300d",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Products"
-              }
-            },
-            "Property": "ProductSubcategory"
-          }
-        },
-        "type": "Categorical"
       }
     ]
   }

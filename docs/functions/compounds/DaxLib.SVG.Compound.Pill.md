@@ -1,115 +1,145 @@
 ---
 title: Compound.Pill
-nav_order: 4.1
 parent: Compounds
+grand_parent: Functions
+nav_order: 1
 ---
 
 # DaxLib.SVG.Compound.Pill
 
-Creates a pill compound element (rounded rectangle with centered text)
+Creates a pill SVG compound (rounded rectangle with text centered inside)
 
 ## Syntax
 
 ```dax
 DaxLib.SVG.Compound.Pill(
-    width: STRING,
-    height: STRING,
-    txt: STRING,
-    pillColour: STRING,
-    txtColour: STRING
+	x, 
+	y, 
+	width, 
+	height, 
+	paddingX, 
+	paddingY, 
+	txt, 
+	color
 )
 ```
 
-## Parameters
-
-| Name        | Type   | Required | Description                                         |
-|:---:|:---:|:---:|:---:|
-| width       | Yes    |STRING    | The width of the SVG canvas                         |
-| height      | Yes    |STRING    | The height of the SVG canvas                        |
-| txt         | Yes    |STRING    | The text to display                                 |
-| pillColour  | Yes    |STRING    | The hex color of the fill (e.g., "#01B8AA80")     |
-| txtColour   | Yes    |STRING    | The hex color of the text (e.g., "#FFFFFF")       |
+| Parameter | Type | Description | Required |
+| :---: | :---: | :---: | :---: |
+| x | INT64 | The x position of compound | Yes |
+| y | INT64 | The y position of compound | Yes |
+| width | INT64 | The width of the compound | Yes |
+| height | INT64 | The height of the compound | Yes |
+| paddingX | DOUBLE | The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding) | No |
+| paddingY | DOUBLE | The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding) | No |
+| txt | STRING | The text to display | Yes |
+| color | STRING | The Hex color of the pill (e.g., "#01B8AA80") | Yes |
 
 ## Returns
 
-(*STRING*) pill compound element (rounded rectangle with centered text)
+**STRING** A pill-shaped SVG element with rounded corners and centered text
 
 ## Example
 
 ```dax
-DaxLib.SVG.Compound.Pill(
-    "120",
-    "40",
-    "Hello World",
-    "#01B8AA80",
-    "#FFFFFF"
+DaxLib.SVG.SVG(
+    500,
+    100,
+    BLANK(),
+    DaxLib.SVG.Compound.Pill(
+        0,                  // x
+        0,                  // y
+        500,                // width
+        100,                // height
+        0.05,               // paddingX
+        0.02,               // paddingY
+        MAX( Products[Brand] ), // txt
+        DaxLib.SVG.Colour.Theme(
+            "Power BI",
+            25
+        )                   // colour
+    ),
+    BLANK()
 )
 ```
+
+<svg width='500' height='100' viewbox= '0 0 100 20' xmlns='http://www.w3.org/2000/svg'><rect x='1' y='1' width='93.1' height='18.032' rx='10' ry='10' fill='#EC008C' fill-opacity='0.2' stroke='#EC008C' stroke-width='1'  /><text x='47.5' y='11.368' dx='0' dy='0' fill='#EC008C' font-family='Segoe UI' font-size='12' text-anchor='middle' dominant-baseline='middle'  >PhoenixCo</text></svg>
 
 ## Definition
 
 ```dax
-function 'DaxLib.SVG.Compound.Pill' =
+function 'DaxLib.SVG.Compound.Pill' = 
     (
-		width: STRING,
-		height: STRING,
-		txt: STRING,
-		pillColour: STRING,
-		txtColour: STRING
-	) =>
+        x: INT64,
+        y: INT64,
+        width: INT64,
+        height: INT64,
+        paddingX: DOUBLE,
+        paddingY: DOUBLE,
+        txt: STRING,
+        color: STRING
+    ) =>
 
-	VAR Pill = 
-		DaxLib.SVG.Element.Rect(
-			1,                 	// X
-			1,                 	// Y
-			width,      		// Width
-			height,     		// Height
-			10,               	// RX
-			10,               	// RY
-			DaxLib.SVG.Style.Common(
-				pillColour,
-				BLANK(),
-				txtColour,
-				1,
-				BLANK(),
-				BLANK()
-			),         			// Style
-			BLANK(),           	// Class
-			BLANK()           	// Transform
-		)
+    // Apply padding to dimensions
+    VAR _X =            x + (width * (IF(ISBLANK(paddingX), 0, paddingX) / 2))
+    VAR _Y =            y + (height * (IF(ISBLANK(paddingY), 0, paddingY) / 2))
+    VAR _Width =        width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
+    VAR _Height =       height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
 
-	VAR TextElement = 
-		DaxLib.SVG.Element.Txt(
-			width * 0.50,      	// X
-			height * 0.58,     	// Y
-			txt,              	// Text content
-			0,                	// DX
-			0,                	// DY
-			DaxLib.SVG.Style.Common(
-				txtColour,
-				BLANK(),
-				BLANK(),
-				BLANK(),
-				BLANK(),
-				BLANK()
-			) &
-			DaxLib.SVG.Style.Txt(
-				"Segoe UI",
-				12,
-				BLANK(),
-				BLANK(),
-				"middle",
-				"middle",
-				BLANK(),
-				BLANK(),
-				BLANK()
-			),         			// Style
-			BLANK(),			// Class
-			BLANK()				// Transform
-		)
+    VAR _Pill = 
+        DaxLib.SVG.Element.Rect(
+            1,                  // x
+            1,                  // y
+            _Width * 0.98,      // width
+            _Height * 0.92,     // height
+            10,                 // rx
+            10,                 // ry
+            DaxLib.SVG.Attr.Shapes(
+                color,          // fill
+                0.2,            // fillOpacity
+                BLANK(),        // fillRule
+                color,          // stroke
+                1,              // strokeWidth
+                BLANK(),        // strokeOpacity
+                BLANK()         // opacity
+            ),                  // attributes
+            BLANK()             // transforms
+        )
 
-	RETURN
-	
-		Pill & 
-		TextElement
+    VAR _TextElement = 
+        DaxLib.SVG.Element.Txt(
+            _Width * 0.50,      // x
+            _Height * 0.58,     // y
+            txt,                // txt
+            0,                  // dx
+            0,                  // dy
+            DaxLib.SVG.Attr.Shapes(
+                color,          // fill
+                BLANK(),        // fillOpacity
+                BLANK(),        // fillRule
+                BLANK(),        // stroke
+                BLANK(),        // strokeWidth
+                BLANK(),        // strokeOpacity
+                BLANK()         // opacity
+            ) &
+            DaxLib.SVG.Attr.Txt(
+                "Segoe UI",     // fontFamily
+                12,             // fontSize
+                BLANK(),        // fontWeight
+                BLANK(),        // fontStyle
+                "middle",       // textAnchor
+                "middle",       // baseline
+                BLANK(),        // textDecoration
+                BLANK(),        // letterSpacing
+                BLANK()         // wordSpacing
+            ),                  // attributes
+            BLANK()             // transforms
+        )
+
+    VAR _CombinedElements = 
+        _Pill & 
+        _TextElement
+
+    RETURN
+        IF( NOT ISBLANK( txt ), _CombinedElements )
 ```

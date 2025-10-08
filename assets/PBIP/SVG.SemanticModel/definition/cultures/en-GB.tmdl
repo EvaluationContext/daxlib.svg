@@ -219,22 +219,6 @@ cultureInfo en-GB
 			        }
 			      ]
 			    },
-			    "entity__measure.sparkline_bar": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "_Measures",
-			          "ConceptualProperty": "Compound.Bar"
-			        }
-			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "sparkline.bar": {
-			            "State": "Generated"
-			          }
-			        }
-			      ]
-			    },
 			    "entity__measure.pill": {
 			      "Definition": {
 			        "Binding": {
