@@ -11,24 +11,19 @@ Applies a previously defined `DaxLib.SVG.Def.*` shape element (rect, circle, lin
 ## Syntax
 
 ```dax
-DaxLib.SVG.Element.UseDef(
-    defId, 
-    x, 
-    y, 
-    transforms
-)
+DaxLib.SVG.Element.UseDef( defId, x, y, transforms )
 ```
 
 | Name       | Type   | Required | Description                                                        |
-|:----------:|:------:|:--------:|:------------------------------------------------------------------|
-| defId      | STRING | Yes      | The identifier of the defined element to use                      |
-| x          | STRING | No       | X position where the element should be placed                     |
-| y          | STRING | No       | Y position where the element should be placed                     |
-| transforms | STRING | No       | Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |
+|:---:|:---:|:---:|---|
+| defId      | <span class="type-label string">STRING</span> | Yes      | The identifier of the defined element to use                      |
+| x          | <span class="type-label string">STRING</span> | No       | X position where the element should be placed                     |
+| y          | <span class="type-label string">STRING</span> | No       | Y position where the element should be placed                     |
+| transforms | <span class="type-label string">STRING</span> | No       | Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |
 
 ## Returns
 
-**STRING** `<use>`{:.xml} element
+<span class="type-label string">**STRING**</span> `<use>`{:.xml} element
 
 ## Example
 

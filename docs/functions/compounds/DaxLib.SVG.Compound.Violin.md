@@ -1,5 +1,5 @@
 ---
-title: DaxLib.SVG.Compound.Violin
+title: Compound.Violin
 parent: Compounds
 grand_parent: Functions
 nav_order: 6
@@ -7,11 +7,9 @@ nav_order: 6
 
 # DaxLib.SVG.Compound.Violin
 
-Creates a Violin Plot compound SVG Visual showing distribution density using Kernel Density Estimation (KDE)
+Generates a Violin Plot compound SVG Visual showing distribution density using Kernel Density Estimation (KDE)
 
 {: .info}
-> **Understanding Kernel Density Estimation (KDE)**
-> 
 > KDE creates a smooth estimate of your data's probability density by placing a "kernel" (normal distribution curve) at each data point and summing them together. The violin plot displays this density as a symmetrical shape - wider areas indicate higher probability/frequency of values.
 > 
 > **Key Parameters:**
@@ -21,38 +19,26 @@ Creates a Violin Plot compound SVG Visual showing distribution density using Ker
 ## Syntax
 
 ```dax
-DaxLib.SVG.Compound.Violin(
-    x, 
-    y, 
-    width, 
-    height, 
-    paddingX, 
-    paddingY, 
-    axisRef, 
-    measureRef, 
-    samples, 
-    bandwidth, 
-    color
-)
+DaxLib.SVG.Compound.Violin( x, y, width, height, paddingX, paddingY, axisRef, measureRef, samples, bandwidth, color ))
 ```
 
-| Parameter | Type | Description | Required |
-| :---: | :---: | :---: | :---: |
-| x | INT64 | The x position of the compound | Yes |
-| y | INT64 | The y position of the compound | Yes |
-| width | INT64 | The width of the compound | Yes |
-| height | INT64 | The height of the compound | Yes |
-| paddingX | DOUBLE | The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding) | No |
-| paddingY | DOUBLE | The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding) | No |
-| axisRef | ANYREF EXPR | The column that the measure will be evaluated against | Yes |
-| measureRef | NUMERIC EXPR | The measure to evaluate | Yes |
-| samples | INT64 | Number of density calculation points | Yes |
-| bandwidth | NUMERIC | Kernel bandwidth for smoothing | Yes |
-| color | STRING | Fill color for the violin shape | Yes |
+| Parameter | Type | Required | Description |
+|:---:|:---:|:---:|---|
+| x | <span class="type-label int64">INT64</span> | Yes | The x position of the compound |
+| y | <span class="type-label int64">INT64</span> | Yes | The y position of the compound |
+| width | <span class="type-label int64">INT64</span> | Yes | The width of the compound |
+| height | <span class="type-label int64">INT64</span> | Yes | The height of the compound |
+| paddingX | <span class="type-label number">DOUBLE</span> | No | The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding) |
+| paddingY | <span class="type-label number">DOUBLE</span> | No | The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding) |
+| axisRef | <span class="type-label anyref">ANYREF</span> <span class="type-label expr">EXPR</span> | Yes | The column that the measure will be evaluated against |
+| measureRef | <span class="type-label numeric">NUMERIC</span> <span class="type-label expr">EXPR</span> | Yes | The measure to evaluate |
+| samples | <span class="type-label int64">INT64</span> | Yes | Number of density calculation points |
+| bandwidth | <span class="type-label number">NUMERIC</span> | Yes | Kernel bandwidth for smoothing |
+| color | <span class="type-label string">STRING</span> | Yes | Fill color for the violin shape |
 
 ## Returns
 
-**STRING** An SVG violin plot showing the probability density of data using kernel density estimation
+<span class="type-label string">**STRING**</span> An SVG violin plot showing the probability density of data using kernel density estimation
 
 ## Example
 

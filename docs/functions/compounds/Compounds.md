@@ -3,6 +3,7 @@ title: Compounds
 nav_order: 4
 has_children: true
 parent: Functions
+comments: false
 ---
 
 # Compounds

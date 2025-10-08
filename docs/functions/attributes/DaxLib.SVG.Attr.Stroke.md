@@ -16,22 +16,22 @@ DaxLib.SVG.Attr.Stroke(stroke, strokeWidth, strokeOpacity, strokeDasharray, stro
 ```
 
 | Parameter         | Type      | Required   | Description                                          | 
-| :---: | :---: | :---: | :---: |
-| stroke            | STRING    |  No        | Stroke color (e.g., "#FF0000", "red")              |
-| strokeWidth       | INT64     |  No        | Stroke width                                         |
-| strokeOpacity     | DOUBLE    |  No        | Stroke opacity (0-1)                                 |
-| strokeDasharray   | STRING    |  No        | Stroke dasharray pattern (e.g., "5,5" for dashed)    |
-| strokeDashoffset  | STRING    |  No        | Stroke dashoffset                                    |
-| strokeLinecap     | STRING    |  No        | Stroke linecap ("butt", "round", "square")           |
-| strokeLinejoin    | STRING    |  No        | Stroke linejoin ("miter", "round", "bevel")          |
-| strokeMiterlimit  | STRING    |  No        | Miter limit for stroke joins                         |
-| markerStart       | STRING    |  No        | Marker for start of line (e.g., 'url(#arrowStart)')  |
-| markerMid         | STRING    |  No        | Marker for middle points of line                     |
-| markerEnd         | STRING    |  No        | Marker for end of line (e.g., 'url(#arrowEnd)')      |
+|:---:|:---:|:---:|---|
+| stroke            | <span class="type-label string">STRING</span>    |  No        | Stroke color (e.g., "#FF0000", "red")              |
+| strokeWidth       | <span class="type-label int64">INT64</span>     |  No        | Stroke width                                         |
+| strokeOpacity     | <span class="type-label number">DOUBLE</span>    |  No        | Stroke opacity (0-1)                                 |
+| strokeDasharray   | <span class="type-label string">STRING</span>    |  No        | Stroke dasharray pattern (e.g., "5,5" for dashed)    |
+| strokeDashoffset  | <span class="type-label string">STRING</span>    |  No        | Stroke dashoffset                                    |
+| strokeLinecap     | <span class="type-label string">STRING</span>    |  No        | Stroke linecap ("butt", "round", "square")           |
+| strokeLinejoin    | <span class="type-label string">STRING</span>    |  No        | Stroke linejoin ("miter", "round", "bevel")          |
+| strokeMiterlimit  | <span class="type-label string">STRING</span>    |  No        | Miter limit for stroke joins                         |
+| markerStart       | <span class="type-label string">STRING</span>    |  No        | Marker for start of line (e.g., 'url(#arrowStart)')  |
+| markerMid         | <span class="type-label string">STRING</span>    |  No        | Marker for middle points of line                     |
+| markerEnd         | <span class="type-label string">STRING</span>    |  No        | Marker for end of line (e.g., 'url(#arrowEnd)')      |
 
 ## Returns
 
-**STRING** An attribute string that can be used directly in SVG elements
+<span class="type-label string">**STRING**</span> An attribute string that can be used directly in SVG elements
 
 ## Example
 

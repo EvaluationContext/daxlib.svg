@@ -6,37 +6,28 @@ parent: Elements
 
 # DaxLib.SVG.Element.Rect
 
-Creates a `<rect>`{:.xml} element
+Generates a `<rect>`{:.xml} element
 
 ## Syntax
 
 ```dax
-DaxLib.SVG.Element.Rect(
-	x, 
-	y, 
-	width, 
-	height, 
-	rx, 
-	ry, 
-	attributes, 
-	transforms
-)
+DaxLib.SVG.Element.Rect( x, y, width, height, rx, ry, attributes, transforms )
 ```
 
 | Name       | Type   | Required | Description                                                               |
-|:----------:|:------:|:--------:|:-------------------------------------------------------------------------|
-| x          | STRING | Yes      | The x position                                                           |
-| y          | STRING | Yes      | The y position                                                           |
-| width      | STRING | Yes      | The width (pixels or percentage)                                         |
-| height     | STRING | Yes      | The height (pixels or percentage)                                        |
-| rx         | STRING | No       | Optional: x radius for rounded corners                                   |
-| ry         | STRING | No       | Optional: y radius for rounded corners                                   |
-| attributes | STRING | No       | Direct SVG attributes to apply (e.g., "fill='red' stroke-width='2'"), can generate with DaxLib.SVG.Attr.* or manually |
-| transforms | STRING | No       | Transformation to apply (can be generated with DaxLib.SVG.Transforms)   |
+|:---:|:---:|:---:|---|
+| x          | <span class="type-label string">STRING</span> | Yes      | The x position                                                           |
+| y          | <span class="type-label string">STRING</span> | Yes      | The y position                                                           |
+| width      | <span class="type-label string">STRING</span> | Yes      | The width (pixels or percentage)                                         |
+| height     | <span class="type-label string">STRING</span> | Yes      | The height (pixels or percentage)                                        |
+| rx         | <span class="type-label string">STRING</span> | No       | Optional: x radius for rounded corners                                   |
+| ry         | <span class="type-label string">STRING</span> | No       | Optional: y radius for rounded corners                                   |
+| attributes | <span class="type-label string">STRING</span> | No       | Direct SVG attributes to apply (e.g., "fill='red' stroke-width='2'"), can generate with DaxLib.SVG.Attr.* or manually |
+| transforms | <span class="type-label string">STRING</span> | No       | Transformation to apply (can be generated with DaxLib.SVG.Transforms)   |
 
 ## Returns
 
-**STRING** `<rect>`{:.xml} element
+<span class="type-label string">STRING</span> `<rect>`{:.xml} element
 
 ## Example
 

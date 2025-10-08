@@ -11,28 +11,21 @@ Generates an `<ellipse>`{:.xml} element
 ## Syntax
 
 ```dax
-DaxLib.SVG.Element.Ellipse(
-    cx, 
-    cy, 
-    rx, 
-    ry, 
-    attributes, 
-    transforms
-)
+DaxLib.SVG.Element.Ellipse( cx, cy, rx, ry, attributes, transforms )
 ```
 
 | Name       | Type   | Required | Description                                                                |
-|:----------:|:------:|:--------:|:---------------------------------------------------------------------------|
-| cx         | STRING | Yes      | The x position of the center                                               |
-| cy         | STRING | Yes      | The y position of the center                                               |
-| rx         | STRING | Yes      | The x radius                                                               |
-| ry         | STRING | Yes      | The y radius                                                               |
-| attributes | STRING | No       | Direct SVG attributes to apply, can generate with DaxLib.SVG.Attr.* or manually |
-| transforms | STRING | No       | Transformation to apply (can be generated with DaxLib.SVG.Transforms)     |
+|:---:|:---:|:---:|---|
+| cx         | <span class="type-label string">STRING</span> | Yes      | The x position of the center                                               |
+| cy         | <span class="type-label string">STRING</span> | Yes      | The y position of the center                                               |
+| rx         | <span class="type-label string">STRING</span> | Yes      | The x radius                                                               |
+| ry         | <span class="type-label string">STRING</span> | Yes      | The y radius                                                               |
+| attributes | <span class="type-label string">STRING</span> | No       | Direct SVG attributes to apply, can generate with DaxLib.SVG.Attr.* or manually |
+| transforms | <span class="type-label string">STRING</span> | No       | Transformation to apply (can be generated with DaxLib.SVG.Transforms)     |
 
 ## Returns
 
-**STRING** `<ellipse>`{:.xml} element
+<span class="type-label string">STRING</span> `<ellipse>`{:.xml} element
 
 ## Example
 

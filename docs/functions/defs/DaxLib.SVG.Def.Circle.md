@@ -6,33 +6,26 @@ parent: Defs
 
 # DaxLib.SVG.Def.Circle
 
-Creates a reusable `<circle>`{:.xml} definition
+Generates a reusable `<circle>`{:.xml} definition
 
 ## Syntax
 
 ```dax
-DaxLib.SVG.Def.Circle(
-    defId, 
-    cx, 
-    cy, 
-    r, 
-    attributes, 
-    transforms
-)
+DaxLib.SVG.Def.Circle( defId, cx, cy, r, attributes, transforms )
 ```
 
 | Name       | Type   | Required | Description                                                                |
-|:----------:|:------:|:--------:|:--------------------------------------------------------------------------|
-| defId      | STRING | Yes      | The unique identifier for the circle                                      |
-| cx         | STRING | Yes      | X center coordinate                                                       |
-| cy         | STRING | Yes      | Y center coordinate                                                       |
-| r          | STRING | Yes      | Radius                                                                    |
-| attributes | STRING | No       | Direct SVG attributes to apply (e.g., "fill='none' stroke='blue'"), can generate with DaxLib.SVG.Attr.* or manually |
-| transforms | STRING | No       | Transformation to apply (can be generated with DaxLib.SVG.Transforms)    |
+|:---:|:---:|:---:|---|
+| defId      | <span class="type-label string">STRING</span> | Yes      | The unique identifier for the circle                                      |
+| cx         | <span class="type-label string">STRING</span> | Yes      | X center coordinate                                                       |
+| cy         | <span class="type-label string">STRING</span> | Yes      | Y center coordinate                                                       |
+| r          | <span class="type-label string">STRING</span> | Yes      | Radius                                                                    |
+| attributes | <span class="type-label string">STRING</span> | No       | Direct SVG attributes to apply (e.g., "fill='none' stroke='blue'"), can generate with `DaxLib.SVG.Attr.*` or manually |
+| transforms | <span class="type-label string">STRING</span> | No       | Transformation to apply (can be generated with `DaxLib.SVG.Transforms`)    |
 
 ## Returns
 
-(*STRING*) `<circle>`{:.xml} definition
+<span class="type-label string">**STRING**</span> `<circle>`{:.xml} definition
 
 ## Example
 

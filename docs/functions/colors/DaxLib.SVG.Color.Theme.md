@@ -15,13 +15,13 @@ DaxLib.SVG.Color.Theme(themeName, variant)
 ```
 
 | Name      | Type   | Required | Description                                                     |
-|:---------:|:------:|:--------:|:---------------------------------------------------------------|
-| themeName | STRING | Yes      | Theme name                       |
-| variant   | INT64  | Yes      | Variant index (1-N, wraps around if exceeds available variants) |
+|:---:|:---:|:---:|---|
+| themeName | <span class="type-label string">STRING</span> | Yes      | Theme name                       |
+| variant   | <span class="type-label int64">INT64</span>  | Yes      | Variant index (1-N, wraps around if exceeds available variants) |
 
 ## Returns
 
-**STRING** Hex color code
+<span class="type-label string">**STRING**</span> Hex color code
 
 ## Available Themes
 

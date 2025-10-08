@@ -1,0 +1,9 @@
+---
+layout: default
+---
+
+{{ content }}
+
+{% if page.comments != false and site.giscus.enabled %}
+  {% include giscus.html %}
+{% endif %}

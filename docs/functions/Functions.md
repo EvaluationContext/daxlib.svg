@@ -2,6 +2,7 @@
 title: Functions
 nav_order: 2
 has_children: true
+comments: false
 ---
 
 The `DaxLib.SVG` library provides a comprehensive set of functions for creating SVG visuals in Power BI. Functions are grouped by purpose for easy navigation.

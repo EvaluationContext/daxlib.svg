@@ -7,43 +7,31 @@ nav_order: 3
 
 # DaxLib.SVG.Compound.Area
 
-Creates an Area compound SVG Visual for a numeric x-axis.
+Generates an Area compound SVG Visual for a numeric x-axis.
 
 ## Syntax
 
 ```dax
-DaxLib.SVG.Compound.Area(
-    x, 
-    y, 
-    width, 
-    height, 
-    paddingX, 
-    paddingY, 
-    axisRef, 
-    measureRef, 
-    fillColor, 
-    fillOpacity, 
-    strokeColor
-)
+DaxLib.SVG.Compound.Area( x, y, width, height, paddingX, paddingY, axisRef, measureRef, fillColor, fillOpacity, strokeColor )
 ```
 
-| Parameter | Type | Description | Required |
-| :---: | :---: | :---: | :---: |
-| x | INT64 | The x position of the compound | Yes |
-| y | INT64 | The y position of the compound | Yes |
-| width | INT64 | The width of the compound | Yes |
-| height | INT64 | The height of the compound | Yes |
-| paddingX | DOUBLE | The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding) | No |
-| paddingY | DOUBLE | The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding) | No |
-| axisRef | ANYREF EXPR | The column that the measure will be evaluated against | Yes |
-| measureRef | NUMERIC EXPR | The measure to evaluate | Yes |
-| fillColor | STRING | The color of the area fill (e.g., "#01B8AA") | Yes |
-| fillOpacity | NUMERIC | The opacity of the fill (0-1), defaults to 0.3 | No |
-| strokeColor | STRING | The color of the stroke line | Yes |
+| Parameter | Type | Required | Description |
+|:---:|:---:|:---:|---|
+| x | <span class="type-label int64">INT64</span> | Yes | The x position of the compound |
+| y | <span class="type-label int64">INT64</span> | Yes | The y position of the compound |
+| width | <span class="type-label int64">INT64</span> | Yes | The width of the compound |
+| height | <span class="type-label int64">INT64</span> | Yes | The height of the compound |
+| paddingX | <span class="type-label number">DOUBLE</span> | No | The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding) |
+| paddingY | <span class="type-label number">DOUBLE</span> | No | The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding) |
+| axisRef | <span class="type-label anyref">ANYREF</span> <span class="type-label expr">EXPR</span> | Yes | The column that the measure will be evaluated against |
+| measureRef | <span class="type-label numeric">NUMERIC</span> <span class="type-label expr">EXPR</span> | Yes | The measure to evaluate |
+| fillColor | <span class="type-label string">STRING</span> | Yes | The color of the area fill (e.g., "#01B8AA") |
+| fillOpacity | <span class="type-label number">NUMERIC</span> | No | The opacity of the fill (0-1), defaults to 0.3 |
+| strokeColor | <span class="type-label string">STRING</span> | Yes | The color of the stroke line |
 
 ## Returns
 
-**STRING** An SVG area chart element that visualizes the measure across the specified axis with filled area
+<span class="type-label string">**STRING**</span> An SVG area chart element that visualizes the measure across the specified axis with filled area
 
 ## Example
 

@@ -15,26 +15,20 @@ Wraps content in an SVG container for Power BI visualization
 ## Syntax
 
 ```dax
-DaxLib.SVG.SVG(
-	width,
-	height,
-	viewbox,
-	contents,
-	sortValue
-)
+DaxLib.SVG.SVG( width, height, viewbox, contents, sortValue)
 ```
 
 | Name      | Type   | Required | Description                                                                 |
-|-----------|--------|----------|-----------------------------------------------------------------------------|
-| width     | STRING | No       | Width (pixels or percentage)                                                |
-| height    | STRING | No       | Height (pixels or percentage)                                               |
-| viewbox   | STRING | No       | viewBox (e.g., "0 0 100 100")                                               |
-| contents  | STRING | Yes      | SVG elements to include (e.g., from DaxLib.SVG.Element functions)           |
-| sortValue | EXPR   | No       | Sort value for ordering in tables                                           |
+|:---:|:---:|:---:|---|
+| width     | <span class="type-label string">STRING</span> | No       | Width (pixels or percentage)                                                |
+| height    | <span class="type-label string">STRING</span> | No       | Height (pixels or percentage)                                               |
+| viewbox   | <span class="type-label string">STRING</span> | No       | viewBox (e.g., "0 0 100 100")                                               |
+| contents  | <span class="type-label string">STRING</span> | Yes      | SVG elements to include (e.g., from DaxLib.SVG.Element functions)           |
+| sortValue | <span class="type-label expr">EXPR</span> | No       | Sort value for ordering in tables                                           |
 
 ## Returns
 
-**STRING** SVG string
+<span class="type-label string">STRING</span> SVG string
 
 ## Example
 

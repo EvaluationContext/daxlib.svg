@@ -11,20 +11,17 @@ Returns a color for the specified performance level and theme
 ## Syntax
 
 ```dax
-DaxLib.SVG.Color.PerformanceTheme(
-    themeName, 
-    variant
-)
+DaxLib.SVG.Color.PerformanceTheme( themeName, variant )
 ```
 
 | Name      | Type   | Required | Description    |
-|:---------:|:------:|:--------:|:---------------|
-| themeName | STRING | Yes      | Theme name        |
-| variant   | STRING | Yes      | Performance level |
+|:---:|:---:|:---:|---|
+| themeName | <span class="type-label string">STRING</span> | Yes      | Theme name        |
+| variant   | <span class="type-label string">STRING</span> | Yes      | Performance level |
 
 ## Returns
 
-**STRING** Hex color code representing the performance level
+<span class="type-label string">**STRING**</span> Hex color code representing the performance level
 
 ## Available Themes
 

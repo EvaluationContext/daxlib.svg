@@ -7,11 +7,9 @@ nav_order: 7
 
 # DaxLib.SVG.Compound.Heatmap
 
-Creates a KDE-based Heatmap compound SVG Visual using Kernel Density Estimation for smooth color gradients
+Generates a KDE-based Heatmap compound SVG Visual using Kernel Density Estimation (KDE) for smooth color gradients
 
 {: .info}
-> **Understanding Kernel Density Estimation (KDE)**
-> 
 > KDE is a statistical method that estimates the probability density function of your data by placing a "kernel" (typically a normal distribution) at each data point. The heatmap visualizes data density across the range, creating smooth gradients that reveal patterns and concentrations in your dataset.
 > 
 > **Key Parameters:**
@@ -21,38 +19,26 @@ Creates a KDE-based Heatmap compound SVG Visual using Kernel Density Estimation 
 ## Syntax
 
 ```dax
-DaxLib.SVG.Compound.Heatmap(
-    x, 
-    y, 
-    width, 
-    height, 
-    paddingX, 
-    paddingY, 
-    axisRef, 
-    measureRef, 
-    samples, 
-    bandwidth, 
-    color
-)
+DaxLib.SVG.Compound.Heatmap( x, y, width, height, paddingX, paddingY, axisRef, measureRef, samples, bandwidth, color )
 ```
 
-| Parameter | Type | Description | Required |
-| :---: | :---: | :---: | :---: |
-| x | INT64 | The x position of the compound | Yes |
-| y | INT64 | The y position of the compound | Yes |
-| width | INT64 | The width of the compound | Yes |
-| height | INT64 | The height of the compound | Yes |
-| paddingX | DOUBLE | The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding) | No |
-| paddingY | DOUBLE | The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding) | No |
-| axisRef | ANYREF EXPR | The column that the measure will be evaluated against | Yes |
-| measureRef | NUMERIC EXPR | The measure to evaluate | Yes |
-| samples | INT64 | Number of density calculation points (default 50) | No |
-| bandwidth | NUMERIC | Kernel bandwidth for smoothing (default auto-calculated) | No |
-| color | STRING | The Hex color for high density areas (e.g., "#01B8AA") | Yes |
+| Parameter | Type | Required | Description |
+|:---:|:---:|:---:|---|
+| x | <span class="type-label int64">INT64</span> | Yes | The x position of the compound |
+| y | <span class="type-label int64">INT64</span> | Yes | The y position of the compound |
+| width | <span class="type-label int64">INT64</span> | Yes | The width of the compound |
+| height | <span class="type-label int64">INT64</span> | Yes | The height of the compound |
+| paddingX | <span class="type-label number">DOUBLE</span> | No | The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding) |
+| paddingY | <span class="type-label number">DOUBLE</span> | No | The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding) |
+| axisRef | <span class="type-label anyref">ANYREF</span> <span class="type-label expr">EXPR</span> | Yes | The column that the measure will be evaluated against |
+| measureRef | <span class="type-label numeric">NUMERIC</span> <span class="type-label expr">EXPR</span> | Yes | The measure to evaluate |
+| samples | <span class="type-label int64">INT64</span> | No | Number of density calculation points (default 50) |
+| bandwidth | <span class="type-label number">NUMERIC</span> | No | Kernel bandwidth for smoothing (default auto-calculated) |
+| color | <span class="type-label string">STRING</span> | Yes | The Hex color for high density areas (e.g., "#01B8AA") |
 
 ## Returns
 
-**STRING** An SVG heatmap with smooth color gradients representing data density using kernel density estimation
+<span class="type-label string">**STRING**</span> An SVG heatmap with smooth color gradients representing data density using kernel density estimation
 
 ## Example
 

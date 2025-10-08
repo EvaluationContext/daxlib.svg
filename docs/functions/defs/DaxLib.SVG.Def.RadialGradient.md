@@ -6,37 +6,28 @@ parent: Defs
 
 # DaxLib.SVG.Def.RadialGradient
 
-Creates a reusable `<radialGradient>`{:.xml} definition
+Generates a reusable `<radialGradient>`{:.xml} definition
 
 ## Syntax
 
 ```dax
-DaxLib.SVG.Def.RadialGradient(
-    defId, 
-    stops, 
-    cx, 
-    cy, 
-    r, 
-    fx, 
-    fy, 
-    fr
-)
+DaxLib.SVG.Def.RadialGradient( defId, stops, cx, cy, r, fx, fy, fr )
 ```
 
 | Name   | Type   | Required | Description                                                        |
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| defId  | STRING | Yes      | The unique identifier for the gradient                             |
-| stops  | STRING | Yes      | Concatenated list of one or more DaxLib.SVG.Def.GradientStop elements |
-| cx     | STRING | No       | Center X position                                                  |
-| cy     | STRING | No       | Center Y position                                                  |
-| r      | STRING | No       | Radius                                                             |
-| fx     | STRING | No       | Focus X position                                                   |
-| fy     | STRING | No       | Focus Y position                                                   |
-| fr     | STRING | No       | Focus radius                                                       |
+|:---:|:---:|:---:|---|
+| defId  | <span class="type-label string">STRING</span> | Yes      | The unique identifier for the gradient                             |
+| stops  | <span class="type-label string">STRING</span> | Yes      | Concatenated list of one or more `DaxLib.SVG.Def.GradientStop` elements |
+| cx     | <span class="type-label string">STRING</span> | No       | Center X position                                                  |
+| cy     | <span class="type-label string">STRING</span> | No       | Center Y position                                                  |
+| r      | <span class="type-label string">STRING</span> | No       | Radius                                                             |
+| fx     | <span class="type-label string">STRING</span> | No       | Focus X position                                                   |
+| fy     | <span class="type-label string">STRING</span> | No       | Focus Y position                                                   |
+| fr     | <span class="type-label string">STRING</span> | No       | Focus radius                                                       |
 
 ## Returns
 
-**STRING** `<radialGradient>`{:.xml} definition
+<span class="type-label string">**STRING**</span> `<radialGradient>`{:.xml} definition
 
 ## Example
 

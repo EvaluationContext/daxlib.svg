@@ -6,26 +6,22 @@ parent: Elements
 
 # DaxLib.SVG.Element.Polyline
 
-Creates a `<polyline>`{:.xml} (connected points) element
+Generates a `<polyline>`{:.xml} (connected points) element
 
 ## Syntax
 ```dax
-DaxLib.SVG.Element.Polyline(
-	points, 
-	attributes, 
-	transforms
-)
+DaxLib.SVG.Element.Polyline( points, attributes, transforms )
 ```
 
 | Name       | Type   | Required | Description                                                                                         |
-|:----------:|:------:|:--------:|:----------------------------------------------------------------------------------------------------|
-| points     | STRING | Yes      | Space-separated x,y coordinate pairs (e.g., "0,10 20,30 40,15")                                   |
-| attributes | STRING | No       | Direct SVG attributes to apply (e.g., "marker-start='url(#dot)'"), can generate with DaxLib.SVG.Attr.* or manually |
-| transforms | STRING | No       | Transformation to apply (can be generated with DaxLib.SVG.Transforms)                             |
+|:---:|:---:|:---:|---|
+| points     | <span class="type-label string">STRING</span> | Yes      | Space-separated x,y coordinate pairs (e.g., "0,10 20,30 40,15")                                   |
+| attributes | <span class="type-label string">STRING</span> | No       | Direct SVG attributes to apply (e.g., "marker-start='url(#dot)'"), can generate with DaxLib.SVG.Attr.* or manually |
+| transforms | <span class="type-label string">STRING</span> | No       | Transformation to apply (can be generated with DaxLib.SVG.Transforms)                             |
 
 ## Returns
 
-(*STRING*) `<polyline>`{:.xml} element
+<span class="type-label string">STRING</span> `<polyline>`{:.xml} element
 
 ## Example
 

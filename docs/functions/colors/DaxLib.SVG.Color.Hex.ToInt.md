@@ -15,12 +15,12 @@ DaxLib.SVG.Color.Hex.ToInt(hex)
 ```
 
 | Name | Type   | Required | Description                                  |
-|:----:|:------:|:--------:|:---------------------------------------------|
-| hex  | STRING | Yes      | The hex value to convert i.e "1A"          |
+|:---:|:---:|:---:|---|
+| hex  | <span class="type-label string">STRING</span> | Yes      | The hex value to convert i.e "1A"          |
 
 ## Returns
 
-**NUMERIC** Integer representation of the hexadecimal value
+<span class="type-label number">NUMERIC</span> Integer representation of the hexadecimal value
 
 ## Example
 

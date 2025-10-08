@@ -7,39 +7,29 @@ nav_order: 2
 
 # DaxLib.SVG.Compound.Line
 
-Creates a Line compound SVG Visual for a numeric axis
+Generates a Line compound SVG Visual for a numeric axis
 
 ## Syntax
 
 ```dax
-DaxLib.SVG.Compound.Line(
-    x, 
-    y, 
-    width, 
-    height, 
-    paddingX, 
-    paddingY, 
-    axisRef, 
-    measureRef, 
-    lineColor
-)
+DaxLib.SVG.Compound.Line( x, y, width, height, paddingX, paddingY, axisRef, measureRef, lineColor )
 ```
 
-| Parameter | Type | Description | Required |
-| :---: | :---: | :---: | :---: |
-| x | INT64 | The x position of the compound | Yes |
-| y | INT64 | The y position of the compound | Yes |
-| width | INT64 | The width of the compound | Yes |
-| height | INT64 | The height of the compound | Yes |
-| paddingX | DOUBLE | The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding) | No |
-| paddingY | DOUBLE | The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding) | No |
-| axisRef | ANYREF EXPR | The column that the measure will be evaluated against | Yes |
-| measureRef | NUMERIC EXPR | The measure to evaluate | Yes |
-| lineColor | STRING | The Hex color of the line (e.g., "#01B8AA") | Yes |
+| Parameter | Type | Required | Description |
+|:---:|:---:|:---:|---|
+| x | <span class="type-label int64">INT64</span> | Yes | The x position of the compound |
+| y | <span class="type-label int64">INT64</span> | Yes | The y position of the compound |
+| width | <span class="type-label int64">INT64</span> | Yes | The width of the compound |
+| height | <span class="type-label int64">INT64</span> | Yes | The height of the compound |
+| paddingX | <span class="type-label number">DOUBLE</span> | No | The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding) |
+| paddingY | <span class="type-label number">DOUBLE</span> | No | The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding) |
+| axisRef | <span class="type-label anyref">ANYREF</span> <span class="type-label expr">EXPR</span> | Yes | The column that the measure will be evaluated against |
+| measureRef | <span class="type-label numeric">NUMERIC</span> <span class="type-label expr">EXPR</span> | Yes | The measure to evaluate |
+| lineColor | <span class="type-label string">STRING</span> | Yes | The Hex color of the line (e.g., "#01B8AA") |
 
 ## Returns
 
-**STRING** An SVG line chart element that visualizes the measure across the specified axis.
+<span class="type-label string">**STRING**</span> An SVG line chart element that visualizes the measure across the specified axis.
 
 ## Example
 

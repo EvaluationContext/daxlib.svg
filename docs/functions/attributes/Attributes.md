@@ -3,6 +3,7 @@ title: Attributes
 parent: Functions
 has_children: true
 nav_order: 8
+comments: false
 ---
 
 # Attribute Functions

@@ -12,34 +12,24 @@ Creates SVG attribute strings for text styling properties
 ## Syntax
 
 ```dax
-DaxLib.SVG.Attr.Txt(
-    fontFamily, 
-    fontSize, 
-    fontWeight, 
-    fontStyle, 
-    textAnchor, 
-    baseline, 
-    textDecoration, 
-    letterSpacing, 
-    wordSpacing
-)
+DaxLib.SVG.Attr.Txt( fontFamily, fontSize, fontWeight, fontStyle, textAnchor, baseline, textDecoration, letterSpacing, wordSpacing )
 ```
 
 | Parameter         | Type      | Required  | Description                                                           | 
-| :---: | :---: | :---: | :---: |
-| fontFamily        | STRING    | No        | Font family for text (e.g., "Arial, sans-serif") |
-| fontSize          | INT64     | No        | Font size in pixels |
-| fontWeight        | STRING    | No        | Font weight ("normal", "bold", "lighter", "100-900")                  |
-| fontStyle         | STRING    | No        | Font style ("normal", "italic", "oblique")                            |
-| textAnchor        | STRING    | No        | Text anchor position ("start", "middle", "end")                       |
-| baseline          | STRING    | No        | Dominant baseline alignment                                           |
-| textDecoration    | STRING    | No        | Text decoration ("none", "underline", "overline", "line-through")     |
-| letterSpacing     | STRING    | No        | Space between letters                                                 |
-| wordSpacing       | STRING    | No        | Space between words                                                   |
+|:---:|:---:|:---:|---|
+| fontFamily        | <span class="type-label string">STRING</span>    | No        | Font family for text (e.g., "Arial, sans-serif") |
+| fontSize          | <span class="type-label int64">INT64</span>     | No        | Font size in pixels |
+| fontWeight        | <span class="type-label string">STRING</span>    | No        | Font weight ("normal", "bold", "lighter", "100-900")                  |
+| fontStyle         | <span class="type-label string">STRING</span>    | No        | Font style ("normal", "italic", "oblique")                            |
+| textAnchor        | <span class="type-label string">STRING</span>    | No        | Text anchor position ("start", "middle", "end")                       |
+| baseline          | <span class="type-label string">STRING</span>    | No        | Dominant baseline alignment                                           |
+| textDecoration    | <span class="type-label string">STRING</span>    | No        | Text decoration ("none", "underline", "overline", "line-through")     |
+| letterSpacing     | <span class="type-label string">STRING</span>    | No        | Space between letters                                                 |
+| wordSpacing       | <span class="type-label string">STRING</span>    | No        | Space between words                                                   |
 
 ## Returns
 
-**STRING** An attribute string that can be used directly in SVG text elements
+<span class="type-label string">STRING</span> An attribute string that can be used directly in SVG text elements
 
 ## Example
 

@@ -11,26 +11,20 @@ Generates a `<circle>`{:.xml} element
 ## Syntax
 
 ```dax
-DaxLib.SVG.Element.Circle(
-    cx, 
-    cy, 
-    r, 
-    attributes, 
-    transforms
-)
+DaxLib.SVG.Element.Circle( cx, cy, r, attributes, transforms )
 ```
 
 | Name       | Type   | Required | Description                                                               |
-|:----------:|:------:|:--------:|:-------------------------------------------------------------------------|
-| cx         | STRING | Yes      | The x position of the center                                             |
-| cy         | STRING | Yes      | The y position of the center                                             |
-| r          | STRING | Yes      | The radius                                                               |
-| attributes | STRING | No       | Direct SVG attributes to apply (e.g., "fill='red' stroke-width='2'"), can generate with DaxLib.SVG.Attr.* or manually |
-| transforms | STRING | No       | Transformation to apply (can be generated with DaxLib.SVG.Transforms)   |
+|:---:|:---:|:---:|---|
+| cx         | <span class="type-label string">STRING</span> | Yes      | The x position of the center                                             |
+| cy         | <span class="type-label string">STRING</span> | Yes      | The y position of the center                                             |
+| r          | <span class="type-label string">STRING</span> | Yes      | The radius                                                               |
+| attributes | <span class="type-label string">STRING</span> | No       | Direct SVG attributes to apply (e.g., "fill='red' stroke-width='2'"), can generate with DaxLib.SVG.Attr.* or manually |
+| transforms | <span class="type-label string">STRING</span> | No       | Transformation to apply (can be generated with DaxLib.SVG.Transforms)   |
 
 ## Returns
 
-**STRING** `<circle>`{:.xml} element
+<span class="type-label string">STRING</span> `<circle>`{:.xml} element
 
 ## Example
 

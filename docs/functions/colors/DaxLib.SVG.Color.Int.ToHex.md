@@ -11,20 +11,17 @@ Int to Hex conversion
 ## Syntax
 
 ```dax
-DaxLib.SVG.Color.Int.ToHex(
-    number, 
-    padTo
-)
+DaxLib.SVG.Color.Int.ToHex( number, padTo )
 ```
 
 | Name   | Type  | Required | Description                                    |
-|:------:|:-----:|:--------:|:----------------------------------------------|
-| number | INT64 | Yes      | The integer to convert                        |
-| padTo  | INT64 | No       | Optional: Minimum number of characters in result |
+|:---:|:---:|:---:|---|
+| number | <span class="type-label int64">INT64</span> | Yes      | The integer to convert                        |
+| padTo  | <span class="type-label int64">INT64</span> | No       | Minimum number of characters in result |
 
 ## Returns
 
-**STRING** Hexadecimal representation of the integer
+<span class="type-label string">STRING</span> Hexadecimal representation of the integer
 
 ## Example
 

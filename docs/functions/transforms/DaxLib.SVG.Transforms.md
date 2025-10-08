@@ -15,19 +15,17 @@ Creates an SVG transform attribute value for applying multiple transformations t
 DaxLib.SVG.Transforms(translate, rotate, scale, skewX, skewY)
 ```
 
-## Parameters
-
 | Parameter | Type      | Required | Description | 
-| :---: | :---: | :---: | :---: |
-| translate | STRING    | No       | Translation coordinates in the format "x,y" | 
-| rotate    | STRING    | No       | Rotation angle in degrees, or "angle x y" for rotation around a point |
-| scale     | STRING    | No       | Scale factor, or "x,y" for different scaling in each dimension | 
-| skewX     | STRING    | No       | Horizontal skew angle in degrees | 
-| skewY     | STRING    | No       | Vertical skew angle in degrees |
+|:---:|:---:|:---:|---|
+| translate | <span class="type-label string">STRING</span>    | No       | Translation coordinates in the format "x,y" | 
+| rotate    | <span class="type-label string">STRING</span>    | No       | Rotation angle in degrees, or "angle x y" for rotation around a point |
+| scale     | <span class="type-label string">STRING</span>    | No       | Scale factor, or "x,y" for different scaling in each dimension | 
+| skewX     | <span class="type-label string">STRING</span>    | No       | Horizontal skew angle in degrees | 
+| skewY     | <span class="type-label string">STRING</span>    | No       | Vertical skew angle in degrees |
 
 ## Returns
 
-(*STRING*) A transform attribute value that can be used with the transform attribute of SVG elements.
+<span class="type-label string">STRING</span> A transform attribute value that can be used with the transform attribute of SVG elements.
 
 ## Example
 

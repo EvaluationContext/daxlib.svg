@@ -5,11 +5,11 @@ permalink: /sw.js
 // Service Worker for PWA cache (Chirpy-style, Jekyll-processed)
 const CACHE_NAME = 'ec-colour-{{ site.time | date: "%Y%m%d%H%M%S" }}';
 const RESOURCES_TO_PRECACHE = [
-  '{{ site.baseurl }}/',
-  '{{ site.baseurl }}/index.html',
-  '{{ site.baseurl }}/assets/css/google-light.css',
-  '{{ site.baseurl }}/assets/css/highlightjs-badge-custom.css',
-  '{{ site.baseurl }}/assets/js/highlight/languages/dax.js',
+  '/daxlib.svg/',
+  '/daxlib.svg/index.html',
+  '/daxlib.svg/assets/css/google-light.css',
+  '/daxlib.svg/assets/css/highlightjs-badge-custom.css',
+  '/daxlib.svg/assets/js/highlight/languages/dax.js',
   // Add more resources as needed
 ];
 

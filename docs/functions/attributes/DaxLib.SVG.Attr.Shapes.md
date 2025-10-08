@@ -12,30 +12,22 @@ Creates SVG attribute strings for common shape styling properties
 ## Syntax
 
 ```dax
-DaxLib.SVG.Attr.Shapes(
-    fill, 
-    fillOpacity, 
-    fillRule, 
-    stroke, 
-    strokeWidth, 
-    strokeOpacity, 
-    opacity
-)
+DaxLib.SVG.Attr.Shapes( fill, fillOpacity, fillRule, stroke, strokeWidth, strokeOpacity, opacity )
 ```
 
 | Parameter     | Type      | Required  | Description                                   |
-| :---: | :---: | :---: | :---: |
-| fill          | STRING    |  No       | Fill color (e.g., "#FF0000", "red")         |
-| fillOpacity   | DOUBLE    |  No       | Fill opacity value between 0 and 1            |
-| fillRule      | STRING    |  No       | Fill rule ("nonzero", "evenodd")              |
-| stroke        | STRING    |  No       | Stroke color (e.g., "#000000", "black")     |
-| strokeWidth   | INT64     |  No       | Width of the stroke                           |
-| strokeOpacity | DOUBLE    |  No       | Stroke opacity value between 0 and 1          |
-| opacity       | DOUBLE    |  No       | Overall opacity value between 0 and 1         |
+|:---:|:---:|:---:|---|
+| fill          | <span class="type-label string">STRING</span>    |  No       | Fill color (e.g., "#FF0000", "red")         |
+| fillOpacity   | <span class="type-label number">DOUBLE</span>    |  No       | Fill opacity value between 0 and 1            |
+| fillRule      | <span class="type-label string">STRING</span>    |  No       | Fill rule ("nonzero", "evenodd")              |
+| stroke        | <span class="type-label string">STRING</span>    |  No       | Stroke color (e.g., "#000000", "black")     |
+| strokeWidth   | <span class="type-label int64">INT64</span>     |  No       | Width of the stroke                           |
+| strokeOpacity | <span class="type-label number">DOUBLE</span>    |  No       | Stroke opacity value between 0 and 1          |
+| opacity       | <span class="type-label number">DOUBLE</span>    |  No       | Overall opacity value between 0 and 1         |
 
 ## Returns
 
-**STRING** An attribute string that can be used directly in SVG elements
+<span class="type-label string">STRING</span> An attribute string that can be used directly in SVG elements
 
 ## Example
 

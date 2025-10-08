@@ -6,35 +6,27 @@ parent: Elements
 
 # DaxLib.SVG.Element.Txt
 
-Creates a `<text>`{:.xml} SVG element
+Generates a `<text>`{:.xml} SVG element
 
 ## Syntax
 
 ```dax
-DaxLib.SVG.Element.Txt(
-	x, 
-	y, 
-	txt, 
-	dx, 
-	dy, 
-	attributes, 
-	transforms
-)
+DaxLib.SVG.Element.Txt( x, y, txt, dx, dy, attributes, transforms )
 ```
 
 | Name       | Type   | Required | Description                                                         |
-|:----------:|:------:|:--------:|:-------------------------------------------------------------------|
-| x          | STRING | Yes      | The x position of the text                                         |
-| y          | STRING | Yes      | The y position of the text                                         |
-| txt        | STRING | Yes      | The text content                                                   |
-| dx         | STRING | No       | Optional: x offset from position                                   |
-| dy         | STRING | No       | Optional: y offset from position                                   |
-| attributes | STRING | No       | Direct SVG attributes to apply (e.g., "text-anchor='middle' dominant-baseline='middle'"), can generate with DaxLib.SVG.Attr.* or manually |
-| transforms | STRING | No       | Additional transforms (e.g. "scale(1.2) translate(10,10)") (can be generated with DaxLib.SVG.Transforms) |
+|:---:|:---:|:---:|---|
+| x          | <span class="type-label string">STRING</span> | Yes      | The x position of the text                                         |
+| y          | <span class="type-label string">STRING</span> | Yes      | The y position of the text                                         |
+| txt        | <span class="type-label string">STRING</span> | Yes      | The text content                                                   |
+| dx         | <span class="type-label string">STRING</span> | No       | Optional: x offset from position                                   |
+| dy         | <span class="type-label string">STRING</span> | No       | Optional: y offset from position                                   |
+| attributes | <span class="type-label string">STRING</span> | No       | Direct SVG attributes to apply (e.g., "text-anchor='middle' dominant-baseline='middle'"), can generate with DaxLib.SVG.Attr.* or manually |
+| transforms | <span class="type-label string">STRING</span> | No       | Additional transforms (e.g. "scale(1.2) translate(10,10)") (can be generated with DaxLib.SVG.Transforms) |
 
 ## Returns
 
-**STRING** `<text>`{:.xml} element
+<span class="type-label string">STRING</span> `<text>`{:.xml} element
 
 ## Example
 

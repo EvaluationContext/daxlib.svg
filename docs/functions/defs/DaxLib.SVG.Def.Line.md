@@ -6,35 +6,27 @@ parent: Defs
 
 # DaxLib.SVG.Def.Line
 
-Creates a reusable `<line>`{:.xml} definition
+Generates a reusable `<line>`{:.xml} definition
 
 ## Syntax
 
 ```dax
-DaxLib.SVG.Def.Line(
-	defId, 
-	x1, 
-	y1, 
-	x2, 
-	y2, 
-	attributes, 
-	transforms
-)
+DaxLib.SVG.Def.Line( defId, x1, y1, x2, y2, attributes, transforms )
 ```
 
 | Name       | Type   | Required | Description                                                                |
-|:----------:|:------:|:--------:|:--------------------------------------------------------------------------|
-| defId      | STRING | Yes      | The unique identifier for the line                                        |
-| x1         | STRING | Yes      | The x position of the start point                                         |
-| y1         | STRING | Yes      | The y position of the start point                                         |
-| x2         | STRING | Yes      | The x position of the end point                                           |
-| y2         | STRING | Yes      | The y position of the end point                                           |
-| attributes | STRING | No       | Direct SVG attributes to apply (e.g., "stroke-width='2' stroke='blue'"), can generate with DaxLib.SVG.Attr.* or manually |
-| transforms | STRING | No       | Transformation to apply (can be generated with DaxLib.SVG.Transforms)    |
+|:---:|:---:|:---:|---|
+| defId      | <span class="type-label string">STRING</span> | Yes      | The unique identifier for the line                                        |
+| x1         | <span class="type-label string">STRING</span> | Yes      | The x position of the start point                                         |
+| y1         | <span class="type-label string">STRING</span> | Yes      | The y position of the start point                                         |
+| x2         | <span class="type-label string">STRING</span> | Yes      | The x position of the end point                                           |
+| y2         | <span class="type-label string">STRING</span> | Yes      | The y position of the end point                                           |
+| attributes | <span class="type-label string">STRING</span> | No       | Direct SVG attributes to apply (e.g., "stroke-width='2' stroke='blue'"), can generate with `DaxLib.SVG.Attr.*` or manually |
+| transforms | <span class="type-label string">STRING</span> | No       | Transformation to apply (can be generated with `DaxLib.SVG.Transforms`)    |
 
 ## Returns
 
-**STRING** `<line>`{:.xml} definition
+<span class="type-label string">**STRING**</span> `<line>`{:.xml} definition
 
 ## Example
 

@@ -11,24 +11,19 @@ RGB to Hex conversion
 ## Syntax
 
 ```dax
-DaxLib.SVG.Color.RGB.ToHex(
-    red, 
-    green, 
-    blue, 
-    alpha
-)
+DaxLib.SVG.Color.RGB.ToHex( red, green, blue, alpha )
 ```
 
 | Name  | Type   | Required | Description                        |
-|:-----:|:------:|:--------:|:-----------------------------------|
-| red   | INT64  | Yes      | The red value (0-255)             |
-| green | INT64  | Yes      | The green value (0-255)           |
-| blue  | INT64  | Yes      | The blue value (0-255)            |
-| alpha | DOUBLE | No       | Optional: The alpha value (0-1)   |
+|:---:|:---:|:---:|---|
+| red   | <span class="type-label int64">INT64</span>   | Yes      | The red value (0-255)             |
+| green | <span class="type-label int64">INT64</span>   | Yes      | The green value (0-255)           |
+| blue  | <span class="type-label int64">INT64</span>  | Yes      | The blue value (0-255)            |
+| alpha | <span class="type-label number">DOUBLE</span> | No       | The alpha value (0-1)   |
 
 ## Returns
 
-**STRING** Hex color code (e.g., "#FF0000" or "#FF0000FF" with alpha)
+<span class="type-label string">STRING</span> Hex color code
 
 ## Example
 

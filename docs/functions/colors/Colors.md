@@ -3,6 +3,7 @@ title: Colors
 nav_order: 7
 has_children: true
 parent: Functions
+comments: false
 ---
 
 # Colors

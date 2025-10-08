@@ -15,6 +15,24 @@ social:
   links:
     - https://www.linkedin.com/in/jakeduddy/
 
+# Google Search Console verification
+google_site_verification: "SAsOJ1OUHiMcP4hI-eYBkBD6nbsLx6hc2nWjLqdCtd0"
+
+# Giscus Comments Configuration
+giscus:
+  enabled: true
+  repo: "EvaluationContext/daxlib.svg"
+  repo_id: "R_kgDOP22Qnw"
+  category: "Announcements"
+  category_id: "DIC_kwDOP22Qn84CwYnK"
+  mapping: "pathname"
+  reactions_enabled: 0
+  emit_metadata: 0
+  input_position: "top"
+  theme: "light"
+  lang: "en"
+  loading: "lazy"
+
 # Remove logo to hide the icon
 # logo: "/assets/img/icon.png"
 favicon_ico: "/assets/img/favicons/favicon.ico"
@@ -59,7 +77,8 @@ defaults:
       path: "docs" # an empty string here means all files in the project
       type: "pages"
     values:
-      layout: "default"
+      layout: "page"
+      comments: true
 
 # PWA settings
 pwa:

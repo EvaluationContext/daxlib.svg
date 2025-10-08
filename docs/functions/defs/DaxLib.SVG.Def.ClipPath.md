@@ -6,25 +6,22 @@ parent: Defs
 
 # DaxLib.SVG.Def.ClipPath
 
-Creates a reusable `<clipPath>`{:.xml} definition
+Generates a reusable `<clipPath>`{:.xml} definition
 
 ## Syntax
 
 ```dax
-DaxLib.SVG.Def.ClipPath(
-    defId, 
-    contents
-)
+DaxLib.SVG.Def.ClipPath( defId, contents )
 ```
 
 | Name     | Type   | Required | Description                                                        |
-|:--------:|:------:|:--------:|:------------------------------------------------------------------|
-| defId    | STRING | Yes      | The unique identifier for the clip path. (Example: "cut-top", "mask-circle") |
-| contents | STRING | Yes      | The SVG element(s) that make up the clipping path (typically a single shape) |
+|:---:|:---:|:---:|---|
+| defId    | <span class="type-label string">STRING</span> | Yes      | The unique identifier for the clip path. (Example: "cut-top", "mask-circle") |
+| contents | <span class="type-label string">STRING</span> | Yes      | The SVG element(s) that make up the clipping path (typically a single shape) |
 
 ## Returns
 
-**STRING** `<clipPath>`{:.xml} definition
+<span class="type-label string">**STRING**</span> `<clipPath>`{:.xml} definition
 
 ## Example
 

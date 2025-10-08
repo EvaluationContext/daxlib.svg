@@ -6,29 +6,24 @@ parent: Defs
 
 # DaxLib.SVG.Def.Paths
 
-Creates a reusable `<path>`{:.xml} definition
+Generates a reusable `<path>`{:.xml} definition
 
 ## Syntax
 
 ```dax
-DaxLib.SVG.Def.Paths(
-    defId, 
-    d, 
-    attributes, 
-    transforms
-)
+DaxLib.SVG.Def.Paths( defId, d, attributes, transforms )
 ```
 
 | Name       | Type   | Required | Description                                                                |
-|:----------:|:------:|:--------:|:--------------------------------------------------------------------------|
-| defId      | STRING | Yes      | The unique identifier for the path                                        |
-| d          | STRING | Yes      | The path data string (e.g., "M10 10 L90 90")                             |
-| attributes | STRING | No       | Direct SVG attributes to apply (e.g., "fill='none' stroke='blue'"), can generate with DaxLib.SVG.Attr.* or manually |
-| transforms | STRING | No       | Transformation to apply (can be generated with DaxLib.SVG.Transforms)    |
+|:---:|:---:|:---:|---|
+| defId      | <span class="type-label string">STRING</span> | Yes      | The unique identifier for the path                                        |
+| d          | <span class="type-label string">STRING</span> | Yes      | The path data string (e.g., "M10 10 L90 90")                             |
+| attributes | <span class="type-label string">STRING</span> | No       | Direct SVG attributes to apply (e.g., "fill='none' stroke='blue'"), can generate with `DaxLib.SVG.Attr.*` or manually |
+| transforms | <span class="type-label string">STRING</span> | No       | Transformation to apply (can be generated with `DaxLib.SVG.Transforms`)    |
 
 ## Returns
 
-**STRING** `<path>`{:.xml} definition
+<span class="type-label string">**STRING**</span> `<path>`{:.xml} definition
 
 ## Example
 

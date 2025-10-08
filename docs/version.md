@@ -1,6 +1,7 @@
 ---
 title: Version History
 nav_order: 4
+comments: false
 ---
 
 ## Version History
@@ -9,7 +10,7 @@ nav_order: 4
 
 ### 0.1.2-beta
 
-- Restructured library will the idea of Elements > Compounds > Visual
+- Restructured library will the idea of Elements and Compounds
 - Documentation site launch
 
 ###  0.1.1-beta

@@ -11,22 +11,18 @@ Generates a `<g>`{:.xml} element. Transformations applied to the `<g>`{:.xml} el
 ## Syntax
 
 ```dax
-DaxLib.SVG.Element.Group(
-    contents, 
-    transform, 
-    opacity
-)
+DaxLib.SVG.Element.Group( contents, transform, opacity )
 ```
 
 | Name      | Type       | Required | Description                                                        |
-|:---:|:---:|:---:|:---:|
-| contents  | SCALAR VAL | Yes      | Content to group (recommend including all content in a single variable) |
-| transform | SCALAR VAL | No       | Transform (e.g., "translate(50,50) rotate(45)")                    |
-| opacity   | SCALAR VAL | No       | Opacity for entire group (0-1, optional)                           |
+|:---:|:---:|:---:|---|
+| contents  | <span class="type-label string">STRING</span> | Yes      | Content to group (recommend including all content in a single variable) |
+| transform | <span class="type-label string">STRING</span> | No       | Transform (e.g., "translate(50,50) rotate(45)")                    |
+| opacity   | <span class="type-label string">STRING</span> | No       | Opacity for entire group (0-1, optional)                           |
 
 ## Returns
 
-**STRING** `<g>`{:.xml} element
+<span class="type-label string">STRING</span> `<g>`{:.xml} element
 
 ## Example
 

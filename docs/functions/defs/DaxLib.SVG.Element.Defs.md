@@ -6,23 +6,23 @@ parent: Defs
 
 # DaxLib.SVG.Element.Defs
 
-Creates a `<defs>`{:.xml} element from one or more `DaxLib.SVG.Def.*` elements
+Generates a `<defs>`{:.xml} element from one or more `DaxLib.SVG.Def.*` elements
 
 ## Syntax
 
 ```dax
-DaxLib.SVG.Element.Defs(defs)
+DaxLib.SVG.Element.Defs( defs )
 ```
 
 ## Parameters
 
 | Name | Type   | Required | Description                                                    |
-|------|--------|----------|----------------------------------------------------------------|
-| defs | STRING | Yes      | Concatenated list of def elements to include in a defs block   |
+|:---:|:---:|:---:|---|
+| defs | <span class="type-label string">STRING</span> | Yes      | Concatenated list of def elements to include in a defs block   |
 
 ## Returns
 
-(*STRING*) `<defs>`{:.xml} element
+<span class="type-label string">**STRING**</span> `<defs>`{:.xml} element
 
 ## Example
 

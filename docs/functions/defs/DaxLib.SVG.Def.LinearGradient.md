@@ -6,33 +6,26 @@ parent: Defs
 
 # DaxLib.SVG.Def.LinearGradient
 
-Creates a reusable `<linearGradient>`{:.xml} definition
+Generates a reusable `<linearGradient>`{:.xml} definition
 
 ## Syntax
 
 ```dax
-DaxLib.SVG.Def.LinearGradient(
-    defId, 
-    stops, 
-    x1, 
-    y1, 
-    x2, 
-    y2
-)
+DaxLib.SVG.Def.LinearGradient( defId, stops, x1, y1, x2, y2 )
 ```
 
 | Name   | Type   | Required | Description                                                        |
-|:---:|:---:|:---:|:---:|:---:|:---:|
-| defId  | STRING | Yes      | The unique identifier for the gradient                             |
-| stops  | STRING | Yes      | Concatenated list of one or more DaxLib.SVG.Def.GradientStop elements |
-| x1     | STRING | No       | Start X position                                                   |
-| y1     | STRING | No       | Start Y position                                                   |
-| x2     | STRING | No       | End X position                                                     |
-| y2     | STRING | No       | End Y position                                                     |
+|:---:|:---:|:---:|---|
+| defId  | <span class="type-label string">STRING</span> | Yes      | The unique identifier for the gradient                             |
+| stops  | <span class="type-label string">STRING</span> | Yes      | Concatenated list of one or more `DaxLib.SVG.Def.GradientStop` elements |
+| x1     | <span class="type-label string">STRING</span> | No       | Start X position                                                   |
+| y1     | <span class="type-label string">STRING</span> | No       | Start Y position                                                   |
+| x2     | <span class="type-label string">STRING</span> | No       | End X position                                                     |
+| y2     | <span class="type-label string">STRING</span> | No       | End Y position                                                     |
 
 ## Returns
 
-**STRING** `<linearGradient>`{:.xml} definition
+<span class="type-label string">**STRING**</span> `<linearGradient>`{:.xml} definition
 
 ## Example
 

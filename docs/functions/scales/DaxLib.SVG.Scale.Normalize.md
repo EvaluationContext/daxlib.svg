@@ -11,26 +11,20 @@ Maps a value from one scale to another. Used for scaling values to fit within SV
 ## Syntax
 
 ```dax
-DaxLib.SVG.Scale.Normalize(
-    inputValue, 
-    fromMin, 
-    fromMax, 
-    toMin, 
-    toMax
-)
+DaxLib.SVG.Scale.Normalize( inputValue, fromMin, fromMax, toMin, toMax )
 ```
 
 | Name       | Type        | Required | Description                         |
-|:---:|:---:|:---:|:---:|:---:|:---:|
-| inputValue | NUMERIC VAL | Yes      | The value to map                    |
-| fromMin    | NUMERIC VAL | Yes      | The minimum value of the original scale |
-| fromMax    | NUMERIC VAL | Yes      | The maximum value of the original scale |
-| toMin      | NUMERIC VAL | Yes      | The minimum value of the new scale  |
-| toMax      | NUMERIC VAL | Yes      | The maximum value of the new scale  |
+|:---:|:---:|:---:|---|
+| inputValue | <span class="type-label numeric">NUMERIC</span> <span class="type-label val">VAL</span> | Yes      | The value to map                    |
+| fromMin    | <span class="type-label numeric">NUMERIC</span> <span class="type-label val">VAL</span> | Yes      | The minimum value of the original scale |
+| fromMax    | <span class="type-label numeric">NUMERIC</span> <span class="type-label val">VAL</span> | Yes      | The maximum value of the original scale |
+| toMin      | <span class="type-label numeric">NUMERIC</span> <span class="type-label val">VAL</span> | Yes      | The minimum value of the new scale  |
+| toMax      | <span class="type-label numeric">NUMERIC</span> <span class="type-label val">VAL</span> | Yes      | The maximum value of the new scale  |
 
 ## Returns
 
-**NUMERIC** mapped value
+<span class="type-label numeric">NUMERIC</span> mapped value
 
 ## Example
 

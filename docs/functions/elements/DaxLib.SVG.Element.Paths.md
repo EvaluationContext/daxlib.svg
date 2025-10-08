@@ -6,27 +6,23 @@ parent: Elements
 
 # DaxLib.SVG.Element.Paths
 
-Creates a `<path>`{:.xml} element
+Generates a `<path>`{:.xml} element
 
 ## Syntax
 
 ```dax
-DaxLib.SVG.Element.Paths(
-    d, 
-    attributes, 
-    transforms
-)
+DaxLib.SVG.Element.Paths( d, attributes, transforms )
 ```
 
 | Name       | Type   | Required | Description                                                        |
-|:----------:|:------:|:--------:|:------------------------------------------------------------------|
-| d          | STRING | Yes      | The path data string (e.g., "M10 10 L90 90")                     |
-| attributes | STRING | No       | Direct SVG attributes to apply (e.g., "pathLength='100' fill-rule='evenodd'"), can generate with DaxLib.SVG.Attr.* or manually |
-| transforms | STRING | No       | Transformation to apply (can be generated with DaxLib.SVG.Transforms) |
+|:---:|:---:|:---:|---|
+| d          | <span class="type-label string">STRING</span> | Yes      | The path data string (e.g., "M10 10 L90 90")                     |
+| attributes | <span class="type-label string">STRING</span> | No       | Direct SVG attributes to apply (e.g., "pathLength='100' fill-rule='evenodd'"), can generate with DaxLib.SVG.Attr.* or manually |
+| transforms | <span class="type-label string">STRING</span> | No       | Transformation to apply (can be generated with DaxLib.SVG.Transforms) |
 
 ## Returns
 
-**STRING** `<path>`{:.xml} element
+<span class="type-label string">**STRING**</span> `<path>`{:.xml} element
 
 ## Example
 
