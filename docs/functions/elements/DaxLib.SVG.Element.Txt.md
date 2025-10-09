@@ -19,10 +19,10 @@ DaxLib.SVG.Element.Txt( x, y, txt, dx, dy, attributes, transforms )
 | x          | <span class="type-label string">STRING</span> | Yes      | The x position of the text                                         |
 | y          | <span class="type-label string">STRING</span> | Yes      | The y position of the text                                         |
 | txt        | <span class="type-label string">STRING</span> | Yes      | The text content                                                   |
-| dx         | <span class="type-label string">STRING</span> | No       | Optional: x offset from position                                   |
-| dy         | <span class="type-label string">STRING</span> | No       | Optional: y offset from position                                   |
-| attributes | <span class="type-label string">STRING</span> | No       | Direct SVG attributes to apply (e.g., "text-anchor='middle' dominant-baseline='middle'"), can generate with DaxLib.SVG.Attr.* or manually |
-| transforms | <span class="type-label string">STRING</span> | No       | Additional transforms (e.g. "scale(1.2) translate(10,10)") (can be generated with DaxLib.SVG.Transforms) |
+| dx         | <span class="type-label string">STRING</span> | No       | x offset from position                                   |
+| dy         | <span class="type-label string">STRING</span> | No       | y offset from position                                   |
+| attributes | <span class="type-label string">STRING</span> | No       | Direct SVG attributes to apply (e.g., "text-anchor='middle' dominant-baseline='middle'"), can generate with `DaxLib.SVG.Attr.*` or manually |
+| transforms | <span class="type-label string">STRING</span> | No       | Additional transforms (e.g. "scale(1.2) translate(10,10)") (can be generated with `DaxLib.SVG.Transforms`) |
 
 ## Returns
 
@@ -52,7 +52,7 @@ DaxLib.SVG.SVG(
             BLANK(),    // letterSpacing
             BLANK()     // wordSpacing
          ),             // attributes
-        BLANK()			// transforms
+        BLANK()         // transforms
     ),                  // contents
     BLANK()             // sortValue
 )

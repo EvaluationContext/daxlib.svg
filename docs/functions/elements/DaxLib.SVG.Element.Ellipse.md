@@ -20,8 +20,8 @@ DaxLib.SVG.Element.Ellipse( cx, cy, rx, ry, attributes, transforms )
 | cy         | <span class="type-label string">STRING</span> | Yes      | The y position of the center                                               |
 | rx         | <span class="type-label string">STRING</span> | Yes      | The x radius                                                               |
 | ry         | <span class="type-label string">STRING</span> | Yes      | The y radius                                                               |
-| attributes | <span class="type-label string">STRING</span> | No       | Direct SVG attributes to apply, can generate with DaxLib.SVG.Attr.* or manually |
-| transforms | <span class="type-label string">STRING</span> | No       | Transformation to apply (can be generated with DaxLib.SVG.Transforms)     |
+| attributes | <span class="type-label string">STRING</span> | No       | Direct SVG attributes to apply, can generate with `DaxLib.SVG.Attr.*` or manually |
+| transforms | <span class="type-label string">STRING</span> | No       | Transformation to apply (can be generated with `DaxLib.SVG.Transforms`)     |
 
 ## Returns
 
@@ -39,17 +39,6 @@ DaxLib.SVG.Element.Ellipse(
 	BLANK()
 )
 // Returns: <ellipse cx='50' cy='50' rx='40' ry='20' fill='#0078D4' />
-
-// Using manual attributes
-DaxLib.SVG.Element.Ellipse(
-	"50", 
-	"50", 
-	"40", 
-	"20", 
-	"fill='blue' stroke='red' stroke-width='2'", 
-	"rotate(45)"
-)
-// Returns: <ellipse cx='50' cy='50' rx='40' ry='20' fill='blue' stroke='red' stroke-width='2' transform='rotate(45)' />
 ```
 
 ## Definition

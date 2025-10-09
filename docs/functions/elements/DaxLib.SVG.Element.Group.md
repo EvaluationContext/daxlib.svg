@@ -16,9 +16,9 @@ DaxLib.SVG.Element.Group( contents, transform, opacity )
 
 | Name      | Type       | Required | Description                                                        |
 |:---:|:---:|:---:|---|
-| contents  | <span class="type-label string">STRING</span> | Yes      | Content to group (recommend including all content in a single variable) |
+| contents  | <span class="type-label string">STRING</span> | Yes      | Content to group |
 | transform | <span class="type-label string">STRING</span> | No       | Transform (e.g., "translate(50,50) rotate(45)")                    |
-| opacity   | <span class="type-label string">STRING</span> | No       | Opacity for entire group (0-1, optional)                           |
+| opacity   | <span class="type-label string">STRING</span> | No       | Opacity for entire group (0-1)                           |
 
 ## Returns
 

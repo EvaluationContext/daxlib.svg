@@ -16,8 +16,8 @@ DaxLib.SVG.Element.Polyline( points, attributes, transforms )
 | Name       | Type   | Required | Description                                                                                         |
 |:---:|:---:|:---:|---|
 | points     | <span class="type-label string">STRING</span> | Yes      | Space-separated x,y coordinate pairs (e.g., "0,10 20,30 40,15")                                   |
-| attributes | <span class="type-label string">STRING</span> | No       | Direct SVG attributes to apply (e.g., "marker-start='url(#dot)'"), can generate with DaxLib.SVG.Attr.* or manually |
-| transforms | <span class="type-label string">STRING</span> | No       | Transformation to apply (can be generated with DaxLib.SVG.Transforms)                             |
+| attributes | <span class="type-label string">STRING</span> | No       | Direct SVG attributes to apply (e.g., "marker-start='url(#dot)'"), can generate with `DaxLib.SVG.Attr.*` or manually |
+| transforms | <span class="type-label string">STRING</span> | No       | Transformation to apply (can be generated with `DaxLib.SVG.Transforms`)                             |
 
 ## Returns
 

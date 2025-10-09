@@ -19,8 +19,8 @@ DaxLib.SVG.Element.Line( x1, y1, x2, y2, attributes, transforms )
 | y1         | <span class="type-label string">STRING</span> | Yes      | Starting Y position (top edge is 0)                                     |
 | x2         | <span class="type-label string">STRING</span> | Yes      | Ending X position (left edge is 0)                                      |
 | y2         | <span class="type-label string">STRING</span> | Yes      | Ending Y position (top edge is 0)                                       |
-| attributes | <span class="type-label string">STRING</span> | No       | Direct SVG attributes to apply (e.g., "stroke-dasharray='5,5' marker-end='url(#arrow)'"), can generate with DaxLib.SVG.Attr.* or manually |
-| transforms | <span class="type-label string">STRING</span> | No       | Transformation to apply (can be generated with DaxLib.SVG.Transforms)   |
+| attributes | <span class="type-label string">STRING</span> | No       | Direct SVG attributes to apply (e.g., "stroke-dasharray='5,5' marker-end='url(#arrow)'"), can generate with `DaxLib.SVG.Attr.*` or manually |
+| transforms | <span class="type-label string">STRING</span> | No       | Transformation to apply (can be generated with `DaxLib.SVG.Transforms`)   |
 
 ## Returns
 

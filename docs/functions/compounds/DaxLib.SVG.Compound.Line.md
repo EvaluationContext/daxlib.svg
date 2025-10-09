@@ -7,7 +7,7 @@ nav_order: 2
 
 # DaxLib.SVG.Compound.Line
 
-Generates a Line compound SVG Visual for a numeric axis
+Generates a Line compound SVG Visual
 
 ## Syntax
 
@@ -75,13 +75,13 @@ function 'DaxLib.SVG.Compound.Line' =
     ) =>
 
         // Apply padding to dimensions
-        VAR _X = 			x + (width * (IF(ISBLANK(paddingX), 0, paddingX) / 2))
-        VAR _Y = 			y + (height * (IF(ISBLANK(paddingY), 0, paddingY) / 2))
-        VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
-        VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
+        VAR _X =            x + (width * (IF(ISBLANK(paddingX), 0, paddingX) / 2))
+        VAR _Y =            y + (height * (IF(ISBLANK(paddingY), 0, paddingY) / 2))
+        VAR _Width =        width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
+        VAR _Height =       height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
 
         // Check if Axis is numeric
-        VAR axisSample = 	MAX( axisRef )
+        VAR axisSample =    MAX( axisRef )
         VAR axisIsNumeric = ISNUMERIC( axisSample ) || ISDATETIME( axisSample )
         
         // For totals

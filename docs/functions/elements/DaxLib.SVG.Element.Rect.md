@@ -20,10 +20,10 @@ DaxLib.SVG.Element.Rect( x, y, width, height, rx, ry, attributes, transforms )
 | y          | <span class="type-label string">STRING</span> | Yes      | The y position                                                           |
 | width      | <span class="type-label string">STRING</span> | Yes      | The width (pixels or percentage)                                         |
 | height     | <span class="type-label string">STRING</span> | Yes      | The height (pixels or percentage)                                        |
-| rx         | <span class="type-label string">STRING</span> | No       | Optional: x radius for rounded corners                                   |
-| ry         | <span class="type-label string">STRING</span> | No       | Optional: y radius for rounded corners                                   |
-| attributes | <span class="type-label string">STRING</span> | No       | Direct SVG attributes to apply (e.g., "fill='red' stroke-width='2'"), can generate with DaxLib.SVG.Attr.* or manually |
-| transforms | <span class="type-label string">STRING</span> | No       | Transformation to apply (can be generated with DaxLib.SVG.Transforms)   |
+| rx         | <span class="type-label string">STRING</span> | No       | x radius for rounded corners                                   |
+| ry         | <span class="type-label string">STRING</span> | No       | y radius for rounded corners                                   |
+| attributes | <span class="type-label string">STRING</span> | No       | Direct SVG attributes to apply (e.g., "fill='red' stroke-width='2'"), can generate with `DaxLib.SVG.Attr.*` or manually |
+| transforms | <span class="type-label string">STRING</span> | No       | Transformation to apply (can be generated with `DaxLib.SVG.Transforms`)   |
 
 ## Returns
 

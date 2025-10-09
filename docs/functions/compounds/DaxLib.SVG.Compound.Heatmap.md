@@ -14,7 +14,7 @@ Generates a KDE-based Heatmap compound SVG Visual using Kernel Density Estimatio
 > 
 > **Key Parameters:**
 > - **Samples**: Controls the resolution of the density calculation (higher = smoother, but slower performance)
-> - **Bandwidth**: Controls the smoothing level - smaller values create sharper peaks around data points, larger values create broader, smoother distributions. If not specified, an optimal bandwidth is auto-calculated based on your data
+> - **Bandwidth**: Controls the smoothing level - smaller values create sharper peaks around data points, larger values create broader, smoother distributions
 
 ## Syntax
 
@@ -32,8 +32,8 @@ DaxLib.SVG.Compound.Heatmap( x, y, width, height, paddingX, paddingY, axisRef, m
 | paddingY | <span class="type-label number">DOUBLE</span> | No | The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding) |
 | axisRef | <span class="type-label anyref">ANYREF</span> <span class="type-label expr">EXPR</span> | Yes | The column that the measure will be evaluated against |
 | measureRef | <span class="type-label numeric">NUMERIC</span> <span class="type-label expr">EXPR</span> | Yes | The measure to evaluate |
-| samples | <span class="type-label int64">INT64</span> | No | Number of density calculation points (default 50) |
-| bandwidth | <span class="type-label number">NUMERIC</span> | No | Kernel bandwidth for smoothing (default auto-calculated) |
+| samples | <span class="type-label int64">INT64</span> | Yes | Number of density calculation points |
+| bandwidth | <span class="type-label number">NUMERIC</span> | Yes | Kernel bandwidth for smoothing (default auto-calculated) |
 | color | <span class="type-label string">STRING</span> | Yes | The Hex color for high density areas (e.g., "#01B8AA") |
 
 ## Returns

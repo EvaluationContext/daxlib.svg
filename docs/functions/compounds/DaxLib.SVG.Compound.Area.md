@@ -7,7 +7,7 @@ nav_order: 3
 
 # DaxLib.SVG.Compound.Area
 
-Generates an Area compound SVG Visual for a numeric x-axis.
+Generates an Area compound SVG Visual
 
 ## Syntax
 

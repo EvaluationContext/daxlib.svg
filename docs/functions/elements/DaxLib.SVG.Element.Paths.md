@@ -17,8 +17,8 @@ DaxLib.SVG.Element.Paths( d, attributes, transforms )
 | Name       | Type   | Required | Description                                                        |
 |:---:|:---:|:---:|---|
 | d          | <span class="type-label string">STRING</span> | Yes      | The path data string (e.g., "M10 10 L90 90")                     |
-| attributes | <span class="type-label string">STRING</span> | No       | Direct SVG attributes to apply (e.g., "pathLength='100' fill-rule='evenodd'"), can generate with DaxLib.SVG.Attr.* or manually |
-| transforms | <span class="type-label string">STRING</span> | No       | Transformation to apply (can be generated with DaxLib.SVG.Transforms) |
+| attributes | <span class="type-label string">STRING</span> | No       | Direct SVG attributes to apply (e.g., "pathLength='100' fill-rule='evenodd'"), can generate with `DaxLib.SVG.Attr.* `or manually |
+| transforms | <span class="type-label string">STRING</span> | No       | Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |
 
 ## Returns
 
@@ -45,7 +45,7 @@ DaxLib.SVG.SVG(
             BLANK(),    // strokeOpacity
             BLANK()     // opacity
         ),              // attributes
-        BLANK()		    // transforms
+        BLANK()         // transforms
     ),                  // contents
     BLANK()             // sortValue
 )
