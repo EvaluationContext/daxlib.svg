@@ -8,10 +8,10 @@ theme:
   name: material
   custom_dir: overrides
   language: en
-  logo: assets/images/icon.png
   favicon: assets/images/favicon.ico
   icon:
     repo: fontawesome/brands/github
+    logo: material/svg
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
