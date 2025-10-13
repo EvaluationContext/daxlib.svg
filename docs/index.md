@@ -7,7 +7,7 @@ title: Home
 A DAX User-Defined Functions (UDF) library designed to make creating SVG visuals Power BI easier
 
 [Download From DaxLib :material-download:{ style="color: var(--button-color); font-size: 1.2em;" }](https://daxlib.org/package/daxlib.svg/){ .md-button }
-[Download Example PBIP :material-download:{ style="color: var(--button-color); font-size: 1.2em;" }](https://github.com/EvaluationContext/daxlib.svg/tree/main/docs/assets/PBIP){ .md-button } 
+[Download Example PBIP :material-download:{ style="color: var(--button-color); font-size: 1.2em;" }](https://github.com/EvaluationContext/daxlib.svg/tree/main/powerBI){ .md-button } 
 
 !!! tip "Getting Started"
 
