@@ -1,60 +1,40 @@
 
 # DaxLib.SVG
 
-A comprehensive set of DAX User-Defined Functions (UDF) designed to enable easy creation of SVG visuals for Power BI.
+DaxLib.SVG is a DAX User-Defined Functions (UDF) library designed to make creating SVG visuals in Power BI easier.
 
-![DaxLib.SVG in Action](assets/img/UDFInAction.png)
-
-## Summary
-
-`DaxLib.SVG` provides a complete toolkit for creating SVG graphics directly in Power BI using DAX measures. The library includes functions for creating basic shapes, complex visuals, reusable components, and styling options.
-
-## Function Categories
-
-### SVG Wrapper
-
-Functions for wrapping SVG content for use in Power BI visuals.
-
-### Elements
-
-Core SVG element generator functions (Circle, Rect, Line, Text, etc.).
-
-![Element Functions](assets/img/elements.png)
-
-### Compounds
-
-Composite SVG components for creating complex visual elements.
-
-![Compound Functions](assets/img/compounds.png)
-
-### Defs
-
-Reusable SVG definitions for gradients, shapes, clip paths, and more.
-
-### Scales
-
-Functions for mapping and normalizing values for SVG graphics.
-
-### Visuals
-
-Ready to use chart and visual components built from library elements.
-
-### Transforms
-
-Functions for creating SVG transform attribute values (translate, rotate, scale, etc.).
-
-### Attributes
-
-Functions for creating SVG attribute strings to style and configure SVG elements.
+[![Download From DaxLib](https://img.shields.io/badge/Download%20from%20DaxLib-009688?style=for-the-badge&logo=cloudsmith&logoColor=white)](https://daxlib.org/package/daxlib.svg/)
+[![Download Example PBIP](https://img.shields.io/badge/Download%20Example%20PBIP-607D8B?style=for-the-badge&logo=microsoftpowerbi&logoColor=white)](https://github.com/EvaluationContext/daxlib.svg/tree/main/assets/PBIP)
 
 ## Getting Started
 
-- Download the library from [DaxLib](https://daxlib.org/package/DaxLib.SVG/)
-- Install using TMDL view
-- Start using the functions in your measures
-
+1. Download the library from [DaxLib](https://daxlib.org/package/DaxLib.SVG/)
+2. Install using TMDL view
+3. Start using the functions in your measures
+   
 For detailed examples, check out our [example PBIP file](https://github.com/EvaluationContext/daxlib.svg/tree/main/assets/PBIP).
 
-## Documentation
+> **Tip:**
+> 
+> `Elements` and `Compounds` should be passed to the `contents` parameter in `evaluationcontext.svg.svg()` to wrap them in the required metadata and `<SVG>` tags. Measures or columns using these functions should have `DataCategory = "ImageUrl"`.
+
+---
+
+## Function Categories
+
+| Category | Description |
+|---|---|
+| **[SVG Wrapper](docs/svg/index.md)** | Wraps one or more `Elements`, `Defs`, `Compounds`, applying required metadata and `<SVG>` tags |
+| **[Elements](docs/elements/index.md)** | SVG primitives (i.e. `<Rect>`, `<Circle>`, `<line>`) |
+| **[Compounds](docs/compounds/index.md)** | Complex components (i.e. boxplot, violin) made from `Elements` |
+| **[Defs](docs/defs/index.md)** | Define reusable SVG elements (i.e. `<linearGradient>`, `<clipPath>`, and shapes) |
+| **[Attributes](docs/attributes/index.md)** | Create Attributes (i.e. fill, stroke, opacity) string that can be applied to `Elements` and `Defs` |
+| **[Transforms](docs/transforms/index.md)** | Create Transform strings |
+| **[Scales](docs/scales/index.md)** | Mapping values between scales |
+| **[Colors](docs/colors/index.md)** | Themes and functions for colour manipulation |
+
+---
 
 Full documentation is available at our [GitHub Pages site](https://evaluationcontext.github.io/daxlib.svg/).
+
+[![Built with Material for MkDocs](https://img.shields.io/badge/Material_for_MkDocs-526CFE?style=for-the-badge&logo=MaterialForMkDocs&logoColor=white)](https://squidfunk.github.io/mkdocs-material/)

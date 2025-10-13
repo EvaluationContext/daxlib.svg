@@ -1,0 +1,19 @@
+:root {
+  --button-color: #e92063;
+}
+
+.md-button {
+  border-radius: 0.4em !important;
+  background-color: color-mix(in srgb, var(--button-color) 10%, transparent) !important;
+  color: var(--button-color) !important;
+  border: 2px solid var(--button-color) !important;
+  stroke: var(--button-color);
+  opacity: 1;
+  font-size: 0.8em;
+  padding: 0.25em 0.8em;
+}
+
+.md-button:hover, .md-button:focus {
+  background-color: color-mix(in srgb, var(--button-color) 50%, transparent) !important;
+  color: #fff !important;
+}

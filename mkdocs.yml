@@ -1,0 +1,189 @@
+site_name: DaxLib.SVG
+site_url: https://evaluationcontext.github.io/daxlib.svg/
+repo_name: daxlib.svg
+repo_url: https://github.com/EvaluationContext/daxlib.svg
+site_author: Jake Duddy
+site_description: Docs for DaxLib.EvaluationContext.SVG DAX UDF library for creation of SVG images for visualization in Power BI
+theme:
+  name: material
+  custom_dir: overrides
+  language: en
+  logo: assets/images/icon.png
+  favicon: assets/images/favicon.ico
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue grey
+      accent: pink
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: pink
+      toggle:
+        icon: material/toggle-switch-off
+        name: Switch to system preference  
+  features:
+    # - announce.dismiss
+    # - content.action.edit
+    # - content.action.view
+    - content.code.annotate
+    - content.code.copy
+    - content.code.select
+    - content.tooltips
+    # - content.footnote.tooltips
+    # - content.tabs.link
+    # - header.autohide
+    # - navigation.expand
+    - navigation.indexes
+    - navigation.sections
+    # - navigation.tabs
+    # - navigation.tabs.sticky
+    # - navigation.top
+    # - navigation.tracking
+    - search.highlight
+    - search.share
+    - search.suggest
+    # - navigation.footer
+    # - navigation.instant
+    # - navigation.instant.prefetch
+    # - navigation.instant.progress
+    # - navigation.prune
+    - navigation.path
+    - toc.follow
+    - toc.integrate
+  
+extra:
+  google_site_verification: SAsOJ1OUHiMcP4hI-eYBkBD6nbsLx6hc2nWjLqdCtd0
+  social:
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/jakeduddy/
+      name: Jake Duddy
+    - icon: fontawesome/brands/github
+      link: https://github.com/EvaluationContext
+      name: EvaluationContext
+
+plugins:
+  - search
+  - meta-descriptions
+
+extra_css:
+  - assets/css/pill.css
+  - assets/css/codeblock.css
+  - assets/css/button.css
+  - assets/css/colorBlocks.css
+  - assets/css/gridCards.css
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      normalize_issue_symbols: true
+      repo_url_shorthand: true
+      user: squidfunk
+      repo: mkdocs-material
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      auto_append:
+        - includes/mkdocs.md
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+      combine_header_slug: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+nav:
+  - Home: 
+    - index.md
+  - Functions:
+      - functions/index.md
+      - SVG:
+        - svg/index.md
+        - SVG: svg/SVG.md
+      - Elements:
+        - elements/index.md
+        - Rect: elements/Rect.md
+        - Circle: elements/Circle.md
+        - Ellipse: elements/Ellipse.md
+        - Polygon: elements/Polygon.md
+        - Line: elements/Line.md
+        - Paths: elements/Paths.md
+        - Polyline: elements/Polyline.md
+        - Txt: elements/Txt.md
+        - Defs: elements/Defs.md
+        - UseDef: elements/UseDef.md
+        - Group: elements/Group.md
+      - Compounds:
+        - compounds/index.md
+        - Area: compounds/Area.md
+        - Line: compounds/Line.md
+        - Boxplot: compounds/Boxplot.md
+        - Heatmap: compounds/Heatmap.md
+        - Jitter: compounds/Jitter.md
+        - Violin: compounds/Violin.md
+        - Pill: compounds/Pill.md
+      - Defs:
+        - defs/index.md
+        - Circle: defs/Circle.md
+        - Rect: defs/Rect.md
+        - Line: defs/Line.md
+        - Paths: defs/Paths.md
+        - GradientStop: defs/GradientStop.md
+        - LinearGradient: defs/LinearGradient.md
+        - RadialGradient: defs/RadialGradient.md
+        - ClipPath: defs/ClipPath.md
+      - Attributes:
+        - attributes/index.md
+        - Shapes: attributes/Shapes.md
+        - Stroke: attributes/Stroke.md
+        - Txt: attributes/Txt.md
+      - Transforms:
+        - transforms/index.md
+        - Transforms: transforms/Transforms.md
+      - Scales:
+        - scales/index.md
+        - Normalize: scales/Normalize.md
+      - Colors:
+        - colors/index.md
+        - Theme: colors/Theme.md
+        - PerformanceTheme: colors/PerformanceTheme.md
+        - Interpolate: colors/Interpolate.md
+        - Hex.ToInt: colors/Hex.ToInt.md
+        - Int.ToHex: colors/Int.ToHex.md
+        - RGB.ToHex: colors/RGB.ToHex.md
+  - Change Log: changeLog.md
