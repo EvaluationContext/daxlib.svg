@@ -4,7 +4,7 @@
 DaxLib.SVG is a DAX User-Defined Functions (UDF) library designed to make creating SVG visuals in Power BI easier.
 
 [![Download From DaxLib](https://img.shields.io/badge/Download%20from%20DaxLib-009688?style=for-the-badge&logo=cloudsmith&logoColor=white)](https://daxlib.org/package/daxlib.svg/)
-[![Download Example PBIP](https://img.shields.io/badge/Download%20Example%20PBIP-607D8B?style=for-the-badge&logo=microsoftpowerbi&logoColor=white)](https://github.com/EvaluationContext/daxlib.svg/tree/main/assets/PBIP)
+[![Download Example PBIP](https://img.shields.io/badge/Download%20Example%20PBIP-607D8B?style=for-the-badge&logo=microsoftpowerbi&logoColor=white)](https://github.com/EvaluationContext/daxlib.svg/tree/main/powerBI)
 
 ## Getting Started
 
@@ -13,10 +13,6 @@ DaxLib.SVG is a DAX User-Defined Functions (UDF) library designed to make creati
 3. Start using the functions in your measures
    
 For detailed examples, check out our [example PBIP file](https://github.com/EvaluationContext/daxlib.svg/tree/main/assets/PBIP).
-
-> **Tip:**
-> 
-> `Elements` and `Compounds` should be passed to the `contents` parameter in `evaluationcontext.svg.svg()` to wrap them in the required metadata and `<SVG>` tags. Measures or columns using these functions should have `DataCategory = "ImageUrl"`.
 
 ---
 
