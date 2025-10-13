@@ -1,6 +1,5 @@
 ---
 comments: true
-icon: material/shape-outline
 ---
 
 # Attr.Shapes

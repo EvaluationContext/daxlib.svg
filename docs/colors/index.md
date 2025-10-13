@@ -4,7 +4,9 @@ icon: material/palette-swatch-outline
 
 # Colors
 
-This library offers functions for working with colors in SVG visualizations. These functions provide capabilities for theming, and interpolation to create dynamic and accessible visualizations.
+This library offers functions for working with colors in SVG visualizations. These functions provide capabilities for theming, and interpolation to create dynamic and accessible visualizations
+
+These are subset of functions from [EvaluationContext.Colour](https://daxlib.org/package/EvaluationContext.Colour)
 
 !!! tip
 

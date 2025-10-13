@@ -1,6 +1,5 @@
 ---
 comments: true
-icon: material/square-outline
 ---
 
 # Def.Rect
