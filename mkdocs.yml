@@ -3,7 +3,7 @@ site_url: https://evaluationcontext.github.io/daxlib.svg/
 repo_name: daxlib.svg
 repo_url: https://github.com/EvaluationContext/daxlib.svg
 site_author: Jake Duddy
-site_description: Docs for DaxLib.EvaluationContext.SVG DAX UDF library for creation of SVG images for visualization in Power BI
+site_description: A DAX User-Defined Functions (UDF) library designed to make creating SVG visuals in Power BI easier
 theme:
   name: material
   custom_dir: overrides
@@ -76,7 +76,7 @@ extra_css:
   - assets/css/codeblock.css
   - assets/css/button.css
   - assets/css/colorBlocks.css
-  - assets/css/gridCards.css
+  - assets/css/cards.css
 
 markdown_extensions:
   - abbr
