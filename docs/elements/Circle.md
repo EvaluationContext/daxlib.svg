@@ -37,18 +37,18 @@ Generates a `#!xml <circle>` element
             "10%",          // r
             DaxLib.SVG.Attr.Shapes(
                 DaxLib.SVG.Colour.Theme(
-                "Power BI",
-                25
-            ),              // fill
-            0.5,            // fillOpacity
-            BLANK(),        // fillRule   
-            DaxLib.SVG.Colour.Theme(
-                "Power BI",
-                25
-            ),              // stroke
-            1,              // strokeWidth
-            BLANK(),        // strokeOpacity
-            BLANK()         // opacity
+                    "Power BI",
+                    25
+                ),              // fill
+                0.5,            // fillOpacity
+                BLANK(),        // fillRule   
+                DaxLib.SVG.Colour.Theme(
+                    "Power BI",
+                    25
+                ),              // stroke
+                1,              // strokeWidth
+                BLANK(),        // strokeOpacity
+                BLANK()         // opacity
             ),              // attributes
             BLANK()         // transforms
         ),                  // contents
