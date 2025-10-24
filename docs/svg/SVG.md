@@ -7,7 +7,7 @@ comments: true
 Wraps content in an SVG container for Power BI visualization
 
 !!! Tip
-	Any measures use these UDFs must have `DataCategory = "ImageUrl"`{:.txt}
+	Any measures use these UDFs must have `DataCategory = "ImageUrl"`
 
 === "Syntax"
 
