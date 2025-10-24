@@ -1,4 +1,4 @@
-## 0.1.2-beta (Latest)
+## 0.2.0-beta (Latest)
 
 :octicons-sparkles-fill-16: Restructured library will the idea of Elements and Compounds
 
