@@ -1,4 +1,16 @@
-## 0.2.0-beta (Latest)
+## 0.2.2-beta (Latest)
+
+:material-bug-outline: `#!dax DaxLib.SVG.Compound.Pill()` correctly accepts x and y parameters
+
+:material-bug-outline: `#!dax DaxLib.SVG.Compound.Heatmap()` correctly accepts x and y parameters
+
+## 0.2.1-beta
+
+:octicons-sparkles-fill-16: [Tom Shanley](https://www.linkedin.com/in/tshanley/) contributed `#!dax DaxLib.SVG.Compound.Bar()`
+
+:octicons-sparkles-fill-16: Annotation placeholders
+
+## 0.2.0-beta 
 
 :octicons-sparkles-fill-16: Restructured library will the idea of Elements and Compounds
 

@@ -72,125 +72,125 @@ Generates a KDE-based Heatmap compound SVG Visual using Kernel Density Estimatio
     ```dax
     function 'DaxLib.SVG.Compound.Heatmap' =
         (
-            x: INT64,
-            y: INT64,
-            width: INT64,
-            height: INT64,
-            paddingX: DOUBLE,
-            paddingY: DOUBLE,
-            axisRef: ANYREF EXPR,
-            measureRef: NUMERIC EXPR,
-            samples: INT64,
-            bandwidth: NUMERIC,
-            color: STRING
-        ) =>
-        
-            // Apply padding to dimensions
-            VAR _X = 			x + (width * (IF(ISBLANK(paddingX), 0, paddingX) / 2))
-            VAR _Y = 			y + (height * (IF(ISBLANK(paddingY), 0, paddingY) / 2))
-            VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
-            VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
+			x: INT64,
+			y: INT64,
+			width: INT64,
+			height: INT64,
+			paddingX: DOUBLE,
+			paddingY: DOUBLE,
+			axisRef: ANYREF EXPR,
+			measureRef: NUMERIC EXPR,
+			samples: INT64,
+			bandwidth: NUMERIC,
+			color: STRING
+		) =>
+		
+			// Apply padding to dimensions
+			VAR _X = 			x + (width * (IF(ISBLANK(paddingX), 0, paddingX) / 2))
+			VAR _Y = 			y + (height * (IF(ISBLANK(paddingY), 0, paddingY) / 2))
+			VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
+			VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
 
-            // Check if Axis is numeric
-            VAR axisSample = 	MAX( axisRef )
-            VAR axisIsNumeric = ISNUMERIC( axisSample ) || ISDATETIME( axisSample )
-            
-            // For totals
-            VAR _Data = 
-                ADDCOLUMNS(
-                    FILTER(
-                        VALUES( axisRef ),
-                        NOT ISBLANK( measureRef )
-                    ),
-                    "@AxisIndex", 	
-                        IF(
-                            axisIsNumeric,
-                            axisRef,
-                            RANK( DENSE, CALCULATETABLE( VALUES( axisRef ), ALLSELECTED() ) )
-                        ),
-                    "@Value", measureRef
-                )
-            
-            VAR _NumValues = 		COUNTROWS( _Data )
-            VAR _Min = 				MINX( _Data, [@Value] )
-            VAR _Max = 				MAXX( _Data, [@Value] )
-            VAR _Range = 			_Max - _Min
-            VAR _RangePerSample = 	_Range / samples
+			// Check if Axis is numeric
+			VAR axisSample = 	MAX( axisRef )
+			VAR axisIsNumeric = ISNUMERIC( axisSample ) || ISDATETIME( axisSample )
+			
+			// For totals
+			VAR _Data = 
+				ADDCOLUMNS(
+					FILTER(
+						VALUES( axisRef ),
+						NOT ISBLANK( measureRef )
+					),
+					"@AxisIndex", 	
+						IF(
+							axisIsNumeric,
+							axisRef,
+							RANK( DENSE, CALCULATETABLE( VALUES( axisRef ), ALLSELECTED() ) )
+						),
+					"@Value", measureRef
+				)
+			
+			VAR _NumValues = 		COUNTROWS( _Data )
+			VAR _Min = 				MINX( _Data, [@Value] )
+			VAR _Max = 				MAXX( _Data, [@Value] )
+			VAR _Range = 			_Max - _Min
+			VAR _RangePerSample = 	_Range / samples
 
-            // Calculate Kernel Density Estimation using Normal distribution
-            VAR _KDE = 
-                ADDCOLUMNS(
-                    GENERATESERIES( 0, samples, 1 ),
-                    "@InputX", _Min + _RangePerSample * [Value],
-                    "@KDE", 
-                        ( 1 / _NumValues ) * 
-                        SUMX(
-                            _Data, 
-                            NORM.DIST( 
-                                _Min + _RangePerSample * [Value], 
-                                [@Value], 
-                                bandwidth, 
-                                FALSE() 
-                            ) 
-                        )
-                )
+			// Calculate Kernel Density Estimation using Normal distribution
+			VAR _KDE = 
+				ADDCOLUMNS(
+					GENERATESERIES( 0, samples, 1 ),
+					"@InputX", _Min + _RangePerSample * [Value],
+					"@KDE", 
+						( 1 / _NumValues ) * 
+						SUMX(
+							_Data, 
+							NORM.DIST( 
+								_Min + _RangePerSample * [Value], 
+								[@Value], 
+								bandwidth, 
+								FALSE() 
+							) 
+						)
+				)
 
-            VAR _MaxKDE = 		MAXX( _KDE, [@KDE] )
+			VAR _MaxKDE = 		MAXX( _KDE, [@KDE] )
 
-            // Create gradient stops from KDE points
-            VAR _GradientStops = 
-                CONCATENATEX(
-                    _KDE,
-                    VAR _Position = DaxLib.SVG.Scale.Normalize( [@InputX], _Min, _Max, 0, 100 )
-                    VAR _Intensity = IF( _MaxKDE > 0, [@KDE] / _MaxKDE, 0 )
-                    VAR _StopColor = 
-                        DaxLib.SVG.Color.Hex.Interpolate(
-                            "#FFFFFF",
-                            color,
-                            _Intensity
-                        )
-                    RETURN
-                        "<stop offset='" & _Position & "%' stop-color='" & _StopColor & "' />",
-                    "",
-                    [Value],
-                    ASC
-                )
+			// Create gradient stops from KDE points
+			VAR _GradientStops = 
+				CONCATENATEX(
+					_KDE,
+					VAR _Position = DaxLib.SVG.Scale.Normalize( [@InputX], _Min, _Max, 0, 100 )
+					VAR _Intensity = IF( _MaxKDE > 0, [@KDE] / _MaxKDE, 0 )
+					VAR _StopColor = 
+						DaxLib.SVG.Color.Hex.Interpolate(
+							"#FFFFFF",
+							color,
+							_Intensity
+						)
+					RETURN
+						"<stop offset='" & _Position & "%' stop-color='" & _StopColor & "' />",
+					"",
+					[Value],
+					ASC
+				)
 
-            // Create linear gradient definition
-            VAR _GradientDef = 
-                "<defs>" &
-                    "<linearGradient id='kde-gradient' x1='0%' y1='0%' x2='100%' y2='0%'>" &
-                        _GradientStops &
-                    "</linearGradient>" &
-                "</defs>"
+			// Create linear gradient definition
+			VAR _GradientDef = 
+				"<defs>" &
+					"<linearGradient id='kde-gradient' x1='0%' y1='0%' x2='100%' y2='0%'>" &
+						_GradientStops &
+					"</linearGradient>" &
+				"</defs>"
 
-            // Create rectangle with gradient fill
-            VAR _HeatmapRect = 
-                DaxLib.SVG.Element.Rect(
-                    0,                          // x
-                    0,                          // y
-                    width,                      // width
-                    height,                     // height
-                    0,                          // rx
-                    0,                          // ry
-                    DaxLib.SVG.Attr.Shapes(
-                        "url(#kde-gradient)", 	// fill
-                        BLANK(),                // fillOpacity
-                        BLANK(),                // fillRule
-                        BLANK(),                // stroke
-                        BLANK(),                // strokeWidth
-                        BLANK(),                // strokeOpacity
-                        BLANK()                 // opacity
-                    ),
-                    BLANK()                     // transforms
-                )
-            
-            // Combined elements
-            VAR _CombinedElements =
-                _GradientDef & 
-                _HeatmapRect
-                    
-            RETURN
+			// Create rectangle with gradient fill
+			VAR _HeatmapRect = 
+				DaxLib.SVG.Element.Rect(
+					_X,                         // x
+					_Y,                         // y
+					_Width,                     // width
+					_Height,                    // height
+					0,                          // rx
+					0,                          // ry
+					DaxLib.SVG.Attr.Shapes(
+						"url(#kde-gradient)", 	// fill
+						BLANK(),                // fillOpacity
+						BLANK(),                // fillRule
+						BLANK(),                // stroke
+						BLANK(),                // strokeWidth
+						BLANK(),                // strokeOpacity
+						BLANK()                 // opacity
+					),
+					BLANK()                     // transforms
+				)
+			
+			// Combined elements
+			VAR _CombinedElements =
+				_GradientDef & 
+				_HeatmapRect
+					
+			RETURN
 
-                IF( NOT ISEMPTY( _Data ), _CombinedElements )
+				IF( NOT ISEMPTY( _Data ), _CombinedElements )
     ```

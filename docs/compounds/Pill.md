@@ -56,76 +56,77 @@ Generates a pill SVG compound (rounded rectangle with text centered inside)
     ```dax
     function 'DaxLib.SVG.Compound.Pill' = 
         (
-            x: INT64,
-            y: INT64,
-            width: INT64,
-            height: INT64,
-            paddingX: DOUBLE,
-            paddingY: DOUBLE,
-            txt: STRING,
-            color: STRING
-        ) =>
+			x: INT64,
+			y: INT64,
+			width: INT64,
+			height: INT64,
+			paddingX: DOUBLE,
+			paddingY: DOUBLE,
+			txt: STRING,
+			color: STRING
+		) =>
 
-        // Apply padding to dimensions
-        VAR _X =            x + (width * (IF(ISBLANK(paddingX), 0, paddingX) / 2))
-        VAR _Y =            y + (height * (IF(ISBLANK(paddingY), 0, paddingY) / 2))
-        VAR _Width =        width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
-        VAR _Height =       height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
+		// Apply padding to dimensions
+		VAR _X = 			x + (width * (IF(ISBLANK(paddingX), 0, paddingX) / 2))
+		VAR _Y = 			y + (height * (IF(ISBLANK(paddingY), 0, paddingY) / 2))
+		VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
+		VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
 
-        VAR _Pill = 
-            DaxLib.SVG.Element.Rect(
-                1,                  // x
-                1,                  // y
-                _Width * 0.98,      // width
-                _Height * 0.92,     // height
-                10,                 // rx
-                10,                 // ry
-                DaxLib.SVG.Attr.Shapes(
-                    color,          // fill
-                    0.2,            // fillOpacity
-                    BLANK(),        // fillRule
-                    color,          // stroke
-                    1,              // strokeWidth
-                    BLANK(),        // strokeOpacity
-                    BLANK()         // opacity
-                ),                  // attributes
-                BLANK()             // transforms
-            )
+		VAR _Pill = 
+			DaxLib.SVG.Element.Rect(
+				_X,                	// x
+				_Y,                	// y
+				_Width * 0.98,      // width
+				_Height * 0.92,     // height
+				10,               	// rx
+				10,               	// ry
+				DaxLib.SVG.Attr.Shapes(
+					color,			// fill
+					0.2,			// fillOpacity
+					BLANK(),		// fillRule
+					color,			// stroke
+					1,				// strokeWidth
+					BLANK(),		// strokeOpacity
+					BLANK()			// opacity
+				),         			// attributes
+				BLANK()           	// transforms
+			)
 
-        VAR _TextElement = 
-            DaxLib.SVG.Element.Txt(
-                _Width * 0.50,      // x
-                _Height * 0.58,     // y
-                txt,                // txt
-                0,                  // dx
-                0,                  // dy
-                DaxLib.SVG.Attr.Shapes(
-                    color,          // fill
-                    BLANK(),        // fillOpacity
-                    BLANK(),        // fillRule
-                    BLANK(),        // stroke
-                    BLANK(),        // strokeWidth
-                    BLANK(),        // strokeOpacity
-                    BLANK()         // opacity
-                ) &
-                DaxLib.SVG.Attr.Txt(
-                    "Segoe UI",     // fontFamily
-                    12,             // fontSize
-                    BLANK(),        // fontWeight
-                    BLANK(),        // fontStyle
-                    "middle",       // textAnchor
-                    "middle",       // baseline
-                    BLANK(),        // textDecoration
-                    BLANK(),        // letterSpacing
-                    BLANK()         // wordSpacing
-                ),                  // attributes
-                BLANK()             // transforms
-            )
+		VAR _TextElement = 
+			DaxLib.SVG.Element.Txt(
+				_X + (_Width * 0.50),      // x
+				_Y + (_Height * 0.58),     // y
+				txt,              	// txt
+				0,                	// dx
+				0,                	// dy
+				DaxLib.SVG.Attr.Shapes(
+					color,			// fill
+					BLANK(),		// fillOpacity
+					BLANK(),		// fillRule
+					BLANK(),		// stroke
+					BLANK(),		// strokeWidth
+					BLANK(),		// strokeOpacity
+					BLANK()			// opacity
+				) &
+				DaxLib.SVG.Attr.Txt(
+					"Segoe UI",		// fontFamily
+					12,				// fontSize
+					BLANK(),		// fontWeight
+					BLANK(),		// fontStyle
+					"middle",		// textAnchor
+					"middle",		// baseline
+					BLANK(),		// textDecoration
+					BLANK(),		// letterSpacing
+					BLANK()			// wordSpacing
+				),         			// attributes
+				BLANK()				// transforms
+			)
 
-        VAR _CombinedElements = 
-            _Pill & 
-            _TextElement
+		VAR _CombinedElements = 
+			_Pill & 
+			_TextElement
 
-        RETURN
-            IF( NOT ISBLANK( txt ), _CombinedElements )
+		RETURN
+		
+			IF( NOT ISBLANK( txt ), _CombinedElements )
     ```
