@@ -4,6 +4,10 @@
 
 :material-bug-outline: `#!dax DaxLib.SVG.Compound.Heatmap()` correctly accepts x and y parameters
 
+:material-bug-outline: `#!dax DaxLib.SVG.Compound.Bar()` correctly accepts y parameters
+
+:material-bug-outline: `#!dax DaxLib.SVG.Compound.Violin()` resolved spike from last point
+
 ## 0.2.1-beta
 
 :octicons-sparkles-fill-16: [Tom Shanley](https://www.linkedin.com/in/tshanley/) contributed `#!dax DaxLib.SVG.Compound.Bar()`

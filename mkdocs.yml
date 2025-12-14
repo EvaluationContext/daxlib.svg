@@ -156,6 +156,7 @@ nav:
         - Jitter: compounds/Jitter.md
         - Violin: compounds/Violin.md
         - Pill: compounds/Pill.md
+        - Bar: compounds/Bar.md
       - Defs:
         - defs/index.md
         - Circle: defs/Circle.md
