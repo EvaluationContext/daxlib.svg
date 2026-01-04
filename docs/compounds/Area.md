@@ -79,154 +79,152 @@ Generates an Area compound SVG Visual
         ) =>
 
             // Apply padding to dimensions
-            VAR _X = 			x + (width * (IF(ISBLANK(paddingX), 0, paddingX) / 2))
-            VAR _Y = 			y + (height * (IF(ISBLANK(paddingY), 0, paddingY) / 2))
-            VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
-            VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
-        
-            // Check if Axis is numeric
-            VAR axisSample = 	MAX( axisRef )
-            VAR axisIsNumeric = ISNUMERIC( axisSample ) || ISDATETIME( axisSample )
-            
-            // For totals
-            VAR _Data = 
+			VAR _X = 			x + ( width * ( COALESCE( paddingX, 0 ) / 2) )
+            VAR _Y = 			y + ( height * ( COALESCE( paddingY, 0 ) / 2) )
+            VAR _Width = 		width * ( 1 - COALESCE( paddingX, 0 ) )
+            VAR _Height = 		height * ( 1 - COALESCE( paddingY, 0 ) )
+		
+			// Check if Axis is numeric
+			VAR axisSample = 	MAX( axisRef )
+			VAR axisIsNumeric = ISNUMERIC( axisSample ) || ISDATETIME( axisSample )
+			
+			// For totals
+            // Materialize axis + value once (avoid repeated measure evaluation)
+            VAR _Values =
                 ADDCOLUMNS(
-                    FILTER(
-                        VALUES( axisRef ),
-                        NOT ISBLANK( measureRef )
-                    ),
-                    "@AxisIndex", 	
+					VALUES( axisRef ),
+					"@Value", measureRef
+				)
+
+            VAR _DataNonBlank =
+                FILTER( _Values, NOT ISBLANK( [@Value] ) )
+
+            VAR _Data =
+                ADDCOLUMNS(
+                    _DataNonBlank,
+                    "@AxisIndex",
                         IF(
                             axisIsNumeric,
                             axisRef,
                             RANK( DENSE, CALCULATETABLE( VALUES( axisRef ), ALLSELECTED() ) )
-                        ),
-                    "@Value", measureRef
-                )
-            
-            VAR _XMin = 	MINX( _Data, [@AxisIndex] )
-            VAR _XMax = 	MAXX( _Data, [@AxisIndex] )
-            VAR _RawYMin = 	MINX( _Data, [@Value] )
-            VAR _YMin = 	IF( _RawYMin > 0, 0, _RawYMin )
-            VAR _YMax = 	MAXX( _Data, [@Value] )
-
-            // Calculate baseline Y position (for zero line or bottom)
-            VAR _BaselineY = DaxLib.SVG.Scale.Normalize( _YMin, _YMin, _YMax, _Y + _Height, _Y )
-
-            // Get first and last X positions
-            VAR _FirstX = 
-                MINX(
-                    FILTER( _Data, NOT ISBLANK( [@Value] ) ),
-                    DaxLib.SVG.Scale.Normalize( [@AxisIndex], _XMin, _XMax, _X, _X + _Width )
-                )
-            
-            VAR _LastX = 
-                MAXX(
-                    FILTER( _Data, NOT ISBLANK( [@Value] ) ),
-                    DaxLib.SVG.Scale.Normalize( [@AxisIndex], _XMin, _XMax, _X, _X + _Width )
-                )
-
-            // Generate points for the area polygon
-            // Start at baseline (bottom left), go up the data line, then back down to baseline
-            VAR _PolygonPoints = 
-                // Start at first X position at baseline
-                _FirstX & "," & _BaselineY
-                // Add all the data points (the top line)
-                & " " & 
-                CONCATENATEX(
-                    _Data,
-                    IF( 
-                        NOT ISBLANK( [@Value] ), 
-                        COMBINEVALUES( 
-                            ",", 
-                            DaxLib.SVG.Scale.Normalize( [@AxisIndex], _XMin, _XMax, _X, _X + _Width ), 
-                            DaxLib.SVG.Scale.Normalize( [@Value], _YMin, _YMax, _Y + _Height, _Y )
                         )
-                    ),
-                    " ",
-                    [@AxisIndex],
-                    ASC
                 )
-                // End at last X position at baseline
-                & " " & _LastX & "," & _BaselineY
+			
+			VAR _XMin = 	MINX( _Data, [@AxisIndex] )
+			VAR _XMax = 	MAXX( _Data, [@AxisIndex] )
+			VAR _RawYMin = 	MINX( _Data, [@Value] )
+			VAR _YMin = 	IF( _RawYMin > 0, 0, _RawYMin )
+			VAR _YMax = 	MAXX( _Data, [@Value] )
+            VAR _XWidth =   _X + _Width
+            VAR _YHeight =  _Y + _Height
 
-            // Generate points for just the top line (for optional stroke)
-            VAR _TopPoints = 
-                CONCATENATEX(
+			// Calculate baseline Y position (for zero line or bottom)
+			VAR _BaselineY = DaxLib.SVG.Scale.Normalize( _YMin, _YMin, _YMax, _YHeight, _Y )
+
+            // Cache
+            VAR _DataNormalized = 
+                ADDCOLUMNS(
                     _Data,
-                    IF( 
-                        NOT ISBLANK( [@Value] ), 
-                        COMBINEVALUES( 
-                            ",", 
-                            DaxLib.SVG.Scale.Normalize( [@AxisIndex], _XMin, _XMax, _X, _X + _Width ), 
-                            DaxLib.SVG.Scale.Normalize( [@Value], _YMin, _YMax, _Y + _Height, _Y )
-                        )
-                    ),
-                    " ",
-                    [@AxisIndex],
-                    ASC
+                    "@NormX", DaxLib.SVG.Scale.Normalize( [@AxisIndex], _XMin, _XMax, _X, _XWidth ),
+                    "@NormY", DaxLib.SVG.Scale.Normalize( [@Value], _YMin, _YMax, _YHeight, _Y )
                 )
 
-            // Area Element (using polygon for filled area)
-            VAR _AreaElement =
-                DaxLib.SVG.Element.Polygon(
-                    _PolygonPoints,		// points
-                    DaxLib.SVG.Attr.Shapes(
-                        fillColor, 		// fill
-                        IF( NOT ISBLANK( fillOpacity ), fillOpacity, 0.3 ), // fillOpacity
-                        BLANK(),      	// fillRule
-                        "none",         // stroke
-                        0,              // strokeWidth
-                        BLANK(),        // strokeOpacity
-                        BLANK()         // opacity
-                    ),
-                    BLANK()				// transforms
-                )
+			// Get first and last X positions
+			VAR _FirstX = MINX( _DataNormalized, [@NormX] )
+			VAR _LastX = MAXX( _DataNormalized, [@NormX] )
 
-            // stroke line on top of the area
-            VAR _StrokeElement = 
-                DaxLib.SVG.Element.Polyline(
-                    _TopPoints,			// points
-                    DaxLib.SVG.Attr.Shapes(
-                        "none",			// fill
-                        BLANK(),		// fillOpacity
-                        BLANK(),		// fillRule
-                        strokeColor,	// stroke
-                        1,				// strokeWidth
-                        BLANK(),		// strokeOpacity
-                        BLANK()			// opacity
-                    ),
-                    BLANK()				// transforms
-                )
-            
-            // Circle if only one point
-            VAR _SinglePointElement =
-                DaxLib.SVG.Element.Circle(
-                        DaxLib.SVG.Scale.Normalize( MAXX( _Data, [@AxisIndex] ), _XMin, _XMax, _X, _X + _Width ), // cx
-                        DaxLib.SVG.Scale.Normalize( MAXX( _Data, [@Value] ), _YMin, _YMax, _Y + _Height, _Y ), // cy
-                        2,               	// r
-                        DaxLib.SVG.Attr.Shapes(
-                            fillColor,     // fill
-                            BLANK(),        // fillOpacity
-                            BLANK(),        // fillRule
-                            BLANK(),        // stroke
-                            BLANK(),        // strokeWidth
-                            BLANK(),        // strokeOpacity
-                            BLANK()         // opacity
-                        ),
-                        BLANK()             // transforms
-                    )
+			// Generate points for the area polygon
+			// Start at baseline (bottom left), go up the data line, then back down to baseline
+			VAR _PolygonPoints = 
+				// Start at first X position at baseline
+				_FirstX & "," & _BaselineY & " " & 
+				// Add all the data points (the top line)
+				CONCATENATEX(
+					_DataNormalized,
+					IF( 
+						NOT ISBLANK( [@Value] ), 
+						COMBINEVALUES( ",", [@NormX], [@NormY] )
+					),
+					" ",
+					[@AxisIndex],
+					ASC
+				)
+				// End at last X position at baseline
+				& " " & _LastX & "," & _BaselineY
 
-            // Combine elements
-            VAR _CombinedElements = 
-                IF(
-                    COUNTROWS( _Data ) = 1,
-                    _SinglePointElement,
-                    _AreaElement &
-                    _StrokeElement
-                )
+			// Generate points for just the top line (for optional stroke)
+			VAR _TopPoints = 
+				CONCATENATEX(
+					_DataNormalized,
+					IF( 
+						NOT ISBLANK( [@Value] ), 
+						COMBINEVALUES( ",", [@NormX], [@NormY] )
+					),
+					" ",
+					[@AxisIndex],
+					ASC
+				)
 
-            RETURN
-            
-                IF( NOT ISEMPTY( _Data ), _CombinedElements )
+			// Area Element (using polygon for filled area)
+			VAR _AreaElement =
+				DaxLib.SVG.Element.Polygon(
+					_PolygonPoints,		// points
+					DaxLib.SVG.Attr.Shapes(
+						fillColor, 		// fill
+						IF( NOT ISBLANK( fillOpacity ), fillOpacity, 0.3 ), // fillOpacity
+						BLANK(),      	// fillRule
+						"none",         // stroke
+						0,              // strokeWidth
+						BLANK(),        // strokeOpacity
+						BLANK()         // opacity
+					),
+					BLANK()				// transforms
+				)
+
+			// stroke line on top of the area
+			VAR _StrokeElement = 
+				DaxLib.SVG.Element.Polyline(
+					_TopPoints,			// points
+					DaxLib.SVG.Attr.Shapes(
+						"none",			// fill
+						BLANK(),		// fillOpacity
+						BLANK(),		// fillRule
+						strokeColor,	// stroke
+						1,				// strokeWidth
+						BLANK(),		// strokeOpacity
+						BLANK()			// opacity
+					),
+					BLANK()				// transforms
+				)
+			
+			// Circle if only one point
+			VAR _SinglePointElement =
+				DaxLib.SVG.Element.Circle(
+						DaxLib.SVG.Scale.Normalize( MAXX( _Data, [@AxisIndex] ), _XMin, _XMax, _X, _XWidth ), // cx
+						DaxLib.SVG.Scale.Normalize( MAXX( _Data, [@Value] ), _YMin, _YMax, _YHeight, _Y ), // cy
+						2,               	// r
+						DaxLib.SVG.Attr.Shapes(
+							fillColor,     // fill
+							BLANK(),        // fillOpacity
+							BLANK(),        // fillRule
+							BLANK(),        // stroke
+							BLANK(),        // strokeWidth
+							BLANK(),        // strokeOpacity
+							BLANK()         // opacity
+						),
+						BLANK()             // transforms
+					)
+
+			// Combine elements
+			VAR _CombinedElements = 
+				IF(
+					COUNTROWS( _Data ) = 1,
+					_SinglePointElement,
+					_AreaElement &
+					_StrokeElement
+				)
+
+			RETURN
+			
+				IF( NOT ISEMPTY( _Data ), _CombinedElements )
     ```

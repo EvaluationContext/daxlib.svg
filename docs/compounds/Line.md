@@ -70,98 +70,106 @@ Generates a Line compound SVG Visual
         ) =>
 
             // Apply padding to dimensions
-            VAR _X =            x + (width * (IF(ISBLANK(paddingX), 0, paddingX) / 2))
-            VAR _Y =            y + (height * (IF(ISBLANK(paddingY), 0, paddingY) / 2))
-            VAR _Width =        width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
-            VAR _Height =       height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
-
-            // Check if Axis is numeric
-            VAR axisSample =    MAX( axisRef )
-            VAR axisIsNumeric = ISNUMERIC( axisSample ) || ISDATETIME( axisSample )
-            
-            // For totals
-            VAR _Data = 
+			VAR _X = 			x + ( width * ( COALESCE( paddingX, 0 ) / 2) )
+            VAR _Y = 			y + ( height * ( COALESCE( paddingY, 0 ) / 2) )
+            VAR _Width = 		width * ( 1 - COALESCE( paddingX, 0 ) )
+            VAR _Height = 		height * ( 1 - COALESCE( paddingY, 0 ) )
+	
+			// Check if Axis is numeric
+			VAR axisSample = 	MAX( axisRef )
+			VAR axisIsNumeric = ISNUMERIC( axisSample ) || ISDATETIME( axisSample )
+			
+			// For totals
+            // Materialize axis + value once (avoid repeated measure evaluation)
+            VAR _Values =
                 ADDCOLUMNS(
-                    FILTER(
-                        VALUES( axisRef ),
-                        NOT ISBLANK( measureRef )
-                    ),
-                    "@AxisIndex", 	
+					VALUES( axisRef ),
+					"@Value", measureRef
+				)
+
+            VAR _DataNonBlank =
+                FILTER( _Values, NOT ISBLANK( [@Value] ) )
+
+            VAR _Data =
+                ADDCOLUMNS(
+                    _DataNonBlank,
+                    "@AxisIndex",
                         IF(
                             axisIsNumeric,
                             axisRef,
                             RANK( DENSE, CALCULATETABLE( VALUES( axisRef ), ALLSELECTED() ) )
-                        ),
-                    "@Value", measureRef
-                )
-
-            // Define axis scales		
-            VAR _XMin = 	MINX( _Data, [@AxisIndex] )
-            VAR _XMax = 	MAXX( _Data, [@AxisIndex] )
-            VAR _RawYMin = 	MINX( _Data, [@Value] )
-            VAR _YMin = 	IF( _RawYMin > 0, 0, _RawYMin )
-            VAR _YMax = 	MAXX( _Data, [@Value] )
-
-            //Points
-            VAR _Points = 
-                CONCATENATEX(
-                    _Data,
-                    IF( 
-                        NOT ISBLANK( [@Value] ), 
-                        COMBINEVALUES( 
-                            ",", 
-                            DaxLib.SVG.Scale.Normalize( [@AxisIndex], _XMin, _XMax, _X, _X + _Width ), 
-                            DaxLib.SVG.Scale.Normalize( [@Value], _YMin, _YMax, _Y + _Height, _Y )
                         )
-                    ),
-                    " ",
-                    [@AxisIndex],
-                    ASC
                 )
 
-            // Line Element
-            VAR _LineElement =
-                DaxLib.SVG.Element.Polyline(
-                    _Points,		// points
-                    DaxLib.SVG.Attr.Shapes(
-                        "none",		// fill
-                        BLANK(),	// fillOpacity
-                        BLANK(),	// fillRule
-                        IF( NOT ISBLANK( lineColor ), lineColor, "#01B8AA" ), // stroke
-                        1,			// stroke
-                        BLANK(),	// strokeOpacity
-                        BLANK()		// opacity
-                    ),
-                    BLANK()			// transforms
-                )
+			// Define axis scales		
+			VAR _XMin = 	MINX( _Data, [@AxisIndex] )
+			VAR _XMax = 	MAXX( _Data, [@AxisIndex] )
+			VAR _RawYMin = 	MINX( _Data, [@Value] )
+			VAR _YMin = 	IF( _RawYMin > 0, 0, _RawYMin )
+			VAR _YMax = 	MAXX( _Data, [@Value] )
+            VAR _XWidth =   _X + _Width
+            VAR _YHeight =  _Y + _Height
 
-            // Single Point Element
-            VAR _SinglePointElement =
-                DaxLib.SVG.Element.Circle(
-                    DaxLib.SVG.Scale.Normalize( MAXX( _Data, [@AxisIndex] ), _XMin, _XMax, _X, _X + _Width ), // cx
-                    DaxLib.SVG.Scale.Normalize( MAXX( _Data, [@Value] ), _YMin, _YMax, _Y + _Height, _Y ), // cy
-                    2,           	// r
-                    DaxLib.SVG.Attr.Shapes(
-                        lineColor, 	// fill
-                        BLANK(),    // fillOpacity
-                        BLANK(),    // fillRule
-                        BLANK(),    // stroke
-                        BLANK(),    // strokeWidth
-                        BLANK(),    // strokeOpacity
-                        BLANK()     // opacity
-                    ),
-                    BLANK()         // transforms
-                )
+			//Points
+			VAR _Points = 
+				CONCATENATEX(
+					_Data,
+					IF( 
+						NOT ISBLANK( [@Value] ), 
+						COMBINEVALUES( 
+							",", 
+							DaxLib.SVG.Scale.Normalize( [@AxisIndex], _XMin, _XMax, _X, _XWidth ), 
+							DaxLib.SVG.Scale.Normalize( [@Value], _YMin, _YMax, _YHeight, _Y )
+						)
+					),
+					" ",
+					[@AxisIndex],
+					ASC
+				)
 
-            // Combined elements
-            VAR _CombinedElement = 
-                IF(
-                    COUNTROWS( _Data ) = 1,
-                    _SinglePointElement,
-                    _LineElement
-                )
+			// Line Element
+			VAR _LineElement =
+				DaxLib.SVG.Element.Polyline(
+					_Points,		// points
+					DaxLib.SVG.Attr.Shapes(
+						"none",		// fill
+						BLANK(),	// fillOpacity
+						BLANK(),	// fillRule
+						IF( NOT ISBLANK( lineColor ), lineColor, "#01B8AA" ), // stroke
+						1,			// stroke
+						BLANK(),	// strokeOpacity
+						BLANK()		// opacity
+					),
+					BLANK()			// transforms
+				)
 
-            RETURN
-                
-                IF( NOT ISEMPTY( _Data ), _CombinedElement )
+			// Single Point Element
+			VAR _SinglePointElement =
+				DaxLib.SVG.Element.Circle(
+					DaxLib.SVG.Scale.Normalize( MAXX( _Data, [@AxisIndex] ), _XMin, _XMax, _X, _XWidth ), // cx
+					DaxLib.SVG.Scale.Normalize( MAXX( _Data, [@Value] ), _YMin, _YMax, _YHeight, _Y ), // cy
+					2,           	// r
+					DaxLib.SVG.Attr.Shapes(
+						lineColor, 	// fill
+						BLANK(),    // fillOpacity
+						BLANK(),    // fillRule
+						BLANK(),    // stroke
+						BLANK(),    // strokeWidth
+						BLANK(),    // strokeOpacity
+						BLANK()     // opacity
+					),
+					BLANK()         // transforms
+				)
+
+			// Combined elements
+			VAR _CombinedElement = 
+				IF(
+					COUNTROWS( _Data ) = 1,
+					_SinglePointElement,
+					_LineElement
+				)
+
+			RETURN
+				
+				IF( NOT ISEMPTY( _Data ), _CombinedElement )
     ```

@@ -1,4 +1,8 @@
-## 0.2.2-beta (Latest)
+## 0.2.3-beta (Latest)
+
+:octicons-sparkles-fill-16: `#!dax DaxLib.SVG.Compound.*` performance improvements
+
+## 0.2.2-beta
 
 :material-bug-outline: `#!dax DaxLib.SVG.Compound.Pill()` correctly accepts x and y parameters
 
