@@ -1,0 +1,38 @@
+{
+  "name": "DaxLib.SVG.Color.PerformanceTheme",
+  "short_name": "Color.PerformanceTheme",
+  "description": "Returns a color for the specified performance level and theme",
+  "parameters": [
+    {
+      "name": "themeName",
+      "type": "string",
+      "type_label": "<span class=\"type-label string\">STRING</span>",
+      "description": "The theme name: \"Stoplight\", \"Colorblind\", \"Corporate\", \"Pastel\", or \"Grayscale\". Defaults to \"Stoplight\"",
+      "optional": true,
+      "default_value": null
+    },
+    {
+      "name": "variant",
+      "type": "string",
+      "type_label": "<span class=\"type-label string\">STRING</span>",
+      "description": "The performance level (\"veryBad\", \"bad\", \"neutral\", \"good\", \"veryGood\"). Defaults to \"neutral\"",
+      "optional": true,
+      "default_value": null
+    }
+  ],
+  "return_type": "STRING",
+  "return_type_label": "<span class=\"type-label string\">STRING</span>",
+  "return_description": "hex color code representing the performance level",
+  "code": "function 'DaxLib.SVG.Color.PerformanceTheme' =\n\t\t(\n\t\t\tthemeName: STRING,\n\t\t\tvariant: STRING\n\t\t) =>\n\t\t\t\n\t\t\tVAR Themes =\n\t\t\t\tDATATABLE(\n\t\t\t\t\"ThemeName\", STRING,\n\t\t\t\t\"Variant\", STRING,\n\t\t\t\t\"Color\", STRING,\n\t\t\t\t{\n\t\t\t\t\t// Stoplight - Classic red/yellow/green\n\t\t\t\t\t{\"Stoplight\", \"veryBad\",  \"#D04848\"}, // Red\n\t\t\t\t\t{\"Stoplight\", \"bad\",      \"#F07857\"}, // Orange-red\n\t\t\t\t\t{\"Stoplight\", \"neutral\",  \"#FFBF49\"}, // Amber\n\t\t\t\t\t{\"Stoplight\", \"good\",     \"#4CAF50\"}, // Green\n\t\t\t\t\t{\"Stoplight\", \"veryGood\", \"#2E8B57\"}, // Sea green\n\t\t\t\t\t\n\t\t\t\t\t// Colorblind-friendly\n\t\t\t\t\t{\"Colorblind\", \"veryBad\",  \"#8F2D56\"}, // Wine red\n\t\t\t\t\t{\"Colorblind\", \"bad\",      \"#D95980\"}, // Light raspberry\n\t\t\t\t\t{\"Colorblind\", \"neutral\",  \"#FFC857\"}, // Yellow\n\t\t\t\t\t{\"Colorblind\", \"good\",     \"#41B3A3\"}, // Teal\n\t\t\t\t\t{\"Colorblind\", \"veryGood\", \"#1D4E89\"}, // Navy blue\n\t\t\t\t\t\n\t\t\t\t\t// Corporate - Blue theme for business use\n\t\t\t\t\t{\"Corporate\", \"veryBad\",  \"#BC2F4A\"}, // Red accent\n\t\t\t\t\t{\"Corporate\", \"bad\",      \"#E36F6F\"}, // Light red\n\t\t\t\t\t{\"Corporate\", \"neutral\",  \"#BDBDBD\"}, // Gray\n\t\t\t\t\t{\"Corporate\", \"good\",     \"#6BB5D8\"}, // Light blue\n\t\t\t\t\t{\"Corporate\", \"veryGood\", \"#114D85\"}, // Dark blue\n\t\t\t\t\t\n\t\t\t\t\t// Pastel - Soft colors for gentler visualization\n\t\t\t\t\t{\"Pastel\", \"veryBad\",  \"#F8AFA6\"}, // Soft red\n\t\t\t\t\t{\"Pastel\", \"bad\",      \"#FAD48E\"}, // Soft orange\n\t\t\t\t\t{\"Pastel\", \"neutral\",  \"#F5F5F5\"}, // Light gray\n\t\t\t\t\t{\"Pastel\", \"good\",     \"#A6DCEF\"}, // Soft blue\n\t\t\t\t\t{\"Pastel\", \"veryGood\", \"#A6E4D0\"}, // Soft green\n\t\t\t\t\t\n\t\t\t\t\t// Grayscale - For black and white or muted presentations\n\t\t\t\t\t{\"Grayscale\", \"veryBad\",  \"#4D4D4D\"}, // Dark gray\n\t\t\t\t\t{\"Grayscale\", \"bad\",      \"#7D7D7D\"}, // Gray\n\t\t\t\t\t{\"Grayscale\", \"neutral\",  \"#ADADAD\"}, // Medium gray\n\t\t\t\t\t{\"Grayscale\", \"good\",     \"#D3D3D3\"}, // Light gray\n\t\t\t\t\t{\"Grayscale\", \"veryGood\", \"#F9F9F9\"}  // Near white\n\t\t\t\t}\n\t\t\t)\n\n\t\t\tVAR _variant = \t\tIF( ISBLANK( variant ), \"neutral\", variant )\n\t\t\tVAR _themeName = \tIF( ISBLANK( themeName ), \"Stoplight\", themeName )\n\t\t\t\n\t\t\tVAR SelectedColor =\n\t\t\t\tMAXX(\n\t\t\t\t\tFILTER( Themes, [Variant] = _variant && [ThemeName] = _themeName),\n\t\t\t\t\t[Color]\n\t\t\t\t)\n\t\t\t\n\t\t\tRETURN SelectedColor",
+  "example": null,
+  "author": null,
+  "version": null,
+  "since": null,
+  "see": null,
+  "deprecated": null,
+  "sections": {
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Color.PerformanceTheme( themeName, variant )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | themeName | <span class=\"type-label string\">STRING</span> | :material-close: | The theme name: \"Stoplight\", \"Colorblind\", \"Corporate\", \"Pastel\", or \"Grayscale\". Defaults to \"Stoplight\" |\n    | variant | <span class=\"type-label string\">STRING</span> | :material-close: | The performance level (\"veryBad\", \"bad\", \"neutral\", \"good\", \"veryGood\"). Defaults to \"neutral\" |\n\n    <span class=\"type-label string\">STRING</span> hex color code representing the performance level",
+    "example": "",
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Color.PerformanceTheme' =\n    \t\t(\n    \t\t\tthemeName: STRING,\n    \t\t\tvariant: STRING\n    \t\t) =>\n    \t\t\t\n    \t\t\tVAR Themes =\n    \t\t\t\tDATATABLE(\n    \t\t\t\t\"ThemeName\", STRING,\n    \t\t\t\t\"Variant\", STRING,\n    \t\t\t\t\"Color\", STRING,\n    \t\t\t\t{\n    \t\t\t\t\t// Stoplight - Classic red/yellow/green\n    \t\t\t\t\t{\"Stoplight\", \"veryBad\",  \"#D04848\"}, // Red\n    \t\t\t\t\t{\"Stoplight\", \"bad\",      \"#F07857\"}, // Orange-red\n    \t\t\t\t\t{\"Stoplight\", \"neutral\",  \"#FFBF49\"}, // Amber\n    \t\t\t\t\t{\"Stoplight\", \"good\",     \"#4CAF50\"}, // Green\n    \t\t\t\t\t{\"Stoplight\", \"veryGood\", \"#2E8B57\"}, // Sea green\n    \t\t\t\t\t\n    \t\t\t\t\t// Colorblind-friendly\n    \t\t\t\t\t{\"Colorblind\", \"veryBad\",  \"#8F2D56\"}, // Wine red\n    \t\t\t\t\t{\"Colorblind\", \"bad\",      \"#D95980\"}, // Light raspberry\n    \t\t\t\t\t{\"Colorblind\", \"neutral\",  \"#FFC857\"}, // Yellow\n    \t\t\t\t\t{\"Colorblind\", \"good\",     \"#41B3A3\"}, // Teal\n    \t\t\t\t\t{\"Colorblind\", \"veryGood\", \"#1D4E89\"}, // Navy blue\n    \t\t\t\t\t\n    \t\t\t\t\t// Corporate - Blue theme for business use\n    \t\t\t\t\t{\"Corporate\", \"veryBad\",  \"#BC2F4A\"}, // Red accent\n    \t\t\t\t\t{\"Corporate\", \"bad\",      \"#E36F6F\"}, // Light red\n    \t\t\t\t\t{\"Corporate\", \"neutral\",  \"#BDBDBD\"}, // Gray\n    \t\t\t\t\t{\"Corporate\", \"good\",     \"#6BB5D8\"}, // Light blue\n    \t\t\t\t\t{\"Corporate\", \"veryGood\", \"#114D85\"}, // Dark blue\n    \t\t\t\t\t\n    \t\t\t\t\t// Pastel - Soft colors for gentler visualization\n    \t\t\t\t\t{\"Pastel\", \"veryBad\",  \"#F8AFA6\"}, // Soft red\n    \t\t\t\t\t{\"Pastel\", \"bad\",      \"#FAD48E\"}, // Soft orange\n    \t\t\t\t\t{\"Pastel\", \"neutral\",  \"#F5F5F5\"}, // Light gray\n    \t\t\t\t\t{\"Pastel\", \"good\",     \"#A6DCEF\"}, // Soft blue\n    \t\t\t\t\t{\"Pastel\", \"veryGood\", \"#A6E4D0\"}, // Soft green\n    \t\t\t\t\t\n    \t\t\t\t\t// Grayscale - For black and white or muted presentations\n    \t\t\t\t\t{\"Grayscale\", \"veryBad\",  \"#4D4D4D\"}, // Dark gray\n    \t\t\t\t\t{\"Grayscale\", \"bad\",      \"#7D7D7D\"}, // Gray\n    \t\t\t\t\t{\"Grayscale\", \"neutral\",  \"#ADADAD\"}, // Medium gray\n    \t\t\t\t\t{\"Grayscale\", \"good\",     \"#D3D3D3\"}, // Light gray\n    \t\t\t\t\t{\"Grayscale\", \"veryGood\", \"#F9F9F9\"}  // Near white\n    \t\t\t\t}\n    \t\t\t)\n    \n    \t\t\tVAR _variant = \t\tIF( ISBLANK( variant ), \"neutral\", variant )\n    \t\t\tVAR _themeName = \tIF( ISBLANK( themeName ), \"Stoplight\", themeName )\n    \t\t\t\n    \t\t\tVAR SelectedColor =\n    \t\t\t\tMAXX(\n    \t\t\t\t\tFILTER( Themes, [Variant] = _variant && [ThemeName] = _themeName),\n    \t\t\t\t\t[Color]\n    \t\t\t\t)\n    \t\t\t\n    \t\t\tRETURN SelectedColor\n    ```"
+  }
+}

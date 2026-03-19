@@ -1,0 +1,54 @@
+{
+  "name": "DaxLib.SVG.Scale.NiceRange",
+  "short_name": "Scale.NiceRange",
+  "description": "Computes a \"nice\" axis range with rounded min, max, and tick interval Returns values suitable for human-friendly axis labelling",
+  "parameters": [
+    {
+      "name": "dataMin",
+      "type": "numeric val",
+      "type_label": "<span class=\"type-label number\">NUMERIC</span> <span class=\"type-label val\">VAL</span>",
+      "description": "Minimum value from source data",
+      "optional": false,
+      "default_value": null
+    },
+    {
+      "name": "dataMax",
+      "type": "numeric val",
+      "type_label": "<span class=\"type-label number\">NUMERIC</span> <span class=\"type-label val\">VAL</span>",
+      "description": "Maximum value from source data",
+      "optional": false,
+      "default_value": null
+    },
+    {
+      "name": "maxTicks",
+      "type": "int",
+      "type_label": "<span class=\"type-label int64\">INT64</span>",
+      "description": "Optional: Desired maximum number of ticks. Defaults to 5",
+      "optional": true,
+      "default_value": null
+    },
+    {
+      "name": "includeZero",
+      "type": "boolean",
+      "type_label": "<span class=\"type-label boolean\">BOOLEAN</span>",
+      "description": "Optional: Whether to include zero in the range when data is fully positive. Defaults to FALSE.",
+      "optional": true,
+      "default_value": null
+    }
+  ],
+  "return_type": "TABLE",
+  "return_type_label": "<span class=\"type-label table\">TABLE</span>",
+  "return_description": "Single-row table with `@NiceMin`, `@NiceMax`, `@NiceInterval`, `@NiceTickCount`",
+  "code": "function 'DaxLib.SVG.Scale.NiceRange' =\n\t\t(\n\t\t\tdataMin: NUMERIC VAL,\n\t\t\tdataMax: NUMERIC VAL,\n\t\t\tmaxTicks: INT64,\n\t\t\tincludeZero: BOOLEAN\n\t\t) =>\n\n\t\t\tVAR _MaxTicks = IF( ISBLANK( maxTicks ) || maxTicks < 2, 5, maxTicks )\n\t\t\tVAR _IncludeZero = IF( ISBLANK( includeZero ), FALSE(), includeZero )\n\t\t\tVAR _DataMin = IF( _IncludeZero && dataMin > 0, 0, dataMin )\n\t\t\tVAR _DataMax = dataMax\n\t\t\tVAR _Range = _DataMax - _DataMin\n\t\t\tVAR _NiceInterval =\n\t\t\t\tIF(\n\t\t\t\t\t_Range = 0,\n\t\t\t\t\tIF( _DataMax = 0, 1, DaxLib.SVG.Scale.NiceNum( ABS( _DataMax ) * 0.2, TRUE() ) ),\n\t\t\t\t\tDaxLib.SVG.Scale.NiceNum( _Range / ( _MaxTicks - 1 ), TRUE() )\n\t\t\t\t)\n\t\t\tVAR _NiceMin = INT( _DataMin / _NiceInterval ) * _NiceInterval\n\t\t\tVAR _NiceMax = -INT( -_DataMax / _NiceInterval ) * _NiceInterval\n\t\t\tVAR _NiceTickCount = INT( ( _NiceMax - _NiceMin ) / _NiceInterval ) + 1\n\n\t\t\tRETURN\n\t\t\t\tROW(\n\t\t\t\t\t\"@NiceMin\", _NiceMin,\n\t\t\t\t\t\"@NiceMax\", _NiceMax,\n\t\t\t\t\t\"@NiceInterval\", _NiceInterval,\n\t\t\t\t\t\"@NiceTickCount\", _NiceTickCount\n\t\t\t\t)",
+  "example": null,
+  "author": null,
+  "version": null,
+  "since": null,
+  "see": null,
+  "deprecated": null,
+  "sections": {
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Scale.NiceRange( dataMin, dataMax, maxTicks, includeZero )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | dataMin | <span class=\"type-label number\">NUMERIC</span> <span class=\"type-label val\">VAL</span> | :material-check: | Minimum value from source data |\n    | dataMax | <span class=\"type-label number\">NUMERIC</span> <span class=\"type-label val\">VAL</span> | :material-check: | Maximum value from source data |\n    | maxTicks | <span class=\"type-label int64\">INT64</span> | :material-close: | Optional: Desired maximum number of ticks. Defaults to 5 |\n    | includeZero | <span class=\"type-label boolean\">BOOLEAN</span> | :material-close: | Optional: Whether to include zero in the range when data is fully positive. Defaults to FALSE. |\n\n    <span class=\"type-label table\">TABLE</span> Single-row table with `@NiceMin`, `@NiceMax`, `@NiceInterval`, `@NiceTickCount`",
+    "example": "",
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Scale.NiceRange' =\n    \t\t(\n    \t\t\tdataMin: NUMERIC VAL,\n    \t\t\tdataMax: NUMERIC VAL,\n    \t\t\tmaxTicks: INT64,\n    \t\t\tincludeZero: BOOLEAN\n    \t\t) =>\n    \n    \t\t\tVAR _MaxTicks = IF( ISBLANK( maxTicks ) || maxTicks < 2, 5, maxTicks )\n    \t\t\tVAR _IncludeZero = IF( ISBLANK( includeZero ), FALSE(), includeZero )\n    \t\t\tVAR _DataMin = IF( _IncludeZero && dataMin > 0, 0, dataMin )\n    \t\t\tVAR _DataMax = dataMax\n    \t\t\tVAR _Range = _DataMax - _DataMin\n    \t\t\tVAR _NiceInterval =\n    \t\t\t\tIF(\n    \t\t\t\t\t_Range = 0,\n    \t\t\t\t\tIF( _DataMax = 0, 1, DaxLib.SVG.Scale.NiceNum( ABS( _DataMax ) * 0.2, TRUE() ) ),\n    \t\t\t\t\tDaxLib.SVG.Scale.NiceNum( _Range / ( _MaxTicks - 1 ), TRUE() )\n    \t\t\t\t)\n    \t\t\tVAR _NiceMin = INT( _DataMin / _NiceInterval ) * _NiceInterval\n    \t\t\tVAR _NiceMax = -INT( -_DataMax / _NiceInterval ) * _NiceInterval\n    \t\t\tVAR _NiceTickCount = INT( ( _NiceMax - _NiceMin ) / _NiceInterval ) + 1\n    \n    \t\t\tRETURN\n    \t\t\t\tROW(\n    \t\t\t\t\t\"@NiceMin\", _NiceMin,\n    \t\t\t\t\t\"@NiceMax\", _NiceMax,\n    \t\t\t\t\t\"@NiceInterval\", _NiceInterval,\n    \t\t\t\t\t\"@NiceTickCount\", _NiceTickCount\n    \t\t\t\t)\n    ```"
+  }
+}

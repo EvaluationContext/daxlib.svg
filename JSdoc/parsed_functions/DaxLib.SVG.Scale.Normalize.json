@@ -1,0 +1,62 @@
+{
+  "name": "DaxLib.SVG.Scale.Normalize",
+  "short_name": "Scale.Normalize",
+  "description": "Map a value from one value scale to another Used for scaling values to fit within SVG dimensions",
+  "parameters": [
+    {
+      "name": "inputValue",
+      "type": "numeric val",
+      "type_label": "<span class=\"type-label number\">NUMERIC</span> <span class=\"type-label val\">VAL</span>",
+      "description": "The value to map",
+      "optional": false,
+      "default_value": null
+    },
+    {
+      "name": "fromMin",
+      "type": "numeric val",
+      "type_label": "<span class=\"type-label number\">NUMERIC</span> <span class=\"type-label val\">VAL</span>",
+      "description": "The minimum value of the original scale",
+      "optional": false,
+      "default_value": null
+    },
+    {
+      "name": "fromMax",
+      "type": "numeric val",
+      "type_label": "<span class=\"type-label number\">NUMERIC</span> <span class=\"type-label val\">VAL</span>",
+      "description": "The maximum value of the original scale",
+      "optional": false,
+      "default_value": null
+    },
+    {
+      "name": "toMin",
+      "type": "numeric val",
+      "type_label": "<span class=\"type-label number\">NUMERIC</span> <span class=\"type-label val\">VAL</span>",
+      "description": "The minimum value of the new scale",
+      "optional": false,
+      "default_value": null
+    },
+    {
+      "name": "toMax",
+      "type": "numeric val",
+      "type_label": "<span class=\"type-label number\">NUMERIC</span> <span class=\"type-label val\">VAL</span>",
+      "description": "The maximum value of the new scale",
+      "optional": false,
+      "default_value": null
+    }
+  ],
+  "return_type": "DECIMAL",
+  "return_type_label": "<span class=\"type-label number\">DECIMAL</span>",
+  "return_description": "mapped value",
+  "code": "function 'DaxLib.SVG.Scale.Normalize' =\n\t\t(\n\t\t\tinputValue: NUMERIC VAL,\n\t\t\tfromMin: NUMERIC VAL,\n\t\t\tfromMax: NUMERIC VAL,\n\t\t\ttoMin: NUMERIC VAL,\n\t\t\ttoMax: NUMERIC VAL\n\t\t) =>\n\t\t\t\n\t\t\t( ( inputValue - fromMin ) / ( fromMax - fromMin ) ) * ( toMax - toMin ) + toMin",
+  "example": null,
+  "author": null,
+  "version": null,
+  "since": null,
+  "see": null,
+  "deprecated": null,
+  "sections": {
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Scale.Normalize( inputValue, fromMin, fromMax, toMin, toMax )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | inputValue | <span class=\"type-label number\">NUMERIC</span> <span class=\"type-label val\">VAL</span> | :material-check: | The value to map |\n    | fromMin | <span class=\"type-label number\">NUMERIC</span> <span class=\"type-label val\">VAL</span> | :material-check: | The minimum value of the original scale |\n    | fromMax | <span class=\"type-label number\">NUMERIC</span> <span class=\"type-label val\">VAL</span> | :material-check: | The maximum value of the original scale |\n    | toMin | <span class=\"type-label number\">NUMERIC</span> <span class=\"type-label val\">VAL</span> | :material-check: | The minimum value of the new scale |\n    | toMax | <span class=\"type-label number\">NUMERIC</span> <span class=\"type-label val\">VAL</span> | :material-check: | The maximum value of the new scale |\n\n    <span class=\"type-label number\">DECIMAL</span> mapped value",
+    "example": "",
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Scale.Normalize' =\n    \t\t(\n    \t\t\tinputValue: NUMERIC VAL,\n    \t\t\tfromMin: NUMERIC VAL,\n    \t\t\tfromMax: NUMERIC VAL,\n    \t\t\ttoMin: NUMERIC VAL,\n    \t\t\ttoMax: NUMERIC VAL\n    \t\t) =>\n    \t\t\t\n    \t\t\t( ( inputValue - fromMin ) / ( fromMax - fromMin ) ) * ( toMax - toMin ) + toMin\n    ```"
+  }
+}

@@ -1,0 +1,366 @@
+{
+  "functions": [
+    {
+      "name": "DaxLib.SVG.Attr.Shapes",
+      "short_name": "Attr.Shapes",
+      "description": "Generates a STRING of common shape attributes that can be passed to `DaxLib.SVG.Element.*` or `DaxLib.SVG.Def.*` functions",
+      "json_file": "DaxLib.SVG.Attr.Shapes.json"
+    },
+    {
+      "name": "DaxLib.SVG.Attr.Stroke",
+      "short_name": "Attr.Stroke",
+      "description": "Comprehensive stroke attributes function",
+      "json_file": "DaxLib.SVG.Attr.Stroke.json"
+    },
+    {
+      "name": "DaxLib.SVG.Attr.Txt",
+      "short_name": "Attr.Txt",
+      "description": "Text-specific attributes",
+      "json_file": "DaxLib.SVG.Attr.Txt.json"
+    },
+    {
+      "name": "DaxLib.SVG.Axes.Baseline",
+      "short_name": "Axes.Baseline",
+      "description": "Maps the numeric baseline to plot coordinates honoring orientation",
+      "json_file": "DaxLib.SVG.Axes.Baseline.json"
+    },
+    {
+      "name": "DaxLib.SVG.Axes.Layout",
+      "short_name": "Axes.Layout",
+      "description": "Calculates axis-aware plot area bounds",
+      "json_file": "DaxLib.SVG.Axes.Layout.json"
+    },
+    {
+      "name": "DaxLib.SVG.Axes.MaxTickLabelWidth",
+      "short_name": "Axes.MaxTickLabelWidth",
+      "description": "Estimates the maximum Y-axis tick label width for layout reservation",
+      "json_file": "DaxLib.SVG.Axes.MaxTickLabelWidth.json"
+    },
+    {
+      "name": "DaxLib.SVG.Axes.Point",
+      "short_name": "Axes.Point",
+      "description": "Maps axis/value data to plot coordinates honoring orientation",
+      "json_file": "DaxLib.SVG.Axes.Point.json"
+    },
+    {
+      "name": "DaxLib.SVG.Axes.Render",
+      "short_name": "Axes.Render",
+      "description": "Renders cartesian axis lines, ticks, and labels",
+      "json_file": "DaxLib.SVG.Axes.Render.json"
+    },
+    {
+      "name": "DaxLib.SVG.Color.Hex.Interpolate",
+      "short_name": "Color.Hex.Interpolate",
+      "description": "Interpolate between two hex colors by a given percentage",
+      "json_file": "DaxLib.SVG.Color.Hex.Interpolate.json"
+    },
+    {
+      "name": "DaxLib.SVG.Color.Hex.ToInt",
+      "short_name": "Color.Hex.ToInt",
+      "description": "Hex to Int conversion",
+      "json_file": "DaxLib.SVG.Color.Hex.ToInt.json"
+    },
+    {
+      "name": "DaxLib.SVG.Color.Int.ToHex",
+      "short_name": "Color.Int.ToHex",
+      "description": "Int to Hex conversion",
+      "json_file": "DaxLib.SVG.Color.Int.ToHex.json"
+    },
+    {
+      "name": "DaxLib.SVG.Color.PerformanceTheme",
+      "short_name": "Color.PerformanceTheme",
+      "description": "Returns a color for the specified performance level and theme",
+      "json_file": "DaxLib.SVG.Color.PerformanceTheme.json"
+    },
+    {
+      "name": "DaxLib.SVG.Color.RGB.ToHex",
+      "short_name": "Color.RGB.ToHex",
+      "description": "RGB to Hex conversion",
+      "json_file": "DaxLib.SVG.Color.RGB.ToHex.json"
+    },
+    {
+      "name": "DaxLib.SVG.Color.Theme",
+      "short_name": "Color.Theme",
+      "description": "Select theme color, wrapping around to the start if variant exceeds available options",
+      "json_file": "DaxLib.SVG.Color.Theme.json"
+    },
+    {
+      "name": "DaxLib.SVG.Compound.Area",
+      "short_name": "Compound.Area",
+      "description": "Creates an Area compound SVG Visual for a numeric x-axis",
+      "json_file": "DaxLib.SVG.Compound.Area.json"
+    },
+    {
+      "name": "DaxLib.SVG.Compound.Bars",
+      "short_name": "Compound.Bars",
+      "description": "Creates a Bars compound SVG Visual showing a bar chart across an axis",
+      "json_file": "DaxLib.SVG.Compound.Bars.json"
+    },
+    {
+      "name": "DaxLib.SVG.Compound.Boxplot",
+      "short_name": "Compound.Boxplot",
+      "description": "Creates a Box Plot compound SVG Visual showing statistical distribution",
+      "json_file": "DaxLib.SVG.Compound.Boxplot.json"
+    },
+    {
+      "name": "DaxLib.SVG.Compound.Heatmap",
+      "short_name": "Compound.Heatmap",
+      "description": "Creates a KDE-based Heatmap compound SVG Visual using Kernel Density Estimation for smooth color gradients",
+      "json_file": "DaxLib.SVG.Compound.Heatmap.json"
+    },
+    {
+      "name": "DaxLib.SVG.Compound.Jitter",
+      "short_name": "Compound.Jitter",
+      "description": "Creates a Jitter Plot compound SVG Visual showing values as points with x-position based on value and y-position jittered around center",
+      "json_file": "DaxLib.SVG.Compound.Jitter.json"
+    },
+    {
+      "name": "DaxLib.SVG.Compound.Line",
+      "short_name": "Compound.Line",
+      "description": "Creates a Line compound SVG Visual for a numeric axis",
+      "json_file": "DaxLib.SVG.Compound.Line.json"
+    },
+    {
+      "name": "DaxLib.SVG.Compound.Pill",
+      "short_name": "Compound.Pill",
+      "description": "Create a pill SVG compound (rounded rectangle with auto-sized text centered inside)",
+      "json_file": "DaxLib.SVG.Compound.Pill.json"
+    },
+    {
+      "name": "DaxLib.SVG.Compound.ProgressBar",
+      "short_name": "Compound.ProgressBar",
+      "description": "Creates a ProgressBar compound SVG visual",
+      "json_file": "DaxLib.SVG.Compound.ProgressBar.json"
+    },
+    {
+      "name": "DaxLib.SVG.Compound.Violin",
+      "short_name": "Compound.Violin",
+      "description": "Creates a Violin Plot compound SVG Visual showing distribution density using Kernel Density Estimation (KDE)",
+      "json_file": "DaxLib.SVG.Compound.Violin.json"
+    },
+    {
+      "name": "DaxLib.SVG.Data.AxisMeasure",
+      "short_name": "Data.AxisMeasure",
+      "description": "Builds a shared axis/value data table for compound visuals",
+      "json_file": "DaxLib.SVG.Data.AxisMeasure.json"
+    },
+    {
+      "name": "DaxLib.SVG.Data.Range",
+      "short_name": "Data.Range",
+      "description": "Computes min/max/baseline values from shaped scalar range inputs",
+      "json_file": "DaxLib.SVG.Data.Range.json"
+    },
+    {
+      "name": "DaxLib.SVG.Def.Circle",
+      "short_name": "Def.Circle",
+      "description": "Create a reusable circle definition",
+      "json_file": "DaxLib.SVG.Def.Circle.json"
+    },
+    {
+      "name": "DaxLib.SVG.Def.ClipPath",
+      "short_name": "Def.ClipPath",
+      "description": "Creates a clipping mask definition",
+      "json_file": "DaxLib.SVG.Def.ClipPath.json"
+    },
+    {
+      "name": "DaxLib.SVG.Def.GradientStop",
+      "short_name": "Def.GradientStop",
+      "description": "Create a gradient stop element",
+      "json_file": "DaxLib.SVG.Def.GradientStop.json"
+    },
+    {
+      "name": "DaxLib.SVG.Def.Line",
+      "short_name": "Def.Line",
+      "description": "Create a reusable line definition",
+      "json_file": "DaxLib.SVG.Def.Line.json"
+    },
+    {
+      "name": "DaxLib.SVG.Def.LinearGradient",
+      "short_name": "Def.LinearGradient",
+      "description": "Create a linear gradient definition",
+      "json_file": "DaxLib.SVG.Def.LinearGradient.json"
+    },
+    {
+      "name": "DaxLib.SVG.Def.Paths",
+      "short_name": "Def.Paths",
+      "description": "Create a reusable path definition",
+      "json_file": "DaxLib.SVG.Def.Paths.json"
+    },
+    {
+      "name": "DaxLib.SVG.Def.RadialGradient",
+      "short_name": "Def.RadialGradient",
+      "description": "Create a radial gradient definition",
+      "json_file": "DaxLib.SVG.Def.RadialGradient.json"
+    },
+    {
+      "name": "DaxLib.SVG.Def.Rect",
+      "short_name": "Def.Rect",
+      "description": "Create a reusable rectangle definition",
+      "json_file": "DaxLib.SVG.Def.Rect.json"
+    },
+    {
+      "name": "DaxLib.SVG.Element.Circle",
+      "short_name": "Element.Circle",
+      "description": "Generates a circle SVG element",
+      "json_file": "DaxLib.SVG.Element.Circle.json"
+    },
+    {
+      "name": "DaxLib.SVG.Element.Defs",
+      "short_name": "Element.Defs",
+      "description": "Create a <defs> element from one or more `DaxLib.SVG.Def.*` elements",
+      "json_file": "DaxLib.SVG.Element.Defs.json"
+    },
+    {
+      "name": "DaxLib.SVG.Element.Ellipse",
+      "short_name": "Element.Ellipse",
+      "description": "Generates an ellipse SVG element",
+      "json_file": "DaxLib.SVG.Element.Ellipse.json"
+    },
+    {
+      "name": "DaxLib.SVG.Element.Group",
+      "short_name": "Element.Group",
+      "description": "Generates SVG group element Transformations applied to the <g> element are performed on its child elements, and its attributes are inherited by its children. It can also group multiple elements to be referenced later with the <use> element",
+      "json_file": "DaxLib.SVG.Element.Group.json"
+    },
+    {
+      "name": "DaxLib.SVG.Element.Line",
+      "short_name": "Element.Line",
+      "description": "Generates SVG line element",
+      "json_file": "DaxLib.SVG.Element.Line.json"
+    },
+    {
+      "name": "DaxLib.SVG.Element.Paths",
+      "short_name": "Element.Paths",
+      "description": "Create an SVG path element",
+      "json_file": "DaxLib.SVG.Element.Paths.json"
+    },
+    {
+      "name": "DaxLib.SVG.Element.Polygon",
+      "short_name": "Element.Polygon",
+      "description": "Creates a polygon (closed shape)",
+      "json_file": "DaxLib.SVG.Element.Polygon.json"
+    },
+    {
+      "name": "DaxLib.SVG.Element.Polyline",
+      "short_name": "Element.Polyline",
+      "description": "Creates a polyline (connected points)",
+      "json_file": "DaxLib.SVG.Element.Polyline.json"
+    },
+    {
+      "name": "DaxLib.SVG.Element.Rect",
+      "short_name": "Element.Rect",
+      "description": "Generates a rectangle SVG element",
+      "json_file": "DaxLib.SVG.Element.Rect.json"
+    },
+    {
+      "name": "DaxLib.SVG.Element.Txt",
+      "short_name": "Element.Txt",
+      "description": "Creates a text SVG element",
+      "json_file": "DaxLib.SVG.Element.Txt.json"
+    },
+    {
+      "name": "DaxLib.SVG.Element.UseDef",
+      "short_name": "Element.UseDef",
+      "description": "Reference a previously defined SVG element with optional positioning and styling This function is used to reuse elements that have been defined using `DaxLib.SVG.Def.*` functions (e.g., `DaxLib.SVG.Def.Circle`, `DaxLib.SVG.Def.Rect`, `DaxLib.SVG.Def.Paths`, etc.). Instead of duplicating element definitions, use the appropriate `DaxLib.SVG.Def.*` function once and then reference it multiple times with `DaxLib.SVG.Element.UseDef`.",
+      "json_file": "DaxLib.SVG.Element.UseDef.json"
+    },
+    {
+      "name": "DaxLib.SVG.Scale.NiceNum",
+      "short_name": "Scale.NiceNum",
+      "description": "Returns a \"nice\" rounded number close to the given value. Used for choosing human-friendly tick intervals and axis bounds",
+      "json_file": "DaxLib.SVG.Scale.NiceNum.json"
+    },
+    {
+      "name": "DaxLib.SVG.Scale.NiceRange",
+      "short_name": "Scale.NiceRange",
+      "description": "Computes a \"nice\" axis range with rounded min, max, and tick interval Returns values suitable for human-friendly axis labelling",
+      "json_file": "DaxLib.SVG.Scale.NiceRange.json"
+    },
+    {
+      "name": "DaxLib.SVG.Scale.Normalize",
+      "short_name": "Scale.Normalize",
+      "description": "Map a value from one value scale to another Used for scaling values to fit within SVG dimensions",
+      "json_file": "DaxLib.SVG.Scale.Normalize.json"
+    },
+    {
+      "name": "DaxLib.SVG.SVG",
+      "short_name": "SVG",
+      "description": "Wraps content in SVG container for Power BI visualization",
+      "json_file": "DaxLib.SVG.SVG.json"
+    },
+    {
+      "name": "DaxLib.SVG.Transforms",
+      "short_name": "Transforms",
+      "description": "Generates transform string for SVG elements",
+      "json_file": "DaxLib.SVG.Transforms.json"
+    },
+    {
+      "name": "DaxLib.SVG.Viz.Area",
+      "short_name": "Viz.Area",
+      "description": "Renders an area chart as an SVG data URI showing measure values across an axis with filled area",
+      "json_file": "DaxLib.SVG.Viz.Area.json"
+    },
+    {
+      "name": "DaxLib.SVG.Viz.Bars",
+      "short_name": "Viz.Bars",
+      "description": "Renders a bar chart as an SVG data URI showing measure values across an axis",
+      "json_file": "DaxLib.SVG.Viz.Bars.json"
+    },
+    {
+      "name": "DaxLib.SVG.Viz.Boxplot",
+      "short_name": "Viz.Boxplot",
+      "description": "Renders a box plot as an SVG data URI showing statistical distribution",
+      "json_file": "DaxLib.SVG.Viz.Boxplot.json"
+    },
+    {
+      "name": "DaxLib.SVG.Viz.Heatmap",
+      "short_name": "Viz.Heatmap",
+      "description": "Renders a heatmap as an SVG data URI showing data density using kernel density estimation",
+      "json_file": "DaxLib.SVG.Viz.Heatmap.json"
+    },
+    {
+      "name": "DaxLib.SVG.Viz.Jitter",
+      "short_name": "Viz.Jitter",
+      "description": "Renders a jitter plot as an SVG data URI showing value distribution as scattered points",
+      "json_file": "DaxLib.SVG.Viz.Jitter.json"
+    },
+    {
+      "name": "DaxLib.SVG.Viz.Line",
+      "short_name": "Viz.Line",
+      "description": "Renders a line chart as an SVG data URI showing measure values across an axis",
+      "json_file": "DaxLib.SVG.Viz.Line.json"
+    },
+    {
+      "name": "DaxLib.SVG.Viz.Pill",
+      "short_name": "Viz.Pill",
+      "description": "Renders a pill-shaped badge as an SVG data URI with centered text",
+      "json_file": "DaxLib.SVG.Viz.Pill.json"
+    },
+    {
+      "name": "DaxLib.SVG.Viz.ProgressBar",
+      "short_name": "Viz.ProgressBar",
+      "description": "Renders a progress bar as an SVG data URI showing value progression",
+      "json_file": "DaxLib.SVG.Viz.ProgressBar.json"
+    },
+    {
+      "name": "DaxLib.SVG.Viz.Violin",
+      "short_name": "Viz.Violin",
+      "description": "Renders a violin plot as an SVG data URI showing probability density distribution",
+      "json_file": "DaxLib.SVG.Viz.Violin.json"
+    }
+  ],
+  "total_count": 58,
+  "categories": {
+    "conversion": [
+      "Color.Hex.ToInt",
+      "Color.Int.ToHex",
+      "Color.RGB.ToHex"
+    ],
+    "hex_manipulation": [],
+    "themes": [
+      "Color.Hex.Interpolate",
+      "Color.PerformanceTheme",
+      "Color.Theme"
+    ]
+  }
+}

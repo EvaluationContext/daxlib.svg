@@ -1,0 +1,30 @@
+{
+  "name": "DaxLib.SVG.Element.Defs",
+  "short_name": "Element.Defs",
+  "description": "Create a <defs> element from one or more `DaxLib.SVG.Def.*` elements",
+  "parameters": [
+    {
+      "name": "defs",
+      "type": "string",
+      "type_label": "<span class=\"type-label string\">STRING</span>",
+      "description": "Concatenated list of def elements to include in a <defs> block",
+      "optional": false,
+      "default_value": null
+    }
+  ],
+  "return_type": "STRING",
+  "return_type_label": "<span class=\"type-label string\">STRING</span>",
+  "return_description": "<defs> element",
+  "code": "function 'DaxLib.SVG.Element.Defs' =\n\t\t(\n\t\t\tdefs: STRING    // concatenated list of elements to include in a <defs> block\n\t\t) =>\n\n\t\t\t\"<defs>\" &\n\t\t\tdefs &  \n\t\t\t\"</defs>\"",
+  "example": null,
+  "author": null,
+  "version": null,
+  "since": null,
+  "see": null,
+  "deprecated": null,
+  "sections": {
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Element.Defs( defs )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | defs | <span class=\"type-label string\">STRING</span> | :material-check: | Concatenated list of def elements to include in a <defs> block |\n\n    <span class=\"type-label string\">STRING</span> <defs> element",
+    "example": "",
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Element.Defs' =\n    \t\t(\n    \t\t\tdefs: STRING    // concatenated list of elements to include in a <defs> block\n    \t\t) =>\n    \n    \t\t\t\"<defs>\" &\n    \t\t\tdefs &  \n    \t\t\t\"</defs>\"\n    ```"
+  }
+}

@@ -77,6 +77,8 @@ extra_css:
   - assets/css/button.css
   - assets/css/colorBlocks.css
   - assets/css/cards.css
+  - assets/css/gallery.css
+  - assets/css/carousel.css
 
 markdown_extensions:
   - abbr
@@ -134,56 +136,81 @@ nav:
       - SVG:
         - svg/index.md
         - SVG: svg/SVG.md
-      - Elements:
-        - elements/index.md
-        - Rect: elements/Rect.md
-        - Circle: elements/Circle.md
-        - Ellipse: elements/Ellipse.md
-        - Polygon: elements/Polygon.md
-        - Line: elements/Line.md
-        - Paths: elements/Paths.md
-        - Polyline: elements/Polyline.md
-        - Txt: elements/Txt.md
-        - Defs: elements/Defs.md
-        - UseDef: elements/UseDef.md
-        - Group: elements/Group.md
-      - Compounds:
-        - compounds/index.md
-        - Area: compounds/Area.md
-        - Line: compounds/Line.md
-        - Boxplot: compounds/Boxplot.md
-        - Heatmap: compounds/Heatmap.md
-        - Jitter: compounds/Jitter.md
-        - Violin: compounds/Violin.md
-        - Pill: compounds/Pill.md
-        - Bar: compounds/Bar.md
-      - Defs:
-        - defs/index.md
-        - Circle: defs/Circle.md
-        - Rect: defs/Rect.md
-        - Line: defs/Line.md
-        - Paths: defs/Paths.md
-        - GradientStop: defs/GradientStop.md
-        - LinearGradient: defs/LinearGradient.md
-        - RadialGradient: defs/RadialGradient.md
-        - ClipPath: defs/ClipPath.md
+      - Scales:
+        - scales/index.md
+        - Normalize: scales/Scale.Normalize.md
+        - NiceNum: scales/Scale.NiceNum.md
+        - NiceRange: scales/Scale.NiceRange.md
+      - Data:
+        - data/index.md
+        - AxisMeasure: data/Data.AxisMeasure.md
+        - Range: data/Data.Range.md
+      - Axes:
+        - axes/index.md
+        - MaxTickLabelWidth: axes/Axes.MaxTickLabelWidth.md
+        - Layout: axes/Axes.Layout.md
+        - Render: axes/Axes.Render.md
+        - Point: axes/Axes.Point.md
+        - Baseline: axes/Axes.Baseline.md
       - Attributes:
         - attributes/index.md
-        - Shapes: attributes/Shapes.md
-        - Stroke: attributes/Stroke.md
-        - Txt: attributes/Txt.md
+        - Shapes: attributes/Attr.Shapes.md
+        - Stroke: attributes/Attr.Stroke.md
+        - Txt: attributes/Attr.Txt.md
       - Transforms:
         - transforms/index.md
         - Transforms: transforms/Transforms.md
-      - Scales:
-        - scales/index.md
-        - Normalize: scales/Normalize.md
+      - Elements:
+        - elements/index.md
+        - Defs: elements/Element.Defs.md
+        - UseDef: elements/Element.UseDef.md
+        - Group: elements/Element.Group.md
+        - Circle: elements/Element.Circle.md
+        - Rect: elements/Element.Rect.md
+        - Line: elements/Element.Line.md
+        - Paths: elements/Element.Paths.md
+        - Ellipse: elements/Element.Ellipse.md
+        - Polygon: elements/Element.Polygon.md
+        - Polyline: elements/Element.Polyline.md
+        - Txt: elements/Element.Txt.md
+      - Defs:
+        - defs/index.md
+        - GradientStop: defs/Def.GradientStop.md
+        - LinearGradient: defs/Def.LinearGradient.md
+        - RadialGradient: defs/Def.RadialGradient.md
+        - ClipPath: defs/Def.ClipPath.md
+        - Circle: defs/Def.Circle.md
+        - Rect: defs/Def.Rect.md
+        - Line: defs/Def.Line.md
+        - Paths: defs/Def.Paths.md
+      - Compounds:
+        - compounds/index.md
+        - Pill: compounds/Compound.Pill.md
+        - Bars: compounds/Compound.Bars.md
+        - Line: compounds/Compound.Line.md
+        - Area: compounds/Compound.Area.md
+        - Jitter: compounds/Compound.Jitter.md
+        - ProgressBar: compounds/Compound.ProgressBar.md
+        - Boxplot: compounds/Compound.Boxplot.md
+        - Violin: compounds/Compound.Violin.md
+        - Heatmap: compounds/Compound.Heatmap.md
+      - Viz:
+        - viz/index.md
+        - Bars: viz/Viz.Bars.md
+        - Line: viz/Viz.Line.md
+        - Area: viz/Viz.Area.md
+        - ProgressBar: viz/Viz.ProgressBar.md
+        - Pill: viz/Viz.Pill.md
+        - Boxplot: viz/Viz.Boxplot.md
+        - Jitter: viz/Viz.Jitter.md
+        - Heatmap: viz/Viz.Heatmap.md
+        - Violin: viz/Viz.Violin.md
       - Colors:
         - colors/index.md
-        - Theme: colors/Theme.md
-        - PerformanceTheme: colors/PerformanceTheme.md
-        - Interpolate: colors/Interpolate.md
-        - Hex.ToInt: colors/Hex.ToInt.md
-        - Int.ToHex: colors/Int.ToHex.md
-        - RGB.ToHex: colors/RGB.ToHex.md
+        - Theme: colors/Color.Theme.md
+        - PerformanceTheme: colors/Color.PerformanceTheme.md
+        - Hex.Interpolate: colors/Color.Hex.Interpolate.md
+        - Hex.ToInt: colors/Color.Hex.ToInt.md
+        - Int.ToHex: colors/Color.Int.ToHex.md
+        - RGB.ToHex: colors/Color.RGB.ToHex.md
   - Change Log: changeLog.md

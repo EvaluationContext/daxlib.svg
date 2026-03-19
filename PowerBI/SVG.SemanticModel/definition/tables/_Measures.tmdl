@@ -5,25 +5,25 @@ table _Measures
 			
 			VAR Compound = 
 			    DaxLib.SVG.Compound.Pill(
-			        0,                  // x
-			        0,                  // y
-			        100,                // width
-			        20,                 // height
+			        SELECTEDVALUE( x[x], 0 ), // x
+			        SELECTEDVALUE( y[y], 0 ), // y
+			        SELECTEDVALUE( Width[Width], 100 ), // width
+			        SELECTEDVALUE( Height[Height], 20), // height
 			        0.05,               // paddingX
 			        0.02,               // paddingY
 			        MAX( Products[Brand] ), // txt
-			        DaxLib.SVG.Colour.Theme(
+			        DaxLib.SVG.Color.Theme(
 			            MAX( Theme[Theme] ),
 			            MIN( Variant[Variant] )
-			        )                   // colour
+			        )                  // color
 			    )
 			RETURN
 			
 			    IF( 
 			        NOT ISBLANK( Compound ) && NOT ISBLANK( [Total Cost] ),
 			        DaxLib.SVG.SVG(
-			            100,
-			            20,
+			            SELECTEDVALUE( Width[Width], 100 ), // width
+			            SELECTEDVALUE( Height[Height], 20), // height
 			            BLANK(),
 			            Compound,
 			            BLANK()
@@ -80,13 +80,13 @@ table _Measures
 			        blank(),        // rx
 			        blank(),        // ry
 			        DaxLib.SVG.Attr.Shapes(
-			            DaxLib.SVG.Colour.Theme(
+			            DaxLib.SVG.Color.Theme(
 			                MAX( Theme[Theme] ),
 			                MIN( Variant[Variant] )
 			            ),          // fill
 			            0.3,        // fillOpacity
 			            BLANK(),    // fillRule
-			             DaxLib.SVG.Colour.Theme(
+			             DaxLib.SVG.Color.Theme(
 			                MAX( Theme[Theme] ),
 			                MIN( Variant[Variant] )
 			            ),          // stroke
@@ -124,7 +124,7 @@ table _Measures
 			            BLANK(),    // fill
 			            BLANK(),    // fillOpacity
 			            BLANK(),    // fillRule
-			            DaxLib.SVG.Colour.Theme(
+			            DaxLib.SVG.Color.Theme(
 			                MAX( Theme[Theme] ),
 			                MIN( Variant[Variant] )
 			            ),          // stroke
@@ -152,7 +152,7 @@ table _Measures
 			            "none",     // fill
 			            BLANK(),    // fillOpacity
 			            BLANK(),    // fillRule
-			            DaxLib.SVG.Colour.Theme(
+			            DaxLib.SVG.Color.Theme(
 			                MAX( Theme[Theme] ),
 			                MIN( Variant[Variant] )
 			            ),          // stroke
@@ -179,13 +179,13 @@ table _Measures
 			        10,             // cy
 			        "10%",          // r
 			        DaxLib.SVG.Attr.Shapes(
-			            DaxLib.SVG.Colour.Theme(
+			            DaxLib.SVG.Color.Theme(
 			                MAX( Theme[Theme] ),
 			                MIN( Variant[Variant] )
 			            ),          // fill
 			            0.5,        // fillOpacity
 			            BLANK(),    // fillRule   
-			             DaxLib.SVG.Colour.Theme(
+			             DaxLib.SVG.Color.Theme(
 			                MAX( Theme[Theme] ),
 			                MIN( Variant[Variant] )
 			            ),          // stroke
@@ -212,7 +212,7 @@ table _Measures
 			            0,              // cy
 			            8,              // r
 			            DaxLib.SVG.Attr.Shapes(
-			                DaxLib.SVG.Colour.Theme(
+			                DaxLib.SVG.Color.Theme(
 			                    MAX( Theme[Theme] ),
 			                    MIN( Variant[Variant] )
 			                ),          // fill
@@ -231,7 +231,7 @@ table _Measures
 			            0,              // cy
 			            8,              // r
 			            DaxLib.SVG.Attr.Shapes(
-			            DaxLib.SVG.Colour.Theme(
+			            DaxLib.SVG.Color.Theme(
 			                MAX( Theme[Theme] ),
 			                MIN( Variant[Variant] ) + 1
 			            ),              // fill
@@ -251,7 +251,7 @@ table _Measures
 			                "none",    // fill
 			                0.8,        // fillOpacity
 			                BLANK(),    // fillRule
-			                DaxLib.SVG.Colour.Theme(
+			                DaxLib.SVG.Color.Theme(
 			                    MAX( Theme[Theme] ),
 			                    MIN( Variant[Variant] )
 			                ),          // stroke
@@ -339,7 +339,7 @@ table _Measures
 			            "myGradient",   // id
 			            DaxLib.SVG.Def.GradientStop(
 			                "20%",      // offset
-			                DaxLib.SVG.Colour.Theme(
+			                DaxLib.SVG.Color.Theme(
 			                    MAX( Theme[Theme] ),
 			                    MIN( Variant[Variant] )
 			                ),          // colour
@@ -347,7 +347,7 @@ table _Measures
 			            ) &
 			            DaxLib.SVG.Def.GradientStop( 
 			                "80%",      // offset
-			                DaxLib.SVG.Colour.Theme(
+			                DaxLib.SVG.Color.Theme(
 			                    MAX( Theme[Theme] ),
 			                    MIN( Variant[Variant] ) + 1
 			                ),           // colour
@@ -395,7 +395,7 @@ table _Measures
 			            "myGradient",   // id
 			            DaxLib.SVG.Def.GradientStop( 
 			                "10%",      // offset
-			                DaxLib.SVG.Colour.Theme(
+			                DaxLib.SVG.Color.Theme(
 			                    MAX( Theme[Theme] ),
 			                    MIN( Variant[Variant] )
 			                ),          // colour
@@ -403,7 +403,7 @@ table _Measures
 			            ) &
 			            DaxLib.SVG.Def.GradientStop( 
 			                "80%",      // offset
-			                DaxLib.SVG.Colour.Theme(
+			                DaxLib.SVG.Color.Theme(
 			                    MAX( Theme[Theme] ),
 			                    MIN( Variant[Variant] ) + 1
 			                ),          // colour
@@ -411,7 +411,7 @@ table _Measures
 			            ) &
 			            DaxLib.SVG.Def.GradientStop( 
 			                "95%",      // offset
-			                DaxLib.SVG.Colour.Theme(
+			                DaxLib.SVG.Color.Theme(
 			                    MAX( Theme[Theme] ),
 			                    MIN( Variant[Variant] ) + 2
 			                ),          // colour
@@ -472,7 +472,7 @@ table _Measures
 			        BLANK(),        // rx
 			        BLANK(),        // ry
 			        DaxLib.SVG.Attr.Shapes(
-			            DaxLib.SVG.Colour.Theme(
+			            DaxLib.SVG.Color.Theme(
 			                MAX( Theme[Theme] ),
 			                MIN( Variant[Variant] )
 			            ),          // fill
@@ -505,26 +505,36 @@ table _Measures
 			
 			VAR Compound = 
 			    DaxLib.SVG.Compound.Line(
-			        0,                  // x
-			        0,                  // y
-			        100,                // width
-			        20,                 // height
+			        SELECTEDVALUE( x[x], 0 ), // x
+			        SELECTEDVALUE( y[y], 0 ), // y
+			        SELECTEDVALUE( Width[Width], 100 ), // width
+			        SELECTEDVALUE( Height[Height], 20), // height
 			        0.05,               // paddingX
-			        0.04,               // paddingY
-			        Dates[Date],        // xAxis
-			        [Total Cost],       // measureVal
-			        DaxLib.SVG.Colour.Theme(
+			        0.1,               // paddingY
+			        Dates[Date],        // axisRef
+			        [Total Cost],       // measureRef
+			        DaxLib.SVG.Color.Theme(
 			            MAX( Theme[Theme] ),
 			            MIN( Variant[Variant] )
-			        )                   // lineColour
+			        ),                  // lineColor
+			        DaxLib.SVG.Color.PerformanceTheme(
+			           "Stoplight",
+			            "veryBad"
+			        ),                  // minMarkColor
+			        DaxLib.SVG.Color.PerformanceTheme(
+			           "Stoplight",
+			            "veryGood"
+			        ),                  // maxMarkColor
+			        [Axes Toggle],      // showAxis
+			        8                  // axisFontSize
 			    )
 			RETURN
 			
 			    IF(
 			        NOT ISBLANK( Compound ),
 			        DaxLib.SVG.SVG(
-			            100,
-			            20,
+			            SELECTEDVALUE( Width[Width], 100 ), // width
+			            SELECTEDVALUE( Height[Height], 20), // height
 			            BLANK(),
 			            Compound,
 			            BLANK()
@@ -537,9 +547,10 @@ table _Measures
 
 	measure 'Theme Colour' =
 			
-			DaxLib.SVG.Colour.Theme( SELECTEDVALUE( Theme[Theme] ), SELECTEDVALUE( Variant[Variant] ) )
+			DaxLib.SVG.Color.Theme( SELECTEDVALUE( Theme[Theme] ), SELECTEDVALUE( Variant[Variant] ) )
 		displayFolder: Theme
 		lineageTag: cd8e7976-795d-4798-9f25-8d21bca8676e
+		dataCategory: Uncategorized
 
 	measure Blank = ""
 		lineageTag: e0d624fb-152d-45bf-a154-bbbef29f53db
@@ -548,31 +559,41 @@ table _Measures
 			
 			VAR Compound = 
 			    DaxLib.SVG.Compound.Area(
-			        0,              // x
-			        0,              // y
-			        100,            // width
-			        20,             // height
+			        SELECTEDVALUE( x[x], 0 ), // x
+			        SELECTEDVALUE( y[y], 0 ), // y
+			        SELECTEDVALUE( Width[Width], 100 ), // width
+			        SELECTEDVALUE( Height[Height], 20), // height
 			        0.05,           // paddingX
 			        0.02,           // paddingY
-			        Dates[Date],    // xAxis
-			        [Total Cost],   // measureVal
-			        DaxLib.SVG.Colour.Theme(
+			        Dates[Date],    // axisRef
+			        [Total Cost],   // measureRef
+			        DaxLib.SVG.Color.Theme(
 			            MAX( Theme[Theme] ),
 			            MIN( Variant[Variant] )
-			        ),              // fillColour
+			        ),              // fillColor
 			        0.2,            // fillOpacity
-			        DaxLib.SVG.Colour.Theme(
+			        DaxLib.SVG.Color.Theme(
 			            MAX( Theme[Theme] ),
 			            MIN( Variant[Variant] )
-			        )               // strokeColour
-			    )     
+			        ),              // strokeColor
+			        DaxLib.SVG.Color.PerformanceTheme(
+			           "Stoplight",
+			            "veryBad"
+			        ),                  // minMarkColor
+			        DaxLib.SVG.Color.PerformanceTheme(
+			           "Stoplight",
+			            "veryGood"
+			        ),                  // maxMarkColor
+			        [Axes Toggle],  // showAxis
+			        8               // axisFontSize
+			    )
 			RETURN
 			
 			    IF(
 			        NOT ISBLANK( Compound ),
 			        DaxLib.SVG.SVG(
-			            100,
-			            20,
+			            SELECTEDVALUE( Width[Width], 100 ), // width
+			            SELECTEDVALUE( Height[Height], 20), // height
 			            BLANK(),
 			            Compound,
 			            BLANK()
@@ -587,31 +608,32 @@ table _Measures
 			
 			VAR Compound = 
 			    DaxLib.SVG.Compound.Boxplot(
-			        0,                  // x
-			        0,                  // y
-			        100,                // width
-			        20,                 // height
+			        SELECTEDVALUE( x[x], 0 ), // x
+			        SELECTEDVALUE( y[y], 0 ), // y
+			        SELECTEDVALUE( Width[Width], 100 ), // width
+			        SELECTEDVALUE( Height[Height], 20), // height
 			        0.05,               // paddingX
 			        0.02,               // paddingY
 			        Dates[Date],        // axisRef
-			        [Total Cost],       // measureVal
-			        DaxLib.SVG.Colour.Theme(
+			        [Total Cost],       // measureRef
+			        DaxLib.SVG.Color.Theme(
 			            MAX( Theme[Theme] ),
 			            MIN( Variant[Variant] )
-			        ),                  // fillColour
-			        DaxLib.SVG.Colour.Theme(
+			        ),                  // fillColor
+			        DaxLib.SVG.Color.Theme(
 			            MAX( Theme[Theme] ),
 			            MIN( Variant[Variant] )
-			        ),                   // strokeColour
-			        TRUE                 // showOutliers
+			        ),                   // strokeColor
+			        TRUE,                // showOutliers
+			        SELECTEDVALUE( Orientation[Orientation]) // orientation
 			    )
 			RETURN
 			
 			    IF(
 			        NOT ISBLANK( Compound ),
 			        DaxLib.SVG.SVG(
-			            100,
-			            20,
+			            SELECTEDVALUE( Width[Width], 100 ), // width
+			            SELECTEDVALUE( Height[Height], 20), // height
 			            BLANK(),
 			            Compound,                 
 			            BLANK()
@@ -626,28 +648,29 @@ table _Measures
 			
 			VAR Compound =
 			    DaxLib.SVG.Compound.Violin(
-			        0,                  // x
-			        0,                  // y
-			        100,                // width
-			        20,                 // height
+			        SELECTEDVALUE( x[x], 0 ), // x
+			        SELECTEDVALUE( y[y], 0 ), // y
+			        SELECTEDVALUE( Width[Width], 100 ), // width
+			        SELECTEDVALUE( Height[Height], 20), // height
 			        0.05,               // paddingX
 			        0.02,               // paddingY
 			        Dates[Date],        // axisRef
-			        [Total Cost],       // measureVal
+			        [Total Cost],       // measureRef
 			        MAX( Samples[Samples] ), // samples
 			        MAX( Bandwidth[Bandwidth] ), // bandwidth
-			        DaxLib.SVG.Colour.Theme(
+			        DaxLib.SVG.Color.Theme(
 			            MAX( Theme[Theme] ),
 			            MIN( Variant[Variant] )
-			        )                   // color
+			        ),                  // color
+			        SELECTEDVALUE( Orientation[Orientation]) // orientation
 			    )
 			RETURN
 			
 			    IF( 
 			        NOT ISBLANK( Compound ),
 			        DaxLib.SVG.SVG(
-			            100,
-			            20,
+			            SELECTEDVALUE( Width[Width], 100 ), // width
+			            SELECTEDVALUE( Height[Height], 20), // height
 			            BLANK(),
 			            Compound,
 			            BLANK()
@@ -662,18 +685,18 @@ table _Measures
 			
 			VAR Compound =
 			    DaxLib.SVG.Compound.Jitter(
-			        0,                  // x
-			        0,                  // y
-			        100,                // width
-			        20,                 // height
+			        SELECTEDVALUE( x[x], 0 ), // x
+			        SELECTEDVALUE( y[y], 0 ), // y
+			        SELECTEDVALUE( Width[Width], 100 ), // width
+			        SELECTEDVALUE( Height[Height], 20), // height
 			        0.05,               // paddingX
 			        0.02,               // paddingY
-			        Dates[Date],        // xAxis
+			        Dates[Date],        // axisRef
 			        [Total Cost],       // measureRef
-			        DaxLib.SVG.Colour.Theme(
+			        DaxLib.SVG.Color.Theme(
 			            MAX( Theme[Theme] ),
 			            MIN( Variant[Variant] )
-			        ),                  // pointColour
+			        ),                  // pointColor
 			        0.5                 // jitterAmount
 			    )
 			RETURN
@@ -681,8 +704,8 @@ table _Measures
 			    IF(
 			        NOT ISBLANK( Compound ),
 			        DaxLib.SVG.SVG(
-			            100,
-			            20,
+			            SELECTEDVALUE( Width[Width], 100 ), // width
+			            SELECTEDVALUE( Height[Height], 20), // height
 			            BLANK(),
 			            Compound,
 			            BLANK()
@@ -696,28 +719,28 @@ table _Measures
 			
 			VAR Compound = 
 			    DaxLib.SVG.Compound.Heatmap(
-			        0,                  // x
-			        0,                  // y
-			        100,                // width
-			        20,                 // height
+			        SELECTEDVALUE( x[x], 0 ), // x
+			        SELECTEDVALUE( y[y], 0 ), // y
+			        SELECTEDVALUE( Width[Width], 100 ), // width
+			        SELECTEDVALUE( Height[Height], 20), // height
 			        0.05,               // paddingX
 			        0.02,               // paddingY
 			        Dates[Date],        // axisRef
-			        [Total Cost],       // measureVal
+			        [Total Cost],       // measureRef
 			        MAX( Samples[Samples] ), // samples
 			        MAX( Bandwidth[Bandwidth] ), // bandwidth
-			        DaxLib.SVG.Colour.Theme(
+			        DaxLib.SVG.Color.Theme(
 			            MAX( Theme[Theme] ),
 			            MIN( Variant[Variant] )
-			        )                   // Colour
+			        )                   // color
 			    )
 			RETURN
 			
 			    IF(
 			        NOT ISBLANK( Compound ),
 			        DaxLib.SVG.SVG(
-			            100,
-			            20,
+			            SELECTEDVALUE( Width[Width], 100 ), // width
+			            SELECTEDVALUE( Height[Height], 20), // height
 			            BLANK(),
 			            Compound,                 
 			            BLANK()
@@ -738,12 +761,12 @@ table _Measures
 			        20,                 // height
 			        0.05,               // paddingX
 			        0.02,               // paddingY
-			        Dates[Date],        // xAxis
+			        Dates[Date],        // axisRef
 			        [Total Cost],       // measureRef
-			        DaxLib.SVG.Colour.Theme(
+			        DaxLib.SVG.Color.Theme(
 			            MAX( Theme[Theme] ),
 			            MIN( Variant[Variant] ) + 1
-			        ),                  // pointColour
+			        ),                  // pointColor
 			        0.5                 // jitterAmount
 			    )
 			VAR Heatmap = 
@@ -755,13 +778,13 @@ table _Measures
 			        0.05,               // paddingX
 			        0.02,               // paddingY
 			        Dates[Date],        // axisRef
-			        [Total Cost],       // measureVal
+			        [Total Cost],       // measureRef
 			        MAX( Samples[Samples] ), // samples
 			        MAX( Bandwidth[Bandwidth] ), // bandwidth
-			        DaxLib.SVG.Colour.Theme(
+			        DaxLib.SVG.Color.Theme(
 			            MAX( Theme[Theme] ),
 			            MIN( Variant[Variant] )
-			        )                   // colour
+			        )                   // color
 			    )
 			VAR Combined = 
 			    Heatmap &
@@ -793,12 +816,12 @@ table _Measures
 			        20,                 // height
 			        0.05,               // paddingX
 			        0.02,               // paddingY
-			        Dates[Date],        // xAxis
+			        Dates[Date],        // axisRef
 			        [Total Cost],       // measureRef
-			        DaxLib.SVG.Colour.Theme(
+			        DaxLib.SVG.Color.Theme(
 			            MAX( Theme[Theme] ),
 			            MIN( Variant[Variant] ) + 1
-			        ),                  // pointColour
+			        ),                  // pointColor
 			        0.5                 // jitterAmount
 			    )
 			VAR Violin =
@@ -810,13 +833,14 @@ table _Measures
 			        0.05,               // paddingX
 			        0.02,               // paddingY
 			        Dates[Date],        // axisRef
-			        [Total Cost],       // measureVal
+			        [Total Cost],       // measureRef
 			        MAX( Samples[Samples] ), // samples
 			        MAX( Bandwidth[Bandwidth] ), // bandwidth
-			        DaxLib.SVG.Colour.Theme(
+			        DaxLib.SVG.Color.Theme(
 			            MAX( Theme[Theme] ),
 			            MIN( Variant[Variant] ) 
-			        )                   // color
+			        ),                   // color
+			        SELECTEDVALUE( Orientation[Orientation] ) // Orientation
 			    )
 			VAR Combined = 
 			    Violin &
@@ -836,6 +860,198 @@ table _Measures
 			```
 		displayFolder: SVG\Compound
 		lineageTag: 28f64d09-7940-451d-8b66-3305905f9484
+		dataCategory: ImageUrl
+
+	measure 'Compound.Bars' = ```
+			
+			VAR Compound = 
+			    DaxLib.SVG.Compound.Bars(
+			        SELECTEDVALUE( x[x], 0 ), // x
+			        SELECTEDVALUE( y[y], 0 ), // y
+			        SELECTEDVALUE( Width[Width], 100 ), // width
+			        SELECTEDVALUE( Height[Height], 20), // height
+			        0.05,               // paddingX
+			        0.04,               // paddingY
+			        Dates[Date],        // axisRef
+			        [Total Cost],       // measureRef
+			        DaxLib.SVG.Color.Theme(
+			            MAX( Theme[Theme] ),
+			            MIN( Variant[Variant] )
+			        ),                 // barColor
+			        DaxLib.SVG.Color.PerformanceTheme(
+			           "Stoplight",
+			            "veryBad"
+			        ),                  // minMarkColor
+			        DaxLib.SVG.Color.PerformanceTheme(
+			           "Stoplight",
+			            "veryGood"
+			        ),                  // maxMarkColor
+			        [Axes Toggle],     // showAxis
+			        8                  // axisFontSize
+			    )
+			RETURN
+			
+			    IF(
+			        NOT ISBLANK( Compound ),
+			        DaxLib.SVG.SVG(
+			            SELECTEDVALUE( Width[Width], 100 ), // width
+			            SELECTEDVALUE( Height[Height], 20), // height
+			            BLANK(),
+			            Compound,
+			            BLANK()
+			        )
+			    )
+			```
+		displayFolder: SVG\Compound
+		lineageTag: 642d48c6-9dbd-49c5-af50-0d203a518eb3
+		dataCategory: ImageUrl
+
+	measure 'Viz.Line' = ```
+			
+			Var Viz = 
+			DaxLib.SVG.Viz.Line(
+			    Dates[Date],
+			    [Total Cost],
+			    DaxLib.SVG.Color.Theme( MAX( Theme[Theme] ), MIN( Variant[Variant] ) ),
+			    FALSE(),
+			    100,
+			    20
+			)
+			RETURN
+			IF( NOT ISBLANK( viz ), Viz )
+			```
+		displayFolder: SVG\Viz
+		lineageTag: 67d76202-3b8f-4b1e-89e4-1f90f2798302
+		dataCategory: ImageUrl
+
+	measure 'Viz.Area' = ```
+			
+			Var Viz = 
+			    DaxLib.SVG.Viz.Area(
+			        Dates[Date],
+			        [Total Cost],
+			        DaxLib.SVG.Color.Theme( MAX( Theme[Theme] ), MIN( Variant[Variant] ) ),
+			        FALSE(),
+			        100,
+			        20
+			    )
+			RETURN
+			IF( NOT ISBLANK( viz ), Viz )
+			```
+		displayFolder: SVG\Viz
+		lineageTag: 242b6de3-4e80-4432-b2ee-2bc4147ef7b8
+		dataCategory: ImageUrl
+
+	measure 'Viz.ProgressBar' = ```
+			
+			Var Viz = 
+			DaxLib.SVG.Viz.ProgressBar(
+			    [Total Cost],
+			    [Total Cost] * ( RANDBETWEEN( 50, 150) / 100 ),
+			    DaxLib.SVG.Color.Theme( MAX( Theme[Theme] ), MIN( Variant[Variant] ) ),
+			    SELECTEDVALUE( Orientation[Orientation] ),
+			    100,
+			    20
+			)
+			RETURN
+			IF( NOT ISBLANK( viz ), Viz )
+			```
+		displayFolder: SVG\Viz
+		lineageTag: d42fcb84-6d8f-4a6b-95cc-238491f11c83
+		dataCategory: ImageUrl
+
+	measure Background = ```
+			
+			"data:image/svg+xml;utf8," & 
+			"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720' width='1280' height='720'>" &
+			  "<defs>" &
+			    "<linearGradient id='darkGradient' x1='0%' y1='0%' x2='0%' y2='100%'>" &
+			      "<stop offset='0%' stop-color='#2A2D34' />" &
+			      "<stop offset='100%' stop-color='#111215' />" &
+			    "</linearGradient>" &
+			    "<linearGradient id='glassSheen' x1='0%' y1='0%' x2='100%' y2='100%'>" &
+			      "<stop offset='0%' stop-color='#ffffff' stop-opacity='0.12' />" &
+			      "<stop offset='50%' stop-color='#ffffff' stop-opacity='0.0' />" &
+			    "</linearGradient>" &
+			    "<linearGradient id='glassBorder' x1='0%' y1='0%' x2='100%' y2='100%'>" &
+			      "<stop offset='0%' stop-color='#ffffff' stop-opacity='0.3' />" &
+			      "<stop offset='100%' stop-color='#ffffff' stop-opacity='0.05' />" &
+			    "</linearGradient>" &
+			    "<filter id='dropShadow' x='-10%' y='-10%' width='130%' height='130%'>" &
+			      "<feDropShadow dx='8' dy='12' stdDeviation='15' flood-color='#000000' flood-opacity='0.15' />" &
+			    "</filter>" &
+			  "</defs>" &
+			  "<rect width='1280' height='720' fill='#F4F5F7' />" &
+			//   "<g filter='url(#dropShadow)'>" &
+			    "<rect x='0' y='0' width='125' height='720' fill='url(#darkGradient)' />" &
+			    "<rect x='0' y='0' width='125' height='720' fill='url(#glassSheen)' />" &
+			    "<rect x='0' y='0' width='125' height='720' fill='none' stroke='url(#glassBorder)' stroke-width='1.5' />" &
+			//   "</g>" &
+			"</svg>"
+			```
+		lineageTag: 4594eee4-2225-40fc-98ed-ac97f77997bf
+		dataCategory: ImageUrl
+
+	measure 'Viz.Bars' = ```
+			
+			Var Viz = 
+			    DaxLib.SVG.Viz.Bars(
+			    Dates[Date],
+			    [Total Cost],
+			    DaxLib.SVG.Color.Theme( MAX( Theme[Theme] ), MIN( Variant[Variant] ) ),
+			    DaxLib.SVG.Color.PerformanceTheme(
+			        "Stoplight",
+			        "veryBad"
+			    ),                  // minMarkColor
+			    DaxLib.SVG.Color.PerformanceTheme(
+			        "Stoplight",
+			        "veryGood"
+			    ),                  // maxMarkColor
+			    FALSE(),
+			    100,
+			    20
+			)
+			RETURN
+			IF( NOT ISBLANK( viz ), Viz )
+			```
+		displayFolder: SVG\Viz
+		lineageTag: b2c3d4e5-f6a7-8901-bcde-f12345678901
+		dataCategory: ImageUrl
+
+	measure 'Compound.ProgressBar' = ```
+			
+			VAR Compound = 
+			    DaxLib.SVG.Compound.ProgressBar(
+			        SELECTEDVALUE( x[x], 0 ), // x
+			        SELECTEDVALUE( y[y], 0 ), // y
+			        SELECTEDVALUE( Width[Width], 100 ), // width
+			        SELECTEDVALUE( Height[Height], 20), // height
+			        0.05,               // paddingX
+			        0.02,               // paddingY
+			        [Total Cost],       // valueRef
+			        [Total Cost] * ( RANDBETWEEN( 50, 150 ) / 100 ), // trackRef
+			        DaxLib.SVG.Color.Theme(
+			            MAX( Theme[Theme] ),
+			            MIN( Variant[Variant] )
+			        ),                  // fillColor
+			        "#E1DFDD",          // trackColor
+			        SELECTEDVALUE( Orientation[Orientation]) // orientation
+			    )
+			RETURN
+			
+			    IF(
+			        NOT ISBLANK( Compound ),
+			        DaxLib.SVG.SVG(
+			            SELECTEDVALUE( Width[Width], 100 ), // width
+			            SELECTEDVALUE( Height[Height], 20), // height
+			            BLANK(),
+			            Compound,
+			            BLANK()
+			        )
+			    )
+			```
+		displayFolder: SVG\Compound
+		lineageTag: a1b2c3d4-e5f6-7890-abcd-ef1234567890
 		dataCategory: ImageUrl
 
 	column Value

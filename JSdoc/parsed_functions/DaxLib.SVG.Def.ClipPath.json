@@ -1,0 +1,38 @@
+{
+  "name": "DaxLib.SVG.Def.ClipPath",
+  "short_name": "Def.ClipPath",
+  "description": "Creates a clipping mask definition",
+  "parameters": [
+    {
+      "name": "defId",
+      "type": "string",
+      "type_label": "<span class=\"type-label string\">STRING</span>",
+      "description": "The unique identifier for the clip path. (Example: \"cut-top\", \"mask-circle\")",
+      "optional": false,
+      "default_value": null
+    },
+    {
+      "name": "contents",
+      "type": "string",
+      "type_label": "<span class=\"type-label string\">STRING</span>",
+      "description": "The SVG element(s) that make up the clipping path (typically a single shape)",
+      "optional": false,
+      "default_value": null
+    }
+  ],
+  "return_type": "STRING",
+  "return_type_label": "<span class=\"type-label string\">STRING</span>",
+  "return_description": "<clipPath> definition",
+  "code": "function 'DaxLib.SVG.Def.ClipPath' =\n\t\t(\n\t\t\tdefId : STRING,\n\t\t\tcontents: STRING\n\t\t) =>\n\t\t\t\n\t\t\t\"<clipPath id='\" & defId & \"'>\" &\n\t\t\tcontents &\n\t\t\t\"</clipPath>\"",
+  "example": null,
+  "author": null,
+  "version": null,
+  "since": null,
+  "see": null,
+  "deprecated": null,
+  "sections": {
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Def.ClipPath( defId, contents )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | defId | <span class=\"type-label string\">STRING</span> | :material-check: | The unique identifier for the clip path. (Example: \"cut-top\", \"mask-circle\") |\n    | contents | <span class=\"type-label string\">STRING</span> | :material-check: | The SVG element(s) that make up the clipping path (typically a single shape) |\n\n    <span class=\"type-label string\">STRING</span> <clipPath> definition",
+    "example": "",
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Def.ClipPath' =\n    \t\t(\n    \t\t\tdefId : STRING,\n    \t\t\tcontents: STRING\n    \t\t) =>\n    \t\t\t\n    \t\t\t\"<clipPath id='\" & defId & \"'>\" &\n    \t\t\tcontents &\n    \t\t\t\"</clipPath>\"\n    ```"
+  }
+}

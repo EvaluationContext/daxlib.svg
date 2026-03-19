@@ -1,4 +1,32 @@
-## 0.2.3-beta (Latest)
+## 1.0.1 (Latest)
+
+:octicons-sparkles-fill-16: Source library split into individual per-function TMDL files for improved maintainability
+
+:octicons-sparkles-fill-16: Update JSDoc annotations 
+
+:material-bug-outline: Update/fix some `DaxLib.SVG.Compound` UDFs
+
+## 1.0.0
+
+:material-alert-outline: Some incompatible API changes to compounds
+
+:octicons-sparkles-fill-16: `#!dax DaxLib.SVG.Compound.Bar()` renamed to `#!dax DaxLib.SVG.Compound.Bars()`
+
+:octicons-sparkles-fill-16: Added `showAxis` and `axisFontSize` parameters to `#!dax DaxLib.SVG.Compound.Bars()`, `#!dax DaxLib.SVG.Compound.Line()`, `#!dax DaxLib.SVG.Compound.Area()`
+
+:octicons-sparkles-fill-16: Added `orientation` parameter to `#!dax DaxLib.SVG.Compound.ProgressBar()`
+
+:octicons-sparkles-fill-16: New `#!dax DaxLib.SVG.Compound.ProgressBar()` compound
+
+:octicons-sparkles-fill-16: New **Scale** functions: `#!dax DaxLib.SVG.Scale.NiceNum()`, `#!dax DaxLib.SVG.Scale.NiceRange()`
+
+:octicons-sparkles-fill-16: New **Data** namespace: `#!dax DaxLib.SVG.Data.AxisMeasure()`, `#!dax DaxLib.SVG.Data.Range()`
+
+:octicons-sparkles-fill-16: New **Axes** namespace: `#!dax DaxLib.SVG.Axes.Layout()`, `#!dax DaxLib.SVG.Axes.Render()`, `#!dax DaxLib.SVG.Axes.Point()`, `#!dax DaxLib.SVG.Axes.Baseline()`, `#!dax DaxLib.SVG.Axes.MaxTickLabelWidth()`
+
+:octicons-sparkles-fill-16: New **Viz** namespace with simplified chart wrappers: `#!dax DaxLib.SVG.Viz.Bars()`, `#!dax DaxLib.SVG.Viz.Line()`, `#!dax DaxLib.SVG.Viz.Area()`, `#!dax DaxLib.SVG.Viz.ProgressBar()`, `#!dax DaxLib.SVG.Viz.Pill()`, `#!dax DaxLib.SVG.Viz.Boxplot()`, `#!dax DaxLib.SVG.Viz.Jitter()`, `#!dax DaxLib.SVG.Viz.Heatmap()`, `#!dax DaxLib.SVG.Viz.Violin()`
+
+## 0.2.3-beta
 
 :octicons-sparkles-fill-16: `#!dax DaxLib.SVG.Compound.*` performance improvements
 
@@ -30,4 +58,4 @@
 
 ##  0.1.0-beta
 
-:octicons-rocket-24: Initial release of the DaxLib.SVG library with support
+:octicons-rocket-24: Initial release of the DaxLib.SVG library with Docs Site

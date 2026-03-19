@@ -8,7 +8,7 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_ProTooling = ["TMDLView_Desktop","DaxQueryView_Desktop","DevMode"]
+annotation PBI_ProTooling = ["TMDLView_Desktop","DaxQueryView_Desktop","DevMode","TMDL-Extension"]
 
 annotation PBI_QueryOrder = []
 
@@ -27,6 +27,13 @@ ref table Products
 ref table Stores
 ref table Bandwidth
 ref table Samples
+ref table Width
+ref table Height
+ref table Axis
+ref table x
+ref table y
+ref table Cards
+ref table Orientation
 
 ref cultureInfo en-GB
 

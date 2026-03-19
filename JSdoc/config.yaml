@@ -1,0 +1,103 @@
+# Documentation Generation Configuration
+
+# REQUIRED: Source TMDL file(s) (relative to repository root)
+# Accepts a single path, a glob pattern, or a list of paths/globs
+# Examples:
+#   source: src/lib/functions.tmdl           # single file
+#   source: src/lib/*.tmdl                    # glob pattern
+#   source:                                   # list of files/globs
+#     - src/lib/functions.tmdl
+#     - src/lib/viz_functions.tmdl
+source: src/lib/**/*.tmdl
+
+# REQUIRED: Destination directory (relative to repository root)
+destination: docs
+
+# OPTIONAL: Jinja template file (relative to repository root)
+template: JSdoc/doc_template.md.jinja
+
+# OPTIONAL: Output directory for JSON metadata (relative to JSdoc folder)
+output_dir: parsed_functions
+
+path_mapping:
+  # Exact function name to path mapping
+  function_paths:
+    # SVG Container
+    "SVG": svg
+
+    # Scales
+    "Scale.Normalize": scales
+    "Scale.NiceNum": scales
+    "Scale.NiceRange": scales
+
+    # Data
+    "Data.AxisMeasure": data
+    "Data.Range": data
+
+    # Axes
+    "Axes.MaxTickLabelWidth": axes
+    "Axes.Layout": axes
+    "Axes.Render": axes
+    "Axes.Point": axes
+    "Axes.Baseline": axes
+
+    # Attributes
+    "Attr.Shapes": attributes
+    "Attr.Txt": attributes
+    "Attr.Stroke": attributes
+
+    # Transforms
+    "Transforms": transforms
+
+    # Elements
+    "Element.Defs": elements
+    "Element.UseDef": elements
+    "Element.Group": elements
+    "Element.Circle": elements
+    "Element.Rect": elements
+    "Element.Line": elements
+    "Element.Paths": elements
+    "Element.Ellipse": elements
+    "Element.Polygon": elements
+    "Element.Polyline": elements
+    "Element.Txt": elements
+
+    # Defs
+    "Def.GradientStop": defs
+    "Def.LinearGradient": defs
+    "Def.RadialGradient": defs
+    "Def.ClipPath": defs
+    "Def.Circle": defs
+    "Def.Rect": defs
+    "Def.Line": defs
+    "Def.Paths": defs
+
+    # Compounds
+    "Compound.Pill": compounds
+    "Compound.Bars": compounds
+    "Compound.Line": compounds
+    "Compound.Area": compounds
+    "Compound.Jitter": compounds
+    "Compound.ProgressBar": compounds
+    "Compound.Boxplot": compounds
+    "Compound.Violin": compounds
+    "Compound.Heatmap": compounds
+
+    # Viz
+    "Viz.Bars": viz
+    "Viz.Line": viz
+    "Viz.Area": viz
+    "Viz.ProgressBar": viz
+    "Viz.Pill": viz
+    "Viz.Boxplot": viz
+    "Viz.Jitter": viz
+    "Viz.Heatmap": viz
+    "Viz.Violin": viz
+
+    # Colors
+    "Color.Theme": colors
+    "Color.PerformanceTheme": colors
+    "Color.Int.ToHex": colors
+    "Color.Hex.ToInt": colors
+    "Color.RGB.ToHex": colors
+    "Color.Hex.Interpolate": colors

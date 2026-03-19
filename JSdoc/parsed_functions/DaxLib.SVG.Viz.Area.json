@@ -1,0 +1,70 @@
+{
+  "name": "DaxLib.SVG.Viz.Area",
+  "short_name": "Viz.Area",
+  "description": "Renders an area chart as an SVG data URI showing measure values across an axis with filled area",
+  "parameters": [
+    {
+      "name": "axisRef",
+      "type": "anyref expr",
+      "type_label": "<span class=\"type-label anyref\">ANYREF</span> <span class=\"type-label expr\">EXPR</span>",
+      "description": "Axis reference column",
+      "optional": false,
+      "default_value": null
+    },
+    {
+      "name": "measureRef",
+      "type": "numeric expr",
+      "type_label": "<span class=\"type-label number\">NUMERIC</span> <span class=\"type-label expr\">EXPR</span>",
+      "description": "Measure expression",
+      "optional": false,
+      "default_value": null
+    },
+    {
+      "name": "color",
+      "type": "string",
+      "type_label": "<span class=\"type-label string\">STRING</span>",
+      "description": "Optional series color. Defaults to Power BI theme color",
+      "optional": true,
+      "default_value": null
+    },
+    {
+      "name": "showAxis",
+      "type": "boolean",
+      "type_label": "<span class=\"type-label boolean\">BOOLEAN</span>",
+      "description": "Optional axis toggle. Defaults to FALSE",
+      "optional": true,
+      "default_value": null
+    },
+    {
+      "name": "width",
+      "type": "int",
+      "type_label": "<span class=\"type-label int64\">INT64</span>",
+      "description": "Optional: SVG width. Defaults to 120",
+      "optional": true,
+      "default_value": null
+    },
+    {
+      "name": "height",
+      "type": "int",
+      "type_label": "<span class=\"type-label int64\">INT64</span>",
+      "description": "Optional: SVG height. Defaults to 48",
+      "optional": true,
+      "default_value": null
+    }
+  ],
+  "return_type": "STRING",
+  "return_type_label": "<span class=\"type-label string\">STRING</span>",
+  "return_description": "SVG Area Chart",
+  "code": "function 'DaxLib.SVG.Viz.Area' =\n\t\t(\n\t\t\taxisRef: ANYREF EXPR,\n\t\t\tmeasureRef: NUMERIC EXPR,\n\t\t\tcolor: STRING,\n\t\t\tshowAxis: BOOLEAN,\n\t\t\twidth: INT64,\n\t\t\theight: INT64\n\t\t) =>\n\n\t\t\tVAR _W = IF( ISBLANK( width ), 120, width )\n\t\t\tVAR _H = IF( ISBLANK( height ), 48, height )\n\t\t\tVAR _Color = IF( NOT ISBLANK( color ), color, DaxLib.SVG.Color.Theme( \"Power BI\", 1 ) )\n\t\t\tVAR _Marks =\n\t\t\t\tDaxLib.SVG.Compound.Area(\n\t\t\t\t\t0, 0, _W, _H, 0, 0,\n\t\t\t\t\taxisRef, measureRef, _Color, 0.24, _Color, BLANK(), BLANK(), showAxis, 8\n\t\t\t\t)\n\n\t\t\tRETURN\n\t\t\t\tIF( NOT ISBLANK( _Marks ), DaxLib.SVG.SVG( \"100%\", \"100%\", \"0 0 \" & _W & \" \" & _H, _Marks, BLANK() ) )",
+  "example": null,
+  "author": null,
+  "version": null,
+  "since": null,
+  "see": null,
+  "deprecated": null,
+  "sections": {
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Viz.Area( axisRef, measureRef, color, showAxis, width, height )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | axisRef | <span class=\"type-label anyref\">ANYREF</span> <span class=\"type-label expr\">EXPR</span> | :material-check: | Axis reference column |\n    | measureRef | <span class=\"type-label number\">NUMERIC</span> <span class=\"type-label expr\">EXPR</span> | :material-check: | Measure expression |\n    | color | <span class=\"type-label string\">STRING</span> | :material-close: | Optional series color. Defaults to Power BI theme color |\n    | showAxis | <span class=\"type-label boolean\">BOOLEAN</span> | :material-close: | Optional axis toggle. Defaults to FALSE |\n    | width | <span class=\"type-label int64\">INT64</span> | :material-close: | Optional: SVG width. Defaults to 120 |\n    | height | <span class=\"type-label int64\">INT64</span> | :material-close: | Optional: SVG height. Defaults to 48 |\n\n    <span class=\"type-label string\">STRING</span> SVG Area Chart",
+    "example": "",
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Viz.Area' =\n    \t\t(\n    \t\t\taxisRef: ANYREF EXPR,\n    \t\t\tmeasureRef: NUMERIC EXPR,\n    \t\t\tcolor: STRING,\n    \t\t\tshowAxis: BOOLEAN,\n    \t\t\twidth: INT64,\n    \t\t\theight: INT64\n    \t\t) =>\n    \n    \t\t\tVAR _W = IF( ISBLANK( width ), 120, width )\n    \t\t\tVAR _H = IF( ISBLANK( height ), 48, height )\n    \t\t\tVAR _Color = IF( NOT ISBLANK( color ), color, DaxLib.SVG.Color.Theme( \"Power BI\", 1 ) )\n    \t\t\tVAR _Marks =\n    \t\t\t\tDaxLib.SVG.Compound.Area(\n    \t\t\t\t\t0, 0, _W, _H, 0, 0,\n    \t\t\t\t\taxisRef, measureRef, _Color, 0.24, _Color, BLANK(), BLANK(), showAxis, 8\n    \t\t\t\t)\n    \n    \t\t\tRETURN\n    \t\t\t\tIF( NOT ISBLANK( _Marks ), DaxLib.SVG.SVG( \"100%\", \"100%\", \"0 0 \" & _W & \" \" & _H, _Marks, BLANK() ) )\n    ```"
+  }
+}

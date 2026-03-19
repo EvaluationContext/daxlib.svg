@@ -1,24 +1,20 @@
----
-comments: true
----
-
 # Transforms
 
-Creates an SVG transform attribute value for applying multiple transformations to an element
+Generates transform string for SVG elements
 
 === "Syntax"
 
     ```dax
-    DaxLib.SVG.Transforms(translate, rotate, scale, skewX, skewY)
+    DaxLib.SVG.Transforms( translate, rotate, scale, skewX, skewY )
     ```
 
-    | Parameter | Type      | Required | Description | 
+    | Parameter | Type | Required | Description |
     |:---:|:---:|:---:|---|
-    | translate | <span class="type-label string">STRING</span>    | :material-close: | Translation coordinates in the format "x,y" | 
-    | rotate    | <span class="type-label string">STRING</span>    | :material-close: | Rotation angle in degrees, or "angle x y" for rotation around a point |
-    | scale     | <span class="type-label string">STRING</span>    | :material-close: | Scale factor, or "x,y" for different scaling in each dimension | 
-    | skewX     | <span class="type-label string">STRING</span>    | :material-close: | Horizontal skew angle in degrees | 
-    | skewY     | <span class="type-label string">STRING</span>    | :material-close: | Vertical skew angle in degrees |
+    | translate | <span class="type-label string">STRING</span> | :material-close: | Optional: Translation coordinates (e.g., "10,20") |
+    | rotate | <span class="type-label string">STRING</span> | :material-close: | Optional: Rotation with optional center point (e.g., "45" or "45 50 50") |
+    | scale | <span class="type-label string">STRING</span> | :material-close: | Optional: Scale factors (e.g., "2" or "2,1.5") |
+    | skewX | <span class="type-label string">STRING</span> | :material-close: | Optional: Horizontal skew angle in degrees |
+    | skewY | <span class="type-label string">STRING</span> | :material-close: | Optional: Vertical skew angle in degrees |
 
     <span class="type-label string">STRING</span> A transform attribute value that can be used with the transform attribute of SVG elements.
 
@@ -32,18 +28,18 @@ Creates an SVG transform attribute value for applying multiple transformations t
 === "Definition"
 
     ```dax
-    function 'DaxLib.SVG.Transforms' = 
-        (
-            translate: STRING,
-            rotate: STRING,
-            scale: STRING,
-            skewX: STRING,
-            skewY: STRING
-        ) =>
-
-            IF(NOT ISBLANK(translate),  "translate(" & translate & ") ") &
-            IF(NOT ISBLANK(rotate),     "rotate(" & rotate & ") ") &
-            IF(NOT ISBLANK(scale),      "scale(" & scale & ") ") &
-            IF(NOT ISBLANK(skewX),      "skewX(" & skewX & ") ") &
-            IF(NOT ISBLANK(skewY),      "skewY(" & skewY & ") ") 
+    function 'DaxLib.SVG.Transforms' =
+    		(
+    			translate: STRING,
+    			rotate: STRING,
+    			scale: STRING,
+    			skewX: STRING,
+    			skewY: STRING
+    		) =>
+    
+    			IF(NOT ISBLANK(translate), "translate(" & translate & ") ") &
+    			IF(NOT ISBLANK(rotate), "rotate(" & rotate & ") ") &
+    			IF(NOT ISBLANK(scale), "scale(" & scale & ") ") &
+    			IF(NOT ISBLANK(skewX), "skewX(" & skewX & ") ") &
+    			IF(NOT ISBLANK(skewY), "skewY(" & skewY & ") ")
     ```

@@ -1,0 +1,46 @@
+{
+  "name": "DaxLib.SVG.Color.Hex.Interpolate",
+  "short_name": "Color.Hex.Interpolate",
+  "description": "Interpolate between two hex colors by a given percentage",
+  "parameters": [
+    {
+      "name": "startHexColor",
+      "type": "string",
+      "type_label": "<span class=\"type-label string\">STRING</span>",
+      "description": "The starting hex color (e.g., \"#FF0000\")",
+      "optional": false,
+      "default_value": null
+    },
+    {
+      "name": "endHexColor",
+      "type": "string",
+      "type_label": "<span class=\"type-label string\">STRING</span>",
+      "description": "The ending hex color (e.g., \"#0000FF\")",
+      "optional": false,
+      "default_value": null
+    },
+    {
+      "name": "percentage",
+      "type": "decimal",
+      "type_label": "<span class=\"type-label number\">DECIMAL</span>",
+      "description": "The interpolation percentage (0.0 = startColor, 1.0 = endColor)",
+      "optional": false,
+      "default_value": null
+    }
+  ],
+  "return_type": "STRING",
+  "return_type_label": "<span class=\"type-label string\">STRING</span>",
+  "return_description": "Interpolated hex color code",
+  "code": "function 'DaxLib.SVG.Color.Hex.Interpolate' =\n\t\t(\n\t\t\tstartHexColor: STRING,\n\t\t\tendHexColor: STRING,\n\t\t\tpercentage: DOUBLE\n\t\t) =>\n\t\t\n\t\t\t// Clamp percentage between 0 and 1\n\t\t\tVAR _ClampedPercentage = MIN( MAX( percentage, 0 ), 1 )\n\t\t\n\t\t\t// Clean Hex codes\n\t\t\tVAR _StartHex = SUBSTITUTE( startHexColor, \"#\", \"\" )\n\t\t\tVAR _EndHex = \tSUBSTITUTE( endHexColor, \"#\", \"\" )\n\t\t\n\t\t\t// Extract and convert RGB components using your existing Hex.ToInt function\n\t\t\tVAR _StartR = \tDaxLib.SVG.Color.Hex.ToInt( MID( _StartHex, 1, 2 ) )\n\t\t\tVAR _StartG = \tDaxLib.SVG.Color.Hex.ToInt( MID( _StartHex, 3, 2 ) )\n\t\t\tVAR _StartB = \tDaxLib.SVG.Color.Hex.ToInt( MID( _StartHex, 5, 2 ) )\n\t\t\n\t\t\tVAR _EndR = \tDaxLib.SVG.Color.Hex.ToInt( MID( _EndHex, 1, 2 ) )\n\t\t\tVAR _EndG = \tDaxLib.SVG.Color.Hex.ToInt( MID( _EndHex, 3, 2 ) )\n\t\t\tVAR _EndB = \tDaxLib.SVG.Color.Hex.ToInt( MID( _EndHex, 5, 2 ) )\n\t\t\n\t\t\t// Interpolate RGB values\n\t\t\tVAR _InterpolatedR = ROUND( _StartR + ( _EndR - _StartR ) * _ClampedPercentage, 0 )\n\t\t\tVAR _InterpolatedG = ROUND( _StartG + ( _EndG - _StartG ) * _ClampedPercentage, 0 )\n\t\t\tVAR _InterpolatedB = ROUND( _StartB + ( _EndB - _StartB ) * _ClampedPercentage, 0 )\n\t\t\n\t\t\tVAR result =\n\t\t\t\tDaxLib.SVG.Color.RGB.ToHex(\n\t\t\t\t\t_InterpolatedR,\n\t\t\t\t\t_InterpolatedG,\n\t\t\t\t\t_InterpolatedB,\n\t\t\t\t\tBLANK()  // No alpha\n\t\t\t\t)\n\t\t\n\t\t\tRETURN result",
+  "example": null,
+  "author": null,
+  "version": null,
+  "since": null,
+  "see": null,
+  "deprecated": null,
+  "sections": {
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Color.Hex.Interpolate( startHexColor, endHexColor, percentage )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | startHexColor | <span class=\"type-label string\">STRING</span> | :material-check: | The starting hex color (e.g., \"#FF0000\") |\n    | endHexColor | <span class=\"type-label string\">STRING</span> | :material-check: | The ending hex color (e.g., \"#0000FF\") |\n    | percentage | <span class=\"type-label number\">DECIMAL</span> | :material-check: | The interpolation percentage (0.0 = startColor, 1.0 = endColor) |\n\n    <span class=\"type-label string\">STRING</span> Interpolated hex color code",
+    "example": "",
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Color.Hex.Interpolate' =\n    \t\t(\n    \t\t\tstartHexColor: STRING,\n    \t\t\tendHexColor: STRING,\n    \t\t\tpercentage: DOUBLE\n    \t\t) =>\n    \t\t\n    \t\t\t// Clamp percentage between 0 and 1\n    \t\t\tVAR _ClampedPercentage = MIN( MAX( percentage, 0 ), 1 )\n    \t\t\n    \t\t\t// Clean Hex codes\n    \t\t\tVAR _StartHex = SUBSTITUTE( startHexColor, \"#\", \"\" )\n    \t\t\tVAR _EndHex = \tSUBSTITUTE( endHexColor, \"#\", \"\" )\n    \t\t\n    \t\t\t// Extract and convert RGB components using your existing Hex.ToInt function\n    \t\t\tVAR _StartR = \tDaxLib.SVG.Color.Hex.ToInt( MID( _StartHex, 1, 2 ) )\n    \t\t\tVAR _StartG = \tDaxLib.SVG.Color.Hex.ToInt( MID( _StartHex, 3, 2 ) )\n    \t\t\tVAR _StartB = \tDaxLib.SVG.Color.Hex.ToInt( MID( _StartHex, 5, 2 ) )\n    \t\t\n    \t\t\tVAR _EndR = \tDaxLib.SVG.Color.Hex.ToInt( MID( _EndHex, 1, 2 ) )\n    \t\t\tVAR _EndG = \tDaxLib.SVG.Color.Hex.ToInt( MID( _EndHex, 3, 2 ) )\n    \t\t\tVAR _EndB = \tDaxLib.SVG.Color.Hex.ToInt( MID( _EndHex, 5, 2 ) )\n    \t\t\n    \t\t\t// Interpolate RGB values\n    \t\t\tVAR _InterpolatedR = ROUND( _StartR + ( _EndR - _StartR ) * _ClampedPercentage, 0 )\n    \t\t\tVAR _InterpolatedG = ROUND( _StartG + ( _EndG - _StartG ) * _ClampedPercentage, 0 )\n    \t\t\tVAR _InterpolatedB = ROUND( _StartB + ( _EndB - _StartB ) * _ClampedPercentage, 0 )\n    \t\t\n    \t\t\tVAR result =\n    \t\t\t\tDaxLib.SVG.Color.RGB.ToHex(\n    \t\t\t\t\t_InterpolatedR,\n    \t\t\t\t\t_InterpolatedG,\n    \t\t\t\t\t_InterpolatedB,\n    \t\t\t\t\tBLANK()  // No alpha\n    \t\t\t\t)\n    \t\t\n    \t\t\tRETURN result\n    ```"
+  }
+}

@@ -1,0 +1,1 @@
+<svg width='500' height='100' viewbox= '0 0 100 20' xmlns='http://www.w3.org/2000/svg'><defs><clipPath id='clip-circle'><circle cx='50%' cy='80%' r='8'/></clipPath></defs><rect x='0%' y='0%' width='100%' height='80%' fill='#EC008C' clip-path='url(#clip-circle)' /></svg>

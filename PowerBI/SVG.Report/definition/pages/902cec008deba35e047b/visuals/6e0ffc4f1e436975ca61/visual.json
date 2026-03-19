@@ -1,13 +1,13 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
   "name": "6e0ffc4f1e436975ca61",
   "position": {
-    "x": 277.87479015430847,
-    "y": 222.29983212344675,
-    "z": 2000,
-    "height": 459.67083930611022,
-    "width": 1289.5274160042313,
-    "tabOrder": 1000
+    "x": 204.14978471708781,
+    "y": 618.862436393685,
+    "z": 1000,
+    "height": 387.9914756665072,
+    "width": 1669.5390771104251,
+    "tabOrder": 0
   },
   "visual": {
     "visualType": "pivotTable",
@@ -70,6 +70,20 @@
                       "Entity": "_Measures"
                     }
                   },
+                  "Property": "Compound.ProgressBar"
+                }
+              },
+              "queryRef": "_Measures.Compound.ProgressBar",
+              "nativeQueryRef": "Compound.ProgressBar"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
                   "Property": "Compound.Line"
                 }
               },
@@ -89,6 +103,20 @@
               },
               "queryRef": "_Measures.Compound.Area",
               "nativeQueryRef": "Compound.Area"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Compound.Bars"
+                }
+              },
+              "queryRef": "_Measures.Compound.Bar",
+              "nativeQueryRef": "Compound.Bars"
             },
             {
               "field": {
@@ -154,11 +182,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Jitter and Heatmap"
+                  "Property": "Jitter and Violin"
                 }
               },
-              "queryRef": "_Measures.Jitter and Heatmap",
-              "nativeQueryRef": "Jitter and Heatmap"
+              "queryRef": "_Measures.Jitter and Violin",
+              "nativeQueryRef": "Jitter and Violin"
             },
             {
               "field": {
@@ -231,14 +259,14 @@
             "imageWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "100D"
+                  "Value": "105D"
                 }
               }
             },
             "imageHeight": {
               "expr": {
                 "Literal": {
-                  "Value": "20D"
+                  "Value": "22D"
                 }
               }
             }
@@ -258,7 +286,7 @@
             "name": {
               "expr": {
                 "Literal": {
-                  "Value": "'Minimal'"
+                  "Value": "'None'"
                 }
               }
             }
@@ -278,7 +306,57 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Compounds'"
+                  "Value": "'Table'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": -0.2
+                    }
+                  }
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "6D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": 0
+                    }
+                  }
                 }
               }
             }
@@ -287,135 +365,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "3fbc573019d43aa37825",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Products"
-              }
-            },
-            "Property": "Brand"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "52542026103dd71e5977",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Compound.Pill"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "1d5b5b4a0801c11eb5d0",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Compound.Area"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "d68f1c6501087b007207",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Compound.BoxPlot"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "6d52f41906038d303098",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Compound.Jitter"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "303ee2ba98090016b012",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Compound.Violin"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "d5d607a6e330623ea717",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Compound.Heatmap"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "ee6b56c9b92bbbd5daee",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Jitter and Heatmap"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "ceb5df60eeb5ddb26a85",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Jitter and Violin"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

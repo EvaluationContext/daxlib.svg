@@ -1,0 +1,62 @@
+{
+  "name": "DaxLib.SVG.Viz.Jitter",
+  "short_name": "Viz.Jitter",
+  "description": "Renders a jitter plot as an SVG data URI showing value distribution as scattered points",
+  "parameters": [
+    {
+      "name": "axisRef",
+      "type": "anyref expr",
+      "type_label": "<span class=\"type-label anyref\">ANYREF</span> <span class=\"type-label expr\">EXPR</span>",
+      "description": "Axis reference column",
+      "optional": false,
+      "default_value": null
+    },
+    {
+      "name": "measureRef",
+      "type": "numeric expr",
+      "type_label": "<span class=\"type-label number\">NUMERIC</span> <span class=\"type-label expr\">EXPR</span>",
+      "description": "Measure expression",
+      "optional": false,
+      "default_value": null
+    },
+    {
+      "name": "color",
+      "type": "string",
+      "type_label": "<span class=\"type-label string\">STRING</span>",
+      "description": "Optional point color. Defaults to Power BI theme color",
+      "optional": true,
+      "default_value": null
+    },
+    {
+      "name": "width",
+      "type": "int",
+      "type_label": "<span class=\"type-label int64\">INT64</span>",
+      "description": "Optional: SVG width. Defaults to 120",
+      "optional": true,
+      "default_value": null
+    },
+    {
+      "name": "height",
+      "type": "int",
+      "type_label": "<span class=\"type-label int64\">INT64</span>",
+      "description": "Optional: SVG height. Defaults to 48",
+      "optional": true,
+      "default_value": null
+    }
+  ],
+  "return_type": "STRING",
+  "return_type_label": "<span class=\"type-label string\">STRING</span>",
+  "return_description": "SVG Jitter Plot",
+  "code": "function 'DaxLib.SVG.Viz.Jitter' =\n\t\t(\n\t\t\taxisRef: ANYREF EXPR,\n\t\t\tmeasureRef: NUMERIC EXPR,\n\t\t\tcolor: STRING,\n\t\t\twidth: INT64,\n\t\t\theight: INT64\n\t\t) =>\n\n\t\t\tVAR _W = IF( ISBLANK( width ), 120, width )\n\t\t\tVAR _H = IF( ISBLANK( height ), 48, height )\n\t\t\tVAR _Color = IF( NOT ISBLANK( color ), color, DaxLib.SVG.Color.Theme( \"Power BI\", 1 ) )\n\t\t\tVAR _Marks =\n\t\t\t\tDaxLib.SVG.Compound.Jitter(\n\t\t\t\t\t0, 0, _W, _H, 0, 0,\n\t\t\t\t\taxisRef, measureRef, _Color, BLANK()\n\t\t\t\t)\n\n\t\t\tRETURN\n\t\t\t\tIF( NOT ISBLANK( _Marks ), DaxLib.SVG.SVG( \"100%\", \"100%\", \"0 0 \" & _W & \" \" & _H, _Marks, BLANK() ) )",
+  "example": null,
+  "author": null,
+  "version": null,
+  "since": null,
+  "see": null,
+  "deprecated": null,
+  "sections": {
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Viz.Jitter( axisRef, measureRef, color, width, height )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | axisRef | <span class=\"type-label anyref\">ANYREF</span> <span class=\"type-label expr\">EXPR</span> | :material-check: | Axis reference column |\n    | measureRef | <span class=\"type-label number\">NUMERIC</span> <span class=\"type-label expr\">EXPR</span> | :material-check: | Measure expression |\n    | color | <span class=\"type-label string\">STRING</span> | :material-close: | Optional point color. Defaults to Power BI theme color |\n    | width | <span class=\"type-label int64\">INT64</span> | :material-close: | Optional: SVG width. Defaults to 120 |\n    | height | <span class=\"type-label int64\">INT64</span> | :material-close: | Optional: SVG height. Defaults to 48 |\n\n    <span class=\"type-label string\">STRING</span> SVG Jitter Plot",
+    "example": "",
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Viz.Jitter' =\n    \t\t(\n    \t\t\taxisRef: ANYREF EXPR,\n    \t\t\tmeasureRef: NUMERIC EXPR,\n    \t\t\tcolor: STRING,\n    \t\t\twidth: INT64,\n    \t\t\theight: INT64\n    \t\t) =>\n    \n    \t\t\tVAR _W = IF( ISBLANK( width ), 120, width )\n    \t\t\tVAR _H = IF( ISBLANK( height ), 48, height )\n    \t\t\tVAR _Color = IF( NOT ISBLANK( color ), color, DaxLib.SVG.Color.Theme( \"Power BI\", 1 ) )\n    \t\t\tVAR _Marks =\n    \t\t\t\tDaxLib.SVG.Compound.Jitter(\n    \t\t\t\t\t0, 0, _W, _H, 0, 0,\n    \t\t\t\t\taxisRef, measureRef, _Color, BLANK()\n    \t\t\t\t)\n    \n    \t\t\tRETURN\n    \t\t\t\tIF( NOT ISBLANK( _Marks ), DaxLib.SVG.SVG( \"100%\", \"100%\", \"0 0 \" & _W & \" \" & _H, _Marks, BLANK() ) )\n    ```"
+  }
+}

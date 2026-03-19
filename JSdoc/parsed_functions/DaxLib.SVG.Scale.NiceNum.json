@@ -1,0 +1,38 @@
+{
+  "name": "DaxLib.SVG.Scale.NiceNum",
+  "short_name": "Scale.NiceNum",
+  "description": "Returns a \"nice\" rounded number close to the given value. Used for choosing human-friendly tick intervals and axis bounds",
+  "parameters": [
+    {
+      "name": "rawValue",
+      "type": "numeric val",
+      "type_label": "<span class=\"type-label number\">NUMERIC</span> <span class=\"type-label val\">VAL</span>",
+      "description": "The raw value to round to a nice number",
+      "optional": false,
+      "default_value": null
+    },
+    {
+      "name": "roundMode",
+      "type": "boolean",
+      "type_label": "<span class=\"type-label boolean\">BOOLEAN</span>",
+      "description": "Optional: TRUE for rounding to nearest nice number (for intervals), FALSE for ceiling to next nice number (for range extents). Defaults to TRUE.",
+      "optional": true,
+      "default_value": null
+    }
+  ],
+  "return_type": "NUMERIC",
+  "return_type_label": "<span class=\"type-label number\">NUMERIC</span>",
+  "return_description": "A human-friendly number (1, 2, 2.5, 5, or 10 scaled by the appropriate power of 10)",
+  "code": "function 'DaxLib.SVG.Scale.NiceNum' =\n\t\t(\n\t\t\trawValue: NUMERIC VAL,\n\t\t\troundMode: BOOLEAN\n\t\t) =>\n\n\t\t\tVAR _Value = ABS( rawValue )\n\t\t\tVAR _RoundMode = IF( ISBLANK( roundMode ), TRUE(), roundMode )\n\t\t\tVAR _Exponent = IF( _Value = 0, 0, INT( LOG10( _Value ) ) )\n\t\t\tVAR _Fraction = IF( _Value = 0, 0, _Value / POWER( 10, _Exponent ) )\n\t\t\tVAR _NiceFraction =\n\t\t\t\tIF(\n\t\t\t\t\t_Value = 0,\n\t\t\t\t\t0,\n\t\t\t\t\tIF(\n\t\t\t\t\t\t_RoundMode,\n\t\t\t\t\t\tIF( _Fraction < 1.5, 1, IF( _Fraction < 3, 2, IF( _Fraction < 7, 5, 10 ) ) ),\n\t\t\t\t\t\tIF( _Fraction <= 1, 1, IF( _Fraction <= 2, 2, IF( _Fraction <= 5, 5, 10 ) ) )\n\t\t\t\t\t)\n\t\t\t\t)\n\n\t\t\tRETURN\n\t\t\t\t_NiceFraction * POWER( 10, _Exponent )",
+  "example": null,
+  "author": null,
+  "version": null,
+  "since": null,
+  "see": null,
+  "deprecated": null,
+  "sections": {
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Scale.NiceNum( rawValue, roundMode )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | rawValue | <span class=\"type-label number\">NUMERIC</span> <span class=\"type-label val\">VAL</span> | :material-check: | The raw value to round to a nice number |\n    | roundMode | <span class=\"type-label boolean\">BOOLEAN</span> | :material-close: | Optional: TRUE for rounding to nearest nice number (for intervals), FALSE for ceiling to next nice number (for range extents). Defaults to TRUE. |\n\n    <span class=\"type-label number\">NUMERIC</span> A human-friendly number (1, 2, 2.5, 5, or 10 scaled by the appropriate power of 10)",
+    "example": "",
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Scale.NiceNum' =\n    \t\t(\n    \t\t\trawValue: NUMERIC VAL,\n    \t\t\troundMode: BOOLEAN\n    \t\t) =>\n    \n    \t\t\tVAR _Value = ABS( rawValue )\n    \t\t\tVAR _RoundMode = IF( ISBLANK( roundMode ), TRUE(), roundMode )\n    \t\t\tVAR _Exponent = IF( _Value = 0, 0, INT( LOG10( _Value ) ) )\n    \t\t\tVAR _Fraction = IF( _Value = 0, 0, _Value / POWER( 10, _Exponent ) )\n    \t\t\tVAR _NiceFraction =\n    \t\t\t\tIF(\n    \t\t\t\t\t_Value = 0,\n    \t\t\t\t\t0,\n    \t\t\t\t\tIF(\n    \t\t\t\t\t\t_RoundMode,\n    \t\t\t\t\t\tIF( _Fraction < 1.5, 1, IF( _Fraction < 3, 2, IF( _Fraction < 7, 5, 10 ) ) ),\n    \t\t\t\t\t\tIF( _Fraction <= 1, 1, IF( _Fraction <= 2, 2, IF( _Fraction <= 5, 5, 10 ) ) )\n    \t\t\t\t\t)\n    \t\t\t\t)\n    \n    \t\t\tRETURN\n    \t\t\t\t_NiceFraction * POWER( 10, _Exponent )\n    ```"
+  }
+}

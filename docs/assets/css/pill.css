@@ -75,3 +75,13 @@ table th:has(.type-label) {
   border-color: #6251d7;
   color: #6251d7;
 }
+.type-label.table { 
+  background-color: #e8f0fe;
+  border-color: #3367d6;
+  color: #3367d6;
+}
+.type-label.decimal { 
+  background-color: #e6f4ea;
+  border-color: #137333;
+  color: #137333;
+}

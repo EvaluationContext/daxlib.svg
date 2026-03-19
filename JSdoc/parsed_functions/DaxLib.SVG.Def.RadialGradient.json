@@ -1,0 +1,86 @@
+{
+  "name": "DaxLib.SVG.Def.RadialGradient",
+  "short_name": "Def.RadialGradient",
+  "description": "Create a radial gradient definition",
+  "parameters": [
+    {
+      "name": "defId",
+      "type": "string",
+      "type_label": "<span class=\"type-label string\">STRING</span>",
+      "description": "The unique identifier for the gradient",
+      "optional": false,
+      "default_value": null
+    },
+    {
+      "name": "stops",
+      "type": "string",
+      "type_label": "<span class=\"type-label string\">STRING</span>",
+      "description": "Concatenated list of one or more `DaxLib.SVG.Def.GradientStop` elements",
+      "optional": false,
+      "default_value": null
+    },
+    {
+      "name": "cx",
+      "type": "string",
+      "type_label": "<span class=\"type-label string\">STRING</span>",
+      "description": "Optional: Center X position",
+      "optional": true,
+      "default_value": null
+    },
+    {
+      "name": "cy",
+      "type": "string",
+      "type_label": "<span class=\"type-label string\">STRING</span>",
+      "description": "Optional: Center Y position",
+      "optional": true,
+      "default_value": null
+    },
+    {
+      "name": "r",
+      "type": "string",
+      "type_label": "<span class=\"type-label string\">STRING</span>",
+      "description": "Optional: Radius",
+      "optional": true,
+      "default_value": null
+    },
+    {
+      "name": "fx",
+      "type": "string",
+      "type_label": "<span class=\"type-label string\">STRING</span>",
+      "description": "Optional: Focus X position",
+      "optional": true,
+      "default_value": null
+    },
+    {
+      "name": "fy",
+      "type": "string",
+      "type_label": "<span class=\"type-label string\">STRING</span>",
+      "description": "Optional: Focus Y position",
+      "optional": true,
+      "default_value": null
+    },
+    {
+      "name": "fr",
+      "type": "string",
+      "type_label": "<span class=\"type-label string\">STRING</span>",
+      "description": "Optional: Focus radius",
+      "optional": true,
+      "default_value": null
+    }
+  ],
+  "return_type": "STRING",
+  "return_type_label": "<span class=\"type-label string\">STRING</span>",
+  "return_description": "<radialGradient> definition",
+  "code": "function 'DaxLib.SVG.Def.RadialGradient' =\n\t\t(\n\t\t\tdefId: STRING,\n\t\t\tstops: STRING,\n\t\t\tcx: STRING,\n\t\t\tcy: STRING,\n\t\t\tr: STRING,\n\t\t\tfx: STRING,\n\t\t\tfy: STRING,\n\t\t\tfr: STRING\n\t\t) =>\n\n\t\t\t\"<radialGradient\" & \n\t\t\t\" id='\" & defId & \"'\" &\n\t\t\tIF( NOT ISBLANK( cx ), \" cx='\" & cx & \"'\" ) &\n\t\t\tIF( NOT ISBLANK( cy ), \" cy='\" & cy & \"'\" ) &\n\t\t\tIF( NOT ISBLANK( r ),  \" r='\" & r & \"'\" ) &\n\t\t\tIF( NOT ISBLANK( fx ), \" fx='\" & fx & \"'\" ) &\n\t\t\tIF( NOT ISBLANK( fy ), \" fy='\" & fy & \"'\" ) &\n\t\t\tIF( NOT ISBLANK( fr ), \" fr='\" & fr & \"'\" ) &\n\t\t\t\">\" &\n\t\t\tstops &\n\t\t\t\"</radialGradient>\"",
+  "example": null,
+  "author": null,
+  "version": null,
+  "since": null,
+  "see": null,
+  "deprecated": null,
+  "sections": {
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Def.RadialGradient( defId, stops, cx, cy, r, fx, fy, fr )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | defId | <span class=\"type-label string\">STRING</span> | :material-check: | The unique identifier for the gradient |\n    | stops | <span class=\"type-label string\">STRING</span> | :material-check: | Concatenated list of one or more `DaxLib.SVG.Def.GradientStop` elements |\n    | cx | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Center X position |\n    | cy | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Center Y position |\n    | r | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Radius |\n    | fx | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Focus X position |\n    | fy | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Focus Y position |\n    | fr | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Focus radius |\n\n    <span class=\"type-label string\">STRING</span> <radialGradient> definition",
+    "example": "",
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Def.RadialGradient' =\n    \t\t(\n    \t\t\tdefId: STRING,\n    \t\t\tstops: STRING,\n    \t\t\tcx: STRING,\n    \t\t\tcy: STRING,\n    \t\t\tr: STRING,\n    \t\t\tfx: STRING,\n    \t\t\tfy: STRING,\n    \t\t\tfr: STRING\n    \t\t) =>\n    \n    \t\t\t\"<radialGradient\" & \n    \t\t\t\" id='\" & defId & \"'\" &\n    \t\t\tIF( NOT ISBLANK( cx ), \" cx='\" & cx & \"'\" ) &\n    \t\t\tIF( NOT ISBLANK( cy ), \" cy='\" & cy & \"'\" ) &\n    \t\t\tIF( NOT ISBLANK( r ),  \" r='\" & r & \"'\" ) &\n    \t\t\tIF( NOT ISBLANK( fx ), \" fx='\" & fx & \"'\" ) &\n    \t\t\tIF( NOT ISBLANK( fy ), \" fy='\" & fy & \"'\" ) &\n    \t\t\tIF( NOT ISBLANK( fr ), \" fr='\" & fr & \"'\" ) &\n    \t\t\t\">\" &\n    \t\t\tstops &\n    \t\t\t\"</radialGradient>\"\n    ```"
+  }
+}

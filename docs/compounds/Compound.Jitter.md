@@ -1,0 +1,138 @@
+# Compound.Jitter
+
+Creates a Jitter Plot compound SVG Visual showing values as points with x-position based on value and y-position jittered around center
+
+<svg width='500' height='100' xmlns='http://www.w3.org/2000/svg'><circle cx='47.5939883947411' cy='33.1979' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='26.6667342963805' cy='50.6174' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='15.434537818536' cy='59.5305' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='50.9381086674241' cy='38.5879' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='233.04810501542' cy='50.1078' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='21.9444895309203' cy='67.5714' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='214.089256005519' cy='71.55755' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='18.9930865525077' cy='40.46215' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='236.083833793215' cy='44.7668' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='65.0566567927285' cy='29.1113' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='40.8045568901152' cy='56.6934' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='19.4219434750852' cy='41.76065' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='203.413609803603' cy='56.8208' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='76.0816527349456' cy='63.0193' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='71.8027207433858' cy='41.1163' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='125.2363658497' cy='48.9318' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='27.1485960071417' cy='64.5824' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='133.437652166856' cy='34.0848' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='59.3730979142996' cy='30.12315' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='138.844140561597' cy='67.7478' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='59.9946995211816' cy='70.71965' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='81.6519741113456' cy='33.3253' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='69.8415435805876' cy='34.7708' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='382.116843856517' cy='73.7748' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='31.085406184061' cy='59.6089' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='49.3913325758805' cy='42.6794' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='116.035216482714' cy='68.59305' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='160.913406914462' cy='34.5258' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='26.3342497159552' cy='56.6199' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='175.089778445058' cy='57.8988' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='78.4427751176757' cy='29.6013' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='91.8337120597306' cy='52.3618' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='75.6817075150138' cy='39.8668' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='62.0835700373316' cy='41.3368' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='231.111020938159' cy='69.7568' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='22.7708823648758' cy='37.52215' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='13.4010813991235' cy='53.0135' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='35.7618740869989' cy='27.23215' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='213.817004138938' cy='46.9963' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='34.57890358708' cy='52.1364' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='30.4927162798247' cy='48.8534' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='45.7484580425256' cy='59.4374' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='45.2665963317643' cy='27.0484' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='77.3923165882162' cy='36.2653' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='45.7243649569875' cy='68.9679' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='13.5600957636747' cy='45.149' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='41.1587252475248' cy='63.54115' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='79.6811597143321' cy='62.8968' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='108.429029378348' cy='53.8808' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='82.119379970784' cy='74.4118' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='29.7530585538062' cy='68.17165' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='337.009769112157' cy='70.7123' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='487.5' cy='44.1788' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='204.627901314722' cy='29.5278' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='36.4147967050803' cy='60.9319' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='35.7739206297679' cy='41.3564' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='250.901081399124' cy='42.7823' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='242.69497646486' cy='64.1218' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='24.2140581886057' cy='31.6299' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='175.417444408375' cy='39.0828' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='107.571315533193' cy='40.5038' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /> <circle cx='78.8379017204999' cy='63.3133' r='2' fill='#E044A7' fill-opacity='0.5' stroke='#E044A7' stroke-width='1' stroke-opacity='0.9'  /></svg>
+
+=== "Syntax"
+
+    ```dax
+    DaxLib.SVG.Compound.Jitter( x, y, width, height, paddingX, paddingY, axisRef, measureRef, pointColor, jitterAmount )
+    ```
+
+    | Parameter | Type | Required | Description |
+    |:---:|:---:|:---:|---|
+    | x | <span class="type-label int64">INT64</span> | :material-check: | The x position of the compound |
+    | y | <span class="type-label int64">INT64</span> | :material-check: | The y position of the compound |
+    | width | <span class="type-label int64">INT64</span> | :material-check: | The width of the compound |
+    | height | <span class="type-label int64">INT64</span> | :material-check: | The height of the compound |
+    | paddingX | <span class="type-label number">DECIMAL</span> | :material-close: | Optional: The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0 |
+    | paddingY | <span class="type-label number">DECIMAL</span> | :material-close: | Optional: The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0 |
+    | axisRef | <span class="type-label anyref">ANYREF</span> <span class="type-label expr">EXPR</span> | :material-check: | The column that the measure will be evaluated against |
+    | measureRef | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: | The measure to evaluate |
+    | pointColor | <span class="type-label string">STRING</span> | :material-close: | Optional: The hex color of the points (e.g., "#01B8AA") |
+    | jitterAmount | <span class="type-label number">DECIMAL</span> | :material-close: | Optional: The amount of jitter as a percentage of height (0.0-1.0). Defaults to 0.3 |
+
+    <span class="type-label string">STRING</span> SVG Jitter Plot
+
+=== "Example"
+
+    ```dax hl_lines="5-16"
+    DaxLib.SVG.SVG(
+        500,
+        100,
+        BLANK(),
+        DaxLib.SVG.Compound.Jitter(
+            0,                  // x
+            0,                  // y
+            500,                // width
+            100,                // height
+            0.05,               // paddingX
+            0.02,               // paddingY
+            Dates[Date],        // axisRef
+            [Total Cost],       // measureRef
+            "#EC008C",          // pointColor
+            0.5                 // jitterAmount
+        ),
+        BLANK()
+    )
+    ```
+
+=== "Definition"
+
+    ```dax
+    function 'DaxLib.SVG.Compound.Jitter' =
+    		(
+    			x: INT64,
+    			y: INT64,
+    			width: INT64,
+    			height: INT64,
+    			paddingX: DOUBLE,
+    			paddingY: DOUBLE,
+    			axisRef: ANYREF EXPR,
+    			measureRef: NUMERIC EXPR,
+    			pointColor: STRING,
+    			jitterAmount: DOUBLE
+    		) =>
+    			
+    			// Apply padding to dimensions
+    			VAR _X = 			x + (width * (IF(ISBLANK(paddingX), 0, paddingX) / 2))
+    			VAR _Y = 			y + (height * (IF(ISBLANK(paddingY), 0, paddingY) / 2))
+    			VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
+    			VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
+    
+    			// Check if Axis is numeric
+    			VAR axisSample = 	MAX( axisRef )
+    			VAR axisIsNumeric = ISNUMERIC( axisSample ) || ISDATETIME( axisSample )
+    			
+    			// For totals
+    			VAR _Data = 
+    				ADDCOLUMNS(
+    					FILTER(
+    						VALUES( axisRef ),
+    						NOT ISBLANK( measureRef )
+    					),
+    					"@AxisIndex", 	
+    						IF(
+    							axisIsNumeric,
+    							axisRef,
+    							RANK( DENSE, CALCULATETABLE( VALUES( axisRef ), ALLSELECTED() ) )
+    						),
+    					"@Value", measureRef
+    				)
+    					
+    			VAR _RawXMin = 	MINX( _Data, [@Value] )
+    			VAR _XMin = 	IF( _RawXMin > 0, 0, _RawXMin )
+    			VAR _XMax = 	MAXX( _Data, [@Value] )
+    		
+    			// Points
+    			VAR _CenterY = 		_Y + _Height * 0.5
+    			VAR _JitterRange = 	_Height * IF( ISBLANK( jitterAmount ), 0.3, jitterAmount )
+    			VAR _CircleElements = 
+    				CONCATENATEX(
+    					_Data,
+    					IF( 
+    						NOT ISBLANK( [@Value] ),
+    						VAR _Seed = 		ABS( [@Value] * 12345 ) + ABS( [@AxisIndex] * 67890 ) + ABS( LEN( FORMAT( [@Value], "0.000000" ) ) * 9876 )
+    						VAR _PseudoRandom = MOD( _Seed, 10000 ) / 10000
+    						VAR _JitterOffset = ( _PseudoRandom - 0.5 ) * _JitterRange
+    						VAR _CX = DaxLib.SVG.Scale.Normalize( [@Value], _XMin, _XMax, _X, _X + _Width )
+    						VAR _CY = _CenterY + _JitterOffset
+    						VAR _ClampedCX = MAX( _X, MIN( _X + _Width, _CX ) )
+    						VAR _ClampedCY = MAX( _Y, MIN( _Y + _Height, _CY ) )
+    						RETURN
+    							DaxLib.SVG.Element.Circle(
+    								_ClampedCX, // cx
+    								_ClampedCY,          // cy
+    								2,         			// r
+    								DaxLib.SVG.Attr.Shapes(
+    									pointColor,   	// fill
+    									0.5,            // fillOpacity
+    									BLANK(),        // fillRule
+    									pointColor,   	// stroke
+    									1,              // strokeWidth
+    									0.9,            // strokeOpacity
+    									BLANK()         // opacity
+    								),
+    								BLANK()             // transforms
+    							)
+    					),
+    					" ",
+    					[@AxisIndex],
+    					ASC
+    				)
+    
+    			RETURN
+    				
+    				IF( NOT ISEMPTY( _Data ), _CircleElements )
+    ```
