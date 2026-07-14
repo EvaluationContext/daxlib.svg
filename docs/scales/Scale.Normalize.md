@@ -8,13 +8,13 @@ Map a value from one value scale to another Used for scaling values to fit withi
     DaxLib.SVG.Scale.Normalize( inputValue, fromMin, fromMax, toMin, toMax )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | inputValue | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | The value to map |
-    | fromMin | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | The minimum value of the original scale |
-    | fromMax | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | The maximum value of the original scale |
-    | toMin | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | The minimum value of the new scale |
-    | toMax | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | The maximum value of the new scale |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | inputValue | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | The value to map |
+    | fromMin | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | The minimum value of the original scale |
+    | fromMax | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | The maximum value of the original scale |
+    | toMin | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | The minimum value of the new scale |
+    | toMax | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | The maximum value of the new scale |
 
     <span class="type-label number">DECIMAL</span> mapped value
 

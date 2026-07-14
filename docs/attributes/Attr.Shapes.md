@@ -8,15 +8,15 @@ Generates a STRING of common shape attributes that can be passed to `DaxLib.SVG.
     DaxLib.SVG.Attr.Shapes( fill, fillOpacity, fillRule, stroke, strokeWidth, strokeOpacity, opacity )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | fill | <span class="type-label string">STRING</span> | :material-close: | Fill color or gradient reference. Omitted if not specified |
-    | fillOpacity | <span class="type-label number">DECIMAL</span> | :material-close: | Fill opacity (0-1). Omitted if not specified |
-    | fillRule | <span class="type-label string">STRING</span> | :material-close: | Fill rule ("nonzero" or "evenodd"). Omitted if not specified |
-    | stroke | <span class="type-label string">STRING</span> | :material-close: | Stroke color. Omitted if not specified |
-    | strokeWidth | <span class="type-label int64">INT64</span> | :material-close: | Stroke width. Omitted if not specified |
-    | strokeOpacity | <span class="type-label number">DECIMAL</span> | :material-close: | Stroke opacity (0-1). Omitted if not specified |
-    | opacity | <span class="type-label number">DECIMAL</span> | :material-close: | Overall opacity (0-1). Omitted if not specified |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | fill | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Fill color or gradient reference. Omitted if not specified |
+    | fillOpacity | <span class="type-label number">DECIMAL</span> | :material-close: | `#!dax BLANK()` | Fill opacity (0-1). Omitted if not specified |
+    | fillRule | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Fill rule ("nonzero" or "evenodd"). Omitted if not specified |
+    | stroke | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Stroke color. Omitted if not specified |
+    | strokeWidth | <span class="type-label int64">INT64</span> | :material-close: | `#!dax BLANK()` | Stroke width. Omitted if not specified |
+    | strokeOpacity | <span class="type-label number">DECIMAL</span> | :material-close: | `#!dax BLANK()` | Stroke opacity (0-1). Omitted if not specified |
+    | opacity | <span class="type-label number">DECIMAL</span> | :material-close: | `#!dax BLANK()` | Overall opacity (0-1). Omitted if not specified |
 
     <span class="type-label string">STRING</span> An attribute string that can be used directly in SVG elements
 
@@ -32,13 +32,13 @@ Generates a STRING of common shape attributes that can be passed to `DaxLib.SVG.
     ```dax
     function 'DaxLib.SVG.Attr.Shapes' =
     		(
-    			fill: STRING,
-    			fillOpacity: DOUBLE,
-    			fillRule: STRING,
-    			stroke: STRING,
-    			strokeWidth: INT64,
-    			strokeOpacity: DOUBLE,
-    			opacity: DOUBLE
+    			fill: STRING = BLANK(),
+    			fillOpacity: DOUBLE = BLANK(),
+    			fillRule: STRING = BLANK(),
+    			stroke: STRING = BLANK(),
+    			strokeWidth: INT64 = BLANK(),
+    			strokeOpacity: DOUBLE = BLANK(),
+    			opacity: DOUBLE = BLANK()
     		) =>
     
     			IF( NOT ISBLANK( fill ),          "fill='" & fill & "' ") &

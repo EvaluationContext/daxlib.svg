@@ -41,7 +41,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: Direct SVG attributes to apply (e.g., \"fill='none' stroke='blue'\"), can generate with `DaxLib.SVG.Attr.*` or manually",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "transforms",
@@ -49,13 +49,13 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`)",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     }
   ],
   "return_type": "STRING",
   "return_type_label": "<span class=\"type-label string\">STRING</span>",
   "return_description": "<ellipse> element",
-  "code": "function 'DaxLib.SVG.Element.Ellipse' =\n\t\t(\n\t\t\tcx: STRING,\n\t\t\tcy: STRING,\n\t\t\trx: STRING,\n\t\t\try: STRING,\n\t\t\tattributes: STRING,\n\t\t\ttransforms: STRING\n\t\t) =>\n\n\t\t\t\"<ellipse\" &\n\t\t\t\" cx='\" & cx & \"'\" &\n\t\t\t\" cy='\" & cy & \"'\" &\n\t\t\t\" rx='\" & rx & \"'\" &\n\t\t\t\" ry='\" & ry & \"'\" &\n\t\t\tIF( NOT ISBLANK( attributes ), \" \" & attributes & \" \" ) &\n\t\t\tIF( NOT ISBLANK( transforms ), \" transform='\" & transforms & \"'\" ) & \n\t\t\t\"/>\"",
+  "code": "function 'DaxLib.SVG.Element.Ellipse' =\n\t\t(\n\t\t\tcx: STRING,\n\t\t\tcy: STRING,\n\t\t\trx: STRING,\n\t\t\try: STRING,\n\t\t\tattributes: STRING = BLANK(),\n\t\t\ttransforms: STRING = BLANK()\n\t\t) =>\n\n\t\t\t\"<ellipse\" &\n\t\t\t\" cx='\" & cx & \"'\" &\n\t\t\t\" cy='\" & cy & \"'\" &\n\t\t\t\" rx='\" & rx & \"'\" &\n\t\t\t\" ry='\" & ry & \"'\" &\n\t\t\tIF( NOT ISBLANK( attributes ), \" \" & attributes & \" \" ) &\n\t\t\tIF( NOT ISBLANK( transforms ), \" transform='\" & transforms & \"'\" ) & \n\t\t\t\"/>\"",
   "example": null,
   "author": null,
   "version": null,
@@ -63,8 +63,8 @@
   "see": null,
   "deprecated": null,
   "sections": {
-    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Element.Ellipse( cx, cy, rx, ry, attributes, transforms )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | cx | <span class=\"type-label string\">STRING</span> | :material-check: | The x position of the center |\n    | cy | <span class=\"type-label string\">STRING</span> | :material-check: | The y position of the center |\n    | rx | <span class=\"type-label string\">STRING</span> | :material-check: | The x radius |\n    | ry | <span class=\"type-label string\">STRING</span> | :material-check: | The y radius |\n    | attributes | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Direct SVG attributes to apply (e.g., \"fill='none' stroke='blue'\"), can generate with `DaxLib.SVG.Attr.*` or manually |\n    | transforms | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |\n\n    <span class=\"type-label string\">STRING</span> <ellipse> element",
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Element.Ellipse( cx, cy, rx, ry, attributes, transforms )\n    ```\n\n    | Parameter | Type | Required | Default | Description |\n    |:---:|:---:|:---:|:---:|---|\n    | cx | <span class=\"type-label string\">STRING</span> | :material-check: |  | The x position of the center |\n    | cy | <span class=\"type-label string\">STRING</span> | :material-check: |  | The y position of the center |\n    | rx | <span class=\"type-label string\">STRING</span> | :material-check: |  | The x radius |\n    | ry | <span class=\"type-label string\">STRING</span> | :material-check: |  | The y radius |\n    | attributes | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Direct SVG attributes to apply (e.g., \"fill='none' stroke='blue'\"), can generate with `DaxLib.SVG.Attr.*` or manually |\n    | transforms | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |\n\n    <span class=\"type-label string\">STRING</span> <ellipse> element",
     "example": "",
-    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Element.Ellipse' =\n    \t\t(\n    \t\t\tcx: STRING,\n    \t\t\tcy: STRING,\n    \t\t\trx: STRING,\n    \t\t\try: STRING,\n    \t\t\tattributes: STRING,\n    \t\t\ttransforms: STRING\n    \t\t) =>\n    \n    \t\t\t\"<ellipse\" &\n    \t\t\t\" cx='\" & cx & \"'\" &\n    \t\t\t\" cy='\" & cy & \"'\" &\n    \t\t\t\" rx='\" & rx & \"'\" &\n    \t\t\t\" ry='\" & ry & \"'\" &\n    \t\t\tIF( NOT ISBLANK( attributes ), \" \" & attributes & \" \" ) &\n    \t\t\tIF( NOT ISBLANK( transforms ), \" transform='\" & transforms & \"'\" ) & \n    \t\t\t\"/>\"\n    ```"
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Element.Ellipse' =\n    \t\t(\n    \t\t\tcx: STRING,\n    \t\t\tcy: STRING,\n    \t\t\trx: STRING,\n    \t\t\try: STRING,\n    \t\t\tattributes: STRING = BLANK(),\n    \t\t\ttransforms: STRING = BLANK()\n    \t\t) =>\n    \n    \t\t\t\"<ellipse\" &\n    \t\t\t\" cx='\" & cx & \"'\" &\n    \t\t\t\" cy='\" & cy & \"'\" &\n    \t\t\t\" rx='\" & rx & \"'\" &\n    \t\t\t\" ry='\" & ry & \"'\" &\n    \t\t\tIF( NOT ISBLANK( attributes ), \" \" & attributes & \" \" ) &\n    \t\t\tIF( NOT ISBLANK( transforms ), \" transform='\" & transforms & \"'\" ) & \n    \t\t\t\"/>\"\n    ```"
   }
 }

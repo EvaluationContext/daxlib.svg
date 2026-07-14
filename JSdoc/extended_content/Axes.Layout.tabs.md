@@ -6,9 +6,9 @@
         0,              // y
         500,            // width
         300,            // height
+        35,             // maxTickLabelWidth
         TRUE,           // showAxis
-        10,             // axisFontSize
-        35              // maxTickLabelWidth
+        10              // axisFontSize
     )
     // Returns single-row table:
     //   @PlotX     – left edge of plot area (after Y-axis reservation)

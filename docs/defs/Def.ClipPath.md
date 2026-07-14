@@ -10,10 +10,10 @@ Creates a clipping mask definition
     DaxLib.SVG.Def.ClipPath( defId, contents )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | defId | <span class="type-label string">STRING</span> | :material-check: | The unique identifier for the clip path. (Example: "cut-top", "mask-circle") |
-    | contents | <span class="type-label string">STRING</span> | :material-check: | The SVG element(s) that make up the clipping path (typically a single shape) |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | defId | <span class="type-label string">STRING</span> | :material-check: |  | The unique identifier for the clip path. (Example: "cut-top", "mask-circle") |
+    | contents | <span class="type-label string">STRING</span> | :material-check: |  | The SVG element(s) that make up the clipping path (typically a single shape) |
 
     <span class="type-label string">STRING</span> <clipPath> definition
 

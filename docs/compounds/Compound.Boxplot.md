@@ -7,23 +7,23 @@ Creates a Box Plot compound SVG Visual showing statistical distribution
 === "Syntax"
 
     ```dax
-    DaxLib.SVG.Compound.Boxplot( x, y, width, height, paddingX, paddingY, axisRef, measureRef, fillColor, strokeColor, showOutliers, orientation )
+    DaxLib.SVG.Compound.Boxplot( x, y, width, height, axisRef, measureRef, fillColor, strokeColor, showOutliers, orientation, paddingX, paddingY )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | x | <span class="type-label int64">INT64</span> | :material-check: | The x position of the compound |
-    | y | <span class="type-label int64">INT64</span> | :material-check: | The y position of the compound |
-    | width | <span class="type-label int64">INT64</span> | :material-check: | The width of the compound |
-    | height | <span class="type-label int64">INT64</span> | :material-check: | The height of the compound |
-    | paddingX | <span class="type-label number">DECIMAL</span> | :material-close: | Optional: The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0 |
-    | paddingY | <span class="type-label number">DECIMAL</span> | :material-close: | Optional: The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0 |
-    | axisRef | <span class="type-label anyref">ANYREF</span> <span class="type-label expr">EXPR</span> | :material-check: | The column that the measure will be evaluated against |
-    | measureRef | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: | The measure to evaluate |
-    | fillColor | <span class="type-label string">STRING</span> | :material-check: | Color for the box fill |
-    | strokeColor | <span class="type-label string">STRING</span> | :material-check: | Color for lines, whiskers, and median |
-    | showOutliers | <span class="type-label boolean">BOOLEAN</span> | :material-check: | Whether to show outlier points beyond whiskers |
-    | orientation | <span class="type-label string">STRING</span> | :material-close: | Optional: "Horizontal" (default) or "Vertical" |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | x | <span class="type-label int64">INT64</span> | :material-check: |  | The x position of the compound |
+    | y | <span class="type-label int64">INT64</span> | :material-check: |  | The y position of the compound |
+    | width | <span class="type-label int64">INT64</span> | :material-check: |  | The width of the compound |
+    | height | <span class="type-label int64">INT64</span> | :material-check: |  | The height of the compound |
+    | axisRef | <span class="type-label anyref">ANYREF</span> <span class="type-label expr">EXPR</span> | :material-check: |  | The column that the measure will be evaluated against |
+    | measureRef | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: |  | The measure to evaluate |
+    | fillColor | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Color for the box fill. Defaults to "#01B8AA" |
+    | strokeColor | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Color for lines, whiskers, and median. Defaults to "#605E5C" |
+    | showOutliers | <span class="type-label boolean">BOOLEAN</span> | :material-close: | `#!dax FALSE()` | Whether to show outlier points beyond whiskers. Defaults to FALSE |
+    | orientation | <span class="type-label string">STRING</span> | :material-close: | `#!dax "Horizontal"` | Optional: "Horizontal" (default) or "Vertical" |
+    | paddingX | <span class="type-label number">DECIMAL</span> | :material-close: | `#!dax 0.05` | Optional: The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0.05 |
+    | paddingY | <span class="type-label number">DECIMAL</span> | :material-close: | `#!dax 0.02` | Optional: The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0.02 |
 
     <span class="type-label string">STRING</span> SVG Box Plot
 
@@ -39,14 +39,14 @@ Creates a Box Plot compound SVG Visual showing statistical distribution
             0,                  // y
             500,                // width
             100,                // height
-            0.05,               // paddingX
-            0.02,               // paddingY
             Dates[Date],        // axisRef
             [Total Cost],       // measureRef
             "#EC008C",          // fillColor
             "#605E5C",          // strokeColor
             TRUE,               // showOutliers
-            "Horizontal"        // orientation
+            "Horizontal",       // orientation
+            0.05,               // paddingX
+            0.02                // paddingY
         ),
         BLANK()
     )
@@ -61,14 +61,14 @@ Creates a Box Plot compound SVG Visual showing statistical distribution
     			y: INT64,
     			width: INT64,
     			height: INT64,
-    			paddingX: DOUBLE,
-    			paddingY: DOUBLE,
     			axisRef: ANYREF EXPR,
     			measureRef: NUMERIC EXPR,
-    			fillColor: STRING,
-    			strokeColor: STRING,
-    			showOutliers: BOOLEAN,
-    			orientation: STRING
+    			fillColor: STRING = BLANK(),
+    			strokeColor: STRING = BLANK(),
+    			showOutliers: BOOLEAN = FALSE(),
+    			orientation: STRING = "Horizontal",
+                paddingX: DOUBLE = 0.05,
+    			paddingY: DOUBLE = 0.02
     		) =>
     
     			// Apply padding to dimensions
@@ -76,6 +76,9 @@ Creates a Box Plot compound SVG Visual showing statistical distribution
     			VAR _Y = 			y + (height * (IF(ISBLANK(paddingY), 0, paddingY) / 2))
     			VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
     			VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
+    
+    			VAR _FillColor = IF( NOT ISBLANK( fillColor ), fillColor, "#01B8AA" )
+    			VAR _StrokeColor = IF( NOT ISBLANK( strokeColor ), strokeColor, "#605E5C" )
     
     			// Check if Axis is numeric
     			VAR axisSample = 	MAX( axisRef )
@@ -147,8 +150,7 @@ Creates a Box Plot compound SVG Visual showing statistical distribution
     							IF( _Orientation = "Horizontal", DaxLib.SVG.Scale.Normalize( [@Value], _XMin, _XMax, _PrimLow, _PrimHigh ), _CenterCross ),
     							IF( _Orientation = "Horizontal", _CenterCross, DaxLib.SVG.Scale.Normalize( [@Value], _XMin, _XMax, _PrimLow, _PrimHigh ) ),
     							2,
-    							DaxLib.SVG.Attr.Shapes( strokeColor, BLANK(), BLANK(), BLANK(), BLANK(), BLANK(), BLANK() ),
-    							BLANK()
+    							DaxLib.SVG.Attr.Shapes( _StrokeColor )
     						),
     						""
     					)
@@ -161,8 +163,7 @@ Creates a Box Plot compound SVG Visual showing statistical distribution
     					IF( _Orientation = "Horizontal", _CenterCross, _LowerWhiskerP ),
     					IF( _Orientation = "Horizontal", _Q1P, _CenterCross ),
     					IF( _Orientation = "Horizontal", _CenterCross, _Q1P ),
-    					DaxLib.SVG.Attr.Shapes( BLANK(), BLANK(), BLANK(), strokeColor, 1, BLANK(), BLANK() ),
-    					BLANK()
+    					DaxLib.SVG.Attr.Shapes( BLANK(), BLANK(), BLANK(), _StrokeColor, 1 )
     				)
     
     			// Upper whisker line (along primary axis)
@@ -172,8 +173,7 @@ Creates a Box Plot compound SVG Visual showing statistical distribution
     					IF( _Orientation = "Horizontal", _CenterCross, _Q3P ),
     					IF( _Orientation = "Horizontal", _UpperWhiskerP, _CenterCross ),
     					IF( _Orientation = "Horizontal", _CenterCross, _UpperWhiskerP ),
-    					DaxLib.SVG.Attr.Shapes( BLANK(), BLANK(), BLANK(), strokeColor, 1, BLANK(), BLANK() ),
-    					BLANK()
+    					DaxLib.SVG.Attr.Shapes( BLANK(), BLANK(), BLANK(), _StrokeColor, 1 )
     				)
     
     			// Lower whisker cap (across cross axis)
@@ -183,8 +183,7 @@ Creates a Box Plot compound SVG Visual showing statistical distribution
     					IF( _Orientation = "Horizontal", _BoxCross, _LowerWhiskerP ),
     					IF( _Orientation = "Horizontal", _LowerWhiskerP, _BoxCross + _BoxCrossLen ),
     					IF( _Orientation = "Horizontal", _BoxCross + _BoxCrossLen, _LowerWhiskerP ),
-    					DaxLib.SVG.Attr.Shapes( BLANK(), BLANK(), BLANK(), strokeColor, 1, BLANK(), BLANK() ),
-    					BLANK()
+    					DaxLib.SVG.Attr.Shapes( BLANK(), BLANK(), BLANK(), _StrokeColor, 1 )
     				)
     
     			// Upper whisker cap (across cross axis)
@@ -194,8 +193,7 @@ Creates a Box Plot compound SVG Visual showing statistical distribution
     					IF( _Orientation = "Horizontal", _BoxCross, _UpperWhiskerP ),
     					IF( _Orientation = "Horizontal", _UpperWhiskerP, _BoxCross + _BoxCrossLen ),
     					IF( _Orientation = "Horizontal", _BoxCross + _BoxCrossLen, _UpperWhiskerP ),
-    					DaxLib.SVG.Attr.Shapes( BLANK(), BLANK(), BLANK(), strokeColor, 1, BLANK(), BLANK() ),
-    					BLANK()
+    					DaxLib.SVG.Attr.Shapes( BLANK(), BLANK(), BLANK(), _StrokeColor, 1 )
     				)
     
     			// Main box (Q1 to Q3)
@@ -206,8 +204,7 @@ Creates a Box Plot compound SVG Visual showing statistical distribution
     					IF( _Orientation = "Horizontal", ABS( _Q3P - _Q1P ), _BoxCrossLen ),
     					IF( _Orientation = "Horizontal", _BoxCrossLen, ABS( _Q3P - _Q1P ) ),
     					2, 2,
-    					DaxLib.SVG.Attr.Shapes( fillColor, 0.5, BLANK(), strokeColor, 1, BLANK(), BLANK() ),
-    					BLANK()
+    					DaxLib.SVG.Attr.Shapes( _FillColor, 0.5, BLANK(), _StrokeColor, 1 )
     				)
     
     			// Median line (across cross axis)
@@ -217,8 +214,7 @@ Creates a Box Plot compound SVG Visual showing statistical distribution
     					IF( _Orientation = "Horizontal", _BoxCross, _MedianP ),
     					IF( _Orientation = "Horizontal", _MedianP, _BoxCross + _BoxCrossLen ),
     					IF( _Orientation = "Horizontal", _BoxCross + _BoxCrossLen, _MedianP ),
-    					DaxLib.SVG.Attr.Shapes( BLANK(), BLANK(), BLANK(), strokeColor, 2, BLANK(), BLANK() ),
-    					BLANK()
+    					DaxLib.SVG.Attr.Shapes( BLANK(), BLANK(), BLANK(), _StrokeColor, 2 )
     				)
     
     			// Combined elements

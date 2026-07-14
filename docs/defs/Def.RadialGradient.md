@@ -10,16 +10,16 @@ Create a radial gradient definition
     DaxLib.SVG.Def.RadialGradient( defId, stops, cx, cy, r, fx, fy, fr )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | defId | <span class="type-label string">STRING</span> | :material-check: | The unique identifier for the gradient |
-    | stops | <span class="type-label string">STRING</span> | :material-check: | Concatenated list of one or more `DaxLib.SVG.Def.GradientStop` elements |
-    | cx | <span class="type-label string">STRING</span> | :material-close: | Optional: Center X position |
-    | cy | <span class="type-label string">STRING</span> | :material-close: | Optional: Center Y position |
-    | r | <span class="type-label string">STRING</span> | :material-close: | Optional: Radius |
-    | fx | <span class="type-label string">STRING</span> | :material-close: | Optional: Focus X position |
-    | fy | <span class="type-label string">STRING</span> | :material-close: | Optional: Focus Y position |
-    | fr | <span class="type-label string">STRING</span> | :material-close: | Optional: Focus radius |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | defId | <span class="type-label string">STRING</span> | :material-check: |  | The unique identifier for the gradient |
+    | stops | <span class="type-label string">STRING</span> | :material-check: |  | Concatenated list of one or more `DaxLib.SVG.Def.GradientStop` elements |
+    | cx | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Center X position |
+    | cy | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Center Y position |
+    | r | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Radius |
+    | fx | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Focus X position |
+    | fy | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Focus Y position |
+    | fr | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Focus radius |
 
     <span class="type-label string">STRING</span> <radialGradient> definition
 
@@ -91,12 +91,12 @@ Create a radial gradient definition
     		(
     			defId: STRING,
     			stops: STRING,
-    			cx: STRING,
-    			cy: STRING,
-    			r: STRING,
-    			fx: STRING,
-    			fy: STRING,
-    			fr: STRING
+    			cx: STRING = BLANK(),
+    			cy: STRING = BLANK(),
+    			r: STRING = BLANK(),
+    			fx: STRING = BLANK(),
+    			fy: STRING = BLANK(),
+    			fr: STRING = BLANK()
     		) =>
     
     			"<radialGradient" & 

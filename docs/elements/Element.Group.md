@@ -8,11 +8,11 @@ Generates SVG group element Transformations applied to the <g> element are perfo
     DaxLib.SVG.Element.Group( contents, opacity, transforms )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | contents | <span class="type-label string">STRING</span> | :material-check: | Content to group (recommend including all content in a single _SvgGroup variable defined upstream) |
-    | opacity | <span class="type-label string">STRING</span> | :material-close: | Optional: Opacity for entire group (0-1, optional) |
-    | transforms | <span class="type-label string">STRING</span> | :material-close: | Optional: Transform (e.g., "translate(50,50) rotate(45)") (can be generated with `DaxLib.SVG.Transforms`) |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | contents | <span class="type-label string">STRING</span> | :material-check: |  | Content to group (recommend including all content in a single _SvgGroup variable defined upstream) |
+    | opacity | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Opacity for entire group (0-1, optional) |
+    | transforms | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Transform (e.g., "translate(50,50) rotate(45)") (can be generated with `DaxLib.SVG.Transforms`) |
 
     <span class="type-label string">STRING</span> <g> element
 
@@ -33,8 +33,8 @@ Generates SVG group element Transformations applied to the <g> element are perfo
     function 'DaxLib.SVG.Element.Group' =
     		(
     			contents : STRING,
-    			opacity : STRING,
-    			transforms : STRING
+    			opacity : STRING = BLANK(),
+    			transforms : STRING = BLANK()
     		) =>
     
     			"<g" &

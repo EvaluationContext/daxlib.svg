@@ -41,7 +41,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: Direct SVG attributes to apply (e.g., \"fill='none' stroke='blue'\"), can generate with `DaxLib.SVG.Attr.*` or manually",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "transforms",
@@ -49,13 +49,13 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: transformation to apply (can be generated with `DaxLib.SVG.Transforms`)",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     }
   ],
   "return_type": "STRING",
   "return_type_label": "<span class=\"type-label string\">STRING</span>",
   "return_description": "<circle> definition",
-  "code": "function 'DaxLib.SVG.Def.Circle' =\n\t\t(\n\t\t\tdefId: STRING,\n\t\t\tcx: STRING,\n\t\t\tcy: STRING,  \n\t\t\tr: STRING,\n\t\t\tattributes: STRING,\n\t\t\ttransforms: STRING\n\t\t) =>\n\n\t\t\t\"<circle id='\" & defId & \"'\" &\n\t\t\t\" cx='\" & cx & \"'\" &\n\t\t\t\" cy='\" & cy & \"'\" &\n\t\t\t\" r='\" & r & \"'\" &\n\t\t\tIF( NOT ISBLANK( attributes ), \" \" & attributes & \" \" ) &\n\t\t\tIF( NOT ISBLANK( transforms ), \" transform='\" & transforms & \"'\" ) &\n\t\t\t\"/>\"",
+  "code": "function 'DaxLib.SVG.Def.Circle' =\n\t\t(\n\t\t\tdefId: STRING,\n\t\t\tcx: STRING,\n\t\t\tcy: STRING,  \n\t\t\tr: STRING,\n\t\t\tattributes: STRING = BLANK(),\n\t\t\ttransforms: STRING = BLANK()\n\t\t) =>\n\n\t\t\t\"<circle id='\" & defId & \"'\" &\n\t\t\t\" cx='\" & cx & \"'\" &\n\t\t\t\" cy='\" & cy & \"'\" &\n\t\t\t\" r='\" & r & \"'\" &\n\t\t\tIF( NOT ISBLANK( attributes ), \" \" & attributes & \" \" ) &\n\t\t\tIF( NOT ISBLANK( transforms ), \" transform='\" & transforms & \"'\" ) &\n\t\t\t\"/>\"",
   "example": null,
   "author": null,
   "version": null,
@@ -63,8 +63,8 @@
   "see": null,
   "deprecated": null,
   "sections": {
-    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Def.Circle( defId, cx, cy, r, attributes, transforms )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | defId | <span class=\"type-label string\">STRING</span> | :material-check: | The unique identifier for the circle |\n    | cx | <span class=\"type-label string\">STRING</span> | :material-check: | X center coordinate |\n    | cy | <span class=\"type-label string\">STRING</span> | :material-check: | Y center coordinate |\n    | r | <span class=\"type-label string\">STRING</span> | :material-check: | Radius |\n    | attributes | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Direct SVG attributes to apply (e.g., \"fill='none' stroke='blue'\"), can generate with `DaxLib.SVG.Attr.*` or manually |\n    | transforms | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |\n\n    <span class=\"type-label string\">STRING</span> <circle> definition",
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Def.Circle( defId, cx, cy, r, attributes, transforms )\n    ```\n\n    | Parameter | Type | Required | Default | Description |\n    |:---:|:---:|:---:|:---:|---|\n    | defId | <span class=\"type-label string\">STRING</span> | :material-check: |  | The unique identifier for the circle |\n    | cx | <span class=\"type-label string\">STRING</span> | :material-check: |  | X center coordinate |\n    | cy | <span class=\"type-label string\">STRING</span> | :material-check: |  | Y center coordinate |\n    | r | <span class=\"type-label string\">STRING</span> | :material-check: |  | Radius |\n    | attributes | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Direct SVG attributes to apply (e.g., \"fill='none' stroke='blue'\"), can generate with `DaxLib.SVG.Attr.*` or manually |\n    | transforms | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |\n\n    <span class=\"type-label string\">STRING</span> <circle> definition",
     "example": "",
-    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Def.Circle' =\n    \t\t(\n    \t\t\tdefId: STRING,\n    \t\t\tcx: STRING,\n    \t\t\tcy: STRING,  \n    \t\t\tr: STRING,\n    \t\t\tattributes: STRING,\n    \t\t\ttransforms: STRING\n    \t\t) =>\n    \n    \t\t\t\"<circle id='\" & defId & \"'\" &\n    \t\t\t\" cx='\" & cx & \"'\" &\n    \t\t\t\" cy='\" & cy & \"'\" &\n    \t\t\t\" r='\" & r & \"'\" &\n    \t\t\tIF( NOT ISBLANK( attributes ), \" \" & attributes & \" \" ) &\n    \t\t\tIF( NOT ISBLANK( transforms ), \" transform='\" & transforms & \"'\" ) &\n    \t\t\t\"/>\"\n    ```"
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Def.Circle' =\n    \t\t(\n    \t\t\tdefId: STRING,\n    \t\t\tcx: STRING,\n    \t\t\tcy: STRING,  \n    \t\t\tr: STRING,\n    \t\t\tattributes: STRING = BLANK(),\n    \t\t\ttransforms: STRING = BLANK()\n    \t\t) =>\n    \n    \t\t\t\"<circle id='\" & defId & \"'\" &\n    \t\t\t\" cx='\" & cx & \"'\" &\n    \t\t\t\" cy='\" & cy & \"'\" &\n    \t\t\t\" r='\" & r & \"'\" &\n    \t\t\tIF( NOT ISBLANK( attributes ), \" \" & attributes & \" \" ) &\n    \t\t\tIF( NOT ISBLANK( transforms ), \" transform='\" & transforms & \"'\" ) &\n    \t\t\t\"/>\"\n    ```"
   }
 }

@@ -9,7 +9,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Fill color or gradient reference. Omitted if not specified",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "fillOpacity",
@@ -17,7 +17,7 @@
       "type_label": "<span class=\"type-label number\">DECIMAL</span>",
       "description": "Fill opacity (0-1). Omitted if not specified",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "fillRule",
@@ -25,7 +25,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Fill rule (\"nonzero\" or \"evenodd\"). Omitted if not specified",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "stroke",
@@ -33,7 +33,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Stroke color. Omitted if not specified",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "strokeWidth",
@@ -41,7 +41,7 @@
       "type_label": "<span class=\"type-label int64\">INT64</span>",
       "description": "Stroke width. Omitted if not specified",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "strokeOpacity",
@@ -49,7 +49,7 @@
       "type_label": "<span class=\"type-label number\">DECIMAL</span>",
       "description": "Stroke opacity (0-1). Omitted if not specified",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "opacity",
@@ -57,13 +57,13 @@
       "type_label": "<span class=\"type-label number\">DECIMAL</span>",
       "description": "Overall opacity (0-1). Omitted if not specified",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     }
   ],
   "return_type": "STRING",
   "return_type_label": "<span class=\"type-label string\">STRING</span>",
   "return_description": "An attribute string that can be used directly in SVG elements",
-  "code": "function 'DaxLib.SVG.Attr.Shapes' =\n\t\t(\n\t\t\tfill: STRING,\n\t\t\tfillOpacity: DOUBLE,\n\t\t\tfillRule: STRING,\n\t\t\tstroke: STRING,\n\t\t\tstrokeWidth: INT64,\n\t\t\tstrokeOpacity: DOUBLE,\n\t\t\topacity: DOUBLE\n\t\t) =>\n\n\t\t\tIF( NOT ISBLANK( fill ),          \"fill='\" & fill & \"' \") &\n\t\t\tIF( NOT ISBLANK( fillOpacity ),   \"fill-opacity='\" & fillOpacity & \"' \") &\n\t\t\tIF( NOT ISBLANK( fillRule ),      \"fill-rule='\" & fillRule & \"' \") &\n\t\t\tIF( NOT ISBLANK( stroke ),        \"stroke='\" & stroke & \"' \") &\n\t\t\tIF( NOT ISBLANK( strokeWidth ),   \"stroke-width='\" & strokeWidth & \"' \") &\n\t\t\tIF( NOT ISBLANK( strokeOpacity ), \"stroke-opacity='\" & strokeOpacity & \"' \") &\n\t\t\tIF( NOT ISBLANK( opacity ),       \"opacity='\" & opacity & \"' \")",
+  "code": "function 'DaxLib.SVG.Attr.Shapes' =\n\t\t(\n\t\t\tfill: STRING = BLANK(),\n\t\t\tfillOpacity: DOUBLE = BLANK(),\n\t\t\tfillRule: STRING = BLANK(),\n\t\t\tstroke: STRING = BLANK(),\n\t\t\tstrokeWidth: INT64 = BLANK(),\n\t\t\tstrokeOpacity: DOUBLE = BLANK(),\n\t\t\topacity: DOUBLE = BLANK()\n\t\t) =>\n\n\t\t\tIF( NOT ISBLANK( fill ),          \"fill='\" & fill & \"' \") &\n\t\t\tIF( NOT ISBLANK( fillOpacity ),   \"fill-opacity='\" & fillOpacity & \"' \") &\n\t\t\tIF( NOT ISBLANK( fillRule ),      \"fill-rule='\" & fillRule & \"' \") &\n\t\t\tIF( NOT ISBLANK( stroke ),        \"stroke='\" & stroke & \"' \") &\n\t\t\tIF( NOT ISBLANK( strokeWidth ),   \"stroke-width='\" & strokeWidth & \"' \") &\n\t\t\tIF( NOT ISBLANK( strokeOpacity ), \"stroke-opacity='\" & strokeOpacity & \"' \") &\n\t\t\tIF( NOT ISBLANK( opacity ),       \"opacity='\" & opacity & \"' \")",
   "example": null,
   "author": null,
   "version": null,
@@ -71,8 +71,8 @@
   "see": null,
   "deprecated": null,
   "sections": {
-    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Attr.Shapes( fill, fillOpacity, fillRule, stroke, strokeWidth, strokeOpacity, opacity )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | fill | <span class=\"type-label string\">STRING</span> | :material-close: | Fill color or gradient reference. Omitted if not specified |\n    | fillOpacity | <span class=\"type-label number\">DECIMAL</span> | :material-close: | Fill opacity (0-1). Omitted if not specified |\n    | fillRule | <span class=\"type-label string\">STRING</span> | :material-close: | Fill rule (\"nonzero\" or \"evenodd\"). Omitted if not specified |\n    | stroke | <span class=\"type-label string\">STRING</span> | :material-close: | Stroke color. Omitted if not specified |\n    | strokeWidth | <span class=\"type-label int64\">INT64</span> | :material-close: | Stroke width. Omitted if not specified |\n    | strokeOpacity | <span class=\"type-label number\">DECIMAL</span> | :material-close: | Stroke opacity (0-1). Omitted if not specified |\n    | opacity | <span class=\"type-label number\">DECIMAL</span> | :material-close: | Overall opacity (0-1). Omitted if not specified |\n\n    <span class=\"type-label string\">STRING</span> An attribute string that can be used directly in SVG elements",
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Attr.Shapes( fill, fillOpacity, fillRule, stroke, strokeWidth, strokeOpacity, opacity )\n    ```\n\n    | Parameter | Type | Required | Default | Description |\n    |:---:|:---:|:---:|:---:|---|\n    | fill | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Fill color or gradient reference. Omitted if not specified |\n    | fillOpacity | <span class=\"type-label number\">DECIMAL</span> | :material-close: | `#!dax BLANK()` | Fill opacity (0-1). Omitted if not specified |\n    | fillRule | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Fill rule (\"nonzero\" or \"evenodd\"). Omitted if not specified |\n    | stroke | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Stroke color. Omitted if not specified |\n    | strokeWidth | <span class=\"type-label int64\">INT64</span> | :material-close: | `#!dax BLANK()` | Stroke width. Omitted if not specified |\n    | strokeOpacity | <span class=\"type-label number\">DECIMAL</span> | :material-close: | `#!dax BLANK()` | Stroke opacity (0-1). Omitted if not specified |\n    | opacity | <span class=\"type-label number\">DECIMAL</span> | :material-close: | `#!dax BLANK()` | Overall opacity (0-1). Omitted if not specified |\n\n    <span class=\"type-label string\">STRING</span> An attribute string that can be used directly in SVG elements",
     "example": "",
-    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Attr.Shapes' =\n    \t\t(\n    \t\t\tfill: STRING,\n    \t\t\tfillOpacity: DOUBLE,\n    \t\t\tfillRule: STRING,\n    \t\t\tstroke: STRING,\n    \t\t\tstrokeWidth: INT64,\n    \t\t\tstrokeOpacity: DOUBLE,\n    \t\t\topacity: DOUBLE\n    \t\t) =>\n    \n    \t\t\tIF( NOT ISBLANK( fill ),          \"fill='\" & fill & \"' \") &\n    \t\t\tIF( NOT ISBLANK( fillOpacity ),   \"fill-opacity='\" & fillOpacity & \"' \") &\n    \t\t\tIF( NOT ISBLANK( fillRule ),      \"fill-rule='\" & fillRule & \"' \") &\n    \t\t\tIF( NOT ISBLANK( stroke ),        \"stroke='\" & stroke & \"' \") &\n    \t\t\tIF( NOT ISBLANK( strokeWidth ),   \"stroke-width='\" & strokeWidth & \"' \") &\n    \t\t\tIF( NOT ISBLANK( strokeOpacity ), \"stroke-opacity='\" & strokeOpacity & \"' \") &\n    \t\t\tIF( NOT ISBLANK( opacity ),       \"opacity='\" & opacity & \"' \")\n    ```"
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Attr.Shapes' =\n    \t\t(\n    \t\t\tfill: STRING = BLANK(),\n    \t\t\tfillOpacity: DOUBLE = BLANK(),\n    \t\t\tfillRule: STRING = BLANK(),\n    \t\t\tstroke: STRING = BLANK(),\n    \t\t\tstrokeWidth: INT64 = BLANK(),\n    \t\t\tstrokeOpacity: DOUBLE = BLANK(),\n    \t\t\topacity: DOUBLE = BLANK()\n    \t\t) =>\n    \n    \t\t\tIF( NOT ISBLANK( fill ),          \"fill='\" & fill & \"' \") &\n    \t\t\tIF( NOT ISBLANK( fillOpacity ),   \"fill-opacity='\" & fillOpacity & \"' \") &\n    \t\t\tIF( NOT ISBLANK( fillRule ),      \"fill-rule='\" & fillRule & \"' \") &\n    \t\t\tIF( NOT ISBLANK( stroke ),        \"stroke='\" & stroke & \"' \") &\n    \t\t\tIF( NOT ISBLANK( strokeWidth ),   \"stroke-width='\" & strokeWidth & \"' \") &\n    \t\t\tIF( NOT ISBLANK( strokeOpacity ), \"stroke-opacity='\" & strokeOpacity & \"' \") &\n    \t\t\tIF( NOT ISBLANK( opacity ),       \"opacity='\" & opacity & \"' \")\n    ```"
   }
 }

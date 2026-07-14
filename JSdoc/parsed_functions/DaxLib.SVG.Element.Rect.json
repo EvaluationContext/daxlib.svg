@@ -41,7 +41,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: x radius for rounded corners",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "ry",
@@ -49,7 +49,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: y radius for rounded corners",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "attributes",
@@ -57,7 +57,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: Direct SVG attributes to apply (e.g., \"fill='red' stroke-width='2'\"), can generate with `DaxLib.SVG.Attr.*` or manually",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "transforms",
@@ -65,13 +65,13 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`)",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     }
   ],
   "return_type": "STRING",
   "return_type_label": "<span class=\"type-label string\">STRING</span>",
   "return_description": "<rect> element",
-  "code": "function 'DaxLib.SVG.Element.Rect' =\n\t\t(\n\t\t\tx: STRING,\n\t\t\ty: STRING,\n\t\t\twidth: STRING,\n\t\t\theight: STRING,\n\t\t\trx: STRING,\n\t\t\try: STRING,\n\t\t\tattributes: STRING,\n\t\t\ttransforms: STRING\n\t\t) =>\n\n\t\t\t\"<rect\" &\n\t\t\t\" x='\" & x & \"'\" &\n\t\t\t\" y='\" & y & \"'\" &\n\t\t\t\" width='\" & width & \"'\" &\n\t\t\t\" height='\" & height & \"'\" &\n\t\t\tIF( NOT ISBLANK( rx ), \" rx='\" & rx & \"'\" ) &\n\t\t\tIF( NOT ISBLANK( ry ), \" ry='\" & ry & \"'\" ) &\n\t\t\tIF( NOT ISBLANK( attributes ), \" \" & attributes & \" \" ) &\n\t\t\tIF( NOT ISBLANK( transforms ), \" transform='\" & transforms & \"'\" ) & \n\t\t\t\"/>\"",
+  "code": "function 'DaxLib.SVG.Element.Rect' =\n\t\t(\n\t\t\tx: STRING,\n\t\t\ty: STRING,\n\t\t\twidth: STRING,\n\t\t\theight: STRING,\n\t\t\trx: STRING = BLANK(),\n\t\t\try: STRING = BLANK(),\n\t\t\tattributes: STRING = BLANK(),\n\t\t\ttransforms: STRING = BLANK()\n\t\t) =>\n\n\t\t\t\"<rect\" &\n\t\t\t\" x='\" & x & \"'\" &\n\t\t\t\" y='\" & y & \"'\" &\n\t\t\t\" width='\" & width & \"'\" &\n\t\t\t\" height='\" & height & \"'\" &\n\t\t\tIF( NOT ISBLANK( rx ), \" rx='\" & rx & \"'\" ) &\n\t\t\tIF( NOT ISBLANK( ry ), \" ry='\" & ry & \"'\" ) &\n\t\t\tIF( NOT ISBLANK( attributes ), \" \" & attributes & \" \" ) &\n\t\t\tIF( NOT ISBLANK( transforms ), \" transform='\" & transforms & \"'\" ) & \n\t\t\t\"/>\"",
   "example": null,
   "author": null,
   "version": null,
@@ -79,8 +79,8 @@
   "see": null,
   "deprecated": null,
   "sections": {
-    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Element.Rect( x, y, width, height, rx, ry, attributes, transforms )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | x | <span class=\"type-label string\">STRING</span> | :material-check: | The x position |\n    | y | <span class=\"type-label string\">STRING</span> | :material-check: | The y position |\n    | width | <span class=\"type-label string\">STRING</span> | :material-check: | The width (pixels or percentage) |\n    | height | <span class=\"type-label string\">STRING</span> | :material-check: | The height (pixels or percentage) |\n    | rx | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: x radius for rounded corners |\n    | ry | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: y radius for rounded corners |\n    | attributes | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Direct SVG attributes to apply (e.g., \"fill='red' stroke-width='2'\"), can generate with `DaxLib.SVG.Attr.*` or manually |\n    | transforms | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |\n\n    <span class=\"type-label string\">STRING</span> <rect> element",
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Element.Rect( x, y, width, height, rx, ry, attributes, transforms )\n    ```\n\n    | Parameter | Type | Required | Default | Description |\n    |:---:|:---:|:---:|:---:|---|\n    | x | <span class=\"type-label string\">STRING</span> | :material-check: |  | The x position |\n    | y | <span class=\"type-label string\">STRING</span> | :material-check: |  | The y position |\n    | width | <span class=\"type-label string\">STRING</span> | :material-check: |  | The width (pixels or percentage) |\n    | height | <span class=\"type-label string\">STRING</span> | :material-check: |  | The height (pixels or percentage) |\n    | rx | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: x radius for rounded corners |\n    | ry | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: y radius for rounded corners |\n    | attributes | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Direct SVG attributes to apply (e.g., \"fill='red' stroke-width='2'\"), can generate with `DaxLib.SVG.Attr.*` or manually |\n    | transforms | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |\n\n    <span class=\"type-label string\">STRING</span> <rect> element",
     "example": "",
-    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Element.Rect' =\n    \t\t(\n    \t\t\tx: STRING,\n    \t\t\ty: STRING,\n    \t\t\twidth: STRING,\n    \t\t\theight: STRING,\n    \t\t\trx: STRING,\n    \t\t\try: STRING,\n    \t\t\tattributes: STRING,\n    \t\t\ttransforms: STRING\n    \t\t) =>\n    \n    \t\t\t\"<rect\" &\n    \t\t\t\" x='\" & x & \"'\" &\n    \t\t\t\" y='\" & y & \"'\" &\n    \t\t\t\" width='\" & width & \"'\" &\n    \t\t\t\" height='\" & height & \"'\" &\n    \t\t\tIF( NOT ISBLANK( rx ), \" rx='\" & rx & \"'\" ) &\n    \t\t\tIF( NOT ISBLANK( ry ), \" ry='\" & ry & \"'\" ) &\n    \t\t\tIF( NOT ISBLANK( attributes ), \" \" & attributes & \" \" ) &\n    \t\t\tIF( NOT ISBLANK( transforms ), \" transform='\" & transforms & \"'\" ) & \n    \t\t\t\"/>\"\n    ```"
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Element.Rect' =\n    \t\t(\n    \t\t\tx: STRING,\n    \t\t\ty: STRING,\n    \t\t\twidth: STRING,\n    \t\t\theight: STRING,\n    \t\t\trx: STRING = BLANK(),\n    \t\t\try: STRING = BLANK(),\n    \t\t\tattributes: STRING = BLANK(),\n    \t\t\ttransforms: STRING = BLANK()\n    \t\t) =>\n    \n    \t\t\t\"<rect\" &\n    \t\t\t\" x='\" & x & \"'\" &\n    \t\t\t\" y='\" & y & \"'\" &\n    \t\t\t\" width='\" & width & \"'\" &\n    \t\t\t\" height='\" & height & \"'\" &\n    \t\t\tIF( NOT ISBLANK( rx ), \" rx='\" & rx & \"'\" ) &\n    \t\t\tIF( NOT ISBLANK( ry ), \" ry='\" & ry & \"'\" ) &\n    \t\t\tIF( NOT ISBLANK( attributes ), \" \" & attributes & \" \" ) &\n    \t\t\tIF( NOT ISBLANK( transforms ), \" transform='\" & transforms & \"'\" ) & \n    \t\t\t\"/>\"\n    ```"
   }
 }

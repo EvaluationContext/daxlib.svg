@@ -8,10 +8,10 @@ Returns a "nice" rounded number close to the given value. Used for choosing huma
     DaxLib.SVG.Scale.NiceNum( rawValue, roundMode )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | rawValue | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | The raw value to round to a nice number |
-    | roundMode | <span class="type-label boolean">BOOLEAN</span> | :material-close: | Optional: TRUE for rounding to nearest nice number (for intervals), FALSE for ceiling to next nice number (for range extents). Defaults to TRUE. |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | rawValue | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | The raw value to round to a nice number |
+    | roundMode | <span class="type-label boolean">BOOLEAN</span> | :material-close: | `#!dax TRUE()` | Optional: TRUE for rounding to nearest nice number (for intervals), FALSE for ceiling to next nice number (for range extents). Defaults to TRUE. |
 
     <span class="type-label number">NUMERIC</span> A human-friendly number (1, 2, 2.5, 5, or 10 scaled by the appropriate power of 10)
 
@@ -34,7 +34,7 @@ Returns a "nice" rounded number close to the given value. Used for choosing huma
     function 'DaxLib.SVG.Scale.NiceNum' =
     		(
     			rawValue: NUMERIC VAL,
-    			roundMode: BOOLEAN
+    			roundMode: BOOLEAN = TRUE()
     		) =>
     
     			VAR _Value = ABS( rawValue )

@@ -15,24 +15,24 @@ Creates a Line compound SVG Visual for a numeric axis
 === "Syntax"
 
     ```dax
-    DaxLib.SVG.Compound.Line( x, y, width, height, paddingX, paddingY, axisRef, measureRef, lineColor, minMarkColor, maxMarkColor, showAxis, axisFontSize )
+    DaxLib.SVG.Compound.Line( x, y, width, height, axisRef, measureRef, lineColor, minMarkColor, maxMarkColor, showAxis, axisFontSize, paddingX, paddingY )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | x | <span class="type-label int64">INT64</span> | :material-check: | The x position of the compound |
-    | y | <span class="type-label int64">INT64</span> | :material-check: | The y position of the compound |
-    | width | <span class="type-label int64">INT64</span> | :material-check: | The width of the compound |
-    | height | <span class="type-label int64">INT64</span> | :material-check: | The height of the compound |
-    | paddingX | <span class="type-label number">DECIMAL</span> | :material-close: | Optional:The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0 |
-    | paddingY | <span class="type-label number">DECIMAL</span> | :material-close: | Optional: The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0 |
-    | axisRef | <span class="type-label anyref">ANYREF</span> <span class="type-label expr">EXPR</span> | :material-check: | The column that the measure will be evaluated against |
-    | measureRef | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: | The measure to evaluate |
-    | lineColor | <span class="type-label string">STRING</span> | :material-close: | Optional:The hex color of the line. Defaults to "#01B8AA" |
-    | minMarkColor | <span class="type-label string">STRING</span> | :material-close: | Optional: The hex color for the minimum value marker |
-    | maxMarkColor | <span class="type-label string">STRING</span> | :material-close: | Optional: The hex color for the maximum value marker |
-    | showAxis | <span class="type-label boolean">BOOLEAN</span> | :material-close: | Optional: show axes when TRUE, defaults to FALSE |
-    | axisFontSize | <span class="type-label int64">INT64</span> | :material-close: | Optional: axis label font size, defaults to 10 |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | x | <span class="type-label int64">INT64</span> | :material-check: |  | The x position of the compound |
+    | y | <span class="type-label int64">INT64</span> | :material-check: |  | The y position of the compound |
+    | width | <span class="type-label int64">INT64</span> | :material-check: |  | The width of the compound |
+    | height | <span class="type-label int64">INT64</span> | :material-check: |  | The height of the compound |
+    | axisRef | <span class="type-label anyref">ANYREF</span> <span class="type-label expr">EXPR</span> | :material-check: |  | The column that the measure will be evaluated against |
+    | measureRef | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: |  | The measure to evaluate |
+    | lineColor | <span class="type-label string">STRING</span> | :material-close: | `#!dax "#01B8AA"` | Optional:The hex color of the line. Defaults to "#01B8AA" |
+    | minMarkColor | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: The hex color for the minimum value marker |
+    | maxMarkColor | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: The hex color for the maximum value marker |
+    | showAxis | <span class="type-label boolean">BOOLEAN</span> | :material-close: | `#!dax FALSE()` | Optional: show axes when TRUE, defaults to FALSE |
+    | axisFontSize | <span class="type-label int64">INT64</span> | :material-close: | `#!dax 10` | Optional: axis label font size, defaults to 10 |
+    | paddingX | <span class="type-label number">DECIMAL</span> | :material-close: | `#!dax 0` | Optional: The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0.05 |
+    | paddingY | <span class="type-label number">DECIMAL</span> | :material-close: | `#!dax 0` | Optional: The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0.02 |
 
     <span class="type-label string">STRING</span> SVG Line Chart
 
@@ -48,15 +48,15 @@ Creates a Line compound SVG Visual for a numeric axis
             0,                  // y
             500,                // width
             100,                // height
-            0.05,               // paddingX
-            0.04,               // paddingY
             Dates[Date],        // axisRef
             [Total Cost],       // measureRef
             "#EC008C",          // lineColor
             BLANK(),            // minMarkColor
             BLANK(),            // maxMarkColor
             TRUE,               // showAxis
-            10                  // axisFontSize
+            10,                 // axisFontSize
+            0.05,               // paddingX
+            0.04                // paddingY
         ),
         BLANK()
     )
@@ -71,15 +71,15 @@ Creates a Line compound SVG Visual for a numeric axis
     			y: INT64,
     			width: INT64,
     			height: INT64,
-    			paddingX: DOUBLE,
-    			paddingY: DOUBLE,
     			axisRef: ANYREF EXPR,
     			measureRef: NUMERIC EXPR,
-    			lineColor: STRING,
-    			minMarkColor: STRING,
-    			maxMarkColor: STRING,
-    			showAxis: BOOLEAN,
-    			axisFontSize: INT64
+    			lineColor: STRING = "#01B8AA",
+    			minMarkColor: STRING = BLANK(),
+    			maxMarkColor: STRING = BLANK(),
+    			showAxis: BOOLEAN = FALSE(),
+    			axisFontSize: INT64 = 10,
+    			paddingX: DOUBLE = 0,
+    			paddingY: DOUBLE = 0
     		) =>
     
     			// Apply padding to dimensions
@@ -114,8 +114,8 @@ Creates a Line compound SVG Visual for a numeric axis
     			VAR _YTickCount = MINX( _NiceY, [@NiceTickCount] )
     
     			// Axis layout
-    			VAR _MaxTickLabelWidth = DaxLib.SVG.Axes.MaxTickLabelWidth( _YMin, _YMax, _YTickCount, _AxisFontSize, 0.56, FALSE() )
-    			VAR _Layout = DaxLib.SVG.Axes.Layout( _X, _Y, _Width, _Height, _ShowAxis, _AxisFontSize, _MaxTickLabelWidth )
+    			VAR _MaxTickLabelWidth = DaxLib.SVG.Axes.MaxTickLabelWidth( _YMin, _YMax, _YTickCount, _AxisFontSize )
+    			VAR _Layout = DaxLib.SVG.Axes.Layout( _X, _Y, _Width, _Height, _MaxTickLabelWidth, _ShowAxis, _AxisFontSize )
     			VAR _PlotX = MINX( _Layout, [@PlotX] )
     			VAR _PlotY = MINX( _Layout, [@PlotY] )
     			VAR _PlotWidth = MINX( _Layout, [@PlotWidth] )
@@ -138,17 +138,14 @@ Creates a Line compound SVG Visual for a numeric axis
     			// Line Element
     			VAR _LineElement =
     				DaxLib.SVG.Element.Polyline(
-    					_Points,		// points
+    					_Points,
     					DaxLib.SVG.Attr.Shapes(
-    						"none",		// fill
-    						BLANK(),	// fillOpacity
-    						BLANK(),	// fillRule
-    						_LineColor, // stroke
-    						1,			// stroke
-    						BLANK(),	// strokeOpacity
-    						BLANK()		// opacity
-    					),
-    					BLANK()			// transforms
+    						"none",
+    						BLANK(),
+    						BLANK(),
+    						_LineColor,
+    						1
+    					)
     				)
     
     			// Single Point Element
@@ -157,17 +154,8 @@ Creates a Line compound SVG Visual for a numeric axis
     				DaxLib.SVG.Element.Circle(
     					MINX( _SinglePoint, [@X] ),
     					MINX( _SinglePoint, [@Y] ),
-    					2,           	// r
-    					DaxLib.SVG.Attr.Shapes(
-    						_LineColor, // fill
-    						BLANK(),    // fillOpacity
-    						BLANK(),    // fillRule
-    						BLANK(),    // stroke
-    						BLANK(),    // strokeWidth
-    						BLANK(),    // strokeOpacity
-    						BLANK()     // opacity
-    					),
-    					BLANK()         // transforms
+    					2,
+    					DaxLib.SVG.Attr.Shapes( _LineColor )
     				)
     
     			// Combined elements
@@ -192,32 +180,28 @@ Creates a Line compound SVG Visual for a numeric axis
     					MINX( _MinPointData, [@X] ),
     					MINX( _MinPointData, [@Y] ),
     					3.5,
-    					DaxLib.SVG.Attr.Shapes( "white", 0.7, BLANK(), BLANK(), BLANK(), BLANK(), BLANK() ),
-    					BLANK()
+    					DaxLib.SVG.Attr.Shapes( "white", 0.7 )
     				)
     			VAR _MinMark =
     				DaxLib.SVG.Element.Circle(
     					MINX( _MinPointData, [@X] ),
     					MINX( _MinPointData, [@Y] ),
     					2.5,
-    					DaxLib.SVG.Attr.Shapes( _MinMarkColor, BLANK(), BLANK(), BLANK(), BLANK(), BLANK(), BLANK() ),
-    					BLANK()
+    					DaxLib.SVG.Attr.Shapes( _MinMarkColor )
     				)
     			VAR _MaxMarkHalo =
     				DaxLib.SVG.Element.Circle(
     					MINX( _MaxPointData, [@X] ),
     					MINX( _MaxPointData, [@Y] ),
     					3.5,
-    					DaxLib.SVG.Attr.Shapes( "white", 0.7, BLANK(), BLANK(), BLANK(), BLANK(), BLANK() ),
-    					BLANK()
+    					DaxLib.SVG.Attr.Shapes( "white", 0.7 )
     				)
     			VAR _MaxMark =
     				DaxLib.SVG.Element.Circle(
     					MINX( _MaxPointData, [@X] ),
     					MINX( _MaxPointData, [@Y] ),
     					2.5,
-    					DaxLib.SVG.Attr.Shapes( _MaxMarkColor, BLANK(), BLANK(), BLANK(), BLANK(), BLANK(), BLANK() ),
-    					BLANK()
+    					DaxLib.SVG.Attr.Shapes( _MaxMarkColor )
     				)
     			VAR _MinMaxMarks =
     				IF(

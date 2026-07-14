@@ -8,13 +8,13 @@ Generates transform string for SVG elements
     DaxLib.SVG.Transforms( translate, rotate, scale, skewX, skewY )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | translate | <span class="type-label string">STRING</span> | :material-close: | Optional: Translation coordinates (e.g., "10,20") |
-    | rotate | <span class="type-label string">STRING</span> | :material-close: | Optional: Rotation with optional center point (e.g., "45" or "45 50 50") |
-    | scale | <span class="type-label string">STRING</span> | :material-close: | Optional: Scale factors (e.g., "2" or "2,1.5") |
-    | skewX | <span class="type-label string">STRING</span> | :material-close: | Optional: Horizontal skew angle in degrees |
-    | skewY | <span class="type-label string">STRING</span> | :material-close: | Optional: Vertical skew angle in degrees |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | translate | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Translation coordinates (e.g., "10,20") |
+    | rotate | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Rotation with optional center point (e.g., "45" or "45 50 50") |
+    | scale | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Scale factors (e.g., "2" or "2,1.5") |
+    | skewX | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Horizontal skew angle in degrees |
+    | skewY | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Vertical skew angle in degrees |
 
     <span class="type-label string">STRING</span> A transform attribute value that can be used with the transform attribute of SVG elements.
 
@@ -30,11 +30,11 @@ Generates transform string for SVG elements
     ```dax
     function 'DaxLib.SVG.Transforms' =
     		(
-    			translate: STRING,
-    			rotate: STRING,
-    			scale: STRING,
-    			skewX: STRING,
-    			skewY: STRING
+    			translate: STRING = BLANK(),
+    			rotate: STRING = BLANK(),
+    			scale: STRING = BLANK(),
+    			skewX: STRING = BLANK(),
+    			skewY: STRING = BLANK()
     		) =>
     
     			IF(NOT ISBLANK(translate), "translate(" & translate & ") ") &

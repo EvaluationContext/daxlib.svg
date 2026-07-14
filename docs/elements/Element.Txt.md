@@ -7,18 +7,19 @@ Creates a text SVG element
 === "Syntax"
 
     ```dax
-    DaxLib.SVG.Element.Txt( x, y, txt, dx, dy, attributes, transforms )
+    DaxLib.SVG.Element.Txt( x, y, txt, dx, dy, attributes, transforms, escape )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | x | <span class="type-label string">STRING</span> | :material-check: | The x position of the text |
-    | y | <span class="type-label string">STRING</span> | :material-check: | The y position of the text |
-    | txt | <span class="type-label string">STRING</span> | :material-check: | The text content |
-    | dx | <span class="type-label string">STRING</span> | :material-close: | Optional: x offset from position |
-    | dy | <span class="type-label string">STRING</span> | :material-close: | Optional: y offset from position |
-    | attributes | <span class="type-label string">STRING</span> | :material-close: | Optional: Direct SVG attributes to apply (e.g., "text-anchor='middle' dominant-baseline='middle'"), can generate with `DaxLib.SVG.Attr.*` or manually |
-    | transforms | <span class="type-label string">STRING</span> | :material-close: | Optional: Additional transforms (e.g. "scale(1.2) translate(10,10)") (can be generated with `DaxLib.SVG.Transforms`) |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | x | <span class="type-label string">STRING</span> | :material-check: |  | The x position of the text |
+    | y | <span class="type-label string">STRING</span> | :material-check: |  | The y position of the text |
+    | txt | <span class="type-label string">STRING</span> | :material-check: |  | The text content |
+    | dx | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: x offset from position |
+    | dy | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: y offset from position |
+    | attributes | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Direct SVG attributes to apply (e.g., "text-anchor='middle' dominant-baseline='middle'"), can generate with `DaxLib.SVG.Attr.*` or manually |
+    | transforms | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Additional transforms (e.g. "scale(1.2) translate(10,10)") (can be generated with `DaxLib.SVG.Transforms`) |
+    | escape | <span class="type-label boolean">BOOLEAN</span> | :material-close: | `#!dax TRUE()` | Optional: When TRUE or BLANK (default), XML-escapes `txt` (replaces &, <, >, ", ') so characters like & and < render correctly. Pass FALSE to insert `txt` verbatim (e.g. when it already contains raw SVG markup). |
 
     <span class="type-label string">STRING</span> <text> element
 
@@ -60,19 +61,29 @@ Creates a text SVG element
     			x: STRING,
     			y: STRING,
     			txt: STRING,
-    			dx: STRING,
-    			dy: STRING,
-    			attributes: STRING,
-    			transforms: STRING
+    			dx: STRING = BLANK(),
+    			dy: STRING = BLANK(),
+    			attributes: STRING = BLANK(),
+    			transforms: STRING = BLANK(),
+    			escape: BOOLEAN = TRUE()
     		) =>
     
-    			"<text" &
-    			" x='" & x & "'" &
-    			" y='" & y & "'" &
-    			IF(NOT ISBLANK( dx ), " dx='" & dx & "'" ) & 
-    			IF(NOT ISBLANK( dy ), " dy='" & dy & "'" ) &
-    			IF( NOT ISBLANK( attributes ), " " & attributes & " " ) &
-    			IF( NOT ISBLANK( transforms ), " transform='" & transforms & "'" ) &
-    			">" & txt & 
-    			"</text>"
+    			VAR _Escape = COALESCE( escape, TRUE() )
+    			VAR _s0 = COALESCE( txt, "" )
+    			VAR _s1 = SUBSTITUTE( _s0, "&",  "&amp;"  )
+    			VAR _s2 = SUBSTITUTE( _s1, "<",  "&lt;"   )
+    			VAR _s3 = SUBSTITUTE( _s2, ">",  "&gt;"   )
+    			VAR _s4 = SUBSTITUTE( _s3, """", "&quot;" )
+    			VAR _s5 = SUBSTITUTE( _s4, "'",  "&apos;" )
+    			VAR _Txt = IF( _Escape, _s5, txt )
+    			RETURN
+    				"<text" &
+    				" x='" & x & "'" &
+    				" y='" & y & "'" &
+    				IF(NOT ISBLANK( dx ), " dx='" & dx & "'" ) & 
+    				IF(NOT ISBLANK( dy ), " dy='" & dy & "'" ) &
+    				IF( NOT ISBLANK( attributes ), " " & attributes & " " ) &
+    				IF( NOT ISBLANK( transforms ), " transform='" & transforms & "'" ) &
+    				">" & _Txt & 
+    				"</text>"
     ```

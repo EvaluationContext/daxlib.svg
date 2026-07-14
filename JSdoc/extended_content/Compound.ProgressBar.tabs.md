@@ -10,13 +10,13 @@
             0,                  // y
             500,                // width
             100,                // height
-            0.02,               // paddingX
-            0.05,               // paddingY
             [Completed],        // valueRef
             [Target],           // trackRef
             "#EC008C",          // fillColor
             "#E1DFDD",          // trackColor
-            "Horizontal"        // orientation
+            "Horizontal",       // orientation
+            0.02,               // paddingX
+            0.05                // paddingY
         ),
         BLANK()
     )

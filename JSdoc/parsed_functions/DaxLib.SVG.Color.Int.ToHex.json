@@ -17,13 +17,13 @@
       "type_label": "<span class=\"type-label int64\">INT64</span>",
       "description": "Optional: Minimum number of characters in result. Defaults to minimum digits needed",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     }
   ],
   "return_type": "STRING",
   "return_type_label": "<span class=\"type-label string\">STRING</span>",
   "return_description": "Hexadecimal representation of the integer",
-  "code": "function 'DaxLib.SVG.Color.Int.ToHex' =\n\t\t(\n\t\t\tnumber: INT64,\n\t\t\tpadTo: INT64\n\t\t) =>\n\t\t\n\t\t\tVAR MinPadding = IF( number = 0, 1, CEILING( LOG( number + 1, 16 ), 1 ) )\n\t\t\tVAR ActualPadding = MAX( MinPadding, IF( ISBLANK( padTo ), MinPadding, padTo ) )\n\t\t\tVAR BitTable = GENERATESERIES( 1, ActualPadding )\n\t\t\tVAR Hex =\n\t\t\t\tCONCATENATEX(\n\t\t\t\t\tBitTable,\n\t\t\t\t\tVAR c = MOD( TRUNC( number / POWER( 16, [Value] - 1 ) ), 16 )\n\t\t\t\t\tRETURN\n\t\t\t\t\t\tSWITCH( c, 10, \"A\", 11, \"B\", 12, \"C\", 13, \"D\", 14, \"E\", 15, \"F\", c ),\n\t\t\t\t\t\"\",\n\t\t\t\t\t[Value],\n\t\t\t\t\tDESC\n\t\t\t\t)\n\t\t\n\t\t\tRETURN Hex",
+  "code": "function 'DaxLib.SVG.Color.Int.ToHex' =\n\t\t(\n\t\t\tnumber: INT64,\n\t\t\tpadTo: INT64 = BLANK()\n\t\t) =>\n\t\t\n\t\t\tVAR MinPadding = IF( number = 0, 1, CEILING( LOG( number + 1, 16 ), 1 ) )\n\t\t\tVAR ActualPadding = MAX( MinPadding, IF( ISBLANK( padTo ), MinPadding, padTo ) )\n\t\t\tVAR BitTable = GENERATESERIES( 1, ActualPadding )\n\t\t\tVAR Hex =\n\t\t\t\tCONCATENATEX(\n\t\t\t\t\tBitTable,\n\t\t\t\t\tVAR c = MOD( TRUNC( number / POWER( 16, [Value] - 1 ) ), 16 )\n\t\t\t\t\tRETURN\n\t\t\t\t\t\tSWITCH( c, 10, \"A\", 11, \"B\", 12, \"C\", 13, \"D\", 14, \"E\", 15, \"F\", c ),\n\t\t\t\t\t\"\",\n\t\t\t\t\t[Value],\n\t\t\t\t\tDESC\n\t\t\t\t)\n\t\t\n\t\t\tRETURN Hex",
   "example": null,
   "author": null,
   "version": null,
@@ -31,8 +31,8 @@
   "see": null,
   "deprecated": null,
   "sections": {
-    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Color.Int.ToHex( number, padTo )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | number | <span class=\"type-label int64\">INT64</span> | :material-check: | The integer to convert |\n    | padTo | <span class=\"type-label int64\">INT64</span> | :material-close: | Optional: Minimum number of characters in result. Defaults to minimum digits needed |\n\n    <span class=\"type-label string\">STRING</span> Hexadecimal representation of the integer",
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Color.Int.ToHex( number, padTo )\n    ```\n\n    | Parameter | Type | Required | Default | Description |\n    |:---:|:---:|:---:|:---:|---|\n    | number | <span class=\"type-label int64\">INT64</span> | :material-check: |  | The integer to convert |\n    | padTo | <span class=\"type-label int64\">INT64</span> | :material-close: | `#!dax BLANK()` | Optional: Minimum number of characters in result. Defaults to minimum digits needed |\n\n    <span class=\"type-label string\">STRING</span> Hexadecimal representation of the integer",
     "example": "",
-    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Color.Int.ToHex' =\n    \t\t(\n    \t\t\tnumber: INT64,\n    \t\t\tpadTo: INT64\n    \t\t) =>\n    \t\t\n    \t\t\tVAR MinPadding = IF( number = 0, 1, CEILING( LOG( number + 1, 16 ), 1 ) )\n    \t\t\tVAR ActualPadding = MAX( MinPadding, IF( ISBLANK( padTo ), MinPadding, padTo ) )\n    \t\t\tVAR BitTable = GENERATESERIES( 1, ActualPadding )\n    \t\t\tVAR Hex =\n    \t\t\t\tCONCATENATEX(\n    \t\t\t\t\tBitTable,\n    \t\t\t\t\tVAR c = MOD( TRUNC( number / POWER( 16, [Value] - 1 ) ), 16 )\n    \t\t\t\t\tRETURN\n    \t\t\t\t\t\tSWITCH( c, 10, \"A\", 11, \"B\", 12, \"C\", 13, \"D\", 14, \"E\", 15, \"F\", c ),\n    \t\t\t\t\t\"\",\n    \t\t\t\t\t[Value],\n    \t\t\t\t\tDESC\n    \t\t\t\t)\n    \t\t\n    \t\t\tRETURN Hex\n    ```"
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Color.Int.ToHex' =\n    \t\t(\n    \t\t\tnumber: INT64,\n    \t\t\tpadTo: INT64 = BLANK()\n    \t\t) =>\n    \t\t\n    \t\t\tVAR MinPadding = IF( number = 0, 1, CEILING( LOG( number + 1, 16 ), 1 ) )\n    \t\t\tVAR ActualPadding = MAX( MinPadding, IF( ISBLANK( padTo ), MinPadding, padTo ) )\n    \t\t\tVAR BitTable = GENERATESERIES( 1, ActualPadding )\n    \t\t\tVAR Hex =\n    \t\t\t\tCONCATENATEX(\n    \t\t\t\t\tBitTable,\n    \t\t\t\t\tVAR c = MOD( TRUNC( number / POWER( 16, [Value] - 1 ) ), 16 )\n    \t\t\t\t\tRETURN\n    \t\t\t\t\t\tSWITCH( c, 10, \"A\", 11, \"B\", 12, \"C\", 13, \"D\", 14, \"E\", 15, \"F\", c ),\n    \t\t\t\t\t\"\",\n    \t\t\t\t\t[Value],\n    \t\t\t\t\tDESC\n    \t\t\t\t)\n    \t\t\n    \t\t\tRETURN Hex\n    ```"
   }
 }

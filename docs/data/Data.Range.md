@@ -8,11 +8,11 @@ Computes min/max/baseline values from shaped scalar range inputs
     DaxLib.SVG.Data.Range( dataMin, dataMax, includeZero )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | dataMin | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | Minimum value from source data |
-    | dataMax | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | Maximum value from source data |
-    | includeZero | <span class="type-label boolean">BOOLEAN</span> | :material-close: | Use zero baseline when range is fully positive. Defaults to FALSE |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | dataMin | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | Minimum value from source data |
+    | dataMax | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | Maximum value from source data |
+    | includeZero | <span class="type-label boolean">BOOLEAN</span> | :material-close: | `#!dax FALSE()` | Use zero baseline when range is fully positive. Defaults to FALSE |
 
     <span class="type-label table">TABLE</span> Single-row table with `@Min`, `@Max`, and `@Baseline`
 
@@ -39,7 +39,7 @@ Computes min/max/baseline values from shaped scalar range inputs
     		(
     			dataMin: NUMERIC VAL,
     			dataMax: NUMERIC VAL,
-    			includeZero: BOOLEAN
+    			includeZero: BOOLEAN = FALSE()
     		) =>
     
     			VAR _IncludeZero = IF( ISBLANK( includeZero ), FALSE(), includeZero )

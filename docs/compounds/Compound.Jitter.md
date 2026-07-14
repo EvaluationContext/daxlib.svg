@@ -7,21 +7,21 @@ Creates a Jitter Plot compound SVG Visual showing values as points with x-positi
 === "Syntax"
 
     ```dax
-    DaxLib.SVG.Compound.Jitter( x, y, width, height, paddingX, paddingY, axisRef, measureRef, pointColor, jitterAmount )
+    DaxLib.SVG.Compound.Jitter( x, y, width, height, axisRef, measureRef, pointColor, jitterAmount, paddingX, paddingY )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | x | <span class="type-label int64">INT64</span> | :material-check: | The x position of the compound |
-    | y | <span class="type-label int64">INT64</span> | :material-check: | The y position of the compound |
-    | width | <span class="type-label int64">INT64</span> | :material-check: | The width of the compound |
-    | height | <span class="type-label int64">INT64</span> | :material-check: | The height of the compound |
-    | paddingX | <span class="type-label number">DECIMAL</span> | :material-close: | Optional: The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0 |
-    | paddingY | <span class="type-label number">DECIMAL</span> | :material-close: | Optional: The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0 |
-    | axisRef | <span class="type-label anyref">ANYREF</span> <span class="type-label expr">EXPR</span> | :material-check: | The column that the measure will be evaluated against |
-    | measureRef | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: | The measure to evaluate |
-    | pointColor | <span class="type-label string">STRING</span> | :material-close: | Optional: The hex color of the points (e.g., "#01B8AA") |
-    | jitterAmount | <span class="type-label number">DECIMAL</span> | :material-close: | Optional: The amount of jitter as a percentage of height (0.0-1.0). Defaults to 0.3 |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | x | <span class="type-label int64">INT64</span> | :material-check: |  | The x position of the compound |
+    | y | <span class="type-label int64">INT64</span> | :material-check: |  | The y position of the compound |
+    | width | <span class="type-label int64">INT64</span> | :material-check: |  | The width of the compound |
+    | height | <span class="type-label int64">INT64</span> | :material-check: |  | The height of the compound |
+    | axisRef | <span class="type-label anyref">ANYREF</span> <span class="type-label expr">EXPR</span> | :material-check: |  | The column that the measure will be evaluated against |
+    | measureRef | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: |  | The measure to evaluate |
+    | pointColor | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: The hex color of the points (e.g., "#01B8AA") |
+    | jitterAmount | <span class="type-label number">DECIMAL</span> | :material-close: | `#!dax 0.3` | Optional: The amount of jitter as a percentage of height (0.0-1.0). Defaults to 0.3 |
+    | paddingX | <span class="type-label number">DECIMAL</span> | :material-close: | `#!dax 0.05` | Optional: The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0.05 |
+    | paddingY | <span class="type-label number">DECIMAL</span> | :material-close: | `#!dax 0.02` | Optional: The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0.02 |
 
     <span class="type-label string">STRING</span> SVG Jitter Plot
 
@@ -37,12 +37,12 @@ Creates a Jitter Plot compound SVG Visual showing values as points with x-positi
             0,                  // y
             500,                // width
             100,                // height
-            0.05,               // paddingX
-            0.02,               // paddingY
             Dates[Date],        // axisRef
             [Total Cost],       // measureRef
             "#EC008C",          // pointColor
-            0.5                 // jitterAmount
+            0.5,                // jitterAmount
+            0.05,               // paddingX
+            0.02                // paddingY
         ),
         BLANK()
     )
@@ -57,12 +57,12 @@ Creates a Jitter Plot compound SVG Visual showing values as points with x-positi
     			y: INT64,
     			width: INT64,
     			height: INT64,
-    			paddingX: DOUBLE,
-    			paddingY: DOUBLE,
     			axisRef: ANYREF EXPR,
     			measureRef: NUMERIC EXPR,
-    			pointColor: STRING,
-    			jitterAmount: DOUBLE
+    			pointColor: STRING = BLANK(),
+    			jitterAmount: DOUBLE = 0.3,
+    			paddingX: DOUBLE = 0.05,
+    			paddingY: DOUBLE = 0.02
     		) =>
     			
     			// Apply padding to dimensions
@@ -70,6 +70,8 @@ Creates a Jitter Plot compound SVG Visual showing values as points with x-positi
     			VAR _Y = 			y + (height * (IF(ISBLANK(paddingY), 0, paddingY) / 2))
     			VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
     			VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
+    
+    			VAR _PointColor = IF( NOT ISBLANK( pointColor ), pointColor, "#01B8AA" )
     
     			// Check if Axis is numeric
     			VAR axisSample = 	MAX( axisRef )
@@ -112,19 +114,17 @@ Creates a Jitter Plot compound SVG Visual showing values as points with x-positi
     						VAR _ClampedCY = MAX( _Y, MIN( _Y + _Height, _CY ) )
     						RETURN
     							DaxLib.SVG.Element.Circle(
-    								_ClampedCX, // cx
-    								_ClampedCY,          // cy
-    								2,         			// r
+    								_ClampedCX,
+    								_ClampedCY,
+    								2,
     								DaxLib.SVG.Attr.Shapes(
-    									pointColor,   	// fill
-    									0.5,            // fillOpacity
-    									BLANK(),        // fillRule
-    									pointColor,   	// stroke
-    									1,              // strokeWidth
-    									0.9,            // strokeOpacity
-    									BLANK()         // opacity
-    								),
-    								BLANK()             // transforms
+    									_PointColor,
+    									0.5,
+    									BLANK(),
+    									_PointColor,
+    									1,
+    									0.9
+    								)
     							)
     					),
     					" ",

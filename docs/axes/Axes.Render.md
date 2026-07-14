@@ -8,22 +8,22 @@ Renders cartesian axis lines, ticks, and labels
     DaxLib.SVG.Axes.Render( plotX, plotY, plotWidth, plotHeight, xAxisMin, xAxisMax, yAxisMin, yAxisMax, showAxis, axisFontSize, xAxisIsDate, yAxisIsDate, tickCountX, tickCountY )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | plotX | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | Plot area X origin |
-    | plotY | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | Plot area Y origin |
-    | plotWidth | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | Plot area width |
-    | plotHeight | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | Plot area height |
-    | xAxisMin | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | X-axis minimum value |
-    | xAxisMax | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | X-axis maximum value |
-    | yAxisMin | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | Y-axis minimum value |
-    | yAxisMax | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | Y-axis maximum value |
-    | showAxis | <span class="type-label boolean">BOOLEAN</span> | :material-close: | Optional: Whether axes are enabled. Defaults to FALSE |
-    | axisFontSize | <span class="type-label int64">INT64</span> | :material-close: | Optional: Axis label font size. Defaults to 10 |
-    | xAxisIsDate | <span class="type-label boolean">BOOLEAN</span> | :material-close: | Optional: Whether X-axis values represent dates. Defaults to FALSE |
-    | yAxisIsDate | <span class="type-label boolean">BOOLEAN</span> | :material-close: | Optional: Whether Y-axis values represent dates. Defaults to FALSE |
-    | tickCountX | <span class="type-label int64">INT64</span> | :material-close: | Optional: Number of X-axis ticks. Defaults to 5 |
-    | tickCountY | <span class="type-label int64">INT64</span> | :material-close: | Optional: Number of Y-axis ticks. Defaults to 4 |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | plotX | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | Plot area X origin |
+    | plotY | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | Plot area Y origin |
+    | plotWidth | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | Plot area width |
+    | plotHeight | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | Plot area height |
+    | xAxisMin | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | X-axis minimum value |
+    | xAxisMax | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | X-axis maximum value |
+    | yAxisMin | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | Y-axis minimum value |
+    | yAxisMax | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | Y-axis maximum value |
+    | showAxis | <span class="type-label boolean">BOOLEAN</span> | :material-close: | `#!dax FALSE()` | Optional: Whether axes are enabled. Defaults to FALSE |
+    | axisFontSize | <span class="type-label int64">INT64</span> | :material-close: | `#!dax 10` | Optional: Axis label font size. Defaults to 10 |
+    | xAxisIsDate | <span class="type-label boolean">BOOLEAN</span> | :material-close: | `#!dax FALSE()` | Optional: Whether X-axis values represent dates. Defaults to FALSE |
+    | yAxisIsDate | <span class="type-label boolean">BOOLEAN</span> | :material-close: | `#!dax FALSE()` | Optional: Whether Y-axis values represent dates. Defaults to FALSE |
+    | tickCountX | <span class="type-label int64">INT64</span> | :material-close: | `#!dax 5` | Optional: Number of X-axis ticks. Defaults to 5 |
+    | tickCountY | <span class="type-label int64">INT64</span> | :material-close: | `#!dax 4` | Optional: Number of Y-axis ticks. Defaults to 4 |
 
     <span class="type-label string">STRING</span> Axis SVG string or blank when axes are disabled
 
@@ -63,25 +63,19 @@ Renders cartesian axis lines, ticks, and labels
     			xAxisMax: NUMERIC VAL,
     			yAxisMin: NUMERIC VAL,
     			yAxisMax: NUMERIC VAL,
-    			showAxis: BOOLEAN,
-    			axisFontSize: INT64,
-    			xAxisIsDate: BOOLEAN,
-    			yAxisIsDate: BOOLEAN,
-    			tickCountX: INT64,
-    			tickCountY: INT64
+    			showAxis: BOOLEAN = FALSE(),
+    			axisFontSize: INT64 = 10,
+    			xAxisIsDate: BOOLEAN = FALSE(),
+    			yAxisIsDate: BOOLEAN = FALSE(),
+    			tickCountX: INT64 = 5,
+    			tickCountY: INT64 = 4
     		) =>
     
-    			VAR _ShowAxis = IF( ISBLANK( showAxis ), FALSE(), showAxis )
-    			VAR _AxisFontSize = IF( ISBLANK( axisFontSize ), 10, axisFontSize )
     			VAR _AxisFontFamily = "Segoe UI"
     			VAR _AxisColor = "#605E5C"
     			VAR _AxisLineStrokeWidth = 1
     			VAR _TickLength = 3
     			VAR _TickPadding = 4
-    			VAR _TickCountX = IF( ISBLANK( tickCountX ) || tickCountX < 1, 5, tickCountX )
-    			VAR _TickCountY = IF( ISBLANK( tickCountY ) || tickCountY < 1, 4, tickCountY )
-    			VAR _XAxisIsDate = IF( ISBLANK( xAxisIsDate ), FALSE(), xAxisIsDate )
-    			VAR _YAxisIsDate = IF( ISBLANK( yAxisIsDate ), FALSE(), yAxisIsDate )
     			VAR _XAxisSpan = ABS( xAxisMax - xAxisMin )
     			VAR _YAxisSpan = ABS( yAxisMax - yAxisMin )
     			VAR _XAxisDecimals = IF( _XAxisSpan >= 100, 0, IF( _XAxisSpan >= 10, 1, 2 ) )
@@ -89,12 +83,12 @@ Renders cartesian axis lines, ticks, and labels
     
     			VAR _XTickBase =
     				ADDCOLUMNS(
-    					GENERATESERIES( 0, _TickCountX - 1, 1 ),
+    					GENERATESERIES( 0, tickCountX - 1, 1 ),
     					"@TickValue",
     						IF(
-    							_TickCountX = 1,
+    							tickCountX = 1,
     							xAxisMin,
-    							xAxisMin + DIVIDE( [Value], _TickCountX - 1, 0 ) * ( xAxisMax - xAxisMin )
+    							xAxisMin + DIVIDE( [Value], tickCountX - 1, 0 ) * ( xAxisMax - xAxisMin )
     						),
     					"@TickIndex", [Value]
     				)
@@ -111,39 +105,39 @@ Renders cartesian axis lines, ticks, and labels
     					"@Label",
     						FORMAT(
     							IF(
-    								_XAxisIsDate,
+    								xAxisIsDate,
     								[@TickValue],
     								ROUND( [@TickValue], _XAxisDecimals )
     							),
-    							IF( _XAxisIsDate, "dd-mmm-yy", "General Number" )
+    							IF( xAxisIsDate, "dd-mmm-yy", "General Number" )
     						),
     					"@Anchor",
     						IF(
     							[@TickIndex] = 0, "start",
-    							IF( [@TickIndex] = _TickCountX - 1, "end", "middle" )
+    							IF( [@TickIndex] = tickCountX - 1, "end", "middle" )
     						)
     				)
     
     			// Detect X-axis label overlap and filter to first/last when needed
     			VAR _XLabelWidthFactor = 0.56
     			VAR _MaxXLabelLen = MAXX( _XTickTable, LEN( [@Label] ) )
-    			VAR _EstXLabelWidth = _MaxXLabelLen * _AxisFontSize * _XLabelWidthFactor
-    			VAR _XLabelsOverlap = _EstXLabelWidth * _TickCountX > plotWidth * 0.9
+    			VAR _EstXLabelWidth = _MaxXLabelLen * axisFontSize * _XLabelWidthFactor
+    			VAR _XLabelsOverlap = _EstXLabelWidth * tickCountX > plotWidth * 0.9
     
     			VAR _XTickRendered =
     				FILTER(
     					_XTickTable,
-    					NOT _XLabelsOverlap || [@TickIndex] = 0 || [@TickIndex] = _TickCountX - 1
+    					NOT _XLabelsOverlap || [@TickIndex] = 0 || [@TickIndex] = tickCountX - 1
     				)
     
     			VAR _YTickBase =
     				ADDCOLUMNS(
-    					GENERATESERIES( 0, _TickCountY - 1, 1 ),
+    					GENERATESERIES( 0, tickCountY - 1, 1 ),
     					"@TickValue",
     						IF(
-    							_TickCountY = 1,
+    							tickCountY = 1,
     							yAxisMin,
-    							yAxisMin + DIVIDE( [Value], _TickCountY - 1, 0 ) * ( yAxisMax - yAxisMin )
+    							yAxisMin + DIVIDE( [Value], tickCountY - 1, 0 ) * ( yAxisMax - yAxisMin )
     						)
     				)
     
@@ -159,22 +153,22 @@ Renders cartesian axis lines, ticks, and labels
     					"@Label",
     						FORMAT(
     							IF(
-    								_YAxisIsDate,
+    								yAxisIsDate,
     								[@TickValue],
     								ROUND( [@TickValue], _YAxisDecimals )
     							),
-    							IF( _YAxisIsDate, "dd-mmm-yy", "General Number" )
+    							IF( yAxisIsDate, "dd-mmm-yy", "General Number" )
     						)
     				)
     
     			// Detect Y-axis label overlap and filter to first/last when needed
-    			VAR _EstYLabelHeight = _AxisFontSize * 1.5
-    			VAR _YLabelsOverlap = _EstYLabelHeight * _TickCountY > plotHeight * 0.9
+    			VAR _EstYLabelHeight = axisFontSize * 1.5
+    			VAR _YLabelsOverlap = _EstYLabelHeight * tickCountY > plotHeight * 0.9
     
     			VAR _YTickRendered =
     				FILTER(
     					_YTickTable,
-    					NOT _YLabelsOverlap || [Value] = 0 || [Value] = _TickCountY - 1
+    					NOT _YLabelsOverlap || [Value] = 0 || [Value] = tickCountY - 1
     				)
     
     			VAR _XAxisLine =
@@ -183,8 +177,7 @@ Renders cartesian axis lines, ticks, and labels
     					plotY + plotHeight,
     					plotX + plotWidth,
     					plotY + plotHeight,
-    					DaxLib.SVG.Attr.Shapes( BLANK(), BLANK(), BLANK(), _AxisColor, _AxisLineStrokeWidth, BLANK(), BLANK() ),
-    					BLANK()
+    					DaxLib.SVG.Attr.Shapes( BLANK(), BLANK(), BLANK(), _AxisColor, _AxisLineStrokeWidth )
     				)
     
     			VAR _YAxisLine =
@@ -193,8 +186,7 @@ Renders cartesian axis lines, ticks, and labels
     					plotY,
     					plotX,
     					plotY + plotHeight,
-    					DaxLib.SVG.Attr.Shapes( BLANK(), BLANK(), BLANK(), _AxisColor, _AxisLineStrokeWidth, BLANK(), BLANK() ),
-    					BLANK()
+    					DaxLib.SVG.Attr.Shapes( BLANK(), BLANK(), BLANK(), _AxisColor, _AxisLineStrokeWidth )
     				)
     
     			VAR _XTicks =
@@ -205,8 +197,7 @@ Renders cartesian axis lines, ticks, and labels
     						plotY + plotHeight,
     						[@Pos],
     						plotY + plotHeight + _TickLength,
-    						DaxLib.SVG.Attr.Shapes( BLANK(), BLANK(), BLANK(), _AxisColor, 1, BLANK(), BLANK() ),
-    						BLANK()
+    						DaxLib.SVG.Attr.Shapes( BLANK(), BLANK(), BLANK(), _AxisColor, 1 )
     					)
     					&
     					DaxLib.SVG.Element.Txt(
@@ -215,9 +206,8 @@ Renders cartesian axis lines, ticks, and labels
     						[@Label],
     						BLANK(),
     						BLANK(),
-    						DaxLib.SVG.Attr.Shapes( _AxisColor, BLANK(), BLANK(), BLANK(), BLANK(), BLANK(), BLANK() )
-    						& DaxLib.SVG.Attr.Txt( _AxisFontFamily, _AxisFontSize, BLANK(), BLANK(), [@Anchor], "hanging", BLANK(), BLANK(), BLANK() ),
-    						BLANK()
+    						DaxLib.SVG.Attr.Shapes( _AxisColor )
+    						& DaxLib.SVG.Attr.Txt( _AxisFontFamily, axisFontSize, BLANK(), BLANK(), [@Anchor], "hanging" )
     					),
     					""
     				)
@@ -230,8 +220,7 @@ Renders cartesian axis lines, ticks, and labels
     						[@Pos],
     						plotX,
     						[@Pos],
-    						DaxLib.SVG.Attr.Shapes( BLANK(), BLANK(), BLANK(), _AxisColor, 1, BLANK(), BLANK() ),
-    						BLANK()
+    						DaxLib.SVG.Attr.Shapes( BLANK(), BLANK(), BLANK(), _AxisColor, 1 )
     					)
     					&
     					DaxLib.SVG.Element.Txt(
@@ -240,13 +229,12 @@ Renders cartesian axis lines, ticks, and labels
     						[@Label],
     						BLANK(),
     						BLANK(),
-    						DaxLib.SVG.Attr.Shapes( _AxisColor, BLANK(), BLANK(), BLANK(), BLANK(), BLANK(), BLANK() )
-    						& DaxLib.SVG.Attr.Txt( _AxisFontFamily, _AxisFontSize, BLANK(), BLANK(), "end", "middle", BLANK(), BLANK(), BLANK() ),
-    						BLANK()
+    						DaxLib.SVG.Attr.Shapes( _AxisColor )
+    						& DaxLib.SVG.Attr.Txt( _AxisFontFamily, axisFontSize, BLANK(), BLANK(), "end", "middle" )
     					),
     					""
     				)
     
     			RETURN
-    				IF( _ShowAxis, _XAxisLine & _YAxisLine & _XTicks & _YTicks )
+    				IF( showAxis, _XAxisLine & _YAxisLine & _XTicks & _YTicks )
     ```

@@ -10,11 +10,11 @@ Create an SVG path element
     DaxLib.SVG.Element.Paths( d, attributes, transforms )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | d | <span class="type-label string">STRING</span> | :material-check: | The path data string (e.g., "M10 10 L90 90") |
-    | attributes | <span class="type-label string">STRING</span> | :material-close: | Optional: Direct SVG attributes to apply (e.g., "pathLength='100' fill-rule='evenodd'"), can generate with `DaxLib.SVG.Attr.*` or manually |
-    | transforms | <span class="type-label string">STRING</span> | :material-close: | Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | d | <span class="type-label string">STRING</span> | :material-check: |  | The path data string (e.g., "M10 10 L90 90") |
+    | attributes | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Direct SVG attributes to apply (e.g., "pathLength='100' fill-rule='evenodd'"), can generate with `DaxLib.SVG.Attr.*` or manually |
+    | transforms | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |
 
     <span class="type-label string">STRING</span> <path> element
 
@@ -51,8 +51,8 @@ Create an SVG path element
     function 'DaxLib.SVG.Element.Paths' =
     		(
     			d: STRING,
-    			attributes: STRING,
-    			transforms: STRING
+    			attributes: STRING = BLANK(),
+    			transforms: STRING = BLANK()
     		) =>
     
     			"<path d='" & d & "'" &

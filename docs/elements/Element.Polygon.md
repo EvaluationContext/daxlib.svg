@@ -8,11 +8,11 @@ Creates a polygon (closed shape)
     DaxLib.SVG.Element.Polygon( points, attributes, transforms )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | points | <span class="type-label string">STRING</span> | :material-check: | Space-separated x,y coordinate pairs (e.g., "0,10 20,30 40,15") |
-    | attributes | <span class="type-label string">STRING</span> | :material-close: | Optional: Direct SVG attributes to apply (e.g., "fill-rule='nonzero' vector-effect='non-scaling-stroke'"), can generate with `DaxLib.SVG.Attr.*` or manually |
-    | transforms | <span class="type-label string">STRING</span> | :material-close: | Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | points | <span class="type-label string">STRING</span> | :material-check: |  | Space-separated x,y coordinate pairs (e.g., "0,10 20,30 40,15") |
+    | attributes | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Direct SVG attributes to apply (e.g., "fill-rule='nonzero' vector-effect='non-scaling-stroke'"), can generate with `DaxLib.SVG.Attr.*` or manually |
+    | transforms | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |
 
     <span class="type-label string">STRING</span> <polygon> element
 
@@ -33,8 +33,8 @@ Creates a polygon (closed shape)
     function 'DaxLib.SVG.Element.Polygon' =
     		(
     			points: STRING,
-    			attributes: STRING,
-    			transforms: STRING
+    			attributes: STRING = BLANK(),
+    			transforms: STRING = BLANK()
     		) =>
     
     			"<polygon" &

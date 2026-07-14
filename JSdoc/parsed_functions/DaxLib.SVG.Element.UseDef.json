@@ -17,7 +17,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: X position where the element should be placed",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "y",
@@ -25,7 +25,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: Y position where the element should be placed",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "transforms",
@@ -33,13 +33,13 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`)",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     }
   ],
   "return_type": "STRING",
   "return_type_label": "<span class=\"type-label string\">STRING</span>",
   "return_description": "<use> element",
-  "code": "function 'DaxLib.SVG.Element.UseDef' =\n\t\t(\n\t\t\tdefId: STRING,\n\t\t\tx: STRING,\n\t\t\ty: STRING,\n\t\t\ttransforms: STRING\n\t\t) =>\n\n\t\t\t\"<use\" &\n\t\t\t\" href='#\" & defId & \"'\" &\n\t\t\tIF( NOT ISBLANK( x ), \" x='\" & x & \"'\" ) &\n\t\t\tIF( NOT ISBLANK( y ), \" y='\" & y & \"'\" ) &\n\t\t\tIF( NOT ISBLANK( transforms ), \" transform='\" & transforms & \"'\" ) & \n\t\t\t\"/>\"",
+  "code": "function 'DaxLib.SVG.Element.UseDef' =\n\t\t(\n\t\t\tdefId: STRING,\n\t\t\tx: STRING = BLANK(),\n\t\t\ty: STRING = BLANK(),\n\t\t\ttransforms: STRING = BLANK()\n\t\t) =>\n\n\t\t\t\"<use\" &\n\t\t\t\" href='#\" & defId & \"'\" &\n\t\t\tIF( NOT ISBLANK( x ), \" x='\" & x & \"'\" ) &\n\t\t\tIF( NOT ISBLANK( y ), \" y='\" & y & \"'\" ) &\n\t\t\tIF( NOT ISBLANK( transforms ), \" transform='\" & transforms & \"'\" ) & \n\t\t\t\"/>\"",
   "example": null,
   "author": null,
   "version": null,
@@ -47,8 +47,8 @@
   "see": null,
   "deprecated": null,
   "sections": {
-    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Element.UseDef( defId, x, y, transforms )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | defId | <span class=\"type-label string\">STRING</span> | :material-check: | The identifier of the defined element to use |\n    | x | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: X position where the element should be placed |\n    | y | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Y position where the element should be placed |\n    | transforms | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |\n\n    <span class=\"type-label string\">STRING</span> <use> element",
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Element.UseDef( defId, x, y, transforms )\n    ```\n\n    | Parameter | Type | Required | Default | Description |\n    |:---:|:---:|:---:|:---:|---|\n    | defId | <span class=\"type-label string\">STRING</span> | :material-check: |  | The identifier of the defined element to use |\n    | x | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: X position where the element should be placed |\n    | y | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Y position where the element should be placed |\n    | transforms | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |\n\n    <span class=\"type-label string\">STRING</span> <use> element",
     "example": "",
-    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Element.UseDef' =\n    \t\t(\n    \t\t\tdefId: STRING,\n    \t\t\tx: STRING,\n    \t\t\ty: STRING,\n    \t\t\ttransforms: STRING\n    \t\t) =>\n    \n    \t\t\t\"<use\" &\n    \t\t\t\" href='#\" & defId & \"'\" &\n    \t\t\tIF( NOT ISBLANK( x ), \" x='\" & x & \"'\" ) &\n    \t\t\tIF( NOT ISBLANK( y ), \" y='\" & y & \"'\" ) &\n    \t\t\tIF( NOT ISBLANK( transforms ), \" transform='\" & transforms & \"'\" ) & \n    \t\t\t\"/>\"\n    ```"
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Element.UseDef' =\n    \t\t(\n    \t\t\tdefId: STRING,\n    \t\t\tx: STRING = BLANK(),\n    \t\t\ty: STRING = BLANK(),\n    \t\t\ttransforms: STRING = BLANK()\n    \t\t) =>\n    \n    \t\t\t\"<use\" &\n    \t\t\t\" href='#\" & defId & \"'\" &\n    \t\t\tIF( NOT ISBLANK( x ), \" x='\" & x & \"'\" ) &\n    \t\t\tIF( NOT ISBLANK( y ), \" y='\" & y & \"'\" ) &\n    \t\t\tIF( NOT ISBLANK( transforms ), \" transform='\" & transforms & \"'\" ) & \n    \t\t\t\"/>\"\n    ```"
   }
 }

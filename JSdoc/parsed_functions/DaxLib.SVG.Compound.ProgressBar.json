@@ -36,22 +36,6 @@
       "default_value": null
     },
     {
-      "name": "paddingX",
-      "type": "decimal",
-      "type_label": "<span class=\"type-label number\">DECIMAL</span>",
-      "description": "Optional: Horizontal padding percentage (0.0-1.0). Defaults to 0",
-      "optional": true,
-      "default_value": null
-    },
-    {
-      "name": "paddingY",
-      "type": "decimal",
-      "type_label": "<span class=\"type-label number\">DECIMAL</span>",
-      "description": "Optional: Vertical padding percentage (0.0-1.0). Defaults to 0",
-      "optional": true,
-      "default_value": null
-    },
-    {
       "name": "valueRef",
       "type": "numeric expr",
       "type_label": "<span class=\"type-label number\">NUMERIC</span> <span class=\"type-label expr\">EXPR</span>",
@@ -65,7 +49,7 @@
       "type_label": "<span class=\"type-label number\">NUMERIC</span> <span class=\"type-label expr\">EXPR</span>",
       "description": "Optional: Track measure (maximum value, can vary per context). Defaults to MAX(1, ABS(valueRef))",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "fillColor",
@@ -73,7 +57,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: Progress color. Defaults to \"#0F6CBD\"",
       "optional": true,
-      "default_value": null
+      "default_value": "\"#0F6CBD\""
     },
     {
       "name": "trackColor",
@@ -81,7 +65,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: Track color. Defaults to \"#E1DFDD\"",
       "optional": true,
-      "default_value": null
+      "default_value": "\"#E1DFDD\""
     },
     {
       "name": "orientation",
@@ -89,13 +73,29 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "\"Horizontal\" or \"Vertical\". Defaults to \"Horizontal\"",
       "optional": true,
-      "default_value": null
+      "default_value": "\"Horizontal\""
+    },
+    {
+      "name": "paddingX",
+      "type": "decimal",
+      "type_label": "<span class=\"type-label number\">DECIMAL</span>",
+      "description": "Optional: Horizontal padding percentage (0.0-1.0). Defaults to 0.05",
+      "optional": true,
+      "default_value": "0.05"
+    },
+    {
+      "name": "paddingY",
+      "type": "decimal",
+      "type_label": "<span class=\"type-label number\">DECIMAL</span>",
+      "description": "Optional: Vertical padding percentage (0.0-1.0). Defaults to 0.02",
+      "optional": true,
+      "default_value": "0.02"
     }
   ],
   "return_type": "STRING",
   "return_type_label": "<span class=\"type-label string\">STRING</span>",
   "return_description": "SVG Progress Bar",
-  "code": "function 'DaxLib.SVG.Compound.ProgressBar' =\n\t\t(\n\t\t\tx: INT64,\n\t\t\ty: INT64,\n\t\t\twidth: INT64,\n\t\t\theight: INT64,\n\t\t\tpaddingX: DOUBLE,\n\t\t\tpaddingY: DOUBLE,\n\t\t\tvalueRef: NUMERIC EXPR,\n\t\t\ttrackRef: NUMERIC EXPR,\n\t\t\tfillColor: STRING,\n\t\t\ttrackColor: STRING,\n\t\t\torientation: STRING\n\t\t) =>\n\n\t\t\tVAR _X = x + (width * (IF(ISBLANK(paddingX), 0, paddingX) / 2))\n\t\t\tVAR _Y = y + (height * (IF(ISBLANK(paddingY), 0, paddingY) / 2))\n\t\t\tVAR _Width = width * (1 - IF(ISBLANK(paddingX), 0, paddingX))\n\t\t\tVAR _Height = height * (1 - IF(ISBLANK(paddingY), 0, paddingY))\n\n\t\t\tVAR _Orientation = IF( orientation = \"Vertical\", \"Vertical\", \"Horizontal\" )\n\t\t\tVAR _FillColor = IF( NOT ISBLANK( fillColor ), fillColor, \"#0F6CBD\" )\n\t\t\tVAR _TrackColor = IF( NOT ISBLANK( trackColor ), trackColor, \"#E1DFDD\" )\n\n\t\t\tVAR _Value = valueRef\n\t\t\tVAR _Max = IF( ISBLANK( trackRef ), MAX( 1, ABS( _Value ) ), MAX( 1, ABS( trackRef ) ) )\n\t\t\tVAR _Pct = MIN( 1, MAX( 0, DIVIDE( _Value, _Max, 0 ) ) )\n\n\t\t\tVAR _Track =\n\t\t\t\tDaxLib.SVG.Element.Rect(\n\t\t\t\t\t_X,\n\t\t\t\t\t_Y,\n\t\t\t\t\t_Width,\n\t\t\t\t\t_Height,\n\t\t\t\t\t3,\n\t\t\t\t\t3,\n\t\t\t\t\tDaxLib.SVG.Attr.Shapes( _TrackColor, 1, BLANK(), _TrackColor, 1, BLANK(), BLANK() ),\n\t\t\t\t\tBLANK()\n\t\t\t\t)\n\n\t\t\tVAR _FillW = IF( _Orientation = \"Horizontal\", _Width * _Pct, _Width )\n\t\t\tVAR _FillH = IF( _Orientation = \"Horizontal\", _Height, _Height * _Pct )\n\t\t\tVAR _FillX = _X\n\t\t\tVAR _FillY = IF( _Orientation = \"Horizontal\", _Y, _Y + ( _Height - _FillH ) )\n\n\t\t\tVAR _Fill =\n\t\t\t\tDaxLib.SVG.Element.Rect(\n\t\t\t\t\t_FillX,\n\t\t\t\t\t_FillY,\n\t\t\t\t\t_FillW,\n\t\t\t\t\t_FillH,\n\t\t\t\t\t3,\n\t\t\t\t\t3,\n\t\t\t\t\tDaxLib.SVG.Attr.Shapes( _FillColor, 0.95, BLANK(), _FillColor, 1, BLANK(), BLANK() ),\n\t\t\t\t\tBLANK()\n\t\t\t\t)\n\n\t\t\tRETURN\n\t\t\t\tIF( NOT ISBLANK( _Value ) && _Width > 0 && _Height > 0, _Track & _Fill )",
+  "code": "function 'DaxLib.SVG.Compound.ProgressBar' =\n\t\t(\n\t\t\tx: INT64,\n\t\t\ty: INT64,\n\t\t\twidth: INT64,\n\t\t\theight: INT64,\n\t\t\tvalueRef: NUMERIC EXPR,\n\t\t\ttrackRef: NUMERIC EXPR = BLANK(),\n\t\t\tfillColor: STRING = \"#0F6CBD\",\n\t\t\ttrackColor: STRING = \"#E1DFDD\",\n\t\t\torientation: STRING = \"Horizontal\",\n\t\t\tpaddingX: DOUBLE = 0.05,\n\t\t\tpaddingY: DOUBLE = 0.02\n\t\t) =>\n\n\t\t\tVAR _X = x + (width * (IF(ISBLANK(paddingX), 0, paddingX) / 2))\n\t\t\tVAR _Y = y + (height * (IF(ISBLANK(paddingY), 0, paddingY) / 2))\n\t\t\tVAR _Width = width * (1 - IF(ISBLANK(paddingX), 0, paddingX))\n\t\t\tVAR _Height = height * (1 - IF(ISBLANK(paddingY), 0, paddingY))\n\n\t\t\tVAR _Orientation = IF( orientation = \"Vertical\", \"Vertical\", \"Horizontal\" )\n\t\t\tVAR _FillColor = IF( NOT ISBLANK( fillColor ), fillColor, \"#0F6CBD\" )\n\t\t\tVAR _TrackColor = IF( NOT ISBLANK( trackColor ), trackColor, \"#E1DFDD\" )\n\n\t\t\tVAR _Value = valueRef\n\t\t\tVAR _Max = IF( ISBLANK( trackRef ), MAX( 1, ABS( _Value ) ), MAX( 1, ABS( trackRef ) ) )\n\t\t\tVAR _Pct = MIN( 1, MAX( 0, DIVIDE( _Value, _Max, 0 ) ) )\n\n\t\t\tVAR _Track =\n\t\t\t\tDaxLib.SVG.Element.Rect(\n\t\t\t\t\t_X,\n\t\t\t\t\t_Y,\n\t\t\t\t\t_Width,\n\t\t\t\t\t_Height,\n\t\t\t\t\t3,\n\t\t\t\t\t3,\n\t\t\t\t\tDaxLib.SVG.Attr.Shapes( _TrackColor, 1, BLANK(), _TrackColor, 1 )\n\t\t\t\t)\n\n\t\t\tVAR _FillW = IF( _Orientation = \"Horizontal\", _Width * _Pct, _Width )\n\t\t\tVAR _FillH = IF( _Orientation = \"Horizontal\", _Height, _Height * _Pct )\n\t\t\tVAR _FillX = _X\n\t\t\tVAR _FillY = IF( _Orientation = \"Horizontal\", _Y, _Y + ( _Height - _FillH ) )\n\n\t\t\tVAR _Fill =\n\t\t\t\tDaxLib.SVG.Element.Rect(\n\t\t\t\t\t_FillX,\n\t\t\t\t\t_FillY,\n\t\t\t\t\t_FillW,\n\t\t\t\t\t_FillH,\n\t\t\t\t\t3,\n\t\t\t\t\t3,\n\t\t\t\t\tDaxLib.SVG.Attr.Shapes( _FillColor, 0.95, BLANK(), _FillColor, 1 )\n\t\t\t\t)\n\n\t\t\tRETURN\n\t\t\t\tIF( NOT ISBLANK( _Value ) && _Width > 0 && _Height > 0, _Track & _Fill )",
   "example": null,
   "author": null,
   "version": null,
@@ -103,8 +103,8 @@
   "see": null,
   "deprecated": null,
   "sections": {
-    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Compound.ProgressBar( x, y, width, height, paddingX, paddingY, valueRef, trackRef, fillColor, trackColor, orientation )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | x | <span class=\"type-label int64\">INT64</span> | :material-check: | The x position of the compound |\n    | y | <span class=\"type-label int64\">INT64</span> | :material-check: | The y position of the compound |\n    | width | <span class=\"type-label int64\">INT64</span> | :material-check: | The width of the compound |\n    | height | <span class=\"type-label int64\">INT64</span> | :material-check: | The height of the compound |\n    | paddingX | <span class=\"type-label number\">DECIMAL</span> | :material-close: | Optional: Horizontal padding percentage (0.0-1.0). Defaults to 0 |\n    | paddingY | <span class=\"type-label number\">DECIMAL</span> | :material-close: | Optional: Vertical padding percentage (0.0-1.0). Defaults to 0 |\n    | valueRef | <span class=\"type-label number\">NUMERIC</span> <span class=\"type-label expr\">EXPR</span> | :material-check: | Value expression (the bar measure) |\n    | trackRef | <span class=\"type-label number\">NUMERIC</span> <span class=\"type-label expr\">EXPR</span> | :material-close: | Optional: Track measure (maximum value, can vary per context). Defaults to MAX(1, ABS(valueRef)) |\n    | fillColor | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Progress color. Defaults to \"#0F6CBD\" |\n    | trackColor | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Track color. Defaults to \"#E1DFDD\" |\n    | orientation | <span class=\"type-label string\">STRING</span> | :material-close: | \"Horizontal\" or \"Vertical\". Defaults to \"Horizontal\" |\n\n    <span class=\"type-label string\">STRING</span> SVG Progress Bar",
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Compound.ProgressBar( x, y, width, height, valueRef, trackRef, fillColor, trackColor, orientation, paddingX, paddingY )\n    ```\n\n    | Parameter | Type | Required | Default | Description |\n    |:---:|:---:|:---:|:---:|---|\n    | x | <span class=\"type-label int64\">INT64</span> | :material-check: |  | The x position of the compound |\n    | y | <span class=\"type-label int64\">INT64</span> | :material-check: |  | The y position of the compound |\n    | width | <span class=\"type-label int64\">INT64</span> | :material-check: |  | The width of the compound |\n    | height | <span class=\"type-label int64\">INT64</span> | :material-check: |  | The height of the compound |\n    | valueRef | <span class=\"type-label number\">NUMERIC</span> <span class=\"type-label expr\">EXPR</span> | :material-check: |  | Value expression (the bar measure) |\n    | trackRef | <span class=\"type-label number\">NUMERIC</span> <span class=\"type-label expr\">EXPR</span> | :material-close: | `#!dax BLANK()` | Optional: Track measure (maximum value, can vary per context). Defaults to MAX(1, ABS(valueRef)) |\n    | fillColor | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax \"#0F6CBD\"` | Optional: Progress color. Defaults to \"#0F6CBD\" |\n    | trackColor | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax \"#E1DFDD\"` | Optional: Track color. Defaults to \"#E1DFDD\" |\n    | orientation | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax \"Horizontal\"` | \"Horizontal\" or \"Vertical\". Defaults to \"Horizontal\" |\n    | paddingX | <span class=\"type-label number\">DECIMAL</span> | :material-close: | `#!dax 0.05` | Optional: Horizontal padding percentage (0.0-1.0). Defaults to 0.05 |\n    | paddingY | <span class=\"type-label number\">DECIMAL</span> | :material-close: | `#!dax 0.02` | Optional: Vertical padding percentage (0.0-1.0). Defaults to 0.02 |\n\n    <span class=\"type-label string\">STRING</span> SVG Progress Bar",
     "example": "",
-    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Compound.ProgressBar' =\n    \t\t(\n    \t\t\tx: INT64,\n    \t\t\ty: INT64,\n    \t\t\twidth: INT64,\n    \t\t\theight: INT64,\n    \t\t\tpaddingX: DOUBLE,\n    \t\t\tpaddingY: DOUBLE,\n    \t\t\tvalueRef: NUMERIC EXPR,\n    \t\t\ttrackRef: NUMERIC EXPR,\n    \t\t\tfillColor: STRING,\n    \t\t\ttrackColor: STRING,\n    \t\t\torientation: STRING\n    \t\t) =>\n    \n    \t\t\tVAR _X = x + (width * (IF(ISBLANK(paddingX), 0, paddingX) / 2))\n    \t\t\tVAR _Y = y + (height * (IF(ISBLANK(paddingY), 0, paddingY) / 2))\n    \t\t\tVAR _Width = width * (1 - IF(ISBLANK(paddingX), 0, paddingX))\n    \t\t\tVAR _Height = height * (1 - IF(ISBLANK(paddingY), 0, paddingY))\n    \n    \t\t\tVAR _Orientation = IF( orientation = \"Vertical\", \"Vertical\", \"Horizontal\" )\n    \t\t\tVAR _FillColor = IF( NOT ISBLANK( fillColor ), fillColor, \"#0F6CBD\" )\n    \t\t\tVAR _TrackColor = IF( NOT ISBLANK( trackColor ), trackColor, \"#E1DFDD\" )\n    \n    \t\t\tVAR _Value = valueRef\n    \t\t\tVAR _Max = IF( ISBLANK( trackRef ), MAX( 1, ABS( _Value ) ), MAX( 1, ABS( trackRef ) ) )\n    \t\t\tVAR _Pct = MIN( 1, MAX( 0, DIVIDE( _Value, _Max, 0 ) ) )\n    \n    \t\t\tVAR _Track =\n    \t\t\t\tDaxLib.SVG.Element.Rect(\n    \t\t\t\t\t_X,\n    \t\t\t\t\t_Y,\n    \t\t\t\t\t_Width,\n    \t\t\t\t\t_Height,\n    \t\t\t\t\t3,\n    \t\t\t\t\t3,\n    \t\t\t\t\tDaxLib.SVG.Attr.Shapes( _TrackColor, 1, BLANK(), _TrackColor, 1, BLANK(), BLANK() ),\n    \t\t\t\t\tBLANK()\n    \t\t\t\t)\n    \n    \t\t\tVAR _FillW = IF( _Orientation = \"Horizontal\", _Width * _Pct, _Width )\n    \t\t\tVAR _FillH = IF( _Orientation = \"Horizontal\", _Height, _Height * _Pct )\n    \t\t\tVAR _FillX = _X\n    \t\t\tVAR _FillY = IF( _Orientation = \"Horizontal\", _Y, _Y + ( _Height - _FillH ) )\n    \n    \t\t\tVAR _Fill =\n    \t\t\t\tDaxLib.SVG.Element.Rect(\n    \t\t\t\t\t_FillX,\n    \t\t\t\t\t_FillY,\n    \t\t\t\t\t_FillW,\n    \t\t\t\t\t_FillH,\n    \t\t\t\t\t3,\n    \t\t\t\t\t3,\n    \t\t\t\t\tDaxLib.SVG.Attr.Shapes( _FillColor, 0.95, BLANK(), _FillColor, 1, BLANK(), BLANK() ),\n    \t\t\t\t\tBLANK()\n    \t\t\t\t)\n    \n    \t\t\tRETURN\n    \t\t\t\tIF( NOT ISBLANK( _Value ) && _Width > 0 && _Height > 0, _Track & _Fill )\n    ```"
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Compound.ProgressBar' =\n    \t\t(\n    \t\t\tx: INT64,\n    \t\t\ty: INT64,\n    \t\t\twidth: INT64,\n    \t\t\theight: INT64,\n    \t\t\tvalueRef: NUMERIC EXPR,\n    \t\t\ttrackRef: NUMERIC EXPR = BLANK(),\n    \t\t\tfillColor: STRING = \"#0F6CBD\",\n    \t\t\ttrackColor: STRING = \"#E1DFDD\",\n    \t\t\torientation: STRING = \"Horizontal\",\n    \t\t\tpaddingX: DOUBLE = 0.05,\n    \t\t\tpaddingY: DOUBLE = 0.02\n    \t\t) =>\n    \n    \t\t\tVAR _X = x + (width * (IF(ISBLANK(paddingX), 0, paddingX) / 2))\n    \t\t\tVAR _Y = y + (height * (IF(ISBLANK(paddingY), 0, paddingY) / 2))\n    \t\t\tVAR _Width = width * (1 - IF(ISBLANK(paddingX), 0, paddingX))\n    \t\t\tVAR _Height = height * (1 - IF(ISBLANK(paddingY), 0, paddingY))\n    \n    \t\t\tVAR _Orientation = IF( orientation = \"Vertical\", \"Vertical\", \"Horizontal\" )\n    \t\t\tVAR _FillColor = IF( NOT ISBLANK( fillColor ), fillColor, \"#0F6CBD\" )\n    \t\t\tVAR _TrackColor = IF( NOT ISBLANK( trackColor ), trackColor, \"#E1DFDD\" )\n    \n    \t\t\tVAR _Value = valueRef\n    \t\t\tVAR _Max = IF( ISBLANK( trackRef ), MAX( 1, ABS( _Value ) ), MAX( 1, ABS( trackRef ) ) )\n    \t\t\tVAR _Pct = MIN( 1, MAX( 0, DIVIDE( _Value, _Max, 0 ) ) )\n    \n    \t\t\tVAR _Track =\n    \t\t\t\tDaxLib.SVG.Element.Rect(\n    \t\t\t\t\t_X,\n    \t\t\t\t\t_Y,\n    \t\t\t\t\t_Width,\n    \t\t\t\t\t_Height,\n    \t\t\t\t\t3,\n    \t\t\t\t\t3,\n    \t\t\t\t\tDaxLib.SVG.Attr.Shapes( _TrackColor, 1, BLANK(), _TrackColor, 1 )\n    \t\t\t\t)\n    \n    \t\t\tVAR _FillW = IF( _Orientation = \"Horizontal\", _Width * _Pct, _Width )\n    \t\t\tVAR _FillH = IF( _Orientation = \"Horizontal\", _Height, _Height * _Pct )\n    \t\t\tVAR _FillX = _X\n    \t\t\tVAR _FillY = IF( _Orientation = \"Horizontal\", _Y, _Y + ( _Height - _FillH ) )\n    \n    \t\t\tVAR _Fill =\n    \t\t\t\tDaxLib.SVG.Element.Rect(\n    \t\t\t\t\t_FillX,\n    \t\t\t\t\t_FillY,\n    \t\t\t\t\t_FillW,\n    \t\t\t\t\t_FillH,\n    \t\t\t\t\t3,\n    \t\t\t\t\t3,\n    \t\t\t\t\tDaxLib.SVG.Attr.Shapes( _FillColor, 0.95, BLANK(), _FillColor, 1 )\n    \t\t\t\t)\n    \n    \t\t\tRETURN\n    \t\t\t\tIF( NOT ISBLANK( _Value ) && _Width > 0 && _Height > 0, _Track & _Fill )\n    ```"
   }
 }

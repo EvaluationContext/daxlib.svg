@@ -8,10 +8,10 @@ Returns a color for the specified performance level and theme
     DaxLib.SVG.Color.PerformanceTheme( themeName, variant )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | themeName | <span class="type-label string">STRING</span> | :material-close: | The theme name: "Stoplight", "Colorblind", "Corporate", "Pastel", or "Grayscale". Defaults to "Stoplight" |
-    | variant | <span class="type-label string">STRING</span> | :material-close: | The performance level ("veryBad", "bad", "neutral", "good", "veryGood"). Defaults to "neutral" |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | themeName | <span class="type-label string">STRING</span> | :material-close: |  | The theme name: "Stoplight", "Colorblind", "Corporate", "Pastel", or "Grayscale". Defaults to "Stoplight" |
+    | variant | <span class="type-label string">STRING</span> | :material-close: |  | The performance level ("veryBad", "bad", "neutral", "good", "veryGood"). Defaults to "neutral" |
 
     <span class="type-label string">STRING</span> hex color code representing the performance level
 

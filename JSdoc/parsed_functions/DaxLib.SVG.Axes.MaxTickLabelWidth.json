@@ -25,7 +25,7 @@
       "type_label": "<span class=\"type-label int64\">INT64</span>",
       "description": "Optional: Number of ticks to estimate. Defaults to 1",
       "optional": true,
-      "default_value": null
+      "default_value": "1"
     },
     {
       "name": "axisFontSize",
@@ -33,7 +33,7 @@
       "type_label": "<span class=\"type-label int64\">INT64</span>",
       "description": "Optional: Axis font size. Defaults to 10",
       "optional": true,
-      "default_value": null
+      "default_value": "10"
     },
     {
       "name": "labelWidthFactor",
@@ -41,7 +41,7 @@
       "type_label": "<span class=\"type-label number\">DECIMAL</span>",
       "description": "Optional: Font width factor. Defaults to 0.56 (Segoe UI)",
       "optional": true,
-      "default_value": null
+      "default_value": "0.56"
     },
     {
       "name": "axisIsDate",
@@ -49,13 +49,13 @@
       "type_label": "<span class=\"type-label boolean\">BOOLEAN</span>",
       "description": "Optional: Whether the axis values represent dates. Defaults to FALSE",
       "optional": true,
-      "default_value": null
+      "default_value": "FALSE()"
     }
   ],
   "return_type": "NUMERIC",
   "return_type_label": "<span class=\"type-label number\">NUMERIC</span>",
   "return_description": "Estimated max label width in pixels",
-  "code": "function 'DaxLib.SVG.Axes.MaxTickLabelWidth' =\n\t\t(\n\t\t\taxisMin: NUMERIC VAL,\n\t\t\taxisMax: NUMERIC VAL,\n\t\t\ttickCount: INT64,\n\t\t\taxisFontSize: INT64,\n\t\t\tlabelWidthFactor: DOUBLE,\n\t\t\taxisIsDate: BOOLEAN\n\t\t) =>\n\n\t\t\tVAR _TickCount = IF( ISBLANK( tickCount ) || tickCount < 1, 1, tickCount )\n\t\t\tVAR _AxisFontSize = IF( ISBLANK( axisFontSize ), 10, axisFontSize )\n\t\t\tVAR _LabelWidthFactor = IF( ISBLANK( labelWidthFactor ), 0.56, labelWidthFactor )\n\t\t\tVAR _AxisIsDate = IF( ISBLANK( axisIsDate ), FALSE(), axisIsDate )\n\t\t\tVAR _NumericSpan = ABS( axisMax - axisMin )\n\t\t\tVAR _NumericDecimals = IF( _NumericSpan >= 100, 0, IF( _NumericSpan >= 10, 1, 2 ) )\n\n\t\t\tVAR _TickBase =\n\t\t\t\tADDCOLUMNS(\n\t\t\t\t\tGENERATESERIES( 0, _TickCount - 1, 1 ),\n\t\t\t\t\t\"@TickValue\",\n\t\t\t\t\t\tIF(\n\t\t\t\t\t\t\t_TickCount = 1,\n\t\t\t\t\t\t\taxisMin,\n\t\t\t\t\t\t\taxisMin + DIVIDE( [Value], _TickCount - 1, 0 ) * ( axisMax - axisMin )\n\t\t\t\t\t\t)\n\t\t\t\t)\n\n\t\t\tVAR _LabelTable =\n\t\t\t\tADDCOLUMNS(\n\t\t\t\t\t_TickBase,\n\t\t\t\t\t\"@Label\",\n\t\t\t\t\t\tFORMAT(\n\t\t\t\t\t\t\tIF(\n\t\t\t\t\t\t\t\t_AxisIsDate,\n\t\t\t\t\t\t\t\t[@TickValue],\n\t\t\t\t\t\t\t\tROUND( [@TickValue], _NumericDecimals )\n\t\t\t\t\t\t\t),\n\t\t\t\t\t\t\tIF( _AxisIsDate, \"dd-mmm-yy\", \"General Number\" )\n\t\t\t\t\t\t)\n\t\t\t\t)\n\n\t\t\tVAR _MeasuredLabelTable =\n\t\t\t\tADDCOLUMNS(\n\t\t\t\t\t_LabelTable,\n\t\t\t\t\t\"@EstimatedWidth\", LEN( [@Label] ) * _AxisFontSize * _LabelWidthFactor\n\t\t\t\t)\n\n\t\t\tRETURN\n\t\t\t\tMAXX( _MeasuredLabelTable, [@EstimatedWidth] )",
+  "code": "function 'DaxLib.SVG.Axes.MaxTickLabelWidth' =\n\t\t(\n\t\t\taxisMin: NUMERIC VAL,\n\t\t\taxisMax: NUMERIC VAL,\n\t\t\ttickCount: INT64 = 1,\n\t\t\taxisFontSize: INT64 = 10,\n\t\t\tlabelWidthFactor: DOUBLE = 0.56,\n\t\t\taxisIsDate: BOOLEAN = FALSE()\n\t\t) =>\n\n\t\t\tVAR _NumericSpan = ABS( axisMax - axisMin )\n\t\t\tVAR _NumericDecimals = IF( _NumericSpan >= 100, 0, IF( _NumericSpan >= 10, 1, 2 ) )\n\n\t\t\tVAR _TickBase =\n\t\t\t\tADDCOLUMNS(\n\t\t\t\t\tGENERATESERIES( 0, tickCount - 1, 1 ),\n\t\t\t\t\t\"@TickValue\",\n\t\t\t\t\t\tIF(\n\t\t\t\t\t\t\ttickCount = 1,\n\t\t\t\t\t\t\taxisMin,\n\t\t\t\t\t\t\taxisMin + DIVIDE( [Value], tickCount - 1, 0 ) * ( axisMax - axisMin )\n\t\t\t\t\t\t)\n\t\t\t\t)\n\n\t\t\tVAR _LabelTable =\n\t\t\t\tADDCOLUMNS(\n\t\t\t\t\t_TickBase,\n\t\t\t\t\t\"@Label\",\n\t\t\t\t\t\tFORMAT(\n\t\t\t\t\t\t\tIF( axisIsDate, [@TickValue], ROUND( [@TickValue], _NumericDecimals )),\n\t\t\t\t\t\t\tIF( axisIsDate, \"dd-mmm-yy\", \"General Number\")\n\t\t\t\t\t\t)\n\t\t\t\t)\n\n\t\t\tVAR _MeasuredLabelTable =\n\t\t\t\tADDCOLUMNS(\n\t\t\t\t\t_LabelTable,\n\t\t\t\t\t\"@EstimatedWidth\", LEN( [@Label] ) * axisFontSize * labelWidthFactor\n\t\t\t\t)\n\n\t\t\tRETURN\n\t\t\t\tMAXX( _MeasuredLabelTable, [@EstimatedWidth] )",
   "example": null,
   "author": null,
   "version": null,
@@ -63,8 +63,8 @@
   "see": null,
   "deprecated": null,
   "sections": {
-    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Axes.MaxTickLabelWidth( axisMin, axisMax, tickCount, axisFontSize, labelWidthFactor, axisIsDate )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | axisMin | <span class=\"type-label number\">NUMERIC</span> <span class=\"type-label val\">VAL</span> | :material-check: | Axis minimum value |\n    | axisMax | <span class=\"type-label number\">NUMERIC</span> <span class=\"type-label val\">VAL</span> | :material-check: | Axis maximum value |\n    | tickCount | <span class=\"type-label int64\">INT64</span> | :material-close: | Optional: Number of ticks to estimate. Defaults to 1 |\n    | axisFontSize | <span class=\"type-label int64\">INT64</span> | :material-close: | Optional: Axis font size. Defaults to 10 |\n    | labelWidthFactor | <span class=\"type-label number\">DECIMAL</span> | :material-close: | Optional: Font width factor. Defaults to 0.56 (Segoe UI) |\n    | axisIsDate | <span class=\"type-label boolean\">BOOLEAN</span> | :material-close: | Optional: Whether the axis values represent dates. Defaults to FALSE |\n\n    <span class=\"type-label number\">NUMERIC</span> Estimated max label width in pixels",
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Axes.MaxTickLabelWidth( axisMin, axisMax, tickCount, axisFontSize, labelWidthFactor, axisIsDate )\n    ```\n\n    | Parameter | Type | Required | Default | Description |\n    |:---:|:---:|:---:|:---:|---|\n    | axisMin | <span class=\"type-label number\">NUMERIC</span> <span class=\"type-label val\">VAL</span> | :material-check: |  | Axis minimum value |\n    | axisMax | <span class=\"type-label number\">NUMERIC</span> <span class=\"type-label val\">VAL</span> | :material-check: |  | Axis maximum value |\n    | tickCount | <span class=\"type-label int64\">INT64</span> | :material-close: | `#!dax 1` | Optional: Number of ticks to estimate. Defaults to 1 |\n    | axisFontSize | <span class=\"type-label int64\">INT64</span> | :material-close: | `#!dax 10` | Optional: Axis font size. Defaults to 10 |\n    | labelWidthFactor | <span class=\"type-label number\">DECIMAL</span> | :material-close: | `#!dax 0.56` | Optional: Font width factor. Defaults to 0.56 (Segoe UI) |\n    | axisIsDate | <span class=\"type-label boolean\">BOOLEAN</span> | :material-close: | `#!dax FALSE()` | Optional: Whether the axis values represent dates. Defaults to FALSE |\n\n    <span class=\"type-label number\">NUMERIC</span> Estimated max label width in pixels",
     "example": "",
-    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Axes.MaxTickLabelWidth' =\n    \t\t(\n    \t\t\taxisMin: NUMERIC VAL,\n    \t\t\taxisMax: NUMERIC VAL,\n    \t\t\ttickCount: INT64,\n    \t\t\taxisFontSize: INT64,\n    \t\t\tlabelWidthFactor: DOUBLE,\n    \t\t\taxisIsDate: BOOLEAN\n    \t\t) =>\n    \n    \t\t\tVAR _TickCount = IF( ISBLANK( tickCount ) || tickCount < 1, 1, tickCount )\n    \t\t\tVAR _AxisFontSize = IF( ISBLANK( axisFontSize ), 10, axisFontSize )\n    \t\t\tVAR _LabelWidthFactor = IF( ISBLANK( labelWidthFactor ), 0.56, labelWidthFactor )\n    \t\t\tVAR _AxisIsDate = IF( ISBLANK( axisIsDate ), FALSE(), axisIsDate )\n    \t\t\tVAR _NumericSpan = ABS( axisMax - axisMin )\n    \t\t\tVAR _NumericDecimals = IF( _NumericSpan >= 100, 0, IF( _NumericSpan >= 10, 1, 2 ) )\n    \n    \t\t\tVAR _TickBase =\n    \t\t\t\tADDCOLUMNS(\n    \t\t\t\t\tGENERATESERIES( 0, _TickCount - 1, 1 ),\n    \t\t\t\t\t\"@TickValue\",\n    \t\t\t\t\t\tIF(\n    \t\t\t\t\t\t\t_TickCount = 1,\n    \t\t\t\t\t\t\taxisMin,\n    \t\t\t\t\t\t\taxisMin + DIVIDE( [Value], _TickCount - 1, 0 ) * ( axisMax - axisMin )\n    \t\t\t\t\t\t)\n    \t\t\t\t)\n    \n    \t\t\tVAR _LabelTable =\n    \t\t\t\tADDCOLUMNS(\n    \t\t\t\t\t_TickBase,\n    \t\t\t\t\t\"@Label\",\n    \t\t\t\t\t\tFORMAT(\n    \t\t\t\t\t\t\tIF(\n    \t\t\t\t\t\t\t\t_AxisIsDate,\n    \t\t\t\t\t\t\t\t[@TickValue],\n    \t\t\t\t\t\t\t\tROUND( [@TickValue], _NumericDecimals )\n    \t\t\t\t\t\t\t),\n    \t\t\t\t\t\t\tIF( _AxisIsDate, \"dd-mmm-yy\", \"General Number\" )\n    \t\t\t\t\t\t)\n    \t\t\t\t)\n    \n    \t\t\tVAR _MeasuredLabelTable =\n    \t\t\t\tADDCOLUMNS(\n    \t\t\t\t\t_LabelTable,\n    \t\t\t\t\t\"@EstimatedWidth\", LEN( [@Label] ) * _AxisFontSize * _LabelWidthFactor\n    \t\t\t\t)\n    \n    \t\t\tRETURN\n    \t\t\t\tMAXX( _MeasuredLabelTable, [@EstimatedWidth] )\n    ```"
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Axes.MaxTickLabelWidth' =\n    \t\t(\n    \t\t\taxisMin: NUMERIC VAL,\n    \t\t\taxisMax: NUMERIC VAL,\n    \t\t\ttickCount: INT64 = 1,\n    \t\t\taxisFontSize: INT64 = 10,\n    \t\t\tlabelWidthFactor: DOUBLE = 0.56,\n    \t\t\taxisIsDate: BOOLEAN = FALSE()\n    \t\t) =>\n    \n    \t\t\tVAR _NumericSpan = ABS( axisMax - axisMin )\n    \t\t\tVAR _NumericDecimals = IF( _NumericSpan >= 100, 0, IF( _NumericSpan >= 10, 1, 2 ) )\n    \n    \t\t\tVAR _TickBase =\n    \t\t\t\tADDCOLUMNS(\n    \t\t\t\t\tGENERATESERIES( 0, tickCount - 1, 1 ),\n    \t\t\t\t\t\"@TickValue\",\n    \t\t\t\t\t\tIF(\n    \t\t\t\t\t\t\ttickCount = 1,\n    \t\t\t\t\t\t\taxisMin,\n    \t\t\t\t\t\t\taxisMin + DIVIDE( [Value], tickCount - 1, 0 ) * ( axisMax - axisMin )\n    \t\t\t\t\t\t)\n    \t\t\t\t)\n    \n    \t\t\tVAR _LabelTable =\n    \t\t\t\tADDCOLUMNS(\n    \t\t\t\t\t_TickBase,\n    \t\t\t\t\t\"@Label\",\n    \t\t\t\t\t\tFORMAT(\n    \t\t\t\t\t\t\tIF( axisIsDate, [@TickValue], ROUND( [@TickValue], _NumericDecimals )),\n    \t\t\t\t\t\t\tIF( axisIsDate, \"dd-mmm-yy\", \"General Number\")\n    \t\t\t\t\t\t)\n    \t\t\t\t)\n    \n    \t\t\tVAR _MeasuredLabelTable =\n    \t\t\t\tADDCOLUMNS(\n    \t\t\t\t\t_LabelTable,\n    \t\t\t\t\t\"@EstimatedWidth\", LEN( [@Label] ) * axisFontSize * labelWidthFactor\n    \t\t\t\t)\n    \n    \t\t\tRETURN\n    \t\t\t\tMAXX( _MeasuredLabelTable, [@EstimatedWidth] )\n    ```"
   }
 }

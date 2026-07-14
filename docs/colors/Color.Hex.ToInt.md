@@ -8,9 +8,9 @@ Hex to Int conversion
     DaxLib.SVG.Color.Hex.ToInt( hex )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | hex | <span class="type-label string">STRING</span> | :material-check: | The hex value to convert, e.g., "1A" |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | hex | <span class="type-label string">STRING</span> | :material-check: |  | The hex value to convert, e.g., "1A" |
 
     <span class="type-label int64">INT64</span> Integer representation of the hexadecimal value
 

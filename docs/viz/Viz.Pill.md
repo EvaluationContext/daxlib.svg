@@ -10,12 +10,12 @@ Renders a pill-shaped badge as an SVG data URI with centered text
     DaxLib.SVG.Viz.Pill( txt, color, width, height )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | txt | <span class="type-label string">STRING</span> | :material-check: | The text to display |
-    | color | <span class="type-label string">STRING</span> | :material-close: | Optional pill color. Defaults to Power BI theme color |
-    | width | <span class="type-label int64">INT64</span> | :material-close: | Optional: SVG width. Defaults to 120 |
-    | height | <span class="type-label int64">INT64</span> | :material-close: | Optional: SVG height. Defaults to 48 |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | txt | <span class="type-label string">STRING</span> | :material-check: |  | The text to display |
+    | color | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional pill color. Defaults to Power BI theme color |
+    | width | <span class="type-label int64">INT64</span> | :material-close: | `#!dax 120` | Optional: SVG width. Defaults to 120 |
+    | height | <span class="type-label int64">INT64</span> | :material-close: | `#!dax 48` | Optional: SVG height. Defaults to 48 |
 
     <span class="type-label string">STRING</span> SVG Pill
 
@@ -24,7 +24,7 @@ Renders a pill-shaped badge as an SVG data URI with centered text
     ```dax
     DaxLib.SVG.Viz.Pill(
         "Active",           // txt
-        "#EC008C",          // color
+        "#EC008C",        // color
         120,                // width
         28                  // height
     )
@@ -38,19 +38,21 @@ Renders a pill-shaped badge as an SVG data URI with centered text
     function 'DaxLib.SVG.Viz.Pill' =
     		(
     			txt: STRING,
-    			color: STRING,
-    			width: INT64,
-    			height: INT64
+    			color: STRING = BLANK(),
+    			width: INT64 = 120,
+    			height: INT64 = 48
     		) =>
     
-    			VAR _W = IF( ISBLANK( width ), 120, width )
-    			VAR _H = IF( ISBLANK( height ), 48, height )
-    			VAR _Color = IF( NOT ISBLANK( color ), color, DaxLib.SVG.Color.Theme( "Power BI", 1 ) )
     			VAR _Marks =
     				DaxLib.SVG.Compound.Pill(
-    					0, 0, _W, _H, 0, 0, txt, _Color
+    					0, 
+                        0, 
+                        width, 
+                        height, 
+                        txt, 
+                        color
     				)
     
     			RETURN
-    				IF( NOT ISBLANK( _Marks ), DaxLib.SVG.SVG( "100%", "100%", "0 0 " & _W & " " & _H, _Marks, BLANK() ) )
+    				IF( NOT ISBLANK( _Marks ), DaxLib.SVG.SVG( "100%", "100%", _Marks, "0 0 " & width & " " & height ) )
     ```

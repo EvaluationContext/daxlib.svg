@@ -10,10 +10,10 @@
             0,                  // y
             500,                // width
             100,                // height
-            0.05,               // paddingX
-            0.02,               // paddingY
             MAX( Products[Brand] ), // txt
-            "#EC008C"           // color
+            "#EC008C",          // color
+            0.05,               // paddingX
+            0.02                // paddingY
         ),
         BLANK()
     )

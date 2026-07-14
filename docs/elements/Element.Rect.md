@@ -10,16 +10,16 @@ Generates a rectangle SVG element
     DaxLib.SVG.Element.Rect( x, y, width, height, rx, ry, attributes, transforms )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | x | <span class="type-label string">STRING</span> | :material-check: | The x position |
-    | y | <span class="type-label string">STRING</span> | :material-check: | The y position |
-    | width | <span class="type-label string">STRING</span> | :material-check: | The width (pixels or percentage) |
-    | height | <span class="type-label string">STRING</span> | :material-check: | The height (pixels or percentage) |
-    | rx | <span class="type-label string">STRING</span> | :material-close: | Optional: x radius for rounded corners |
-    | ry | <span class="type-label string">STRING</span> | :material-close: | Optional: y radius for rounded corners |
-    | attributes | <span class="type-label string">STRING</span> | :material-close: | Optional: Direct SVG attributes to apply (e.g., "fill='red' stroke-width='2'"), can generate with `DaxLib.SVG.Attr.*` or manually |
-    | transforms | <span class="type-label string">STRING</span> | :material-close: | Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | x | <span class="type-label string">STRING</span> | :material-check: |  | The x position |
+    | y | <span class="type-label string">STRING</span> | :material-check: |  | The y position |
+    | width | <span class="type-label string">STRING</span> | :material-check: |  | The width (pixels or percentage) |
+    | height | <span class="type-label string">STRING</span> | :material-check: |  | The height (pixels or percentage) |
+    | rx | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: x radius for rounded corners |
+    | ry | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: y radius for rounded corners |
+    | attributes | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Direct SVG attributes to apply (e.g., "fill='red' stroke-width='2'"), can generate with `DaxLib.SVG.Attr.*` or manually |
+    | transforms | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |
 
     <span class="type-label string">STRING</span> <rect> element
 
@@ -73,10 +73,10 @@ Generates a rectangle SVG element
     			y: STRING,
     			width: STRING,
     			height: STRING,
-    			rx: STRING,
-    			ry: STRING,
-    			attributes: STRING,
-    			transforms: STRING
+    			rx: STRING = BLANK(),
+    			ry: STRING = BLANK(),
+    			attributes: STRING = BLANK(),
+    			transforms: STRING = BLANK()
     		) =>
     
     			"<rect" &

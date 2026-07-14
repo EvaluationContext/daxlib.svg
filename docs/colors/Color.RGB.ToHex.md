@@ -8,12 +8,12 @@ RGB to Hex conversion
     DaxLib.SVG.Color.RGB.ToHex( red, green, blue, alpha )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | red | <span class="type-label int64">INT64</span> | :material-check: | The red value (0-255) |
-    | green | <span class="type-label int64">INT64</span> | :material-check: | The green value (0-255) |
-    | blue | <span class="type-label int64">INT64</span> | :material-check: | The blue value (0-255) |
-    | alpha | <span class="type-label number">DECIMAL</span> | :material-close: | Optional: The alpha value (0-1) |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | red | <span class="type-label int64">INT64</span> | :material-check: |  | The red value (0-255) |
+    | green | <span class="type-label int64">INT64</span> | :material-check: |  | The green value (0-255) |
+    | blue | <span class="type-label int64">INT64</span> | :material-check: |  | The blue value (0-255) |
+    | alpha | <span class="type-label number">DECIMAL</span> | :material-close: | `#!dax BLANK()` | Optional: The alpha value (0-1) |
 
     <span class="type-label string">STRING</span> hex color code
 
@@ -32,7 +32,7 @@ RGB to Hex conversion
     			red: INT64,
     			green: INT64,
     			blue: INT64,
-    			alpha: DOUBLE
+    			alpha: DOUBLE = BLANK()
     		) =>
     		
     			"#" &

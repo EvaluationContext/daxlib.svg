@@ -17,7 +17,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional pill color. Defaults to Power BI theme color",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "width",
@@ -25,7 +25,7 @@
       "type_label": "<span class=\"type-label int64\">INT64</span>",
       "description": "Optional: SVG width. Defaults to 120",
       "optional": true,
-      "default_value": null
+      "default_value": "120"
     },
     {
       "name": "height",
@@ -33,13 +33,13 @@
       "type_label": "<span class=\"type-label int64\">INT64</span>",
       "description": "Optional: SVG height. Defaults to 48",
       "optional": true,
-      "default_value": null
+      "default_value": "48"
     }
   ],
   "return_type": "STRING",
   "return_type_label": "<span class=\"type-label string\">STRING</span>",
   "return_description": "SVG Pill",
-  "code": "function 'DaxLib.SVG.Viz.Pill' =\n\t\t(\n\t\t\ttxt: STRING,\n\t\t\tcolor: STRING,\n\t\t\twidth: INT64,\n\t\t\theight: INT64\n\t\t) =>\n\n\t\t\tVAR _W = IF( ISBLANK( width ), 120, width )\n\t\t\tVAR _H = IF( ISBLANK( height ), 48, height )\n\t\t\tVAR _Color = IF( NOT ISBLANK( color ), color, DaxLib.SVG.Color.Theme( \"Power BI\", 1 ) )\n\t\t\tVAR _Marks =\n\t\t\t\tDaxLib.SVG.Compound.Pill(\n\t\t\t\t\t0, 0, _W, _H, 0, 0, txt, _Color\n\t\t\t\t)\n\n\t\t\tRETURN\n\t\t\t\tIF( NOT ISBLANK( _Marks ), DaxLib.SVG.SVG( \"100%\", \"100%\", \"0 0 \" & _W & \" \" & _H, _Marks, BLANK() ) )",
+  "code": "function 'DaxLib.SVG.Viz.Pill' =\n\t\t(\n\t\t\ttxt: STRING,\n\t\t\tcolor: STRING = BLANK(),\n\t\t\twidth: INT64 = 120,\n\t\t\theight: INT64 = 48\n\t\t) =>\n\n\t\t\tVAR _Marks =\n\t\t\t\tDaxLib.SVG.Compound.Pill(\n\t\t\t\t\t0, \n                    0, \n                    width, \n                    height, \n                    txt, \n                    color\n\t\t\t\t)\n\n\t\t\tRETURN\n\t\t\t\tIF( NOT ISBLANK( _Marks ), DaxLib.SVG.SVG( \"100%\", \"100%\", _Marks, \"0 0 \" & width & \" \" & height ) )",
   "example": null,
   "author": null,
   "version": null,
@@ -47,8 +47,8 @@
   "see": null,
   "deprecated": null,
   "sections": {
-    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Viz.Pill( txt, color, width, height )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | txt | <span class=\"type-label string\">STRING</span> | :material-check: | The text to display |\n    | color | <span class=\"type-label string\">STRING</span> | :material-close: | Optional pill color. Defaults to Power BI theme color |\n    | width | <span class=\"type-label int64\">INT64</span> | :material-close: | Optional: SVG width. Defaults to 120 |\n    | height | <span class=\"type-label int64\">INT64</span> | :material-close: | Optional: SVG height. Defaults to 48 |\n\n    <span class=\"type-label string\">STRING</span> SVG Pill",
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Viz.Pill( txt, color, width, height )\n    ```\n\n    | Parameter | Type | Required | Default | Description |\n    |:---:|:---:|:---:|:---:|---|\n    | txt | <span class=\"type-label string\">STRING</span> | :material-check: |  | The text to display |\n    | color | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional pill color. Defaults to Power BI theme color |\n    | width | <span class=\"type-label int64\">INT64</span> | :material-close: | `#!dax 120` | Optional: SVG width. Defaults to 120 |\n    | height | <span class=\"type-label int64\">INT64</span> | :material-close: | `#!dax 48` | Optional: SVG height. Defaults to 48 |\n\n    <span class=\"type-label string\">STRING</span> SVG Pill",
     "example": "",
-    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Viz.Pill' =\n    \t\t(\n    \t\t\ttxt: STRING,\n    \t\t\tcolor: STRING,\n    \t\t\twidth: INT64,\n    \t\t\theight: INT64\n    \t\t) =>\n    \n    \t\t\tVAR _W = IF( ISBLANK( width ), 120, width )\n    \t\t\tVAR _H = IF( ISBLANK( height ), 48, height )\n    \t\t\tVAR _Color = IF( NOT ISBLANK( color ), color, DaxLib.SVG.Color.Theme( \"Power BI\", 1 ) )\n    \t\t\tVAR _Marks =\n    \t\t\t\tDaxLib.SVG.Compound.Pill(\n    \t\t\t\t\t0, 0, _W, _H, 0, 0, txt, _Color\n    \t\t\t\t)\n    \n    \t\t\tRETURN\n    \t\t\t\tIF( NOT ISBLANK( _Marks ), DaxLib.SVG.SVG( \"100%\", \"100%\", \"0 0 \" & _W & \" \" & _H, _Marks, BLANK() ) )\n    ```"
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Viz.Pill' =\n    \t\t(\n    \t\t\ttxt: STRING,\n    \t\t\tcolor: STRING = BLANK(),\n    \t\t\twidth: INT64 = 120,\n    \t\t\theight: INT64 = 48\n    \t\t) =>\n    \n    \t\t\tVAR _Marks =\n    \t\t\t\tDaxLib.SVG.Compound.Pill(\n    \t\t\t\t\t0, \n                        0, \n                        width, \n                        height, \n                        txt, \n                        color\n    \t\t\t\t)\n    \n    \t\t\tRETURN\n    \t\t\t\tIF( NOT ISBLANK( _Marks ), DaxLib.SVG.SVG( \"100%\", \"100%\", _Marks, \"0 0 \" & width & \" \" & height ) )\n    ```"
   }
 }

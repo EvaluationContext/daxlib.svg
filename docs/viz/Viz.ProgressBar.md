@@ -10,14 +10,14 @@ Renders a progress bar as an SVG data URI showing value progression
     DaxLib.SVG.Viz.ProgressBar( valueRefExpr, trackRefExpr, color, orientation, width, height )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | valueRefExpr | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: | Value expression |
-    | trackRefExpr | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: | Track measure (maximum value) |
-    | color | <span class="type-label string">STRING</span> | :material-close: | Optional fill color. Defaults to Power BI theme color |
-    | orientation | <span class="type-label string">STRING</span> | :material-close: | Optional orientation: "Horizontal" or "Vertical". Defaults to "Horizontal" |
-    | width | <span class="type-label int64">INT64</span> | :material-close: | Optional: SVG width. Defaults to 120 |
-    | height | <span class="type-label int64">INT64</span> | :material-close: | Optional: SVG height. Defaults to 48 |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | valueRefExpr | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: |  | Value expression |
+    | trackRefExpr | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: |  | Track measure (maximum value) |
+    | color | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional fill color. Defaults to Power BI theme color |
+    | orientation | <span class="type-label string">STRING</span> | :material-close: | `#!dax "Horizontal"` | Optional orientation: "Horizontal" or "Vertical". Defaults to "Horizontal" |
+    | width | <span class="type-label int64">INT64</span> | :material-close: | `#!dax 120` | Optional: SVG width. Defaults to 120 |
+    | height | <span class="type-label int64">INT64</span> | :material-close: | `#!dax 48` | Optional: SVG height. Defaults to 48 |
 
     <span class="type-label string">STRING</span> SVG Progress Bar
 
@@ -27,7 +27,7 @@ Renders a progress bar as an SVG data URI showing value progression
     DaxLib.SVG.Viz.ProgressBar(
         [Completed],        // valueRefExpr
         [Target],           // trackRefExpr
-        BLANK(),            // color (uses default theme)
+        ,                   // color
         "Horizontal",       // orientation
         200,                // width
         20                  // height
@@ -43,21 +43,25 @@ Renders a progress bar as an SVG data URI showing value progression
     		(
     			valueRefExpr: NUMERIC EXPR,
     			trackRefExpr: NUMERIC EXPR,
-    			color: STRING,
-    			orientation: STRING,
-    			width: INT64,
-    			height: INT64
+    			color: STRING = BLANK(),
+    			orientation: STRING = "Horizontal",
+    			width: INT64 = 120,
+    			height: INT64 = 48
     		) =>
     
-    			VAR _W = IF( ISBLANK( width ), 120, width )
-    			VAR _H = IF( ISBLANK( height ), 48, height )
-    			VAR _Color = IF( NOT ISBLANK( color ), color, DaxLib.SVG.Color.Theme( "Power BI", 1 ) )
     			VAR _Marks =
     				DaxLib.SVG.Compound.ProgressBar(
-    					0, 0, _W, _H, 0, 0,
-    					valueRefExpr, trackRefExpr, _Color, "#E1DFDD", orientation
+    					0, 
+                        0, 
+                        width, 
+                        height,
+    					valueRefExpr,
+                        trackRefExpr, 
+                        color, 
+                        "#E1DFDD",
+                        orientation
     				)
     
     			RETURN
-    				IF( NOT ISBLANK( _Marks ), DaxLib.SVG.SVG( "100%", "100%", "0 0 " & _W & " " & _H, _Marks, BLANK() ) )
+    				IF( NOT ISBLANK( _Marks ), DaxLib.SVG.SVG( "100%", "100%", _Marks, "0 0 " & width & " " & height ) )
     ```

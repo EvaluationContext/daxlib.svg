@@ -8,10 +8,10 @@ Int to Hex conversion
     DaxLib.SVG.Color.Int.ToHex( number, padTo )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | number | <span class="type-label int64">INT64</span> | :material-check: | The integer to convert |
-    | padTo | <span class="type-label int64">INT64</span> | :material-close: | Optional: Minimum number of characters in result. Defaults to minimum digits needed |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | number | <span class="type-label int64">INT64</span> | :material-check: |  | The integer to convert |
+    | padTo | <span class="type-label int64">INT64</span> | :material-close: | `#!dax BLANK()` | Optional: Minimum number of characters in result. Defaults to minimum digits needed |
 
     <span class="type-label string">STRING</span> Hexadecimal representation of the integer
 
@@ -28,7 +28,7 @@ Int to Hex conversion
     function 'DaxLib.SVG.Color.Int.ToHex' =
     		(
     			number: INT64,
-    			padTo: INT64
+    			padTo: INT64 = BLANK()
     		) =>
     		
     			VAR MinPadding = IF( number = 0, 1, CEILING( LOG( number + 1, 16 ), 1 ) )

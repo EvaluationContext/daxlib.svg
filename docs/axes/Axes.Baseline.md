@@ -8,15 +8,15 @@ Maps the numeric baseline to plot coordinates honoring orientation
     DaxLib.SVG.Axes.Baseline( orientation, yMin, yMax, plotX, plotY, plotWidth, plotHeight )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | orientation | <span class="type-label string">STRING</span> | :material-check: | "Horizontal" or "Vertical" |
-    | yMin | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | Y-axis minimum value |
-    | yMax | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | Y-axis maximum value |
-    | plotX | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | Plot area X origin |
-    | plotY | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | Plot area Y origin |
-    | plotWidth | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | Plot area width |
-    | plotHeight | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | Plot area height |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | orientation | <span class="type-label string">STRING</span> | :material-check: |  | "Horizontal" or "Vertical" |
+    | yMin | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | Y-axis minimum value |
+    | yMax | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | Y-axis maximum value |
+    | plotX | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | Plot area X origin |
+    | plotY | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | Plot area Y origin |
+    | plotWidth | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | Plot area width |
+    | plotHeight | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | Plot area height |
 
     <span class="type-label table">TABLE</span> Single-row table with `@BaseX` and `@BaseY`
 
@@ -50,13 +50,12 @@ Maps the numeric baseline to plot coordinates honoring orientation
     			plotHeight: NUMERIC VAL
     		) =>
     
-    			VAR _Orientation = IF( orientation = "Horizontal", "Horizontal", "Vertical" )
     			VAR _BaseX = IF( yMax = yMin, plotX, DaxLib.SVG.Scale.Normalize( yMin, yMin, yMax, plotX, plotX + plotWidth ) )
     			VAR _BaseY = IF( yMax = yMin, plotY + plotHeight, DaxLib.SVG.Scale.Normalize( yMin, yMin, yMax, plotY + plotHeight, plotY ) )
     
     			RETURN
     				ROW(
-    					"@BaseX", IF( _Orientation = "Horizontal", _BaseX, plotX ),
-    					"@BaseY", IF( _Orientation = "Horizontal", plotY, _BaseY )
+    					"@BaseX", IF( orientation = "Horizontal", _BaseX, plotX ),
+    					"@BaseY", IF( orientation = "Horizontal", plotY, _BaseY )
     				)
     ```

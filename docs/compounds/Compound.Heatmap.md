@@ -17,22 +17,22 @@ Creates a KDE-based Heatmap compound SVG Visual using Kernel Density Estimation 
 === "Syntax"
 
     ```dax
-    DaxLib.SVG.Compound.Heatmap( x, y, width, height, paddingX, paddingY, axisRef, measureRef, samples, bandwidth, color )
+    DaxLib.SVG.Compound.Heatmap( x, y, width, height, axisRef, measureRef, samples, bandwidth, color, paddingX, paddingY )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | x | <span class="type-label int64">INT64</span> | :material-check: | The x position of the compound |
-    | y | <span class="type-label int64">INT64</span> | :material-check: | The y position of the compound |
-    | width | <span class="type-label int64">INT64</span> | :material-check: | The width of the compound |
-    | height | <span class="type-label int64">INT64</span> | :material-check: | The height of the compound |
-    | paddingX | <span class="type-label number">DECIMAL</span> | :material-close: | Optional: The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0 |
-    | paddingY | <span class="type-label number">DECIMAL</span> | :material-close: | Optional: The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0 |
-    | axisRef | <span class="type-label anyref">ANYREF</span> <span class="type-label expr">EXPR</span> | :material-check: | The column that the measure will be evaluated against |
-    | measureRef | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: | The measure to evaluate |
-    | samples | <span class="type-label int64">INT64</span> | :material-check: | Number of density calculation points (default 50) |
-    | bandwidth | <span class="type-label number">NUMERIC</span> | :material-check: | Kernel bandwidth for smoothing (default auto-calculated) |
-    | color | <span class="type-label string">STRING</span> | :material-check: | The hex color for high density areas (e.g., "#01B8AA") |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | x | <span class="type-label int64">INT64</span> | :material-check: |  | The x position of the compound |
+    | y | <span class="type-label int64">INT64</span> | :material-check: |  | The y position of the compound |
+    | width | <span class="type-label int64">INT64</span> | :material-check: |  | The width of the compound |
+    | height | <span class="type-label int64">INT64</span> | :material-check: |  | The height of the compound |
+    | axisRef | <span class="type-label anyref">ANYREF</span> <span class="type-label expr">EXPR</span> | :material-check: |  | The column that the measure will be evaluated against |
+    | measureRef | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: |  | The measure to evaluate |
+    | samples | <span class="type-label int64">INT64</span> | :material-check: |  | Number of density calculation points (default 50) |
+    | bandwidth | <span class="type-label number">NUMERIC</span> | :material-check: |  | Kernel bandwidth for smoothing (default auto-calculated) |
+    | color | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: The hex color for high density areas (e.g., "#01B8AA"). Defaults to "#01B8AA" |
+    | paddingX | <span class="type-label number">DECIMAL</span> | :material-close: | `#!dax 0.05` | Optional: The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0.05 |
+    | paddingY | <span class="type-label number">DECIMAL</span> | :material-close: | `#!dax 0.02` | Optional: The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0.02 |
 
     <span class="type-label string">STRING</span> SVG Heatmap
 
@@ -48,13 +48,13 @@ Creates a KDE-based Heatmap compound SVG Visual using Kernel Density Estimation 
             0,                  // y
             500,                // width
             100,                // height
-            0.05,               // paddingX
-            0.02,               // paddingY
             Dates[Date],        // axisRef
             [Total Cost],       // measureRef
             MAX( Samples[Samples] ), // samples
             MAX( Bandwidth[Bandwidth] ), // bandwidth
-            "#EC008C"           // color
+            "#EC008C",          // color
+            0.05,               // paddingX
+            0.02                // paddingY
         ),
         BLANK()
     )
@@ -69,13 +69,13 @@ Creates a KDE-based Heatmap compound SVG Visual using Kernel Density Estimation 
     			y: INT64,
     			width: INT64,
     			height: INT64,
-    			paddingX: DOUBLE,
-    			paddingY: DOUBLE,
     			axisRef: ANYREF EXPR,
     			measureRef: NUMERIC EXPR,
     			samples: INT64,
     			bandwidth: NUMERIC,
-    			color: STRING
+    			color: STRING = BLANK(),
+    			paddingX: DOUBLE = 0.05,
+    			paddingY: DOUBLE = 0.02
     		) =>
     		
     			// Apply padding to dimensions
@@ -83,6 +83,8 @@ Creates a KDE-based Heatmap compound SVG Visual using Kernel Density Estimation 
     			VAR _Y = 			y + (height * (IF(ISBLANK(paddingY), 0, paddingY) / 2))
     			VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
     			VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
+    
+    			VAR _Color = IF( NOT ISBLANK( color ), color, "#01B8AA" )
     
     			// Check if Axis is numeric
     			VAR axisSample = 	MAX( axisRef )
@@ -139,7 +141,7 @@ Creates a KDE-based Heatmap compound SVG Visual using Kernel Density Estimation 
     					VAR _StopColor = 
     						DaxLib.SVG.Color.Hex.Interpolate(
     							"#FFFFFF",
-    							color,
+    							_Color,
     							_Intensity
     						)
     					RETURN
@@ -160,22 +162,13 @@ Creates a KDE-based Heatmap compound SVG Visual using Kernel Density Estimation 
     			// Create rectangle with gradient fill
     			VAR _HeatmapRect = 
     				DaxLib.SVG.Element.Rect(
-    					_X,                         // x
-    					_Y,                         // y
-    					_Width,                     // width
-    					_Height,                    // height
-    					0,                          // rx
-    					0,                          // ry
-    					DaxLib.SVG.Attr.Shapes(
-    						"url(#kde-gradient)", 	// fill
-    						BLANK(),                // fillOpacity
-    						BLANK(),                // fillRule
-    						BLANK(),                // stroke
-    						BLANK(),                // strokeWidth
-    						BLANK(),                // strokeOpacity
-    						BLANK()                 // opacity
-    					),
-    					BLANK()                     // transforms
+    					_X,
+    					_Y,
+    					_Width,
+    					_Height,
+    					0,
+    					0,
+    					DaxLib.SVG.Attr.Shapes( "url(#kde-gradient)" )
     				)
     			
     			// Combined elements

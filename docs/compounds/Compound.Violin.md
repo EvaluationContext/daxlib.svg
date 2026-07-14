@@ -17,23 +17,23 @@ Creates a Violin Plot compound SVG Visual showing distribution density using Ker
 === "Syntax"
 
     ```dax
-    DaxLib.SVG.Compound.Violin( x, y, width, height, paddingX, paddingY, axisRef, measureRef, samples, bandwidth, color, orientation )
+    DaxLib.SVG.Compound.Violin( x, y, width, height, axisRef, measureRef, samples, bandwidth, color, orientation, paddingX, paddingY )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | x | <span class="type-label int64">INT64</span> | :material-check: | The x position of the compound |
-    | y | <span class="type-label int64">INT64</span> | :material-check: | The y position of the compound |
-    | width | <span class="type-label int64">INT64</span> | :material-check: | The width of the compound |
-    | height | <span class="type-label int64">INT64</span> | :material-check: | The height of the compound |
-    | paddingX | <span class="type-label number">DECIMAL</span> | :material-close: | Optional: The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0 |
-    | paddingY | <span class="type-label number">DECIMAL</span> | :material-close: | Optional: The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0 |
-    | axisRef | <span class="type-label anyref">ANYREF</span> <span class="type-label expr">EXPR</span> | :material-check: | The column that the measure will be evaluated against |
-    | measureRef | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: | The measure to evaluate |
-    | samples | <span class="type-label int64">INT64</span> | :material-check: | Number of density calculation points |
-    | bandwidth | <span class="type-label number">NUMERIC</span> | :material-check: | Kernel bandwidth for smoothing |
-    | color | <span class="type-label string">STRING</span> | :material-check: | Fill color for the violin shape |
-    | orientation | <span class="type-label string">STRING</span> | :material-close: | Optional: "Horizontal" (default) or "Vertical" |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | x | <span class="type-label int64">INT64</span> | :material-check: |  | The x position of the compound |
+    | y | <span class="type-label int64">INT64</span> | :material-check: |  | The y position of the compound |
+    | width | <span class="type-label int64">INT64</span> | :material-check: |  | The width of the compound |
+    | height | <span class="type-label int64">INT64</span> | :material-check: |  | The height of the compound |
+    | axisRef | <span class="type-label anyref">ANYREF</span> <span class="type-label expr">EXPR</span> | :material-check: |  | The column that the measure will be evaluated against |
+    | measureRef | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: |  | The measure to evaluate |
+    | samples | <span class="type-label int64">INT64</span> | :material-check: |  | Number of density calculation points |
+    | bandwidth | <span class="type-label number">NUMERIC</span> | :material-check: |  | Kernel bandwidth for smoothing |
+    | color | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Fill color for the violin shape. Defaults to "#01B8AA" |
+    | orientation | <span class="type-label string">STRING</span> | :material-close: | `#!dax "Horizontal"` | Optional: "Horizontal" (default) or "Vertical" |
+    | paddingX | <span class="type-label number">DECIMAL</span> | :material-close: | `#!dax 0.05` | Optional: The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0.05 |
+    | paddingY | <span class="type-label number">DECIMAL</span> | :material-close: | `#!dax 0.02` | Optional: The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0.02 |
 
     <span class="type-label string">STRING</span> SVG Violin Plot
 
@@ -49,14 +49,14 @@ Creates a Violin Plot compound SVG Visual showing distribution density using Ker
             0,                  // y
             500,                // width
             100,                // height
-            0.05,               // paddingX
-            0.02,               // paddingY
             Dates[Date],        // axisRef
             [Total Cost],       // measureRef
             MAX( Samples[Samples] ), // samples
             MAX( Bandwidth[Bandwidth] ), // bandwidth
             "#EC008C",          // color
-            "Horizontal"        // orientation
+            "Horizontal",       // orientation
+            0.05,               // paddingX
+            0.02                // paddingY
         ),
         BLANK()
     )
@@ -71,14 +71,14 @@ Creates a Violin Plot compound SVG Visual showing distribution density using Ker
     			y: INT64,
     			width: INT64,
     			height: INT64,
-    			paddingX: DOUBLE,
-    			paddingY: DOUBLE,
     			axisRef: ANYREF EXPR,
     			measureRef: NUMERIC EXPR,
     			samples: INT64,
     			bandwidth: NUMERIC,
-    			color: STRING,
-    			orientation: STRING
+    			color: STRING = BLANK(),
+    			orientation: STRING = "Horizontal",
+    			paddingX: DOUBLE = 0.05,
+    			paddingY: DOUBLE = 0.02
     		) =>
     		
     			// Apply padding to dimensions
@@ -86,6 +86,8 @@ Creates a Violin Plot compound SVG Visual showing distribution density using Ker
     			VAR _Y = 			y + (height * (IF(ISBLANK(paddingY), 0, paddingY) / 2))
     			VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
     			VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
+    
+    			VAR _Color = IF( NOT ISBLANK( color ), color, "#01B8AA" )
     
     			// Check if Axis is numeric
     			VAR axisSample = 	MAX( axisRef )
@@ -239,17 +241,14 @@ Creates a Violin Plot compound SVG Visual showing distribution density using Ker
     			// Combined Elements
     			VAR _CombinedElements = 
     				DaxLib.SVG.Element.Paths(
-    					_ViolinPath, // d
+    					_ViolinPath,
     					DaxLib.SVG.Attr.Shapes(
-    						color,          // fill
-    						0.5,          	// fillOpacity
-    						BLANK(),        // fillRule
-    						color,          // stroke
-    						1,              // strokeWidth
-    						BLANK(),        // strokeOpacity
-    						BLANK()         // opacity
-    					),
-    					BLANK()             // transforms
+    						_Color,
+    						0.5,
+    						BLANK(),
+    						_Color,
+    						1
+    					)
     				)
     
     			RETURN

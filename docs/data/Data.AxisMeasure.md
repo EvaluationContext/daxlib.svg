@@ -8,11 +8,11 @@ Builds a shared axis/value data table for compound visuals
     DaxLib.SVG.Data.AxisMeasure( axisRef, measureRef, axisMode )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | axisRef | <span class="type-label anyref">ANYREF</span> <span class="type-label expr">EXPR</span> | :material-check: | Axis reference column evaluated in current filter context |
-    | measureRef | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: | Measure expression evaluated per axis value |
-    | axisMode | <span class="type-label string">STRING</span> | :material-check: | "Auto", "Numeric", or "Categorical" |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | axisRef | <span class="type-label anyref">ANYREF</span> <span class="type-label expr">EXPR</span> | :material-check: |  | Axis reference column evaluated in current filter context |
+    | measureRef | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: |  | Measure expression evaluated per axis value |
+    | axisMode | <span class="type-label string">STRING</span> | :material-check: |  | "Auto", "Numeric", or "Categorical" |
 
     <span class="type-label table">TABLE</span> Standardized table with `@AxisValue`, `@AxisIndex`, and `@Value`
 

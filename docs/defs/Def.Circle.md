@@ -8,14 +8,14 @@ Create a reusable circle definition
     DaxLib.SVG.Def.Circle( defId, cx, cy, r, attributes, transforms )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | defId | <span class="type-label string">STRING</span> | :material-check: | The unique identifier for the circle |
-    | cx | <span class="type-label string">STRING</span> | :material-check: | X center coordinate |
-    | cy | <span class="type-label string">STRING</span> | :material-check: | Y center coordinate |
-    | r | <span class="type-label string">STRING</span> | :material-check: | Radius |
-    | attributes | <span class="type-label string">STRING</span> | :material-close: | Optional: Direct SVG attributes to apply (e.g., "fill='none' stroke='blue'"), can generate with `DaxLib.SVG.Attr.*` or manually |
-    | transforms | <span class="type-label string">STRING</span> | :material-close: | Optional: transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | defId | <span class="type-label string">STRING</span> | :material-check: |  | The unique identifier for the circle |
+    | cx | <span class="type-label string">STRING</span> | :material-check: |  | X center coordinate |
+    | cy | <span class="type-label string">STRING</span> | :material-check: |  | Y center coordinate |
+    | r | <span class="type-label string">STRING</span> | :material-check: |  | Radius |
+    | attributes | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Direct SVG attributes to apply (e.g., "fill='none' stroke='blue'"), can generate with `DaxLib.SVG.Attr.*` or manually |
+    | transforms | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |
 
     <span class="type-label string">STRING</span> <circle> definition
 
@@ -50,8 +50,8 @@ Create a reusable circle definition
     			cx: STRING,
     			cy: STRING,  
     			r: STRING,
-    			attributes: STRING,
-    			transforms: STRING
+    			attributes: STRING = BLANK(),
+    			transforms: STRING = BLANK()
     		) =>
     
     			"<circle id='" & defId & "'" &

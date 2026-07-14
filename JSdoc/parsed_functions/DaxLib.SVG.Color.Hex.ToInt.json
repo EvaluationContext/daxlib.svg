@@ -23,7 +23,7 @@
   "see": null,
   "deprecated": null,
   "sections": {
-    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Color.Hex.ToInt( hex )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | hex | <span class=\"type-label string\">STRING</span> | :material-check: | The hex value to convert, e.g., \"1A\" |\n\n    <span class=\"type-label int64\">INT64</span> Integer representation of the hexadecimal value",
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Color.Hex.ToInt( hex )\n    ```\n\n    | Parameter | Type | Required | Default | Description |\n    |:---:|:---:|:---:|:---:|---|\n    | hex | <span class=\"type-label string\">STRING</span> | :material-check: |  | The hex value to convert, e.g., \"1A\" |\n\n    <span class=\"type-label int64\">INT64</span> Integer representation of the hexadecimal value",
     "example": "",
     "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Color.Hex.ToInt' =\n    \t\t(\n    \t\t\thex: STRING\n    \t\t) =>\n    \t\t\n    \t\t\tVAR CleanHex = IF( LEFT( hex, 1 ) = \"#\", MID( hex, 2, LEN( hex ) - 1), hex )\n    \t\t\tVAR Result =\n    \t\t\t\tSUMX(\n    \t\t\t\t\tGENERATESERIES( 1, LEN( CleanHex ) ),\n    \t\t\t\t\tVAR Pos = [Value]\n    \t\t\t\t\tVAR c = MID( CleanHex, Pos, 1 )\n    \t\t\t\t\tVAR DigitValue = SWITCH( UPPER( c ), \"A\", 10, \"B\", 11, \"C\", 12, \"D\", 13, \"E\", 14, \"F\", 15, VALUE( c ) )\n    \t\t\t\t\tRETURN\n    \t\t\t\t\t\tDigitValue * POWER( 16, LEN( hex ) - Pos )\n    \t\t\t\t)\n    \t\t\n    \t\t\tRETURN Result\n    ```"
   }

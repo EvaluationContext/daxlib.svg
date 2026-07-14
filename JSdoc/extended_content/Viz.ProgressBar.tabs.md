@@ -4,7 +4,7 @@
     DaxLib.SVG.Viz.ProgressBar(
         [Completed],        // valueRefExpr
         [Target],           // trackRefExpr
-        BLANK(),            // color (uses default theme)
+        ,                   // color
         "Horizontal",       // orientation
         200,                // width
         20                  // height

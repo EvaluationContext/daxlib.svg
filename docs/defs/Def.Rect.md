@@ -8,15 +8,15 @@ Create a reusable rectangle definition
     DaxLib.SVG.Def.Rect( defId, width, height, rx, ry, attributes, transforms )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | defId | <span class="type-label string">STRING</span> | :material-check: | The unique identifier for the rectangle |
-    | width | <span class="type-label string">STRING</span> | :material-check: | The width of the rectangle (pixels or percentage) |
-    | height | <span class="type-label string">STRING</span> | :material-check: | The height of the rectangle (pixels or percentage) |
-    | rx | <span class="type-label string">STRING</span> | :material-close: | Optional: x radius for rounded corners |
-    | ry | <span class="type-label string">STRING</span> | :material-close: | Optional: y radius for rounded corners |
-    | attributes | <span class="type-label string">STRING</span> | :material-close: | Optional: Direct SVG attributes to apply (e.g., "fill='none' stroke='blue'"), can generate with `DaxLib.SVG.Attr.*` or manually |
-    | transforms | <span class="type-label string">STRING</span> | :material-close: | Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | defId | <span class="type-label string">STRING</span> | :material-check: |  | The unique identifier for the rectangle |
+    | width | <span class="type-label string">STRING</span> | :material-check: |  | The width of the rectangle (pixels or percentage) |
+    | height | <span class="type-label string">STRING</span> | :material-check: |  | The height of the rectangle (pixels or percentage) |
+    | rx | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: x radius for rounded corners |
+    | ry | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: y radius for rounded corners |
+    | attributes | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Direct SVG attributes to apply (e.g., "fill='none' stroke='blue'"), can generate with `DaxLib.SVG.Attr.*` or manually |
+    | transforms | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |
 
     <span class="type-label string">STRING</span> <rect> definition
 
@@ -51,10 +51,10 @@ Create a reusable rectangle definition
     			defId: STRING,
     			width: STRING,
     			height: STRING,
-    			rx: STRING,
-    			ry: STRING,
-    			attributes: STRING,
-    			transforms: STRING
+    			rx: STRING = BLANK(),
+    			ry: STRING = BLANK(),
+    			attributes: STRING = BLANK(),
+    			transforms: STRING = BLANK()
     		) =>
     
     			"<rect id='" & defId & "'" &

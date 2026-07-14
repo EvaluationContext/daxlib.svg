@@ -7,19 +7,19 @@ Create a pill SVG compound (rounded rectangle with auto-sized text centered insi
 === "Syntax"
 
     ```dax
-    DaxLib.SVG.Compound.Pill( x, y, width, height, paddingX, paddingY, txt, color )
+    DaxLib.SVG.Compound.Pill( x, y, width, height, txt, color, paddingX, paddingY )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | x | <span class="type-label int64">INT64</span> | :material-check: | The x position of compound |
-    | y | <span class="type-label int64">INT64</span> | :material-check: | The y position of compound |
-    | width | <span class="type-label int64">INT64</span> | :material-check: | The width of the compound |
-    | height | <span class="type-label int64">INT64</span> | :material-check: | The height of the compound |
-    | paddingX | <span class="type-label number">DECIMAL</span> | :material-close: | Optional: The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0 |
-    | paddingY | <span class="type-label number">DECIMAL</span> | :material-close: | Optional: The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0 |
-    | txt | <span class="type-label string">STRING</span> | :material-check: | The text to display |
-    | color | <span class="type-label string">STRING</span> | :material-check: | The hex color of the pill, e.g., "#01B8AA80" |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | x | <span class="type-label int64">INT64</span> | :material-check: |  | The x position of compound |
+    | y | <span class="type-label int64">INT64</span> | :material-check: |  | The y position of compound |
+    | width | <span class="type-label int64">INT64</span> | :material-check: |  | The width of the compound |
+    | height | <span class="type-label int64">INT64</span> | :material-check: |  | The height of the compound |
+    | txt | <span class="type-label string">STRING</span> | :material-check: |  | The text to display |
+    | color | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: The hex color of the pill, e.g., "#01B8AA80". Defaults to "#01B8AA" |
+    | paddingX | <span class="type-label number">DECIMAL</span> | :material-close: | `#!dax 0.05` | Optional: The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0.05 |
+    | paddingY | <span class="type-label number">DECIMAL</span> | :material-close: | `#!dax 0.02` | Optional: The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0.02 |
 
     <span class="type-label string">STRING</span> SVG Pill
 
@@ -35,10 +35,10 @@ Create a pill SVG compound (rounded rectangle with auto-sized text centered insi
             0,                  // y
             500,                // width
             100,                // height
-            0.05,               // paddingX
-            0.02,               // paddingY
             MAX( Products[Brand] ), // txt
-            "#EC008C"           // color
+            "#EC008C",          // color
+            0.05,               // paddingX
+            0.02                // paddingY
         ),
         BLANK()
     )
@@ -53,10 +53,10 @@ Create a pill SVG compound (rounded rectangle with auto-sized text centered insi
     			y: INT64,
     			width: INT64,
     			height: INT64,
-    			paddingX: DOUBLE,
-    			paddingY: DOUBLE,
     			txt: STRING,
-    			color: STRING
+    			color: STRING = BLANK(),
+    			paddingX: DOUBLE = 0.05,
+    			paddingY: DOUBLE = 0.02
     		) =>
     
     		// Apply padding to dimensions
@@ -65,24 +65,23 @@ Create a pill SVG compound (rounded rectangle with auto-sized text centered insi
     		VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
     		VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
     
+    		VAR _Color = IF( NOT ISBLANK( color ), color, "#01B8AA" )
+    
     		VAR _Pill = 
     			DaxLib.SVG.Element.Rect(
-    				_X,                	// x
-    				_Y,                	// y
-    				_Width * 0.98,      // width
-    				_Height * 0.92,     // height
-    				10,               	// rx
-    				10,               	// ry
+    				_X,
+    				_Y,
+    				_Width * 0.98,
+    				_Height * 0.92,
+    				10,
+    				10,
     				DaxLib.SVG.Attr.Shapes(
-    					color,			// fill
-    					0.2,			// fillOpacity
-    					BLANK(),		// fillRule
-    					color,			// stroke
-    					1,				// strokeWidth
-    					BLANK(),		// strokeOpacity
-    					BLANK()			// opacity
-    				),         			// attributes
-    				BLANK()           	// transforms
+    					_Color,
+    					0.2,
+    					BLANK(),
+    					_Color,
+    					1
+    				)
     			)
     
     		// Auto-size font to fit text within pill
@@ -95,32 +94,20 @@ Create a pill SVG compound (rounded rectangle with auto-sized text centered insi
     
     		VAR _TextElement = 
     			DaxLib.SVG.Element.Txt(
-    				_X + (_Width * 0.50),      // x
-    				_Y + (_Height * 0.58),     // y
-    				txt,              	// txt
-    				0,                	// dx
-    				0,                	// dy
-    				DaxLib.SVG.Attr.Shapes(
-    					color,			// fill
-    					BLANK(),		// fillOpacity
-    					BLANK(),		// fillRule
-    					BLANK(),		// stroke
-    					BLANK(),		// strokeWidth
-    					BLANK(),		// strokeOpacity
-    					BLANK()			// opacity
-    				) &
+    				_X + (_Width * 0.50),
+    				_Y + (_Height * 0.58),
+    				txt,
+    				0,
+    				0,
+    				DaxLib.SVG.Attr.Shapes( _Color ) &
     				DaxLib.SVG.Attr.Txt(
-    					"Segoe UI",		// fontFamily
-    					_FontSize,		// fontSize (auto-sized)
-    					BLANK(),		// fontWeight
-    					BLANK(),		// fontStyle
-    					"middle",		// textAnchor
-    					"middle",		// baseline
-    					BLANK(),		// textDecoration
-    					BLANK(),		// letterSpacing
-    					BLANK()			// wordSpacing
-    				),         			// attributes
-    				BLANK()				// transforms
+    					"Segoe UI",
+    					_FontSize,
+    					BLANK(),
+    					BLANK(),
+    					"middle",
+    					"middle"
+    				)
     			)
     
     		VAR _CombinedElements = 

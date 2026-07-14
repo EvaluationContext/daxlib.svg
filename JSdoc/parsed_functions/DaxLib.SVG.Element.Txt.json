@@ -33,7 +33,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: x offset from position",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "dy",
@@ -41,7 +41,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: y offset from position",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "attributes",
@@ -49,7 +49,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: Direct SVG attributes to apply (e.g., \"text-anchor='middle' dominant-baseline='middle'\"), can generate with `DaxLib.SVG.Attr.*` or manually",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "transforms",
@@ -57,13 +57,21 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: Additional transforms (e.g. \"scale(1.2) translate(10,10)\") (can be generated with `DaxLib.SVG.Transforms`)",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
+    },
+    {
+      "name": "escape",
+      "type": "boolean",
+      "type_label": "<span class=\"type-label boolean\">BOOLEAN</span>",
+      "description": "Optional: When TRUE or BLANK (default), XML-escapes `txt` (replaces &, <, >, \", ') so characters like & and < render correctly. Pass FALSE to insert `txt` verbatim (e.g. when it already contains raw SVG markup).",
+      "optional": true,
+      "default_value": "TRUE()"
     }
   ],
   "return_type": "STRING",
   "return_type_label": "<span class=\"type-label string\">STRING</span>",
   "return_description": "<text> element",
-  "code": "function 'DaxLib.SVG.Element.Txt' =\n\t\t(\n\t\t\tx: STRING,\n\t\t\ty: STRING,\n\t\t\ttxt: STRING,\n\t\t\tdx: STRING,\n\t\t\tdy: STRING,\n\t\t\tattributes: STRING,\n\t\t\ttransforms: STRING\n\t\t) =>\n\n\t\t\t\"<text\" &\n\t\t\t\" x='\" & x & \"'\" &\n\t\t\t\" y='\" & y & \"'\" &\n\t\t\tIF(NOT ISBLANK( dx ), \" dx='\" & dx & \"'\" ) & \n\t\t\tIF(NOT ISBLANK( dy ), \" dy='\" & dy & \"'\" ) &\n\t\t\tIF( NOT ISBLANK( attributes ), \" \" & attributes & \" \" ) &\n\t\t\tIF( NOT ISBLANK( transforms ), \" transform='\" & transforms & \"'\" ) &\n\t\t\t\">\" & txt & \n\t\t\t\"</text>\"",
+  "code": "function 'DaxLib.SVG.Element.Txt' =\n\t\t(\n\t\t\tx: STRING,\n\t\t\ty: STRING,\n\t\t\ttxt: STRING,\n\t\t\tdx: STRING = BLANK(),\n\t\t\tdy: STRING = BLANK(),\n\t\t\tattributes: STRING = BLANK(),\n\t\t\ttransforms: STRING = BLANK(),\n\t\t\tescape: BOOLEAN = TRUE()\n\t\t) =>\n\n\t\t\tVAR _Escape = COALESCE( escape, TRUE() )\n\t\t\tVAR _s0 = COALESCE( txt, \"\" )\n\t\t\tVAR _s1 = SUBSTITUTE( _s0, \"&\",  \"&amp;\"  )\n\t\t\tVAR _s2 = SUBSTITUTE( _s1, \"<\",  \"&lt;\"   )\n\t\t\tVAR _s3 = SUBSTITUTE( _s2, \">\",  \"&gt;\"   )\n\t\t\tVAR _s4 = SUBSTITUTE( _s3, \"\"\"\", \"&quot;\" )\n\t\t\tVAR _s5 = SUBSTITUTE( _s4, \"'\",  \"&apos;\" )\n\t\t\tVAR _Txt = IF( _Escape, _s5, txt )\n\t\t\tRETURN\n\t\t\t\t\"<text\" &\n\t\t\t\t\" x='\" & x & \"'\" &\n\t\t\t\t\" y='\" & y & \"'\" &\n\t\t\t\tIF(NOT ISBLANK( dx ), \" dx='\" & dx & \"'\" ) & \n\t\t\t\tIF(NOT ISBLANK( dy ), \" dy='\" & dy & \"'\" ) &\n\t\t\t\tIF( NOT ISBLANK( attributes ), \" \" & attributes & \" \" ) &\n\t\t\t\tIF( NOT ISBLANK( transforms ), \" transform='\" & transforms & \"'\" ) &\n\t\t\t\t\">\" & _Txt & \n\t\t\t\t\"</text>\"",
   "example": null,
   "author": null,
   "version": null,
@@ -71,8 +79,8 @@
   "see": null,
   "deprecated": null,
   "sections": {
-    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Element.Txt( x, y, txt, dx, dy, attributes, transforms )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | x | <span class=\"type-label string\">STRING</span> | :material-check: | The x position of the text |\n    | y | <span class=\"type-label string\">STRING</span> | :material-check: | The y position of the text |\n    | txt | <span class=\"type-label string\">STRING</span> | :material-check: | The text content |\n    | dx | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: x offset from position |\n    | dy | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: y offset from position |\n    | attributes | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Direct SVG attributes to apply (e.g., \"text-anchor='middle' dominant-baseline='middle'\"), can generate with `DaxLib.SVG.Attr.*` or manually |\n    | transforms | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Additional transforms (e.g. \"scale(1.2) translate(10,10)\") (can be generated with `DaxLib.SVG.Transforms`) |\n\n    <span class=\"type-label string\">STRING</span> <text> element",
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Element.Txt( x, y, txt, dx, dy, attributes, transforms, escape )\n    ```\n\n    | Parameter | Type | Required | Default | Description |\n    |:---:|:---:|:---:|:---:|---|\n    | x | <span class=\"type-label string\">STRING</span> | :material-check: |  | The x position of the text |\n    | y | <span class=\"type-label string\">STRING</span> | :material-check: |  | The y position of the text |\n    | txt | <span class=\"type-label string\">STRING</span> | :material-check: |  | The text content |\n    | dx | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: x offset from position |\n    | dy | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: y offset from position |\n    | attributes | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Direct SVG attributes to apply (e.g., \"text-anchor='middle' dominant-baseline='middle'\"), can generate with `DaxLib.SVG.Attr.*` or manually |\n    | transforms | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Additional transforms (e.g. \"scale(1.2) translate(10,10)\") (can be generated with `DaxLib.SVG.Transforms`) |\n    | escape | <span class=\"type-label boolean\">BOOLEAN</span> | :material-close: | `#!dax TRUE()` | Optional: When TRUE or BLANK (default), XML-escapes `txt` (replaces &, <, >, \", ') so characters like & and < render correctly. Pass FALSE to insert `txt` verbatim (e.g. when it already contains raw SVG markup). |\n\n    <span class=\"type-label string\">STRING</span> <text> element",
     "example": "",
-    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Element.Txt' =\n    \t\t(\n    \t\t\tx: STRING,\n    \t\t\ty: STRING,\n    \t\t\ttxt: STRING,\n    \t\t\tdx: STRING,\n    \t\t\tdy: STRING,\n    \t\t\tattributes: STRING,\n    \t\t\ttransforms: STRING\n    \t\t) =>\n    \n    \t\t\t\"<text\" &\n    \t\t\t\" x='\" & x & \"'\" &\n    \t\t\t\" y='\" & y & \"'\" &\n    \t\t\tIF(NOT ISBLANK( dx ), \" dx='\" & dx & \"'\" ) & \n    \t\t\tIF(NOT ISBLANK( dy ), \" dy='\" & dy & \"'\" ) &\n    \t\t\tIF( NOT ISBLANK( attributes ), \" \" & attributes & \" \" ) &\n    \t\t\tIF( NOT ISBLANK( transforms ), \" transform='\" & transforms & \"'\" ) &\n    \t\t\t\">\" & txt & \n    \t\t\t\"</text>\"\n    ```"
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Element.Txt' =\n    \t\t(\n    \t\t\tx: STRING,\n    \t\t\ty: STRING,\n    \t\t\ttxt: STRING,\n    \t\t\tdx: STRING = BLANK(),\n    \t\t\tdy: STRING = BLANK(),\n    \t\t\tattributes: STRING = BLANK(),\n    \t\t\ttransforms: STRING = BLANK(),\n    \t\t\tescape: BOOLEAN = TRUE()\n    \t\t) =>\n    \n    \t\t\tVAR _Escape = COALESCE( escape, TRUE() )\n    \t\t\tVAR _s0 = COALESCE( txt, \"\" )\n    \t\t\tVAR _s1 = SUBSTITUTE( _s0, \"&\",  \"&amp;\"  )\n    \t\t\tVAR _s2 = SUBSTITUTE( _s1, \"<\",  \"&lt;\"   )\n    \t\t\tVAR _s3 = SUBSTITUTE( _s2, \">\",  \"&gt;\"   )\n    \t\t\tVAR _s4 = SUBSTITUTE( _s3, \"\"\"\", \"&quot;\" )\n    \t\t\tVAR _s5 = SUBSTITUTE( _s4, \"'\",  \"&apos;\" )\n    \t\t\tVAR _Txt = IF( _Escape, _s5, txt )\n    \t\t\tRETURN\n    \t\t\t\t\"<text\" &\n    \t\t\t\t\" x='\" & x & \"'\" &\n    \t\t\t\t\" y='\" & y & \"'\" &\n    \t\t\t\tIF(NOT ISBLANK( dx ), \" dx='\" & dx & \"'\" ) & \n    \t\t\t\tIF(NOT ISBLANK( dy ), \" dy='\" & dy & \"'\" ) &\n    \t\t\t\tIF( NOT ISBLANK( attributes ), \" \" & attributes & \" \" ) &\n    \t\t\t\tIF( NOT ISBLANK( transforms ), \" transform='\" & transforms & \"'\" ) &\n    \t\t\t\t\">\" & _Txt & \n    \t\t\t\t\"</text>\"\n    ```"
   }
 }

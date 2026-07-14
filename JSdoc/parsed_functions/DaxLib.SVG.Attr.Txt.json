@@ -9,7 +9,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Font family for text. Omitted if not specified",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "fontSize",
@@ -17,7 +17,7 @@
       "type_label": "<span class=\"type-label int64\">INT64</span>",
       "description": "Font size for text. Omitted if not specified",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "fontWeight",
@@ -25,7 +25,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Weight (\"normal\", \"bold\", \"lighter\", \"100-900\"). Omitted if not specified",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "fontStyle",
@@ -33,7 +33,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Style (\"normal\", \"italic\", \"oblique\"). Omitted if not specified",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "textAnchor",
@@ -41,7 +41,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Anchor (\"start\", \"middle\", \"end\"). Omitted if not specified",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "baseline",
@@ -49,7 +49,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Dominant baseline. Omitted if not specified",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "textDecoration",
@@ -57,7 +57,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Decoration (\"none\", \"underline\", \"overline\", \"line-through\"). Omitted if not specified",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "letterSpacing",
@@ -65,7 +65,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Space between letters. Omitted if not specified",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "wordSpacing",
@@ -73,13 +73,13 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Space between words. Omitted if not specified",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     }
   ],
   "return_type": "STRING",
   "return_type_label": "<span class=\"type-label string\">STRING</span>",
   "return_description": "An attribute string that can be used directly in SVG text elements",
-  "code": "function 'DaxLib.SVG.Attr.Txt' =\n\t\t(\n\t\t\tfontFamily: STRING,\n\t\t\tfontSize: INT64,\n\t\t\tfontWeight: STRING,\n\t\t\tfontStyle: STRING,\n\t\t\ttextAnchor: STRING,\n\t\t\tbaseline: STRING,\n\t\t\ttextDecoration: STRING,\n\t\t\tletterSpacing: STRING,\n\t\t\twordSpacing: STRING\n\t\t) =>\n\n\t\t\tIF( NOT ISBLANK( fontFamily ),     \"font-family='\" & fontFamily & \"' \") &\n\t\t\tIF( NOT ISBLANK( fontSize ),       \"font-size='\" & fontSize & \"' \") &\n\t\t\tIF( NOT ISBLANK( fontWeight ),     \"font-weight='\" & fontWeight & \"' \") &\n\t\t\tIF( NOT ISBLANK( fontStyle ),      \"font-style='\" & fontStyle & \"' \") &\n\t\t\tIF( NOT ISBLANK( textAnchor ),     \"text-anchor='\" & textAnchor & \"' \") &\n\t\t\tIF( NOT ISBLANK( baseline ),       \"dominant-baseline='\" & baseline & \"' \") &\n\t\t\tIF( NOT ISBLANK( textDecoration ), \"text-decoration='\" & textDecoration & \"' \") &\n\t\t\tIF( NOT ISBLANK( letterSpacing ),  \"letter-spacing='\" & letterSpacing & \"' \") &\n\t\t\tIF( NOT ISBLANK( wordSpacing ),    \"word-spacing='\" & wordSpacing & \"' \")",
+  "code": "function 'DaxLib.SVG.Attr.Txt' =\n\t\t(\n\t\t\tfontFamily: STRING = BLANK(),\n\t\t\tfontSize: INT64 = BLANK(),\n\t\t\tfontWeight: STRING = BLANK(),\n\t\t\tfontStyle: STRING = BLANK(),\n\t\t\ttextAnchor: STRING = BLANK(),\n\t\t\tbaseline: STRING = BLANK(),\n\t\t\ttextDecoration: STRING = BLANK(),\n\t\t\tletterSpacing: STRING = BLANK(),\n\t\t\twordSpacing: STRING = BLANK()\n\t\t) =>\n\n\t\t\tIF( NOT ISBLANK( fontFamily ),     \"font-family='\" & fontFamily & \"' \") &\n\t\t\tIF( NOT ISBLANK( fontSize ),       \"font-size='\" & fontSize & \"' \") &\n\t\t\tIF( NOT ISBLANK( fontWeight ),     \"font-weight='\" & fontWeight & \"' \") &\n\t\t\tIF( NOT ISBLANK( fontStyle ),      \"font-style='\" & fontStyle & \"' \") &\n\t\t\tIF( NOT ISBLANK( textAnchor ),     \"text-anchor='\" & textAnchor & \"' \") &\n\t\t\tIF( NOT ISBLANK( baseline ),       \"dominant-baseline='\" & baseline & \"' \") &\n\t\t\tIF( NOT ISBLANK( textDecoration ), \"text-decoration='\" & textDecoration & \"' \") &\n\t\t\tIF( NOT ISBLANK( letterSpacing ),  \"letter-spacing='\" & letterSpacing & \"' \") &\n\t\t\tIF( NOT ISBLANK( wordSpacing ),    \"word-spacing='\" & wordSpacing & \"' \")",
   "example": null,
   "author": null,
   "version": null,
@@ -87,8 +87,8 @@
   "see": null,
   "deprecated": null,
   "sections": {
-    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Attr.Txt( fontFamily, fontSize, fontWeight, fontStyle, textAnchor, baseline, textDecoration, letterSpacing, wordSpacing )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | fontFamily | <span class=\"type-label string\">STRING</span> | :material-close: | Font family for text. Omitted if not specified |\n    | fontSize | <span class=\"type-label int64\">INT64</span> | :material-close: | Font size for text. Omitted if not specified |\n    | fontWeight | <span class=\"type-label string\">STRING</span> | :material-close: | Weight (\"normal\", \"bold\", \"lighter\", \"100-900\"). Omitted if not specified |\n    | fontStyle | <span class=\"type-label string\">STRING</span> | :material-close: | Style (\"normal\", \"italic\", \"oblique\"). Omitted if not specified |\n    | textAnchor | <span class=\"type-label string\">STRING</span> | :material-close: | Anchor (\"start\", \"middle\", \"end\"). Omitted if not specified |\n    | baseline | <span class=\"type-label string\">STRING</span> | :material-close: | Dominant baseline. Omitted if not specified |\n    | textDecoration | <span class=\"type-label string\">STRING</span> | :material-close: | Decoration (\"none\", \"underline\", \"overline\", \"line-through\"). Omitted if not specified |\n    | letterSpacing | <span class=\"type-label string\">STRING</span> | :material-close: | Space between letters. Omitted if not specified |\n    | wordSpacing | <span class=\"type-label string\">STRING</span> | :material-close: | Space between words. Omitted if not specified |\n\n    <span class=\"type-label string\">STRING</span> An attribute string that can be used directly in SVG text elements",
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Attr.Txt( fontFamily, fontSize, fontWeight, fontStyle, textAnchor, baseline, textDecoration, letterSpacing, wordSpacing )\n    ```\n\n    | Parameter | Type | Required | Default | Description |\n    |:---:|:---:|:---:|:---:|---|\n    | fontFamily | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Font family for text. Omitted if not specified |\n    | fontSize | <span class=\"type-label int64\">INT64</span> | :material-close: | `#!dax BLANK()` | Font size for text. Omitted if not specified |\n    | fontWeight | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Weight (\"normal\", \"bold\", \"lighter\", \"100-900\"). Omitted if not specified |\n    | fontStyle | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Style (\"normal\", \"italic\", \"oblique\"). Omitted if not specified |\n    | textAnchor | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Anchor (\"start\", \"middle\", \"end\"). Omitted if not specified |\n    | baseline | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Dominant baseline. Omitted if not specified |\n    | textDecoration | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Decoration (\"none\", \"underline\", \"overline\", \"line-through\"). Omitted if not specified |\n    | letterSpacing | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Space between letters. Omitted if not specified |\n    | wordSpacing | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Space between words. Omitted if not specified |\n\n    <span class=\"type-label string\">STRING</span> An attribute string that can be used directly in SVG text elements",
     "example": "",
-    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Attr.Txt' =\n    \t\t(\n    \t\t\tfontFamily: STRING,\n    \t\t\tfontSize: INT64,\n    \t\t\tfontWeight: STRING,\n    \t\t\tfontStyle: STRING,\n    \t\t\ttextAnchor: STRING,\n    \t\t\tbaseline: STRING,\n    \t\t\ttextDecoration: STRING,\n    \t\t\tletterSpacing: STRING,\n    \t\t\twordSpacing: STRING\n    \t\t) =>\n    \n    \t\t\tIF( NOT ISBLANK( fontFamily ),     \"font-family='\" & fontFamily & \"' \") &\n    \t\t\tIF( NOT ISBLANK( fontSize ),       \"font-size='\" & fontSize & \"' \") &\n    \t\t\tIF( NOT ISBLANK( fontWeight ),     \"font-weight='\" & fontWeight & \"' \") &\n    \t\t\tIF( NOT ISBLANK( fontStyle ),      \"font-style='\" & fontStyle & \"' \") &\n    \t\t\tIF( NOT ISBLANK( textAnchor ),     \"text-anchor='\" & textAnchor & \"' \") &\n    \t\t\tIF( NOT ISBLANK( baseline ),       \"dominant-baseline='\" & baseline & \"' \") &\n    \t\t\tIF( NOT ISBLANK( textDecoration ), \"text-decoration='\" & textDecoration & \"' \") &\n    \t\t\tIF( NOT ISBLANK( letterSpacing ),  \"letter-spacing='\" & letterSpacing & \"' \") &\n    \t\t\tIF( NOT ISBLANK( wordSpacing ),    \"word-spacing='\" & wordSpacing & \"' \")\n    ```"
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Attr.Txt' =\n    \t\t(\n    \t\t\tfontFamily: STRING = BLANK(),\n    \t\t\tfontSize: INT64 = BLANK(),\n    \t\t\tfontWeight: STRING = BLANK(),\n    \t\t\tfontStyle: STRING = BLANK(),\n    \t\t\ttextAnchor: STRING = BLANK(),\n    \t\t\tbaseline: STRING = BLANK(),\n    \t\t\ttextDecoration: STRING = BLANK(),\n    \t\t\tletterSpacing: STRING = BLANK(),\n    \t\t\twordSpacing: STRING = BLANK()\n    \t\t) =>\n    \n    \t\t\tIF( NOT ISBLANK( fontFamily ),     \"font-family='\" & fontFamily & \"' \") &\n    \t\t\tIF( NOT ISBLANK( fontSize ),       \"font-size='\" & fontSize & \"' \") &\n    \t\t\tIF( NOT ISBLANK( fontWeight ),     \"font-weight='\" & fontWeight & \"' \") &\n    \t\t\tIF( NOT ISBLANK( fontStyle ),      \"font-style='\" & fontStyle & \"' \") &\n    \t\t\tIF( NOT ISBLANK( textAnchor ),     \"text-anchor='\" & textAnchor & \"' \") &\n    \t\t\tIF( NOT ISBLANK( baseline ),       \"dominant-baseline='\" & baseline & \"' \") &\n    \t\t\tIF( NOT ISBLANK( textDecoration ), \"text-decoration='\" & textDecoration & \"' \") &\n    \t\t\tIF( NOT ISBLANK( letterSpacing ),  \"letter-spacing='\" & letterSpacing & \"' \") &\n    \t\t\tIF( NOT ISBLANK( wordSpacing ),    \"word-spacing='\" & wordSpacing & \"' \")\n    ```"
   }
 }

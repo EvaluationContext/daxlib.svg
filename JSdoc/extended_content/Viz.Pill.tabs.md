@@ -3,7 +3,7 @@
     ```dax
     DaxLib.SVG.Viz.Pill(
         "Active",           // txt
-        "#EC008C",          // color
+        "#EC008C",        // color
         120,                // width
         28                  // height
     )

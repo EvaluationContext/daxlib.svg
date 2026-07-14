@@ -10,13 +10,13 @@ Generates a circle SVG element
     DaxLib.SVG.Element.Circle( cx, cy, r, attributes, transforms )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | cx | <span class="type-label string">STRING</span> | :material-check: | The x position of the center |
-    | cy | <span class="type-label string">STRING</span> | :material-check: | The y position of the center |
-    | r | <span class="type-label string">STRING</span> | :material-check: | The radius |
-    | attributes | <span class="type-label string">STRING</span> | :material-close: | Optional: Direct SVG attributes to apply (e.g., "fill='red' stroke-width='2'"), can generate with `DaxLib.SVG.Attr.*` or manually |
-    | transforms | <span class="type-label string">STRING</span> | :material-close: | Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | cx | <span class="type-label string">STRING</span> | :material-check: |  | The x position of the center |
+    | cy | <span class="type-label string">STRING</span> | :material-check: |  | The y position of the center |
+    | r | <span class="type-label string">STRING</span> | :material-check: |  | The radius |
+    | attributes | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Direct SVG attributes to apply (e.g., "fill='red' stroke-width='2'"), can generate with `DaxLib.SVG.Attr.*` or manually |
+    | transforms | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |
 
     <span class="type-label string">STRING</span> <circle> element
 
@@ -60,8 +60,8 @@ Generates a circle SVG element
     			cx: STRING,
     			cy: STRING,
     			r: STRING,
-    			attributes: STRING,
-    			transforms: STRING
+    			attributes: STRING = BLANK(),
+    			transforms: STRING = BLANK()
     		) =>
     
     			"<circle" &

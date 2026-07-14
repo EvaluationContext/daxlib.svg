@@ -15,30 +15,30 @@ Creates a Bars compound SVG Visual showing a bar chart across an axis
 === "Syntax"
 
     ```dax
-    DaxLib.SVG.Compound.Bars( x, y, width, height, paddingX, paddingY, axisRef, measureRef, barColor, minMarkColor, maxMarkColor, showAxis, axisFontSize )
+    DaxLib.SVG.Compound.Bars( x, y, width, height, axisRef, measureRef, barColor, minMarkColor, maxMarkColor, showAxis, axisFontSize, paddingX, paddingY )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | x | <span class="type-label int64">INT64</span> | :material-check: | The x position of the compound |
-    | y | <span class="type-label int64">INT64</span> | :material-check: | The y position of the compound |
-    | width | <span class="type-label int64">INT64</span> | :material-check: | The width of the compound |
-    | height | <span class="type-label int64">INT64</span> | :material-check: | The height of the compound |
-    | paddingX | <span class="type-label number">DECIMAL</span> | :material-close: | Optional: The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0 |
-    | paddingY | <span class="type-label number">DECIMAL</span> | :material-close: | Optional: The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0 |
-    | axisRef | <span class="type-label anyref">ANYREF</span> <span class="type-label expr">EXPR</span> | :material-check: | The column that the measure will be evaluated against |
-    | measureRef | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: | The measure to evaluate |
-    | barColor | <span class="type-label string">STRING</span> | :material-close: | The hex color of the bars. Defaults to "#01B8AA" |
-    | minMarkColor | <span class="type-label string">STRING</span> | :material-close: | Optional: The hex color for the minimum value bar. Omitted if not specified |
-    | maxMarkColor | <span class="type-label string">STRING</span> | :material-close: | Optional: The hex color for the maximum value bar. Omitted if not specified |
-    | showAxis | <span class="type-label boolean">BOOLEAN</span> | :material-close: | Optional: Show axes when TRUE. Defaults to FALSE |
-    | axisFontSize | <span class="type-label int64">INT64</span> | :material-close: | Optional: Axis label font size. Defaults to 10 |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | x | <span class="type-label int64">INT64</span> | :material-check: |  | The x position of the compound |
+    | y | <span class="type-label int64">INT64</span> | :material-check: |  | The y position of the compound |
+    | width | <span class="type-label int64">INT64</span> | :material-check: |  | The width of the compound |
+    | height | <span class="type-label int64">INT64</span> | :material-check: |  | The height of the compound |
+    | axisRef | <span class="type-label anyref">ANYREF</span> <span class="type-label expr">EXPR</span> | :material-check: |  | The column that the measure will be evaluated against |
+    | measureRef | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: |  | The measure to evaluate |
+    | barColor | <span class="type-label string">STRING</span> | :material-close: | `#!dax "#01B8AA"` | The hex color of the bars. Defaults to "#01B8AA" |
+    | minMarkColor | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: The hex color for the minimum value bar. Omitted if not specified |
+    | maxMarkColor | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: The hex color for the maximum value bar. Omitted if not specified |
+    | showAxis | <span class="type-label boolean">BOOLEAN</span> | :material-close: | `#!dax FALSE()` | Optional: Show axes when TRUE. Defaults to FALSE |
+    | axisFontSize | <span class="type-label int64">INT64</span> | :material-close: | `#!dax 10` | Optional: Axis label font size. Defaults to 10 |
+    | paddingX | <span class="type-label number">DECIMAL</span> | :material-close: | `#!dax 0.05` | Optional: The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0.05 |
+    | paddingY | <span class="type-label number">DECIMAL</span> | :material-close: | `#!dax 0.02` | Optional: The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0.02 |
 
     <span class="type-label string">STRING</span> SVG Bar Chart
 
 === "Example"
 
-    ```dax hl_lines="5-17"
+    ```dax hl_lines="5-19"
     DaxLib.SVG.SVG(
         500,
         100,
@@ -48,15 +48,15 @@ Creates a Bars compound SVG Visual showing a bar chart across an axis
             0,                  // y
             500,                // width
             100,                // height
-            0.05,               // paddingX
-            0.04,               // paddingY
             Dates[Date],        // axisRef
             [Total Cost],       // measureRef
             "#EC008C",          // barColor
             BLANK(),            // minMarkColor
             BLANK(),            // maxMarkColor
             FALSE,              // showAxis
-            BLANK()             // axisFontSize
+            10,                 // axisFontSize
+            0.05,               // paddingX
+            0.04                // paddingY
         ),
         BLANK()
     )
@@ -71,15 +71,15 @@ Creates a Bars compound SVG Visual showing a bar chart across an axis
     			y: INT64,
     			width: INT64,
     			height: INT64,
-    			paddingX: DOUBLE,
-    			paddingY: DOUBLE,
     			axisRef: ANYREF EXPR,
     			measureRef: NUMERIC EXPR,
-    			barColor: STRING,
-    			minMarkColor: STRING,
-    			maxMarkColor: STRING,
-    			showAxis: BOOLEAN,
-    			axisFontSize: INT64
+    			barColor: STRING = "#01B8AA",
+    			minMarkColor: STRING = BLANK(),
+    			maxMarkColor: STRING = BLANK(),
+    			showAxis: BOOLEAN = FALSE(),
+    			axisFontSize: INT64 = 10,
+                paddingX: DOUBLE = 0.05,
+    			paddingY: DOUBLE = 0.02
     		) =>
     
     			// Apply padding to dimensions
@@ -99,14 +99,9 @@ Creates a Bars compound SVG Visual showing a bar chart across an axis
     			VAR _RawYMax = MAXX( _DataNonBlank, [@Value] )
     			VAR _Range = DaxLib.SVG.Data.Range( _RawYMin, _RawYMax, TRUE() )
     
-    			// Global axis range — only values with data, consistent across table rows
-    			VAR _GlobalAxisRef = CALCULATETABLE( FILTER( VALUES( axisRef ), NOT ISBLANK( measureRef ) ), ALLSELECTED() )
-    			VAR _GlobalAxisCount = COUNTROWS( _GlobalAxisRef )
-    			VAR _AxisIsNumericRange = ISNUMBER( MAX( axisRef ) ) || _AxisIsDate
-    
-    			// Axis bounds from global data range (not the full calendar/dimension table)
-    			VAR _XMin = IF( _AxisIsNumericRange, MINX( _GlobalAxisRef, axisRef ), 1 )
-    			VAR _XMax = IF( _AxisIsNumericRange, MAXX( _GlobalAxisRef, axisRef ), _GlobalAxisCount )
+    			// Define axis scales
+    			VAR _XMin = MINX( _DataNonBlank, [@AxisIndex] )
+    			VAR _XMax = MAXX( _DataNonBlank, [@AxisIndex] )
     			VAR _RawYMin2 = MINX( _Range, [@Baseline] )
     			VAR _RawYMax2 = MAXX( _Range, [@Max] )
     
@@ -117,48 +112,47 @@ Creates a Bars compound SVG Visual showing a bar chart across an axis
     			VAR _YTickCount = MINX( _NiceY, [@NiceTickCount] )
     
     			// Axis layout
-    			VAR _MaxTickLabelWidth = DaxLib.SVG.Axes.MaxTickLabelWidth( _YMin, _YMax, _YTickCount, _AxisFontSize, 0.56, FALSE() )
-    			VAR _Layout = DaxLib.SVG.Axes.Layout( _X, _Y, _Width, _Height, _ShowAxis, _AxisFontSize, _MaxTickLabelWidth )
+    			VAR _MaxTickLabelWidth = DaxLib.SVG.Axes.MaxTickLabelWidth( _YMin, _YMax, _YTickCount, _AxisFontSize )
+    			VAR _Layout = DaxLib.SVG.Axes.Layout( _X, _Y, _Width, _Height, _MaxTickLabelWidth, _ShowAxis, _AxisFontSize )
     			VAR _PlotX = MINX( _Layout, [@PlotX] )
     			VAR _PlotY = MINX( _Layout, [@PlotY] )
     			VAR _PlotWidth = MINX( _Layout, [@PlotWidth] )
     			VAR _PlotHeight = MINX( _Layout, [@PlotHeight] )
-    		
-    			// Cap bar count by canvas width (minimum 2px per bar)
-    			VAR _CategoryDimension = _PlotWidth
-    			VAR _MinBarPx = 2
-    			VAR _MaxBars = MAX( 1, INT( _CategoryDimension / _MinBarPx ) )
-    			VAR _SlotCount = MIN( _GlobalAxisCount, _MaxBars )
-    			VAR _SlotWidth = DIVIDE( _CategoryDimension, MAX( 1, _SlotCount ) )
-    			VAR _BarThickness = MAX( 1, _SlotWidth * 0.8 )
     
-    			// Assign global ordinal position (0-based) for consistent bar placement
-    			VAR _DataRanked =
+    			// Bar thickness derived from data grain (smallest gap between consecutive axis values)
+    			VAR _PointCount = COUNTROWS( _DataNonBlank )
+    			VAR _Gaps =
     				ADDCOLUMNS(
     					_DataNonBlank,
-    					"@SlotIndex",
-    						RANKX( _GlobalAxisRef, axisRef, [@AxisValue], ASC, DENSE ) - 1
+    					"@Gap",
+    						VAR _Cur = [@AxisIndex]
+    						VAR _Next = MINX( FILTER( _DataNonBlank, [@AxisIndex] > _Cur ), [@AxisIndex] )
+    						RETURN IF( NOT ISBLANK( _Next ), _Next - _Cur )
     				)
-    			VAR _DataVisible = FILTER( _DataRanked, [@SlotIndex] < _SlotCount )
+    			VAR _MinGap = COALESCE( MINX( FILTER( _Gaps, NOT ISBLANK( [@Gap] ) ), [@Gap] ), 1 )
+    			VAR _AxisRange = _XMax - _XMin
+    			VAR _PixelsPerUnit = IF( _AxisRange > 0, DIVIDE( _PlotWidth, _AxisRange ), _PlotWidth )
+    			VAR _MinBarPx = 2
+    			VAR _BarThickness = MAX( _MinBarPx, _MinGap * _PixelsPerUnit * 0.8 )
     
     			VAR _Baseline = DaxLib.SVG.Axes.Baseline( "Vertical", _YMin, _YMax, _PlotX, _PlotY, _PlotWidth, _PlotHeight )
-    			VAR _BaseX = MINX( _Baseline, [@BaseX] )
     			VAR _BaseY = MINX( _Baseline, [@BaseY] )
     
     			// Determine min and max values for bar highlighting
-    			VAR _VisibleMinValue = MINX( _DataVisible, [@Value] )
-    			VAR _VisibleMaxValue = MAXX( _DataVisible, [@Value] )
-    			VAR _CanHighlight = COUNTROWS( _DataNonBlank ) > 2 && _VisibleMinValue <> _VisibleMaxValue
-    		
+    			VAR _VisibleMinValue = MINX( _DataNonBlank, [@Value] )
+    			VAR _VisibleMaxValue = MAXX( _DataNonBlank, [@Value] )
+    			VAR _CanHighlight = _PointCount > 2 && _VisibleMinValue <> _VisibleMaxValue
+    
     		//Bars
-    		VAR _Bars = 
+    		VAR _Bars =
     			CONCATENATEX(
-    				_DataVisible,
-    				IF( 
-    					NOT ISBLANK( [@Value] ), 
-    					VAR _SlotCenter = ( [@SlotIndex] + 0.5 ) * _SlotWidth
-    					VAR _BarCategoryStart = _PlotX + _SlotCenter - _BarThickness / 2
-    					VAR _ValueY = IF( _YMax = _YMin, _PlotY + _PlotHeight / 2, DaxLib.SVG.Scale.Normalize( [@Value], _YMin, _YMax, _PlotY + _PlotHeight, _PlotY ) )
+    				_DataNonBlank,
+    				IF(
+    					NOT ISBLANK( [@Value] ),
+    					VAR _Point = DaxLib.SVG.Axes.Point( "Vertical", [@AxisIndex], [@Value], _XMin, _XMax, _YMin, _YMax, _PlotX, _PlotY, _PlotWidth, _PlotHeight )
+    					VAR _CX = MINX( _Point, [@X] )
+    					VAR _ValueY = MINX( _Point, [@Y] )
+    					VAR _BarCategoryStart = _CX - _BarThickness / 2
     					VAR _ThisBarColor =
     						IF( _CanHighlight && NOT ISBLANK( minMarkColor ) && [@Value] = _VisibleMinValue, minMarkColor,
     						IF( _CanHighlight && NOT ISBLANK( maxMarkColor ) && [@Value] = _VisibleMaxValue, maxMarkColor,
@@ -173,19 +167,16 @@ Creates a Bars compound SVG Visual showing a bar chart across an axis
     							0,
     							0,
     							DaxLib.SVG.Attr.Shapes(
-    							_ThisBarColor,
+    								_ThisBarColor,
     								BLANK(),
     								BLANK(),
     								BLANK(),
-    								1,
-    								BLANK(),
-    								BLANK()
-    							),
-    							BLANK()
+    								1
+    							)
     						)
     				),
     				" ",
-    				[@SlotIndex],
+    				[@AxisIndex],
     				ASC
     			)
     

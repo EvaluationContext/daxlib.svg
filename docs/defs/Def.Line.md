@@ -8,15 +8,15 @@ Create a reusable line definition
     DaxLib.SVG.Def.Line( defId, x1, y1, x2, y2, attributes, transforms )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | defId | <span class="type-label string">STRING</span> | :material-check: | The unique identifier for the line |
-    | x1 | <span class="type-label string">STRING</span> | :material-check: | The x position of the start point |
-    | y1 | <span class="type-label string">STRING</span> | :material-check: | The y position of the start point |
-    | x2 | <span class="type-label string">STRING</span> | :material-check: | The x position of the end point |
-    | y2 | <span class="type-label string">STRING</span> | :material-check: | The y position of the end point |
-    | attributes | <span class="type-label string">STRING</span> | :material-close: | Optional: Direct SVG attributes to apply (e.g., "stroke-width='2' stroke='blue'"), can generate with `DaxLib.SVG.Attr.*` or manually |
-    | transforms | <span class="type-label string">STRING</span> | :material-close: | Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | defId | <span class="type-label string">STRING</span> | :material-check: |  | The unique identifier for the line |
+    | x1 | <span class="type-label string">STRING</span> | :material-check: |  | The x position of the start point |
+    | y1 | <span class="type-label string">STRING</span> | :material-check: |  | The y position of the start point |
+    | x2 | <span class="type-label string">STRING</span> | :material-check: |  | The x position of the end point |
+    | y2 | <span class="type-label string">STRING</span> | :material-check: |  | The y position of the end point |
+    | attributes | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Direct SVG attributes to apply (e.g., "stroke-width='2' stroke='blue'"), can generate with `DaxLib.SVG.Attr.*` or manually |
+    | transforms | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |
 
     <span class="type-label string">STRING</span> <line> definition
 
@@ -57,8 +57,8 @@ Create a reusable line definition
     			y1: STRING,
     			x2: STRING,
     			y2: STRING,
-    			attributes: STRING,
-    			transforms: STRING
+    			attributes: STRING = BLANK(),
+    			transforms: STRING = BLANK()
     		) =>
     
     			"<line id='" & defId & "'" &

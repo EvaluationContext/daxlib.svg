@@ -10,14 +10,14 @@ Renders a box plot as an SVG data URI showing statistical distribution
     DaxLib.SVG.Viz.Boxplot( axisRef, measureRef, color, showOutliers, width, height )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | axisRef | <span class="type-label anyref">ANYREF</span> <span class="type-label expr">EXPR</span> | :material-check: | Axis reference column |
-    | measureRef | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: | Measure expression |
-    | color | <span class="type-label string">STRING</span> | :material-close: | Optional box fill color. Defaults to Power BI theme color |
-    | showOutliers | <span class="type-label boolean">BOOLEAN</span> | :material-close: | Optional: show outlier points. Defaults to FALSE |
-    | width | <span class="type-label int64">INT64</span> | :material-close: | Optional: SVG width. Defaults to 120 |
-    | height | <span class="type-label int64">INT64</span> | :material-close: | Optional: SVG height. Defaults to 48 |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | axisRef | <span class="type-label anyref">ANYREF</span> <span class="type-label expr">EXPR</span> | :material-check: |  | Axis reference column |
+    | measureRef | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: |  | Measure expression |
+    | color | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional box fill color. Defaults to Power BI theme color |
+    | showOutliers | <span class="type-label boolean">BOOLEAN</span> | :material-close: | `#!dax FALSE()` | Optional: show outlier points. Defaults to FALSE |
+    | width | <span class="type-label int64">INT64</span> | :material-close: | `#!dax 120` | Optional: SVG width. Defaults to 120 |
+    | height | <span class="type-label int64">INT64</span> | :material-close: | `#!dax 48` | Optional: SVG height. Defaults to 48 |
 
     <span class="type-label string">STRING</span> SVG Box Plot
 
@@ -27,7 +27,7 @@ Renders a box plot as an SVG data URI showing statistical distribution
     DaxLib.SVG.Viz.Boxplot(
         Products[Product],  // axisRefColumn
         [Total Cost],       // measureRefExpr
-        BLANK(),            // color (uses default theme)
+        ,                   // color
         TRUE,               // showOutliers
         200,                // width
         60                  // height
@@ -43,21 +43,23 @@ Renders a box plot as an SVG data URI showing statistical distribution
     		(
     			axisRef: ANYREF EXPR,
     			measureRef: NUMERIC EXPR,
-    			color: STRING,
-    			showOutliers: BOOLEAN,
-    			width: INT64,
-    			height: INT64
+    			color: STRING = BLANK(),
+    			showOutliers: BOOLEAN = FALSE(),
+    			width: INT64 = 120,
+    			height: INT64 = 48
     		) =>
     
-    			VAR _W = IF( ISBLANK( width ), 120, width )
-    			VAR _H = IF( ISBLANK( height ), 48, height )
-    			VAR _Color = IF( NOT ISBLANK( color ), color, DaxLib.SVG.Color.Theme( "Power BI", 1 ) )
     			VAR _Marks =
     				DaxLib.SVG.Compound.Boxplot(
-    					0, 0, _W, _H, 0, 0,
-    					axisRef, measureRef, _Color, "#605E5C", showOutliers, BLANK()
+    					0, 
+                        0, 
+                        width, 
+                        height,
+    					axisRef,
+                        measureRef, 
+                        color
     				)
     
     			RETURN
-    				IF( NOT ISBLANK( _Marks ), DaxLib.SVG.SVG( "100%", "100%", "0 0 " & _W & " " & _H, _Marks, BLANK() ) )
+    				IF( NOT ISBLANK( _Marks ), DaxLib.SVG.SVG( "100%", "100%", _Marks, "0 0 " & width & " " & height ) )
     ```

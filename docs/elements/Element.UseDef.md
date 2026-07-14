@@ -10,12 +10,12 @@ Reference a previously defined SVG element with optional positioning and styling
     DaxLib.SVG.Element.UseDef( defId, x, y, transforms )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | defId | <span class="type-label string">STRING</span> | :material-check: | The identifier of the defined element to use |
-    | x | <span class="type-label string">STRING</span> | :material-close: | Optional: X position where the element should be placed |
-    | y | <span class="type-label string">STRING</span> | :material-close: | Optional: Y position where the element should be placed |
-    | transforms | <span class="type-label string">STRING</span> | :material-close: | Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | defId | <span class="type-label string">STRING</span> | :material-check: |  | The identifier of the defined element to use |
+    | x | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: X position where the element should be placed |
+    | y | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Y position where the element should be placed |
+    | transforms | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |
 
     <span class="type-label string">STRING</span> <use> element
 
@@ -141,9 +141,9 @@ Reference a previously defined SVG element with optional positioning and styling
     function 'DaxLib.SVG.Element.UseDef' =
     		(
     			defId: STRING,
-    			x: STRING,
-    			y: STRING,
-    			transforms: STRING
+    			x: STRING = BLANK(),
+    			y: STRING = BLANK(),
+    			transforms: STRING = BLANK()
     		) =>
     
     			"<use" &

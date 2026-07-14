@@ -7,22 +7,22 @@ Creates a ProgressBar compound SVG visual
 === "Syntax"
 
     ```dax
-    DaxLib.SVG.Compound.ProgressBar( x, y, width, height, paddingX, paddingY, valueRef, trackRef, fillColor, trackColor, orientation )
+    DaxLib.SVG.Compound.ProgressBar( x, y, width, height, valueRef, trackRef, fillColor, trackColor, orientation, paddingX, paddingY )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | x | <span class="type-label int64">INT64</span> | :material-check: | The x position of the compound |
-    | y | <span class="type-label int64">INT64</span> | :material-check: | The y position of the compound |
-    | width | <span class="type-label int64">INT64</span> | :material-check: | The width of the compound |
-    | height | <span class="type-label int64">INT64</span> | :material-check: | The height of the compound |
-    | paddingX | <span class="type-label number">DECIMAL</span> | :material-close: | Optional: Horizontal padding percentage (0.0-1.0). Defaults to 0 |
-    | paddingY | <span class="type-label number">DECIMAL</span> | :material-close: | Optional: Vertical padding percentage (0.0-1.0). Defaults to 0 |
-    | valueRef | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: | Value expression (the bar measure) |
-    | trackRef | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-close: | Optional: Track measure (maximum value, can vary per context). Defaults to MAX(1, ABS(valueRef)) |
-    | fillColor | <span class="type-label string">STRING</span> | :material-close: | Optional: Progress color. Defaults to "#0F6CBD" |
-    | trackColor | <span class="type-label string">STRING</span> | :material-close: | Optional: Track color. Defaults to "#E1DFDD" |
-    | orientation | <span class="type-label string">STRING</span> | :material-close: | "Horizontal" or "Vertical". Defaults to "Horizontal" |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | x | <span class="type-label int64">INT64</span> | :material-check: |  | The x position of the compound |
+    | y | <span class="type-label int64">INT64</span> | :material-check: |  | The y position of the compound |
+    | width | <span class="type-label int64">INT64</span> | :material-check: |  | The width of the compound |
+    | height | <span class="type-label int64">INT64</span> | :material-check: |  | The height of the compound |
+    | valueRef | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: |  | Value expression (the bar measure) |
+    | trackRef | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-close: | `#!dax BLANK()` | Optional: Track measure (maximum value, can vary per context). Defaults to MAX(1, ABS(valueRef)) |
+    | fillColor | <span class="type-label string">STRING</span> | :material-close: | `#!dax "#0F6CBD"` | Optional: Progress color. Defaults to "#0F6CBD" |
+    | trackColor | <span class="type-label string">STRING</span> | :material-close: | `#!dax "#E1DFDD"` | Optional: Track color. Defaults to "#E1DFDD" |
+    | orientation | <span class="type-label string">STRING</span> | :material-close: | `#!dax "Horizontal"` | "Horizontal" or "Vertical". Defaults to "Horizontal" |
+    | paddingX | <span class="type-label number">DECIMAL</span> | :material-close: | `#!dax 0.05` | Optional: Horizontal padding percentage (0.0-1.0). Defaults to 0.05 |
+    | paddingY | <span class="type-label number">DECIMAL</span> | :material-close: | `#!dax 0.02` | Optional: Vertical padding percentage (0.0-1.0). Defaults to 0.02 |
 
     <span class="type-label string">STRING</span> SVG Progress Bar
 
@@ -38,13 +38,13 @@ Creates a ProgressBar compound SVG visual
             0,                  // y
             500,                // width
             100,                // height
-            0.02,               // paddingX
-            0.05,               // paddingY
             [Completed],        // valueRef
             [Target],           // trackRef
             "#EC008C",          // fillColor
             "#E1DFDD",          // trackColor
-            "Horizontal"        // orientation
+            "Horizontal",       // orientation
+            0.02,               // paddingX
+            0.05                // paddingY
         ),
         BLANK()
     )
@@ -59,13 +59,13 @@ Creates a ProgressBar compound SVG visual
     			y: INT64,
     			width: INT64,
     			height: INT64,
-    			paddingX: DOUBLE,
-    			paddingY: DOUBLE,
     			valueRef: NUMERIC EXPR,
-    			trackRef: NUMERIC EXPR,
-    			fillColor: STRING,
-    			trackColor: STRING,
-    			orientation: STRING
+    			trackRef: NUMERIC EXPR = BLANK(),
+    			fillColor: STRING = "#0F6CBD",
+    			trackColor: STRING = "#E1DFDD",
+    			orientation: STRING = "Horizontal",
+    			paddingX: DOUBLE = 0.05,
+    			paddingY: DOUBLE = 0.02
     		) =>
     
     			VAR _X = x + (width * (IF(ISBLANK(paddingX), 0, paddingX) / 2))
@@ -89,8 +89,7 @@ Creates a ProgressBar compound SVG visual
     					_Height,
     					3,
     					3,
-    					DaxLib.SVG.Attr.Shapes( _TrackColor, 1, BLANK(), _TrackColor, 1, BLANK(), BLANK() ),
-    					BLANK()
+    					DaxLib.SVG.Attr.Shapes( _TrackColor, 1, BLANK(), _TrackColor, 1 )
     				)
     
     			VAR _FillW = IF( _Orientation = "Horizontal", _Width * _Pct, _Width )
@@ -106,8 +105,7 @@ Creates a ProgressBar compound SVG visual
     					_FillH,
     					3,
     					3,
-    					DaxLib.SVG.Attr.Shapes( _FillColor, 0.95, BLANK(), _FillColor, 1, BLANK(), BLANK() ),
-    					BLANK()
+    					DaxLib.SVG.Attr.Shapes( _FillColor, 0.95, BLANK(), _FillColor, 1 )
     				)
     
     			RETURN

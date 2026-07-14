@@ -8,11 +8,11 @@ Create a gradient stop element
     DaxLib.SVG.Def.GradientStop( offset, color, opacity )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | offset | <span class="type-label string">STRING</span> | :material-check: | Stop position |
-    | color | <span class="type-label string">STRING</span> | :material-check: | Color value (hex or named color) |
-    | opacity | <span class="type-label string">STRING</span> | :material-close: | Optional: Opacity value |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | offset | <span class="type-label string">STRING</span> | :material-check: |  | Stop position |
+    | color | <span class="type-label string">STRING</span> | :material-check: |  | Color value (hex or named color) |
+    | opacity | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Opacity value |
 
     <span class="type-label string">STRING</span> <stop> element
 
@@ -30,7 +30,7 @@ Create a gradient stop element
     		(
     			offset: STRING,
     			color: STRING,
-    			opacity: STRING
+    			opacity: STRING = BLANK()
     		) =>
     
     			"<stop offset='" & offset & 

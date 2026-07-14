@@ -10,14 +10,14 @@ Generates SVG line element
     DaxLib.SVG.Element.Line( x1, y1, x2, y2, attributes, transforms )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | x1 | <span class="type-label string">STRING</span> | :material-check: | Starting X position (left edge is 0) |
-    | y1 | <span class="type-label string">STRING</span> | :material-check: | Starting Y position (top edge is 0) |
-    | x2 | <span class="type-label string">STRING</span> | :material-check: | Ending X position (left edge is 0) |
-    | y2 | <span class="type-label string">STRING</span> | :material-check: | Ending Y position (top edge is 0) |
-    | attributes | <span class="type-label string">STRING</span> | :material-close: | Optional: Direct SVG attributes to apply (e.g., "stroke-dasharray='5,5' marker-end='url(#arrow)'"), can generate with `DaxLib.SVG.Attr.*` or manually |
-    | transforms | <span class="type-label string">STRING</span> | :material-close: | Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | x1 | <span class="type-label string">STRING</span> | :material-check: |  | Starting X position (left edge is 0) |
+    | y1 | <span class="type-label string">STRING</span> | :material-check: |  | Starting Y position (top edge is 0) |
+    | x2 | <span class="type-label string">STRING</span> | :material-check: |  | Ending X position (left edge is 0) |
+    | y2 | <span class="type-label string">STRING</span> | :material-check: |  | Ending Y position (top edge is 0) |
+    | attributes | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Direct SVG attributes to apply (e.g., "stroke-dasharray='5,5' marker-end='url(#arrow)'"), can generate with `DaxLib.SVG.Attr.*` or manually |
+    | transforms | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Transformation to apply (can be generated with `DaxLib.SVG.Transforms`) |
 
     <span class="type-label string">STRING</span> <line> element
 
@@ -60,8 +60,8 @@ Generates SVG line element
     			y1: STRING,
     			x2: STRING,
     			y2: STRING,
-    			attributes: STRING,
-    			transforms: STRING
+    			attributes: STRING = BLANK(),
+    			transforms: STRING = BLANK()
     		) =>  
     			
     			"<line" &

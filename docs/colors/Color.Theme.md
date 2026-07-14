@@ -8,10 +8,10 @@ Select theme color, wrapping around to the start if variant exceeds available op
     DaxLib.SVG.Color.Theme( themeName, variant )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | themeName | <span class="type-label string">STRING</span> | :material-check: | The theme name e.g. "Office", "Power BI" |
-    | variant | <span class="type-label int64">INT64</span> | :material-check: | The variant index (1-N, wraps around if exceeds available variants) |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | themeName | <span class="type-label string">STRING</span> | :material-check: |  | The theme name e.g. "Office", "Power BI" |
+    | variant | <span class="type-label int64">INT64</span> | :material-check: |  | The variant index (1-N, wraps around if exceeds available variants) |
 
     <span class="type-label string">STRING</span> hex color code
 

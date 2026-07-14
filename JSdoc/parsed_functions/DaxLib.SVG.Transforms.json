@@ -9,7 +9,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: Translation coordinates (e.g., \"10,20\")",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "rotate",
@@ -17,7 +17,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: Rotation with optional center point (e.g., \"45\" or \"45 50 50\")",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "scale",
@@ -25,7 +25,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: Scale factors (e.g., \"2\" or \"2,1.5\")",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "skewX",
@@ -33,7 +33,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: Horizontal skew angle in degrees",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "skewY",
@@ -41,13 +41,13 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: Vertical skew angle in degrees",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     }
   ],
   "return_type": "STRING",
   "return_type_label": "<span class=\"type-label string\">STRING</span>",
   "return_description": "A transform attribute value that can be used with the transform attribute of SVG elements.",
-  "code": "function 'DaxLib.SVG.Transforms' =\n\t\t(\n\t\t\ttranslate: STRING,\n\t\t\trotate: STRING,\n\t\t\tscale: STRING,\n\t\t\tskewX: STRING,\n\t\t\tskewY: STRING\n\t\t) =>\n\n\t\t\tIF(NOT ISBLANK(translate), \"translate(\" & translate & \") \") &\n\t\t\tIF(NOT ISBLANK(rotate), \"rotate(\" & rotate & \") \") &\n\t\t\tIF(NOT ISBLANK(scale), \"scale(\" & scale & \") \") &\n\t\t\tIF(NOT ISBLANK(skewX), \"skewX(\" & skewX & \") \") &\n\t\t\tIF(NOT ISBLANK(skewY), \"skewY(\" & skewY & \") \")",
+  "code": "function 'DaxLib.SVG.Transforms' =\n\t\t(\n\t\t\ttranslate: STRING = BLANK(),\n\t\t\trotate: STRING = BLANK(),\n\t\t\tscale: STRING = BLANK(),\n\t\t\tskewX: STRING = BLANK(),\n\t\t\tskewY: STRING = BLANK()\n\t\t) =>\n\n\t\t\tIF(NOT ISBLANK(translate), \"translate(\" & translate & \") \") &\n\t\t\tIF(NOT ISBLANK(rotate), \"rotate(\" & rotate & \") \") &\n\t\t\tIF(NOT ISBLANK(scale), \"scale(\" & scale & \") \") &\n\t\t\tIF(NOT ISBLANK(skewX), \"skewX(\" & skewX & \") \") &\n\t\t\tIF(NOT ISBLANK(skewY), \"skewY(\" & skewY & \") \")",
   "example": null,
   "author": null,
   "version": null,
@@ -55,8 +55,8 @@
   "see": null,
   "deprecated": null,
   "sections": {
-    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Transforms( translate, rotate, scale, skewX, skewY )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | translate | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Translation coordinates (e.g., \"10,20\") |\n    | rotate | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Rotation with optional center point (e.g., \"45\" or \"45 50 50\") |\n    | scale | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Scale factors (e.g., \"2\" or \"2,1.5\") |\n    | skewX | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Horizontal skew angle in degrees |\n    | skewY | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Vertical skew angle in degrees |\n\n    <span class=\"type-label string\">STRING</span> A transform attribute value that can be used with the transform attribute of SVG elements.",
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Transforms( translate, rotate, scale, skewX, skewY )\n    ```\n\n    | Parameter | Type | Required | Default | Description |\n    |:---:|:---:|:---:|:---:|---|\n    | translate | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Translation coordinates (e.g., \"10,20\") |\n    | rotate | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Rotation with optional center point (e.g., \"45\" or \"45 50 50\") |\n    | scale | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Scale factors (e.g., \"2\" or \"2,1.5\") |\n    | skewX | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Horizontal skew angle in degrees |\n    | skewY | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Vertical skew angle in degrees |\n\n    <span class=\"type-label string\">STRING</span> A transform attribute value that can be used with the transform attribute of SVG elements.",
     "example": "",
-    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Transforms' =\n    \t\t(\n    \t\t\ttranslate: STRING,\n    \t\t\trotate: STRING,\n    \t\t\tscale: STRING,\n    \t\t\tskewX: STRING,\n    \t\t\tskewY: STRING\n    \t\t) =>\n    \n    \t\t\tIF(NOT ISBLANK(translate), \"translate(\" & translate & \") \") &\n    \t\t\tIF(NOT ISBLANK(rotate), \"rotate(\" & rotate & \") \") &\n    \t\t\tIF(NOT ISBLANK(scale), \"scale(\" & scale & \") \") &\n    \t\t\tIF(NOT ISBLANK(skewX), \"skewX(\" & skewX & \") \") &\n    \t\t\tIF(NOT ISBLANK(skewY), \"skewY(\" & skewY & \") \")\n    ```"
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Transforms' =\n    \t\t(\n    \t\t\ttranslate: STRING = BLANK(),\n    \t\t\trotate: STRING = BLANK(),\n    \t\t\tscale: STRING = BLANK(),\n    \t\t\tskewX: STRING = BLANK(),\n    \t\t\tskewY: STRING = BLANK()\n    \t\t) =>\n    \n    \t\t\tIF(NOT ISBLANK(translate), \"translate(\" & translate & \") \") &\n    \t\t\tIF(NOT ISBLANK(rotate), \"rotate(\" & rotate & \") \") &\n    \t\t\tIF(NOT ISBLANK(scale), \"scale(\" & scale & \") \") &\n    \t\t\tIF(NOT ISBLANK(skewX), \"skewX(\" & skewX & \") \") &\n    \t\t\tIF(NOT ISBLANK(skewY), \"skewY(\" & skewY & \") \")\n    ```"
   }
 }

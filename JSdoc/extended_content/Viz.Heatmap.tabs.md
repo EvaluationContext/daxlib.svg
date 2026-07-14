@@ -4,7 +4,7 @@
     DaxLib.SVG.Viz.Heatmap(
         Products[Product],  // axisRefColumn
         [Total Cost],       // measureRefExpr
-        BLANK(),            // color (uses default theme)
+        ,                   // color
         200,                // width
         60                  // height
     )

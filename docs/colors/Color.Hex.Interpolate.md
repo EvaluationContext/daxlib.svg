@@ -8,11 +8,11 @@ Interpolate between two hex colors by a given percentage
     DaxLib.SVG.Color.Hex.Interpolate( startHexColor, endHexColor, percentage )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | startHexColor | <span class="type-label string">STRING</span> | :material-check: | The starting hex color (e.g., "#FF0000") |
-    | endHexColor | <span class="type-label string">STRING</span> | :material-check: | The ending hex color (e.g., "#0000FF") |
-    | percentage | <span class="type-label number">DECIMAL</span> | :material-check: | The interpolation percentage (0.0 = startColor, 1.0 = endColor) |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | startHexColor | <span class="type-label string">STRING</span> | :material-check: |  | The starting hex color (e.g., "#FF0000") |
+    | endHexColor | <span class="type-label string">STRING</span> | :material-check: |  | The ending hex color (e.g., "#0000FF") |
+    | percentage | <span class="type-label number">DECIMAL</span> | :material-check: |  | The interpolation percentage (0.0 = startColor, 1.0 = endColor) |
 
     <span class="type-label string">STRING</span> Interpolated hex color code
 

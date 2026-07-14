@@ -25,7 +25,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: Start X position",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "y1",
@@ -33,7 +33,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: Start Y position",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "x2",
@@ -41,7 +41,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: End X position",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "y2",
@@ -49,13 +49,13 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: End Y position",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     }
   ],
   "return_type": "STRING",
   "return_type_label": "<span class=\"type-label string\">STRING</span>",
   "return_description": "<linearGradient> definition",
-  "code": "function 'DaxLib.SVG.Def.LinearGradient' =\n\t\t(\n\t\t\tdefId: STRING,\n\t\t\tstops: STRING,\n\t\t\tx1: STRING,\n\t\t\ty1: STRING,\n\t\t\tx2: STRING,\n\t\t\ty2: STRING\n\t\t) =>\n\t\t\t\n\t\t\t\"<linearGradient\" & \n\t\t\t\" id='\" & defId & \"'\" &\n\t\t\tIF( NOT ISBLANK( x1 ), \" x1='\" & x1 & \"'\" ) &\n\t\t\tIF( NOT ISBLANK( y1 ), \" y1='\" & y1 & \"'\" ) &\n\t\t\tIF( NOT ISBLANK( x2 ), \" x2='\" & x2 & \"'\" ) &\n\t\t\tIF( NOT ISBLANK( y2 ), \" y2='\" & y2 & \"'\" ) &\n\t\t\t\">\" &\n\t\t\tstops &\n\t\t\t\"</linearGradient>\"",
+  "code": "function 'DaxLib.SVG.Def.LinearGradient' =\n\t\t(\n\t\t\tdefId: STRING,\n\t\t\tstops: STRING,\n\t\t\tx1: STRING = BLANK(),\n\t\t\ty1: STRING = BLANK(),\n\t\t\tx2: STRING = BLANK(),\n\t\t\ty2: STRING = BLANK()\n\t\t) =>\n\t\t\t\n\t\t\t\"<linearGradient\" & \n\t\t\t\" id='\" & defId & \"'\" &\n\t\t\tIF( NOT ISBLANK( x1 ), \" x1='\" & x1 & \"'\" ) &\n\t\t\tIF( NOT ISBLANK( y1 ), \" y1='\" & y1 & \"'\" ) &\n\t\t\tIF( NOT ISBLANK( x2 ), \" x2='\" & x2 & \"'\" ) &\n\t\t\tIF( NOT ISBLANK( y2 ), \" y2='\" & y2 & \"'\" ) &\n\t\t\t\">\" &\n\t\t\tstops &\n\t\t\t\"</linearGradient>\"",
   "example": null,
   "author": null,
   "version": null,
@@ -63,8 +63,8 @@
   "see": null,
   "deprecated": null,
   "sections": {
-    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Def.LinearGradient( defId, stops, x1, y1, x2, y2 )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | defId | <span class=\"type-label string\">STRING</span> | :material-check: | The unique identifier for the gradient |\n    | stops | <span class=\"type-label string\">STRING</span> | :material-check: | Concatenated list of one or more `DaxLib.SVG.Def.GradientStop` elements |\n    | x1 | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Start X position |\n    | y1 | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Start Y position |\n    | x2 | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: End X position |\n    | y2 | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: End Y position |\n\n    <span class=\"type-label string\">STRING</span> <linearGradient> definition",
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Def.LinearGradient( defId, stops, x1, y1, x2, y2 )\n    ```\n\n    | Parameter | Type | Required | Default | Description |\n    |:---:|:---:|:---:|:---:|---|\n    | defId | <span class=\"type-label string\">STRING</span> | :material-check: |  | The unique identifier for the gradient |\n    | stops | <span class=\"type-label string\">STRING</span> | :material-check: |  | Concatenated list of one or more `DaxLib.SVG.Def.GradientStop` elements |\n    | x1 | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Start X position |\n    | y1 | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Start Y position |\n    | x2 | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: End X position |\n    | y2 | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: End Y position |\n\n    <span class=\"type-label string\">STRING</span> <linearGradient> definition",
     "example": "",
-    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Def.LinearGradient' =\n    \t\t(\n    \t\t\tdefId: STRING,\n    \t\t\tstops: STRING,\n    \t\t\tx1: STRING,\n    \t\t\ty1: STRING,\n    \t\t\tx2: STRING,\n    \t\t\ty2: STRING\n    \t\t) =>\n    \t\t\t\n    \t\t\t\"<linearGradient\" & \n    \t\t\t\" id='\" & defId & \"'\" &\n    \t\t\tIF( NOT ISBLANK( x1 ), \" x1='\" & x1 & \"'\" ) &\n    \t\t\tIF( NOT ISBLANK( y1 ), \" y1='\" & y1 & \"'\" ) &\n    \t\t\tIF( NOT ISBLANK( x2 ), \" x2='\" & x2 & \"'\" ) &\n    \t\t\tIF( NOT ISBLANK( y2 ), \" y2='\" & y2 & \"'\" ) &\n    \t\t\t\">\" &\n    \t\t\tstops &\n    \t\t\t\"</linearGradient>\"\n    ```"
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Def.LinearGradient' =\n    \t\t(\n    \t\t\tdefId: STRING,\n    \t\t\tstops: STRING,\n    \t\t\tx1: STRING = BLANK(),\n    \t\t\ty1: STRING = BLANK(),\n    \t\t\tx2: STRING = BLANK(),\n    \t\t\ty2: STRING = BLANK()\n    \t\t) =>\n    \t\t\t\n    \t\t\t\"<linearGradient\" & \n    \t\t\t\" id='\" & defId & \"'\" &\n    \t\t\tIF( NOT ISBLANK( x1 ), \" x1='\" & x1 & \"'\" ) &\n    \t\t\tIF( NOT ISBLANK( y1 ), \" y1='\" & y1 & \"'\" ) &\n    \t\t\tIF( NOT ISBLANK( x2 ), \" x2='\" & x2 & \"'\" ) &\n    \t\t\tIF( NOT ISBLANK( y2 ), \" y2='\" & y2 & \"'\" ) &\n    \t\t\t\">\" &\n    \t\t\tstops &\n    \t\t\t\"</linearGradient>\"\n    ```"
   }
 }

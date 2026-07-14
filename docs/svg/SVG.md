@@ -8,16 +8,16 @@ Wraps content in SVG container for Power BI visualization
 === "Syntax"
 
     ```dax
-    DaxLib.SVG.SVG( width, height, viewbox, contents, sortValue )
+    DaxLib.SVG.SVG( width, height, contents, viewbox, sortValue )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | width | <span class="type-label string">STRING</span> | :material-check: | width (pixels or percentage) |
-    | height | <span class="type-label string">STRING</span> | :material-check: | height (pixels or percentage) |
-    | viewbox | <span class="type-label string">STRING</span> | :material-close: | Optional: viewBox (e.g., "0 0 100 100") |
-    | contents | <span class="type-label string">STRING</span> | :material-check: | To include one or more SVG elements (e.g., from DaxLib.SVG.Element functions) |
-    | sortValue | <span class="type-label number">NUMERIC</span> | :material-close: | Optional: Sort value for ordering in tables |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | width | <span class="type-label string">STRING</span> | :material-check: |  | width (pixels or percentage) |
+    | height | <span class="type-label string">STRING</span> | :material-check: |  | height (pixels or percentage) |
+    | contents | <span class="type-label string">STRING</span> | :material-check: |  | To include one or more SVG elements (e.g., from DaxLib.SVG.Element functions) |
+    | viewbox | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: viewBox (e.g., "0 0 100 100") |
+    | sortValue | <span class="type-label number">NUMERIC</span> | :material-close: | `#!dax BLANK()` | Optional: Sort value for ordering in tables |
 
     <span class="type-label string">STRING</span> SVG string
 
@@ -27,8 +27,8 @@ Wraps content in SVG container for Power BI visualization
 	DaxLib.SVG.SVG(
 		"100",
 		"100",
-		"viewBox='0 0 100 100' ",
 		DaxLib.SVG.Element.Circle("50", "50", "40", "fill='blue'", BLANK()),
+		"0 0 100 100",
 		1
 	)
 	```
@@ -40,9 +40,9 @@ Wraps content in SVG container for Power BI visualization
     		(
     			width : STRING,
     			height : STRING, 
-    			viewbox : STRING,
     			contents : STRING,
-    			sortValue : NUMERIC
+    			viewbox : STRING = BLANK(),
+    			sortValue : NUMERIC = BLANK()
     		) =>
     
     			"data:image/svg+xml;utf8," &

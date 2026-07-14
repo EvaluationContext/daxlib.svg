@@ -20,14 +20,6 @@
       "default_value": null
     },
     {
-      "name": "viewbox",
-      "type": "string",
-      "type_label": "<span class=\"type-label string\">STRING</span>",
-      "description": "Optional: viewBox (e.g., \"0 0 100 100\")",
-      "optional": true,
-      "default_value": null
-    },
-    {
       "name": "contents",
       "type": "string",
       "type_label": "<span class=\"type-label string\">STRING</span>",
@@ -36,18 +28,26 @@
       "default_value": null
     },
     {
+      "name": "viewbox",
+      "type": "string",
+      "type_label": "<span class=\"type-label string\">STRING</span>",
+      "description": "Optional: viewBox (e.g., \"0 0 100 100\")",
+      "optional": true,
+      "default_value": "BLANK()"
+    },
+    {
       "name": "sortValue",
       "type": "numeric",
       "type_label": "<span class=\"type-label number\">NUMERIC</span>",
       "description": "Optional: Sort value for ordering in tables",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     }
   ],
   "return_type": "STRING",
   "return_type_label": "<span class=\"type-label string\">STRING</span>",
   "return_description": "SVG string",
-  "code": "function 'DaxLib.SVG.SVG' =\n\t\t(\n\t\t\twidth : STRING,\n\t\t\theight : STRING, \n\t\t\tviewbox : STRING,\n\t\t\tcontents : STRING,\n\t\t\tsortValue : NUMERIC\n\t\t) =>\n\n\t\t\t\"data:image/svg+xml;utf8,\" &\n\t\t\t\"<svg \" & \n\t\t\t\"width='\" & width & \"' height='\" & height & \"' \" &\n\t\t\tIF( NOT ISBLANK( viewbox ), \"viewBox='\" & viewbox & \"' \" ) &\n\t\t\t\"xmlns='http://www.w3.org/2000/svg'>\" &\n\t\t\tIF( NOT ISBLANK( sortValue ), \"<desc>\" & FORMAT( sortValue, \"000000000000\" ) & \"</desc>\" ) &\n\t\t\tcontents &\n\t\t\t\"</svg>\"",
+  "code": "function 'DaxLib.SVG.SVG' =\n\t\t(\n\t\t\twidth : STRING,\n\t\t\theight : STRING, \n\t\t\tcontents : STRING,\n\t\t\tviewbox : STRING = BLANK(),\n\t\t\tsortValue : NUMERIC = BLANK()\n\t\t) =>\n\n\t\t\t\"data:image/svg+xml;utf8,\" &\n\t\t\t\"<svg \" & \n\t\t\t\"width='\" & width & \"' height='\" & height & \"' \" &\n\t\t\tIF( NOT ISBLANK( viewbox ), \"viewBox='\" & viewbox & \"' \" ) &\n\t\t\t\"xmlns='http://www.w3.org/2000/svg'>\" &\n\t\t\tIF( NOT ISBLANK( sortValue ), \"<desc>\" & FORMAT( sortValue, \"000000000000\" ) & \"</desc>\" ) &\n\t\t\tcontents &\n\t\t\t\"</svg>\"",
   "example": null,
   "author": null,
   "version": null,
@@ -55,8 +55,8 @@
   "see": null,
   "deprecated": null,
   "sections": {
-    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.SVG( width, height, viewbox, contents, sortValue )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | width | <span class=\"type-label string\">STRING</span> | :material-check: | width (pixels or percentage) |\n    | height | <span class=\"type-label string\">STRING</span> | :material-check: | height (pixels or percentage) |\n    | viewbox | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: viewBox (e.g., \"0 0 100 100\") |\n    | contents | <span class=\"type-label string\">STRING</span> | :material-check: | To include one or more SVG elements (e.g., from DaxLib.SVG.Element functions) |\n    | sortValue | <span class=\"type-label number\">NUMERIC</span> | :material-close: | Optional: Sort value for ordering in tables |\n\n    <span class=\"type-label string\">STRING</span> SVG string",
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.SVG( width, height, contents, viewbox, sortValue )\n    ```\n\n    | Parameter | Type | Required | Default | Description |\n    |:---:|:---:|:---:|:---:|---|\n    | width | <span class=\"type-label string\">STRING</span> | :material-check: |  | width (pixels or percentage) |\n    | height | <span class=\"type-label string\">STRING</span> | :material-check: |  | height (pixels or percentage) |\n    | contents | <span class=\"type-label string\">STRING</span> | :material-check: |  | To include one or more SVG elements (e.g., from DaxLib.SVG.Element functions) |\n    | viewbox | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: viewBox (e.g., \"0 0 100 100\") |\n    | sortValue | <span class=\"type-label number\">NUMERIC</span> | :material-close: | `#!dax BLANK()` | Optional: Sort value for ordering in tables |\n\n    <span class=\"type-label string\">STRING</span> SVG string",
     "example": "",
-    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.SVG' =\n    \t\t(\n    \t\t\twidth : STRING,\n    \t\t\theight : STRING, \n    \t\t\tviewbox : STRING,\n    \t\t\tcontents : STRING,\n    \t\t\tsortValue : NUMERIC\n    \t\t) =>\n    \n    \t\t\t\"data:image/svg+xml;utf8,\" &\n    \t\t\t\"<svg \" & \n    \t\t\t\"width='\" & width & \"' height='\" & height & \"' \" &\n    \t\t\tIF( NOT ISBLANK( viewbox ), \"viewBox='\" & viewbox & \"' \" ) &\n    \t\t\t\"xmlns='http://www.w3.org/2000/svg'>\" &\n    \t\t\tIF( NOT ISBLANK( sortValue ), \"<desc>\" & FORMAT( sortValue, \"000000000000\" ) & \"</desc>\" ) &\n    \t\t\tcontents &\n    \t\t\t\"</svg>\"\n    ```"
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.SVG' =\n    \t\t(\n    \t\t\twidth : STRING,\n    \t\t\theight : STRING, \n    \t\t\tcontents : STRING,\n    \t\t\tviewbox : STRING = BLANK(),\n    \t\t\tsortValue : NUMERIC = BLANK()\n    \t\t) =>\n    \n    \t\t\t\"data:image/svg+xml;utf8,\" &\n    \t\t\t\"<svg \" & \n    \t\t\t\"width='\" & width & \"' height='\" & height & \"' \" &\n    \t\t\tIF( NOT ISBLANK( viewbox ), \"viewBox='\" & viewbox & \"' \" ) &\n    \t\t\t\"xmlns='http://www.w3.org/2000/svg'>\" &\n    \t\t\tIF( NOT ISBLANK( sortValue ), \"<desc>\" & FORMAT( sortValue, \"000000000000\" ) & \"</desc>\" ) &\n    \t\t\tcontents &\n    \t\t\t\"</svg>\"\n    ```"
   }
 }

@@ -8,9 +8,9 @@ Create a <defs> element from one or more `DaxLib.SVG.Def.*` elements
     DaxLib.SVG.Element.Defs( defs )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | defs | <span class="type-label string">STRING</span> | :material-check: | Concatenated list of def elements to include in a <defs> block |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | defs | <span class="type-label string">STRING</span> | :material-check: |  | Concatenated list of def elements to include in a <defs> block |
 
     <span class="type-label string">STRING</span> <defs> element
 

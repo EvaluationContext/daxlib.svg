@@ -23,7 +23,7 @@
   "see": null,
   "deprecated": null,
   "sections": {
-    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Element.Defs( defs )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | defs | <span class=\"type-label string\">STRING</span> | :material-check: | Concatenated list of def elements to include in a <defs> block |\n\n    <span class=\"type-label string\">STRING</span> <defs> element",
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Element.Defs( defs )\n    ```\n\n    | Parameter | Type | Required | Default | Description |\n    |:---:|:---:|:---:|:---:|---|\n    | defs | <span class=\"type-label string\">STRING</span> | :material-check: |  | Concatenated list of def elements to include in a <defs> block |\n\n    <span class=\"type-label string\">STRING</span> <defs> element",
     "example": "",
     "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Element.Defs' =\n    \t\t(\n    \t\t\tdefs: STRING    // concatenated list of elements to include in a <defs> block\n    \t\t) =>\n    \n    \t\t\t\"<defs>\" &\n    \t\t\tdefs &  \n    \t\t\t\"</defs>\"\n    ```"
   }

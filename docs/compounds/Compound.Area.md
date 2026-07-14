@@ -15,26 +15,26 @@ Creates an Area compound SVG Visual for a numeric x-axis
 === "Syntax"
 
     ```dax
-    DaxLib.SVG.Compound.Area( x, y, width, height, paddingX, paddingY, axisRef, measureRef, fillColor, fillOpacity, strokeColor, minMarkColor, maxMarkColor, showAxis, axisFontSize )
+    DaxLib.SVG.Compound.Area( x, y, width, height, axisRef, measureRef, fillColor, strokeColor, fillOpacity, minMarkColor, maxMarkColor, showAxis, axisFontSize, paddingX, paddingY )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | x | <span class="type-label int64">INT64</span> | :material-check: | The x position of the compound |
-    | y | <span class="type-label int64">INT64</span> | :material-check: | The y position of the compound |
-    | width | <span class="type-label int64">INT64</span> | :material-check: | The width of the compound |
-    | height | <span class="type-label int64">INT64</span> | :material-check: | The height of the compound |
-    | paddingX | <span class="type-label number">DECIMAL</span> | :material-close: | Optional: The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0 |
-    | paddingY | <span class="type-label number">DECIMAL</span> | :material-close: | Optional: The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0 |
-    | axisRef | <span class="type-label anyref">ANYREF</span> <span class="type-label expr">EXPR</span> | :material-check: | The column that the measure will be evaluated against |
-    | measureRef | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: | The measure to evaluate |
-    | fillColor | <span class="type-label string">STRING</span> | :material-check: | The color of the area fill, e.g., "#01B8AA" |
-    | fillOpacity | <span class="type-label number">NUMERIC</span> | :material-close: | Optional: The opacity of the fill (0-1). Defaults to 0.3 |
-    | strokeColor | <span class="type-label string">STRING</span> | :material-check: | The color of the stroke line |
-    | minMarkColor | <span class="type-label string">STRING</span> | :material-close: | Optional: The hex color for the minimum value marker. Omitted if not specified |
-    | maxMarkColor | <span class="type-label string">STRING</span> | :material-close: | Optional: The hex color for the maximum value marker. Omitted if not specified |
-    | showAxis | <span class="type-label boolean">BOOLEAN</span> | :material-close: | Optional: Show axes when TRUE. Defaults to FALSE |
-    | axisFontSize | <span class="type-label int64">INT64</span> | :material-close: | Optional: Axis label font size. Defaults to 10 |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | x | <span class="type-label int64">INT64</span> | :material-check: |  | The x position of the compound |
+    | y | <span class="type-label int64">INT64</span> | :material-check: |  | The y position of the compound |
+    | width | <span class="type-label int64">INT64</span> | :material-check: |  | The width of the compound |
+    | height | <span class="type-label int64">INT64</span> | :material-check: |  | The height of the compound |
+    | axisRef | <span class="type-label anyref">ANYREF</span> <span class="type-label expr">EXPR</span> | :material-check: |  | The column that the measure will be evaluated against |
+    | measureRef | <span class="type-label number">NUMERIC</span> <span class="type-label expr">EXPR</span> | :material-check: |  | The measure to evaluate |
+    | fillColor | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: The color of the area fill, e.g., "#01B8AA". Defaults to "#01B8AA" |
+    | strokeColor | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: The color of the stroke line. Defaults to fillColor |
+    | fillOpacity | <span class="type-label number">NUMERIC</span> | :material-close: | `#!dax 0.3` | Optional: The opacity of the fill (0-1). Defaults to 0.3 |
+    | minMarkColor | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: The hex color for the minimum value marker. Omitted if not specified |
+    | maxMarkColor | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: The hex color for the maximum value marker. Omitted if not specified |
+    | showAxis | <span class="type-label boolean">BOOLEAN</span> | :material-close: | `#!dax FALSE()` | Optional: Show axes when TRUE. Defaults to FALSE |
+    | axisFontSize | <span class="type-label int64">INT64</span> | :material-close: | `#!dax 10` | Optional: Axis label font size. Defaults to 10 |
+    | paddingX | <span class="type-label number">DECIMAL</span> | :material-close: | `#!dax 0.05` | Optional: The horizontal padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0.05 |
+    | paddingY | <span class="type-label number">DECIMAL</span> | :material-close: | `#!dax 0.02` | Optional: The vertical padding percentage (0.0-1.0, e.g., 0.1 = 10% padding). Defaults to 0.02 |
 
     <span class="type-label string">STRING</span> SVG Area Chart
 
@@ -50,17 +50,17 @@ Creates an Area compound SVG Visual for a numeric x-axis
             0,                  // y
             100,                // width
             20,                 // height
-            0.05,               // paddingX
-            0.02,               // paddingY
             Dates[Date],        // axisRef
             [Total Cost],       // measureRef
             "#EC008C",          // fillColor
-            0.2,                // fillOpacity
             "#EC008C",          // strokeColor
+            0.2,                // fillOpacity
             "#D04848",          // minMarkColor
             "#2E8B57",          // maxMarkColor
             TRUE,               // showAxis
-            8                   // axisFontSize
+            8,                  // axisFontSize
+            0.05,               // paddingX
+            0.02                // paddingY
         ),
         BLANK()
     )
@@ -75,27 +75,27 @@ Creates an Area compound SVG Visual for a numeric x-axis
     			y: INT64,
     			width: INT64,
     			height: INT64,
-    			paddingX: DOUBLE,
-    			paddingY: DOUBLE,
     			axisRef: ANYREF EXPR,
     			measureRef: NUMERIC EXPR,
-    			fillColor: STRING,
-    			fillOpacity: NUMERIC,
-    			strokeColor: STRING,
-    			minMarkColor: STRING,
-    			maxMarkColor: STRING,
-    			showAxis: BOOLEAN,
-    			axisFontSize: INT64
+    			fillColor: STRING = BLANK(),
+    			strokeColor: STRING = BLANK(),
+    			fillOpacity: NUMERIC = 0.3,
+    			minMarkColor: STRING = BLANK(),
+    			maxMarkColor: STRING = BLANK(),
+    			showAxis: BOOLEAN = FALSE(),
+    			axisFontSize: INT64 = 10,
+                paddingX: DOUBLE = 0.05,
+    			paddingY: DOUBLE = 0.02
     		) =>
     
     			// Apply padding to dimensions
-    			VAR _X = 			x + (width * (IF(ISBLANK(paddingX), 0, paddingX) / 2))
-    			VAR _Y = 			y + (height * (IF(ISBLANK(paddingY), 0, paddingY) / 2))
-    			VAR _Width = 		width * (1 - IF(ISBLANK(paddingX), 0, paddingX))
-    			VAR _Height = 		height * (1 - IF(ISBLANK(paddingY), 0, paddingY))
+    			VAR _X = 			x + (width * (paddingX / 2))
+    			VAR _Y = 			y + (height * (paddingY / 2))
+    			VAR _Width = 		width * (1 - paddingX)
+    			VAR _Height = 		height * (1 - paddingY)
     
-    			VAR _ShowAxis = IF( ISBLANK( showAxis ), FALSE(), showAxis )
-    			VAR _AxisFontSize = IF( ISBLANK( axisFontSize ), 10, axisFontSize )
+    			VAR _FillColor = IF( NOT ISBLANK( fillColor ), fillColor, "#01B8AA" )
+    			VAR _StrokeColor = IF( NOT ISBLANK( strokeColor ), strokeColor, _FillColor )
     			VAR _AxisIsDate = ISDATETIME( MAX( axisRef ) )
     		
     			VAR _Data = DaxLib.SVG.Data.AxisMeasure( axisRef, measureRef, "Auto" )
@@ -116,8 +116,8 @@ Creates an Area compound SVG Visual for a numeric x-axis
     			VAR _YTickCount = MINX( _NiceY, [@NiceTickCount] )
     
     			// Axis layout
-    			VAR _MaxTickLabelWidth = DaxLib.SVG.Axes.MaxTickLabelWidth( _YMin, _YMax, _YTickCount, _AxisFontSize, 0.56, FALSE() )
-    			VAR _Layout = DaxLib.SVG.Axes.Layout( _X, _Y, _Width, _Height, _ShowAxis, _AxisFontSize, _MaxTickLabelWidth )
+    			VAR _MaxTickLabelWidth = DaxLib.SVG.Axes.MaxTickLabelWidth( _YMin, _YMax, _YTickCount, axisFontSize )
+    			VAR _Layout = DaxLib.SVG.Axes.Layout( _X, _Y, _Width, _Height, _MaxTickLabelWidth, showAxis, axisFontSize )
     			VAR _PlotX = MINX( _Layout, [@PlotX] )
     			VAR _PlotY = MINX( _Layout, [@PlotY] )
     			VAR _PlotWidth = MINX( _Layout, [@PlotWidth] )
@@ -189,33 +189,27 @@ Creates an Area compound SVG Visual for a numeric x-axis
     			// Area Element (using polygon for filled area)
     			VAR _AreaElement =
     				DaxLib.SVG.Element.Polygon(
-    					_PolygonPoints,		// points
+    					_PolygonPoints,
     					DaxLib.SVG.Attr.Shapes(
-    						fillColor, 		// fill
-    						IF( NOT ISBLANK( fillOpacity ), fillOpacity, 0.3 ), // fillOpacity
-    						BLANK(),      	// fillRule
-    						"none",         // stroke
-    						0,              // strokeWidth
-    						BLANK(),        // strokeOpacity
-    						BLANK()         // opacity
-    					),
-    					BLANK()				// transforms
+    						_FillColor,
+    						IF( NOT ISBLANK( fillOpacity ), fillOpacity, 0.3 ),
+    						BLANK(),
+    						"none",
+    						0
+    					)
     				)
     
     			// stroke line on top of the area
     			VAR _StrokeElement = 
     				DaxLib.SVG.Element.Polyline(
-    					_TopPoints,			// points
+    					_TopPoints,
     					DaxLib.SVG.Attr.Shapes(
-    						"none",			// fill
-    						BLANK(),		// fillOpacity
-    						BLANK(),		// fillRule
-    						strokeColor,	// stroke
-    						1,				// strokeWidth
-    						BLANK(),		// strokeOpacity
-    						BLANK()			// opacity
-    					),
-    					BLANK()				// transforms
+    						"none",
+    						BLANK(),
+    						BLANK(),
+    						_StrokeColor,
+    						1
+    					)
     				)
     			
     			// Circle if only one point
@@ -224,17 +218,8 @@ Creates an Area compound SVG Visual for a numeric x-axis
     				DaxLib.SVG.Element.Circle(
     						MINX( _SinglePoint, [@X] ),
     						MINX( _SinglePoint, [@Y] ),
-    						2,               	// r
-    						DaxLib.SVG.Attr.Shapes(
-    							fillColor,     // fill
-    							BLANK(),        // fillOpacity
-    							BLANK(),        // fillRule
-    							BLANK(),        // stroke
-    							BLANK(),        // strokeWidth
-    							BLANK(),        // strokeOpacity
-    							BLANK()         // opacity
-    						),
-    						BLANK()             // transforms
+    						2,
+    						DaxLib.SVG.Attr.Shapes( _FillColor )
     					)
     
     			// Combine elements
@@ -255,39 +240,35 @@ Creates an Area compound SVG Visual for a numeric x-axis
     			VAR _MaxValueAxisIdx = MINX( _MaxValueRow, [@AxisIndex] )
     			VAR _MaxValueVal = MAXX( _MaxValueRow, [@Value] )
     			VAR _MaxPointData = DaxLib.SVG.Axes.Point( "Vertical", _MaxValueAxisIdx, _MaxValueVal, _XMin, _XMax, _YMin, _YMax, _PlotX, _PlotY, _PlotWidth, _PlotHeight )
-    			VAR _MinMarkColor = IF( NOT ISBLANK( minMarkColor ), minMarkColor, fillColor )
-    			VAR _MaxMarkColor = IF( NOT ISBLANK( maxMarkColor ), maxMarkColor, fillColor )
+    			VAR _MinMarkColor = IF( NOT ISBLANK( minMarkColor ), minMarkColor, _FillColor )
+    			VAR _MaxMarkColor = IF( NOT ISBLANK( maxMarkColor ), maxMarkColor, _FillColor )
     			VAR _MinMarkHalo =
     				DaxLib.SVG.Element.Circle(
     					MINX( _MinPointData, [@X] ),
     					MINX( _MinPointData, [@Y] ),
     					3.5,
-    					DaxLib.SVG.Attr.Shapes( "white", 0.7, BLANK(), BLANK(), BLANK(), BLANK(), BLANK() ),
-    					BLANK()
+    					DaxLib.SVG.Attr.Shapes( "white", 0.7 )
     				)
     			VAR _MinMark =
     				DaxLib.SVG.Element.Circle(
     					MINX( _MinPointData, [@X] ),
     					MINX( _MinPointData, [@Y] ),
     					2.5,
-    					DaxLib.SVG.Attr.Shapes( _MinMarkColor, BLANK(), BLANK(), BLANK(), BLANK(), BLANK(), BLANK() ),
-    					BLANK()
+    					DaxLib.SVG.Attr.Shapes( _MinMarkColor )
     				)
     			VAR _MaxMarkHalo =
     				DaxLib.SVG.Element.Circle(
     					MINX( _MaxPointData, [@X] ),
     					MINX( _MaxPointData, [@Y] ),
     					3.5,
-    					DaxLib.SVG.Attr.Shapes( "white", 0.7, BLANK(), BLANK(), BLANK(), BLANK(), BLANK() ),
-    					BLANK()
+    					DaxLib.SVG.Attr.Shapes( "white", 0.7 )
     				)
     			VAR _MaxMark =
     				DaxLib.SVG.Element.Circle(
     					MINX( _MaxPointData, [@X] ),
     					MINX( _MaxPointData, [@Y] ),
     					2.5,
-    					DaxLib.SVG.Attr.Shapes( _MaxMarkColor, BLANK(), BLANK(), BLANK(), BLANK(), BLANK(), BLANK() ),
-    					BLANK()
+    					DaxLib.SVG.Attr.Shapes( _MaxMarkColor )
     				)
     			VAR _MinMaxMarks =
     				IF(
@@ -296,7 +277,7 @@ Creates an Area compound SVG Visual for a numeric x-axis
     						& IF( NOT ISBLANK( maxMarkColor ), _MaxMarkHalo & _MaxMark )
     				)
     
-    			VAR _AxisElements = DaxLib.SVG.Axes.Render( _PlotX, _PlotY, _PlotWidth, _PlotHeight, _XMin, _XMax, _YMin, _YMax, _ShowAxis, _AxisFontSize, _AxisIsDate, FALSE(), 5, _YTickCount )
+    			VAR _AxisElements = DaxLib.SVG.Axes.Render( _PlotX, _PlotY, _PlotWidth, _PlotHeight, _XMin, _XMax, _YMin, _YMax, showAxis, axisFontSize, _AxisIsDate, FALSE(), 5, _YTickCount )
     
     			RETURN
     			

@@ -8,19 +8,19 @@ Maps axis/value data to plot coordinates honoring orientation
     DaxLib.SVG.Axes.Point( orientation, axisIndex, measureValue, xMin, xMax, yMin, yMax, plotX, plotY, plotWidth, plotHeight )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | orientation | <span class="type-label string">STRING</span> | :material-check: | "Horizontal" or "Vertical" |
-    | axisIndex | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | The axis index value to map |
-    | measureValue | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | The measure value to map |
-    | xMin | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | X-axis minimum value |
-    | xMax | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | X-axis maximum value |
-    | yMin | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | Y-axis minimum value |
-    | yMax | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | Y-axis maximum value |
-    | plotX | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | Plot area X origin |
-    | plotY | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | Plot area Y origin |
-    | plotWidth | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | Plot area width |
-    | plotHeight | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: | Plot area height |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | orientation | <span class="type-label string">STRING</span> | :material-check: |  | "Horizontal" or "Vertical" |
+    | axisIndex | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | The axis index value to map |
+    | measureValue | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | The measure value to map |
+    | xMin | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | X-axis minimum value |
+    | xMax | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | X-axis maximum value |
+    | yMin | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | Y-axis minimum value |
+    | yMax | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | Y-axis maximum value |
+    | plotX | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | Plot area X origin |
+    | plotY | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | Plot area Y origin |
+    | plotWidth | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | Plot area width |
+    | plotHeight | <span class="type-label number">NUMERIC</span> <span class="type-label val">VAL</span> | :material-check: |  | Plot area height |
 
     <span class="type-label table">TABLE</span> Single-row table with `@X` and `@Y`
 
@@ -62,8 +62,6 @@ Maps axis/value data to plot coordinates honoring orientation
     			plotHeight: NUMERIC VAL
     		) =>
     
-    			VAR _Orientation = IF( orientation = "Horizontal", "Horizontal", "Vertical" )
-    
     			VAR _AxisX = IF( xMax = xMin, plotX, DaxLib.SVG.Scale.Normalize( axisIndex, xMin, xMax, plotX, plotX + plotWidth ) )
     			VAR _AxisY = IF( xMax = xMin, plotY + plotHeight, DaxLib.SVG.Scale.Normalize( axisIndex, xMin, xMax, plotY + plotHeight, plotY ) )
     
@@ -72,7 +70,7 @@ Maps axis/value data to plot coordinates honoring orientation
     
     			RETURN
     				ROW(
-    					"@X", IF( _Orientation = "Horizontal", _ValueX, _AxisX ),
-    					"@Y", IF( _Orientation = "Horizontal", _AxisY, _ValueY )
+    					"@X", IF( orientation = "Horizontal", _ValueX, _AxisX ),
+    					"@Y", IF( orientation = "Horizontal", _AxisY, _ValueY )
     				)
     ```

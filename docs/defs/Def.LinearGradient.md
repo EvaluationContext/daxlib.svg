@@ -10,14 +10,14 @@ Create a linear gradient definition
     DaxLib.SVG.Def.LinearGradient( defId, stops, x1, y1, x2, y2 )
     ```
 
-    | Parameter | Type | Required | Description |
-    |:---:|:---:|:---:|---|
-    | defId | <span class="type-label string">STRING</span> | :material-check: | The unique identifier for the gradient |
-    | stops | <span class="type-label string">STRING</span> | :material-check: | Concatenated list of one or more `DaxLib.SVG.Def.GradientStop` elements |
-    | x1 | <span class="type-label string">STRING</span> | :material-close: | Optional: Start X position |
-    | y1 | <span class="type-label string">STRING</span> | :material-close: | Optional: Start Y position |
-    | x2 | <span class="type-label string">STRING</span> | :material-close: | Optional: End X position |
-    | y2 | <span class="type-label string">STRING</span> | :material-close: | Optional: End Y position |
+    | Parameter | Type | Required | Default | Description |
+    |:---:|:---:|:---:|:---:|---|
+    | defId | <span class="type-label string">STRING</span> | :material-check: |  | The unique identifier for the gradient |
+    | stops | <span class="type-label string">STRING</span> | :material-check: |  | Concatenated list of one or more `DaxLib.SVG.Def.GradientStop` elements |
+    | x1 | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Start X position |
+    | y1 | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Start Y position |
+    | x2 | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: End X position |
+    | y2 | <span class="type-label string">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: End Y position |
 
     <span class="type-label string">STRING</span> <linearGradient> definition
 
@@ -82,10 +82,10 @@ Create a linear gradient definition
     		(
     			defId: STRING,
     			stops: STRING,
-    			x1: STRING,
-    			y1: STRING,
-    			x2: STRING,
-    			y2: STRING
+    			x1: STRING = BLANK(),
+    			y1: STRING = BLANK(),
+    			x2: STRING = BLANK(),
+    			y2: STRING = BLANK()
     		) =>
     			
     			"<linearGradient" & 

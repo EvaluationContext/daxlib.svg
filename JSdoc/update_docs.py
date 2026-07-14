@@ -16,6 +16,91 @@ class FunctionParameter:
     default_value: Optional[str] = None
 
 
+def parse_function_signature(function_body: str) -> List[Dict]:
+    """Extract parameter names, types, and default values from a DAX UDF signature.
+
+    A DAX UDF signature has the form:
+        ( name1 : TYPE [SUBTYPE ...] [= DEFAULT], name2 : TYPE [= DEFAULT], ... ) => ...
+
+    Returns a list of dicts with keys: name, type, default (or None).
+    """
+    if '(' not in function_body:
+        return []
+
+    start = function_body.index('(')
+    depth = 0
+    end = -1
+    for i in range(start, len(function_body)):
+        ch = function_body[i]
+        if ch == '(':
+            depth += 1
+        elif ch == ')':
+            depth -= 1
+            if depth == 0:
+                end = i
+                break
+
+    if end < 0:
+        return []
+
+    signature_body = function_body[start + 1:end]
+
+    # Split params on commas at depth 0 (respect nested parens for defaults like BLANK())
+    params: List[str] = []
+    depth = 0
+    current: List[str] = []
+    for ch in signature_body:
+        if ch == '(':
+            depth += 1
+            current.append(ch)
+        elif ch == ')':
+            depth -= 1
+            current.append(ch)
+        elif ch == ',' and depth == 0:
+            piece = ''.join(current).strip()
+            if piece:
+                params.append(piece)
+            current = []
+        else:
+            current.append(ch)
+    tail = ''.join(current).strip()
+    if tail:
+        params.append(tail)
+
+    result: List[Dict] = []
+    for p in params:
+        default = None
+        # Split on the first '=' at depth 0
+        eq_idx = -1
+        depth = 0
+        for i, ch in enumerate(p):
+            if ch == '(':
+                depth += 1
+            elif ch == ')':
+                depth -= 1
+            elif ch == '=' and depth == 0:
+                eq_idx = i
+                break
+
+        if eq_idx >= 0:
+            default = p[eq_idx + 1:].strip()
+            name_type = p[:eq_idx].strip()
+        else:
+            name_type = p.strip()
+
+        if ':' in name_type:
+            name, type_str = name_type.split(':', 1)
+            name = name.strip()
+            type_str = type_str.strip().upper()
+        else:
+            name = name_type.strip()
+            type_str = ''
+
+        result.append({'name': name, 'type': type_str, 'default': default})
+
+    return result
+
+
 @dataclass
 class FunctionMetadata:
     """Represents extracted function metadata."""
@@ -169,7 +254,22 @@ def parse_tmdl_functions(tmdl_path: Path) -> List[FunctionMetadata]:
                     description_lines.append(line.strip())
         
             description = ' '.join(description_lines).strip()
-        
+
+            # Parse the actual DAX function signature to pick up default values
+            # declared with the new UDF optional-parameter syntax (`name: TYPE = DEFAULT`).
+            # The signature is authoritative for optionality and default expressions;
+            # JSDoc metadata (types, descriptions) is preserved.
+            sig_params = parse_function_signature(function_body)
+            sig_by_name = {sp['name']: sp for sp in sig_params}
+
+            for param in parameters:
+                sp = sig_by_name.get(param.name)
+                if sp is None:
+                    continue
+                if sp.get('default') is not None:
+                    param.optional = True
+                    param.default_value = sp['default']
+
             # Extract function code (clean up formatting and remove annotations)
             # Split function body to remove annotations
             body_lines = function_body.split('\n')
@@ -295,19 +395,18 @@ def create_syntax_section(func: FunctionMetadata) -> str:
     
     # Parameters table
     if func.parameters:
-        lines.append('    | Parameter | Type | Required | Description |')
-        lines.append('    |:---:|:---:|:---:|---|')
-        
+        lines.append('    | Parameter | Type | Required | Default | Description |')
+        lines.append('    |:---:|:---:|:---:|:---:|---|')
+
         for param in func.parameters:
             type_label = type_to_label(param.type)
             # Use :material-close: for optional, :material-check: for required
             required_icon = ':material-close:' if param.optional else ':material-check:'
-            # Add default value to description if present
-            description = param.description
-            if param.optional and param.default_value:
-                description += f' (default: {param.default_value})'
-            lines.append(f'    | {param.name} | {type_label} | {required_icon} | {description} |')
-        
+            default_cell = f'`#!dax {param.default_value}`' if param.default_value else ''
+            lines.append(
+                f'    | {param.name} | {type_label} | {required_icon} | {default_cell} | {param.description} |'
+            )
+
         lines.append('')
     
     # Return type

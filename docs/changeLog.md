@@ -1,4 +1,14 @@
-## 1.0.1 (Latest)
+## 2.0.0 (Latest)
+
+:material-alert-outline: Some incompatible API changes: optional parameters have been reordered to trail required parameters in `#!dax DaxLib.SVG.Compound.*` and `#!dax DaxLib.SVG.Axes.Layout()`
+
+:octicons-sparkles-fill-16: Optional parameters with default values in all UDFs, leveraging the new [DAX UDF optional parameter syntax](https://www.sqlbi.com/articles/optional-parameters-in-dax-user-defined-functions/)
+
+:octicons-sparkles-fill-16: `#!dax DaxLib.SVG.Compound.Bars()` aligned with the native Power BI bar chart
+
+:material-bug-outline: Resolves [EvaluationContext/daxlib.svg#4](https://github.com/EvaluationContext/daxlib.svg/issues/4)
+
+## 1.0.1
 
 :octicons-sparkles-fill-16: Source library split into individual per-function TMDL files for improved maintainability
 

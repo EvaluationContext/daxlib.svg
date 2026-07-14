@@ -17,7 +17,7 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: Opacity for entire group (0-1, optional)",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     },
     {
       "name": "transforms",
@@ -25,13 +25,13 @@
       "type_label": "<span class=\"type-label string\">STRING</span>",
       "description": "Optional: Transform (e.g., \"translate(50,50) rotate(45)\") (can be generated with `DaxLib.SVG.Transforms`)",
       "optional": true,
-      "default_value": null
+      "default_value": "BLANK()"
     }
   ],
   "return_type": "STRING",
   "return_type_label": "<span class=\"type-label string\">STRING</span>",
   "return_description": "<g> element",
-  "code": "function 'DaxLib.SVG.Element.Group' =\n\t\t(\n\t\t\tcontents : STRING,\n\t\t\topacity : STRING,\n\t\t\ttransforms : STRING\n\t\t) =>\n\n\t\t\t\"<g\" &\n\t\t\tIF( NOT ISBLANK( transforms ), \" transform='\" & transforms & \"'\" ) &\n\t\t\tIF( NOT ISBLANK( opacity ), \" opacity='\" & opacity & \"'\" ) &\n\t\t\t\">\" & contents & \"</g>\"",
+  "code": "function 'DaxLib.SVG.Element.Group' =\n\t\t(\n\t\t\tcontents : STRING,\n\t\t\topacity : STRING = BLANK(),\n\t\t\ttransforms : STRING = BLANK()\n\t\t) =>\n\n\t\t\t\"<g\" &\n\t\t\tIF( NOT ISBLANK( transforms ), \" transform='\" & transforms & \"'\" ) &\n\t\t\tIF( NOT ISBLANK( opacity ), \" opacity='\" & opacity & \"'\" ) &\n\t\t\t\">\" & contents & \"</g>\"",
   "example": null,
   "author": null,
   "version": null,
@@ -39,8 +39,8 @@
   "see": null,
   "deprecated": null,
   "sections": {
-    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Element.Group( contents, opacity, transforms )\n    ```\n\n    | Parameter | Type | Required | Description |\n    |:---:|:---:|:---:|---|\n    | contents | <span class=\"type-label string\">STRING</span> | :material-check: | Content to group (recommend including all content in a single _SvgGroup variable defined upstream) |\n    | opacity | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Opacity for entire group (0-1, optional) |\n    | transforms | <span class=\"type-label string\">STRING</span> | :material-close: | Optional: Transform (e.g., \"translate(50,50) rotate(45)\") (can be generated with `DaxLib.SVG.Transforms`) |\n\n    <span class=\"type-label string\">STRING</span> <g> element",
+    "syntax": "=== \"Syntax\"\n\n    ```dax\n    DaxLib.SVG.Element.Group( contents, opacity, transforms )\n    ```\n\n    | Parameter | Type | Required | Default | Description |\n    |:---:|:---:|:---:|:---:|---|\n    | contents | <span class=\"type-label string\">STRING</span> | :material-check: |  | Content to group (recommend including all content in a single _SvgGroup variable defined upstream) |\n    | opacity | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Opacity for entire group (0-1, optional) |\n    | transforms | <span class=\"type-label string\">STRING</span> | :material-close: | `#!dax BLANK()` | Optional: Transform (e.g., \"translate(50,50) rotate(45)\") (can be generated with `DaxLib.SVG.Transforms`) |\n\n    <span class=\"type-label string\">STRING</span> <g> element",
     "example": "",
-    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Element.Group' =\n    \t\t(\n    \t\t\tcontents : STRING,\n    \t\t\topacity : STRING,\n    \t\t\ttransforms : STRING\n    \t\t) =>\n    \n    \t\t\t\"<g\" &\n    \t\t\tIF( NOT ISBLANK( transforms ), \" transform='\" & transforms & \"'\" ) &\n    \t\t\tIF( NOT ISBLANK( opacity ), \" opacity='\" & opacity & \"'\" ) &\n    \t\t\t\">\" & contents & \"</g>\"\n    ```"
+    "definition": "=== \"Definition\"\n\n    ```dax\n    function 'DaxLib.SVG.Element.Group' =\n    \t\t(\n    \t\t\tcontents : STRING,\n    \t\t\topacity : STRING = BLANK(),\n    \t\t\ttransforms : STRING = BLANK()\n    \t\t) =>\n    \n    \t\t\t\"<g\" &\n    \t\t\tIF( NOT ISBLANK( transforms ), \" transform='\" & transforms & \"'\" ) &\n    \t\t\tIF( NOT ISBLANK( opacity ), \" opacity='\" & opacity & \"'\" ) &\n    \t\t\t\">\" & contents & \"</g>\"\n    ```"
   }
 }

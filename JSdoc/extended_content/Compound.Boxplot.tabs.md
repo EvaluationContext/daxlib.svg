@@ -10,14 +10,14 @@
             0,                  // y
             500,                // width
             100,                // height
-            0.05,               // paddingX
-            0.02,               // paddingY
             Dates[Date],        // axisRef
             [Total Cost],       // measureRef
             "#EC008C",          // fillColor
             "#605E5C",          // strokeColor
             TRUE,               // showOutliers
-            "Horizontal"        // orientation
+            "Horizontal",       // orientation
+            0.05,               // paddingX
+            0.02                // paddingY
         ),
         BLANK()
     )
