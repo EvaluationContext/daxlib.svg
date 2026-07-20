@@ -25,11 +25,10 @@ Creates a text SVG element
 
 === "Example"
 
-    ```dax hl_lines="5-23"
+    ```dax hl_lines="4-22"
     DaxLib.SVG.SVG( 
         500,                // width
         100,                // height
-        "0 0 100 20",       // viewbox
         DaxLib.SVG.Element.Txt(
             10,             // x
             10, 	        // y
@@ -49,6 +48,7 @@ Creates a text SVG element
             ),              // attributes
             BLANK()         // transforms
         ),                  // contents
+        "0 0 100 20",       // viewbox
         BLANK()             // sortValue
     )
     ```

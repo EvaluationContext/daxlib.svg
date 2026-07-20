@@ -34,8 +34,8 @@ Renders a violin plot as an SVG data URI showing probability density distributio
 
     ```dax
     DaxLib.SVG.Viz.Violin(
-        Products[Product],  // axisRefColumn
-        [Total Cost],       // measureRefExpr
+        Products[Product],  // axisRef
+        [Total Cost],       // measureRef
         ,                   // color (uses default theme)
         200,                // width
         60                  // height

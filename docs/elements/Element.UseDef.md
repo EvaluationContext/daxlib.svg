@@ -25,12 +25,12 @@ Reference a previously defined SVG element with optional positioning and styling
     VAR _Defs =
         DaxLib.SVG.Element.Defs(
             DaxLib.SVG.Def.Circle(
-                "Circle1",      // id
+                "Circle1",      // defId
                 0,              // cx
                 0,              // cy
                 8,              // r
                 DaxLib.SVG.Attr.Shapes(
-                    DaxLib.SVG.Colour.Theme(
+                    DaxLib.SVG.Color.Theme(
                         "Power BI",
                         25
                     ),          // fill
@@ -44,12 +44,12 @@ Reference a previously defined SVG element with optional positioning and styling
                 BLANK()         // transforms
             ) &
             DaxLib.SVG.Def.Circle(
-                "Circle2",      // id
+                "Circle2",      // defId
                 0,              // cx
                 0,              // cy
                 8,              // r
                 DaxLib.SVG.Attr.Shapes(
-                    DaxLib.SVG.Colour.Theme(
+                    DaxLib.SVG.Color.Theme(
                         "Power BI",
                         26
                     ),          // fill
@@ -63,13 +63,13 @@ Reference a previously defined SVG element with optional positioning and styling
                 BLANK()         // transforms
             ) &
             DaxLib.SVG.Def.Paths(
-                "myPath",       // id
+                "myPath",       // defId
                 "M10 10 L30 5 L90 15 L100 0", // d
                 DaxLib.SVG.Attr.Shapes(
                     "none",     // fill
                     0.8,        // fillOpacity
                     BLANK(),    // fillRule
-                    DaxLib.SVG.Colour.Theme(
+                    DaxLib.SVG.Color.Theme(
                         "Power BI",
                         25
                     ),          // stroke
@@ -83,7 +83,7 @@ Reference a previously defined SVG element with optional positioning and styling
     VAR _Contents = 
         _Defs &
         DaxLib.SVG.Element.UseDef(
-            "Circle1",   // id
+            "Circle1",   // defId
             20,             // x
             10,             // y
             DaxLib.SVG.Transforms(
@@ -95,25 +95,25 @@ Reference a previously defined SVG element with optional positioning and styling
             )               // transforms
         ) &
         DaxLib.SVG.Element.UseDef(
-            "Circle2",      // id
+            "Circle2",      // defId
             50,             // x
             10,             // y
             BLANK()         // transforms
         ) &
         DaxLib.SVG.Element.UseDef(
-            "Circle1",      // id
+            "Circle1",      // defId
             80,             // x
             10,             // y
             BLANK()         // transforms
         ) &
         DaxLib.SVG.Element.UseDef(
-            "myPath",       // id
+            "myPath",       // defId
             BLANK(),        // x
             5,              // y
             BLANK()         // transforms
         ) &
         DaxLib.SVG.Element.UseDef(
-            "myPath",       // id
+            "myPath",       // defId
             BLANK(),        // x
             10,             // y
             DaxLib.SVG.Transforms(
@@ -129,8 +129,8 @@ Reference a previously defined SVG element with optional positioning and styling
     DaxLib.SVG.SVG(
         500,                // width
         100,                // height
-        "0 0 100 20",       // viewbox
         _Contents,          // contents
+        "0 0 100 20",       // viewbox
         BLANK()             // sortValue
     )
     ```

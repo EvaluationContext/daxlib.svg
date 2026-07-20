@@ -35,8 +35,8 @@ Renders a bar chart as an SVG data URI showing measure values across an axis
 
     ```dax
     DaxLib.SVG.Viz.Bars(
-        Dates[Date],        // axisRefColumn
-        [Total Cost],       // measureRefExpr
+        Dates[Date],        // axisRef
+        [Total Cost],       // measureRef
         ,                   // color
         ,                   // minMarkColor
         ,                   // maxMarkColor

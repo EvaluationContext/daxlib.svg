@@ -20,8 +20,8 @@ Builds a shared axis/value data table for compound visuals
 
     ```dax
     DaxLib.SVG.Data.AxisMeasure(
-        Dates[Date],        // axisRefColumn
-        [Total Cost],       // measureRefExpr
+        Dates[Date],        // axisRef
+        [Total Cost],       // measureRef
         "Auto"              // axisMode
     )
     // Returns table with columns:

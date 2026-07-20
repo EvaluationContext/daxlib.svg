@@ -2,8 +2,8 @@
 
     ```dax
     DaxLib.SVG.Viz.Boxplot(
-        Products[Product],  // axisRefColumn
-        [Total Cost],       // measureRefExpr
+        Products[Product],  // axisRef
+        [Total Cost],       // measureRef
         ,                   // color
         TRUE,               // showOutliers
         200,                // width

@@ -7,28 +7,28 @@
         "0 0 100 20",
         DaxLib.SVG.Element.Defs(
             DaxLib.SVG.Def.LinearGradient(
-                "myGradient",   // id
+                "myGradient",   // defId
                 DaxLib.SVG.Def.GradientStop(
                     "20%",      // offset
-                    DaxLib.SVG.Colour.Theme(
+                    DaxLib.SVG.Color.Theme(
                         "Power BI",
                         25
-                    ),          // colour
+                    ),          // color
                     BLANK()     // opacity
                 ) &
                 DaxLib.SVG.Def.GradientStop( 
                     "80%",      // offset
-                    DaxLib.SVG.Colour.Theme(
+                    DaxLib.SVG.Color.Theme(
                         "Power BI",
                         26
-                    ),           // colour
+                    ),           // color
                     BLANK()     // opacity
                 ),              // stops
                 BLANK(),        // x1
                 BLANK(),        // y1
                 BLANK(),        // x2
                 BLANK()         // y2
-            )                   // contents
+            )                   // defs
         ) &
         DaxLib.SVG.Element.Rect(
             2,                  // x

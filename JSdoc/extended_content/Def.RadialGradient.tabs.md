@@ -1,35 +1,34 @@
 === "Example"
 
-    ```dax hl_lines="6-38"
+    ```dax hl_lines="5-37"
     DaxLib.SVG.SVG(
         500,                    // width
         100,                    // height
-        "0 0 100 20",           // viewbox
         DaxLib.SVG.Element.Defs(
             DaxLib.SVG.Def.RadialGradient(
-                "myGradient",   // id
+                "myGradient",   // defId
                 DaxLib.SVG.Def.GradientStop( 
                     "10%",      // offset
-                    DaxLib.SVG.Colour.Theme(
+                    DaxLib.SVG.Color.Theme(
                         "Power BI",
                         25
-                    ),          // colour
+                    ),          // color
                     BLANK()     // opacity
                 ) &
                 DaxLib.SVG.Def.GradientStop( 
                     "80%",      // offset
-                    DaxLib.SVG.Colour.Theme(
+                    DaxLib.SVG.Color.Theme(
                         "Power BI",
                         26
-                    ),          // colour
+                    ),          // color
                     0.5         // opacity
                 ) &
                 DaxLib.SVG.Def.GradientStop( 
                     "95%",      // offset
-                    DaxLib.SVG.Colour.Theme(
+                    DaxLib.SVG.Color.Theme(
                         "Power BI",
                         27
-                    ),          // colour
+                    ),          // color
                     BLANK()     // opacity
                 ),              // stops
                 BLANK(),        // cx
@@ -55,6 +54,7 @@
             ),                  // attributes
             BLANK()             // transforms
         ),                      // contents
-        BLANK()                 // sortODer
+        "0 0 100 20",           // viewbox
+        BLANK()                 // sortValue
     )
     ```

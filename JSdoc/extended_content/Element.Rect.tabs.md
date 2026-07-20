@@ -1,10 +1,9 @@
 === "Example"
 
-    ```dax hl_lines="5-34"
+    ```dax hl_lines="4-33"
     DaxLib.SVG.SVG( 
         500,                // width
         100,                // height
-        "0 0 100 20",       // viewbox
         DaxLib.SVG.Element.Rect(
             "50%",          // x
             "0%",           // y
@@ -13,13 +12,13 @@
             blank(),        // rx
             blank(),        // ry
             DaxLib.SVG.Attr.Shapes(
-                DaxLib.SVG.Colour.Theme(
+                DaxLib.SVG.Color.Theme(
                     "Power BI",
                     25
                 ),          // fill
                 0.3,        // fillOpacity
                 BLANK(),    // fillRule
-                DaxLib.SVG.Colour.Theme(
+                DaxLib.SVG.Color.Theme(
                     "Power BI",
                     25
                 ),          // stroke
@@ -35,6 +34,7 @@
                 BLANK()     // skewY
             )               // transforms
         ),                  // contents
+        "0 0 100 20",       // viewbox
         BLANK()             // sortValue
     )
     ```

@@ -25,8 +25,8 @@ Renders a box plot as an SVG data URI showing statistical distribution
 
     ```dax
     DaxLib.SVG.Viz.Boxplot(
-        Products[Product],  // axisRefColumn
-        [Total Cost],       // measureRefExpr
+        Products[Product],  // axisRef
+        [Total Cost],       // measureRef
         ,                   // color
         TRUE,               // showOutliers
         200,                // width

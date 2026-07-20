@@ -2,8 +2,8 @@
 
     ```dax
     DaxLib.SVG.Viz.Area(
-        Dates[Date],        // axisRefColumn
-        [Total Cost],       // measureRefExpr
+        Dates[Date],        // axisRef
+        [Total Cost],       // measureRef
         ,                   // color
         TRUE,               // showAxis
         200,                // width

@@ -34,8 +34,8 @@ Renders a heatmap as an SVG data URI showing data density using kernel density e
 
     ```dax
     DaxLib.SVG.Viz.Heatmap(
-        Products[Product],  // axisRefColumn
-        [Total Cost],       // measureRefExpr
+        Products[Product],  // axisRef
+        [Total Cost],       // measureRef
         ,                   // color
         200,                // width
         60                  // height

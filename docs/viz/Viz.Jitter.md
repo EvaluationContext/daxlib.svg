@@ -24,8 +24,8 @@ Renders a jitter plot as an SVG data URI showing value distribution as scattered
 
     ```dax
     DaxLib.SVG.Viz.Jitter(
-        Products[Product],  // axisRefColumn
-        [Total Cost],       // measureRefExpr
+        Products[Product],  // axisRef
+        [Total Cost],       // measureRef
         ,                   // color
         200,                // width
         60                  // height
