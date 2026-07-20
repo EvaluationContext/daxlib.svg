@@ -1,0 +1,166 @@
+/* ── Vega-style example gallery ── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+@media (max-width: 960px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 540px) {
+  .gallery-grid { grid-template-columns: 1fr; }
+}
+
+/* individual tile */
+.gallery-tile {
+  position: relative;
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--md-default-bg-color);
+  transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.gallery-tile:hover {
+  border-color: rgba(236, 0, 140, 0.5);
+  box-shadow:
+    0 6px 24px rgba(236, 0, 140, 0.08),
+    0 1px 4px rgba(0, 0, 0, 0.06);
+  transform: translateY(-3px);
+}
+
+/* SVG preview area */
+.gallery-tile .gallery-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 1rem;
+  min-height: 80px;
+}
+
+.gallery-tile .gallery-preview svg {
+  width: 100%;
+  height: 60px;
+  display: block;
+}
+
+/* chart label */
+.gallery-tile .gallery-label {
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.4rem 0 0.6rem;
+  color: var(--md-default-fg-color--light);
+  border-top: 1px solid rgba(128, 128, 128, 0.15);
+}
+
+/* hover overlay */
+.gallery-tile .gallery-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: rgba(0, 0, 0, 0.78);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  border-radius: 9px;
+}
+
+.gallery-tile:hover .gallery-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.gallery-overlay .gallery-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.25rem;
+}
+
+.gallery-overlay .gallery-links {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.gallery-overlay .gallery-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: 4px;
+  text-decoration: none !important;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.gallery-overlay .gallery-links a.gallery-viz {
+  background: #EC008C;
+  color: #fff;
+}
+.gallery-overlay .gallery-links a.gallery-viz:hover {
+  background: #d4007d;
+}
+
+.gallery-overlay .gallery-links a.gallery-compound {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+.gallery-overlay .gallery-links a.gallery-compound:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* dark-mode border tweak */
+[data-md-color-scheme="slate"] .gallery-tile {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+[data-md-color-scheme="slate"] .gallery-tile:hover {
+  border-color: rgba(236, 0, 140, 0.45);
+  box-shadow:
+    0 6px 24px rgba(236, 0, 140, 0.1),
+    0 1px 4px rgba(0, 0, 0, 0.2);
+}
+[data-md-color-scheme="slate"] .gallery-tile .gallery-label {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+[data-md-color-scheme="slate"] .gallery-tile .gallery-overlay {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+/* ── Feature row (value prop icons) ── */
+.feature-row > ul {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0.5rem;
+  flex-wrap: wrap;
+}
+
+.feature-row > ul > li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.feature-icon {
+  color: #EC008C;
+  font-size: 1.25em;
+}
+
+@media (max-width: 540px) {
+  .feature-row > ul {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+}

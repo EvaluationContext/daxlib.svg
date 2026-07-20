@@ -1,0 +1,297 @@
+/* ══════════════════════════════════════════════
+   Carousel Component — refined, editorial style
+   ══════════════════════════════════════════════ */
+
+/* ── Hero ── */
+.home-hero {
+  padding-bottom: 0.75rem;
+  margin-bottom: 0;
+}
+
+.home-hero h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.35rem;
+}
+
+.home-hero > p:first-of-type {
+  font-size: 1.05rem;
+  color: var(--md-default-fg-color--light);
+  margin-bottom: 1.5rem;
+  max-width: 42ch;
+}
+
+/* ── Section rhythm ── */
+.carousel-section {
+  margin: 1rem 0 2rem;
+}
+
+.carousel-section h2 {
+  margin-bottom: 0.25rem;
+  font-weight: 800;
+  font-size: 1.35rem;
+  letter-spacing: -0.01em;
+}
+
+.carousel-section > p,
+.carousel-section > .section-sub {
+  margin-bottom: 1.25rem;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+/* ── Carousel wrapper ── */
+.carousel-wrapper {
+  position: relative;
+  padding: 0 28px;
+}
+
+.carousel-viewport {
+  overflow: hidden;
+  /* generous padding so borders + hover lift are never clipped */
+  padding: 6px 4px;
+  margin: -6px -4px;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+  gap: 1rem;
+}
+
+.carousel-track > * {
+  flex: 0 0 auto;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* ── Navigation arrows ── */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: var(--md-default-fg-color);
+  color: var(--md-default-bg-color);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
+  transition: background 0.2s ease, opacity 0.2s ease, transform 0.15s ease;
+  opacity: 0.7;
+}
+
+.carousel-btn:hover {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.08);
+}
+
+.carousel-btn--prev { left: -6px; }
+.carousel-btn--next { right: -6px; }
+
+.carousel-btn:disabled {
+  opacity: 0.15;
+  cursor: default;
+  transform: translateY(-50%) scale(1);
+}
+
+/* ── Page indicator dots ── */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.carousel-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(128, 128, 128, 0.25);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease, width 0.25s ease, border-radius 0.25s ease;
+}
+
+.carousel-dot:hover {
+  background: rgba(236, 0, 140, 0.4);
+}
+
+.carousel-dot.active {
+  background: #EC008C;
+  width: 20px;
+  border-radius: 4px;
+  transform: none;
+}
+
+/* ══════════════════════════════════
+   Namespace Cards
+   ══════════════════════════════════ */
+.ns-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  border-radius: 10px;
+  padding: 1.25rem 1.1rem 1rem;
+  background: var(--md-default-bg-color);
+  transition:
+    box-shadow 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+  text-decoration: none !important;
+  color: var(--md-default-fg-color) !important;
+  min-height: 140px;
+}
+
+.ns-card:hover {
+  border-color: rgba(236, 0, 140, 0.5);
+  box-shadow:
+    0 6px 24px rgba(236, 0, 140, 0.08),
+    0 1px 4px rgba(0, 0, 0, 0.06);
+  transform: translateY(-3px);
+}
+
+.ns-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.55rem;
+}
+
+.ns-card-icon {
+  font-size: 1.5rem;
+  color: #6b6b6b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(128, 128, 128, 0.06);
+  flex-shrink: 0;
+  transition: background 0.25s ease;
+}
+
+.ns-card:hover .ns-card-icon {
+  background: rgba(236, 0, 140, 0.08);
+}
+
+.ns-card-icon svg {
+  width: 22px;
+  height: 22px;
+  fill: #6b6b6b;
+  transition: fill 0.25s ease;
+}
+
+.ns-card:hover .ns-card-icon svg {
+  fill: #EC008C;
+}
+
+.ns-card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--md-default-fg-color);
+  line-height: 1.2;
+}
+
+.ns-card-desc {
+  font-size: 0.8rem;
+  color: var(--md-default-fg-color--light);
+  line-height: 1.55;
+  flex-grow: 1;
+  margin-bottom: 0.7rem;
+}
+
+.ns-card-meta {
+  display: flex;
+  align-items: center;
+  font-size: 0.72rem;
+  color: var(--md-default-fg-color--lighter);
+}
+
+.ns-card-badge {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Namespace category badges */
+.ns-badge-core   { background: rgba(236, 0, 140, 0.08); color: #d4007d; }
+.ns-badge-data   { background: rgba(33, 150, 243, 0.08); color: #1976d2; }
+.ns-badge-render { background: rgba(76, 175, 80, 0.08);  color: #388e3c; }
+.ns-badge-viz    { background: rgba(255, 152, 0, 0.08);  color: #e68900; }
+.ns-badge-style  { background: rgba(156, 39, 176, 0.08); color: #7b1fa2; }
+
+
+
+/* ══════════════════════════════════
+   Visual Carousel Cards
+   ══════════════════════════════════ */
+.carousel-track .gallery-tile {
+  flex: 0 0 auto;
+}
+
+/* ── Examples section highlight ── */
+.carousel-section--highlight {
+  background: rgba(128, 128, 128, 0.04);
+  border-radius: 14px;
+  padding: 1.75rem 1.5rem 1.5rem;
+  margin-left: -1.25rem;
+  margin-right: -1.25rem;
+  border: 1px solid rgba(128, 128, 128, 0.08);
+}
+
+[data-md-color-scheme="slate"] .carousel-section--highlight {
+  background: rgba(255, 255, 255, 0.025);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.carousel-section--highlight h2 {
+  margin-top: 0;
+}
+
+/* ══════════════════════════════════
+   Dark mode refinements
+   ══════════════════════════════════ */
+[data-md-color-scheme="slate"] .ns-card {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-md-color-scheme="slate"] .ns-card:hover {
+  border-color: rgba(236, 0, 140, 0.45);
+  box-shadow:
+    0 6px 24px rgba(236, 0, 140, 0.1),
+    0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+[data-md-color-scheme="slate"] .ns-card-icon {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+[data-md-color-scheme="slate"] .ns-card:hover .ns-card-icon {
+  background: rgba(236, 0, 140, 0.12);
+}
+
+[data-md-color-scheme="slate"] .carousel-btn {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+/* badge colors stay legible in dark */
+[data-md-color-scheme="slate"] .ns-badge-core   { background: rgba(236, 0, 140, 0.12); color: #f06ab8; }
+[data-md-color-scheme="slate"] .ns-badge-data   { background: rgba(33, 150, 243, 0.12); color: #64b5f6; }
+[data-md-color-scheme="slate"] .ns-badge-render { background: rgba(76, 175, 80, 0.12);  color: #81c784; }
+[data-md-color-scheme="slate"] .ns-badge-viz    { background: rgba(255, 152, 0, 0.12);  color: #ffb74d; }
+[data-md-color-scheme="slate"] .ns-badge-style  { background: rgba(156, 39, 176, 0.12); color: #ce93d8; }
