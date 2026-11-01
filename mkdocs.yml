@@ -58,6 +58,8 @@ theme:
     - toc.integrate
   
 extra:
+  # Link preview image (overrides/main.html)
+  og_image: https://evaluationcontext.com/daxlib.svg/assets/images/UDFInAction.png
   google_site_verification: SAsOJ1OUHiMcP4hI-eYBkBD6nbsLx6hc2nWjLqdCtd0
   social:
     - icon: fontawesome/brands/linkedin

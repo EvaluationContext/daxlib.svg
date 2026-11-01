@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{#- Link previews (LinkedIn, Slack, X). extra.og_image is an absolute URL. -#}
+{% block extrahead %}
+  {{ super() }}
+  {% set meta = page.meta if page and page.meta else {} %}
+  {% set og_title = (page.title ~ " - " ~ config.site_name) if page and page.title and page.canonical_url != config.site_url else config.site_name %}
+  {% set og_desc = meta.description | default(config.site_description, true) %}
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="{{ page.canonical_url }}" />
+  <meta property="og:title" content="{{ og_title }}" />
+  <meta property="og:description" content="{{ og_desc }}" />
+  <meta property="og:site_name" content="{{ config.site_name }}" />
+  {% if config.extra.og_image %}
+  <meta property="og:image" content="{{ config.extra.og_image }}" />
+  {% endif %}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{ og_title }}" />
+  <meta name="twitter:description" content="{{ og_desc }}" />
+  {% if config.extra.og_image %}
+  <meta name="twitter:image" content="{{ config.extra.og_image }}" />
+  {% endif %}
+{% endblock %}
