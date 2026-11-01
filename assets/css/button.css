@@ -1,0 +1,32 @@
+:root {
+  --button-color: #e92063;
+}
+
+.md-button {
+  border-radius: 0.4em !important;
+  background-color: transparent !important;
+  color: var(--button-color) !important;
+  border: 1.5px solid var(--button-color) !important;
+  stroke: var(--button-color);
+  opacity: 1;
+  font-size: 0.78em;
+  padding: 0.35em 1em;
+  font-weight: 600;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.md-button:hover, .md-button:focus {
+  background-color: var(--button-color) !important;
+  color: #fff !important;
+}
+
+/* Primary: filled */
+.md-button--primary {
+  background-color: var(--button-color) !important;
+  color: #fff !important;
+}
+
+.md-button--primary:hover, .md-button--primary:focus {
+  background-color: color-mix(in srgb, var(--button-color) 85%, #000) !important;
+  color: #fff !important;
+}

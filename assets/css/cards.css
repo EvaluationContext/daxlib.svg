@@ -1,0 +1,13 @@
+/* Grid card styling */
+.md-typeset .grid.cards > :is(ul, ol) > li,
+.md-typeset .grid.cards > :is(ul, ol) > li > hr,
+.md-typeset .grid > .card {
+  border-color: rgba(128, 128, 128, 0.4);
+}
+
+/* Dark theme adjustments */
+[data-md-color-scheme="slate"] .md-typeset .grid.cards > :is(ul, ol) > li,
+[data-md-color-scheme="slate"] .md-typeset .grid.cards > :is(ul, ol) > li > hr,
+[data-md-color-scheme="slate"] .md-typeset .grid > .card {
+  border-color: rgba(255, 255, 255, 0.2);
+}
